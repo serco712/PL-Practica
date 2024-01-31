@@ -1,6 +1,10 @@
 \babel@toc {spanish}{}\relax 
 \contentsline {chapter}{\numberline {1}Introducción}{5}{chapter.1}%
 \contentsline {chapter}{\numberline {2}Clases léxicas}{7}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Palabras reservadas}{7}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Literales}{7}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Identificadores}{7}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Símbolos de operación y puntuación}{7}{section.2.4}%
 \contentsline {chapter}{\numberline {3}Especificación formal del léxico}{9}{chapter.3}%
 \contentsline {chapter}{\numberline {4}Diseño de un analizador léxico}{11}{chapter.4}%
 \contentsline {chapter}{Índice de figuras}{13}{chapter*.3}%
