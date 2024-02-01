@@ -21,9 +21,9 @@ Las palabras son las definidas a continuación, contando cada con una clase léx
     \item \textit{not} $\rightarrow$ Negación lógica.
     \item \textit{null} $\rightarrow$ Referencia a la nada.
     \item \textit{proc} $\rightarrow$ Función.
-    \item \textit{if} $\rightarrow$ 
-    \item \textit{else} $\rightarrow$  
-    \item \textit{while} $\rightarrow$
+    \item \textit{if} $\rightarrow$ Condición.
+    \item \textit{else} $\rightarrow$ Condición alternativa.
+    \item \textit{while} $\rightarrow$ Bucle con condición.
     \item \textit{struct} $\rightarrow$ Estructura.
     \item \textit{new} $\rightarrow$ Reserva de memoria.
     \item \textit{delete} $\rightarrow$ Liberación de memoria.
@@ -41,7 +41,7 @@ Las palabras son las definidas a continuación, contando cada con una clase léx
         \textit{literalBooleano}.
     \item \textbf{Literales enteros.} Opcionalmente empiezan con un signo más (+) o menos (-), y después debe aparecer una
         secuencia (que empieza por un número distinto de 0) de 1 o más dígitos. Su clase léxica será \textit{literalEntero}.
-    \item \textbf{Literales reales.}
+    \item \textbf{Literales reales.} Empieza con una parte entera seguida de una parte decimal, exponecial o parte decimal seguida de exponecial. La parte decimal comienza con el signo punto (.) seguido de una secuencia (que puede ser sólo un 0 o números que no acaben en 0) de 1 o más dígitos. Por último, y también opcionalmente, puede aparecer una parte exponencial que se indica con (e) o (E), seguida de una parte entera con o sin parte decimal. Su clase léxica será \textit{literalReal}.
     \item \textbf{Literales de cadena.} Secuencia de 0 o más caracteres distintos que estan entre "  ". Los caracteres pueden incluir las siguientes secuencias de
     escape: retroceso (\b), retorno de carro (\r), tabulador (\t), y salto de línea (\n). Su clase léxica será \textit{literalCadena}.
 \end{itemize}
@@ -74,8 +74,8 @@ las siguientes clases:
     \item \textbf{Coma.} Se representa con el símbolo coma (,). Su clase léxica será \textit{coma}.
     \item \textbf{Indirección.} Se representa con el símbolo coma (^). Su clase léxica será \textit{indirección}.
     \item \textbf{Final.} Se representa con el símbolo coma (&&). Su clase léxica será \textit{final}.
-    \item \textbf{Por Referencia} Se representa con el símbolo coma (&). Su clase léxica será \textit{porReferencia}.
-    \item \textbf{Corchete de apertura} Se representa con el símbolo coma ({). Su clase léxica será \textit{corcheteAp}.
-    \item \textbf{Corchete de cierre} Se representa con el símbolo coma (}). Su clase léxica será \textit{corcheteCi}.
-    \item \textbf{Arroba } Se representa con el símbolo coma (@). Su clase léxica será \textit{arroba}.
+    \item \textbf{Por Referencia.} Se representa con el símbolo coma (&). Su clase léxica será \textit{porReferencia}.
+    \item \textbf{Corchete de apertura.} Se representa con el símbolo coma ({). Su clase léxica será \textit{corcheteAp}.
+    \item \textbf{Corchete de cierre.} Se representa con el símbolo coma (}). Su clase léxica será \textit{corcheteCi}.
+    \item \textbf{Arroba.} Se representa con el símbolo coma (@). Su clase léxica será \textit{arroba}.
 \end{itemize}
