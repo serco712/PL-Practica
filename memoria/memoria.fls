@@ -1,9 +1,9 @@
-PWD /home/sergio/Desktop/Estudios/UCM/4º/PL/memoria
+PWD /home/sergio/Desktop/Estudios/UCM/4º/PL/PL-Practica/memoria
 INPUT /etc/texmf/web2c/texmf.cnf
 INPUT /usr/share/texmf/web2c/texmf.cnf
 INPUT /usr/share/texlive/texmf-dist/web2c/texmf.cnf
 INPUT /var/lib/texmf/web2c/pdftex/pdflatex.fmt
-INPUT /home/sergio/Desktop/Estudios/UCM/4º/PL/memoria/memoria.tex
+INPUT /home/sergio/Desktop/Estudios/UCM/4º/PL/PL-Practica/memoria/memoria.tex
 OUTPUT memoria.log
 INPUT ./AiTex.cls
 INPUT ./AiTex.cls
@@ -1721,6 +1721,10 @@ INPUT ./Secciones/Hito1/2Especificacion.tex
 INPUT Secciones/Hito1/2Especificacion.tex
 INPUT ./Secciones/Hito1/2Especificacion.tex
 INPUT Secciones/Hito1/2Especificacion.tex
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecrm0700.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx0700.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecrm0500.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecbx0500.tfm
 INPUT ./Secciones/Hito1/3Diagrama.tex
 INPUT Secciones/Hito1/3Diagrama.tex
 INPUT ./Secciones/Hito1/3Diagrama.tex
@@ -1759,6 +1763,8 @@ INPUT Secciones/1Lexico.aux
 INPUT ./memoria.out
 INPUT ./memoria.out
 INPUT /usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc
+INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
+INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb
 INPUT /usr/share/texmf/fonts/type1/public/cm-super/sfbx1000.pfb
 INPUT /usr/share/texmf/fonts/type1/public/cm-super/sfbx1440.pfb

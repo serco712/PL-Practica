@@ -19,27 +19,35 @@ las definidas a continuación, contando cada con una clase léxica.
 \section{Literales}
 
 \begin{itemize}
-    \item \textbf{Literales booleanos.} 
-    \item \textbf{Literales enteros.} Opcionalmente,empiezan con un signo + o -, después debe aparecer una secuencia (que empieza por un número distinto de 0) de 1 o más dígitos 
+    \item \textbf{Literales booleanos.} Toma como valor las palabras reservadas \textit{true} o \textit{false}. Su clase léxica será
+        \textit{literalBooleano}.
+    \item \textbf{Literales enteros.} Opcionalmente empiezan con un signo más (+) o menos (-), y después debe aparecer una
+        secuencia (que empieza por un número distinto de 0) de 1 o más dígitos. Su clase léxica será \textit{literalEntero}.
     \item \textbf{Literales reales.}
 \end{itemize}
 
 \section{Identificadores}
 
+Los identificadores nos sirven para poder ponerle un nombre a las variables. Éstos deben comenzar por un subrayado (\_) o una letra, seguida de una secuencia de 0 o más
+subrayados, dígitos o letras. Su clase léxica será \textit{identificador}.
+
 \section{Símbolos de operación y puntuación}
 
+Cada uno de ellos tendrá su propia clase léxica. En el subconjunto del lenguaje en el que trabajamos, \textit{Tiny(0)}, contamos con
+las siguientes clases:
+
 \begin{itemize}
-    \item \textbf{Suma.} Se representa con el símbolo +
-    \item \textbf{Resta.}Se representa con el símbolo símbolo -
-    \item \textbf{Multiplicación.} Se representa con el símbolo *
-    \item \textbf{División.} Se representa con el símbolo /
-    \item \textbf{Menor.} Se representa con el símbolo <
-    \item \textbf{Mayor.} Se representa con el símbolo >
-    \item \textbf{Igual.} Se representa con el símbolo ==
-    \item \textbf{Menor o igual.} Se representa con el símbolo <=
-    \item \textbf{Mayor o igual.} Se representa con el símbolo >=
-    \item \textbf{Asignación.} Se representa con el símbolo = 
-    \item \textbf{Paréntesis de apertura.} Se representa con el símbolo (
-    \item \textbf{Paréntesis de cierre.} Se representa con el símbolo )
-    \item \textbf{Punto y coma.} Se representa con el símbolo ;
+    \item \textbf{Suma.} Se representa con el símbolo más (+). Su clase léxica será \textit{operadorSuma}.
+    \item \textbf{Resta.}Se representa con el símbolo símbolo menos (-). Su clase léxica será \textit{operadorResta}.
+    \item \textbf{Multiplicación.} Se representa con el símbolo asterisco (*). Su clase léxica será \textit{operadorMul}.
+    \item \textbf{División.} Se representa con el símbolo barra (/). Su clase léxica será \textit{operadorDiv}.
+    \item \textbf{Menor.} Se representa con el símbolo menor qué (<). Su clase léxica será \textit{operadorMenor}.
+    \item \textbf{Mayor.} Se representa con el símbolo mayor qué (>). Su clase léxica será \textit{operadorMayor}.
+    \item \textbf{Igual.} Se representa con el dos símbolos de igualdad seguidos (==). Su clase léxica será \textit{operadorIgual}.
+    \item \textbf{Menor o igual.} Se representa con el símbolo menor qué seguido del símbolo de igualdad (<=). Su clase léxica será \textit{operadorMenIgual}.
+    \item \textbf{Mayor o igual.} Se representa con el símbolo mayor qué seguido del símbolo de igualdad (>=). Su clase léxica será \textit{operadorMayIgual}.
+    \item \textbf{Asignación.} Se representa con el símbolo un símbolo de igualdad (=). Su clase léxica será \textit{operadorAsig}.
+    \item \textbf{Paréntesis de apertura.} Se representa con el símbolo del paréntesis de apertura (``('', sin comillas). Su clase léxica será \textit{parentesisAp}.
+    \item \textbf{Paréntesis de cierre.} Se representa con el símbolo del paréntesis de cierre (``)'', sin comillas). Su clase léxica será \textit{parentesisCi}.
+    \item \textbf{Punto y coma.} Se representa con el símbolo punto y coma (;). Su clase léxica será \textit{puntoYComa}.
 \end{itemize}
