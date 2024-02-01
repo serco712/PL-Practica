@@ -1,7 +1,7 @@
-\chapterA{Especificación formal del léxico}
+\section{Especificación formal del léxico}
 
 
-\section{Definiciones auxiliares.}
+\subsection{Definiciones auxiliares.}
     
 \begin{math}
     letra \longrightarrow \textbf A|\textbf B|...|\textbf Z|\textbf a|\textbf b|...|\textbf z\\
@@ -12,8 +12,14 @@
     parteExponencial \longrightarrow (e|E)[\backslash{+}|-]parteEntera\\
 \end{math}
 
-\section{Definiciones de cadenas ignorables.}
-\section{Definiciones léxicas.}
+\subsection{Definiciones de cadenas ignorables.}
+
+\begin{math}
+    separador \longrightarrow \textbf{SP}|\textbf{TAB}|\textbf{NL}\\
+    comentario \longrightarrow \#\#(\overline{\textbf{NL}|\textbf{EOF}})\\
+\end{math}
+
+\subsection{Definiciones léxicas.}
 
 \begin{math}
     bool \longrightarrow \textbf{bool}\\
@@ -39,5 +45,6 @@
     parentesisAp \longrightarrow  \backslash{(}\\
     parentesisCi \longrightarrow  \backslash{)}\\
     puntoYComa \longrightarrow  ;\\
+    arroba \longrightarrow @\\
 
 \end{math}

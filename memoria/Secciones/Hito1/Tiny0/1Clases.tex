@@ -1,8 +1,8 @@
-\chapterA{Clases léxicas}
+\section{Clases léxicas}
 
-\section{Palabras reservadas}
+\subsection{Palabras reservadas}
 
-Para poder analizar de manera correcta, será necesario establecer una clase léxica por cada palabra reservada. En el lenguaje de
+\t Para poder analizar de manera correcta, será necesario establecer una clase léxica por cada palabra reservada. En el lenguaje de
 esta práctica, \textit{Tiny(0)}, contamos con 3 palabras reservadas, utilizadas para definir el tipo de las variables. Tendremos pues,
 una palabra para las variables de tipo booleano, otra para las de tipo entero y una última para las reales. Las palabras son 
 las definidas a continuación, contando cada con una clase léxica.
@@ -16,7 +16,7 @@ las definidas a continuación, contando cada con una clase léxica.
     \item \textit{not} $\rightarrow$ Negación lógica.
 \end{itemize}
 
-\section{Literales}
+\subsection{Literales}
 
 \begin{itemize}
     \item \textbf{Literales booleanos.} Toma como valor las palabras reservadas \textit{true} o \textit{false}. Su clase léxica será
@@ -26,19 +26,19 @@ las definidas a continuación, contando cada con una clase léxica.
     \item \textbf{Literales reales.}
 \end{itemize}
 
-\section{Identificadores}
+\subsection{Identificadores}
 
 Los identificadores nos sirven para poder ponerle un nombre a las variables. Éstos deben comenzar por un subrayado (\_) o una letra, seguida de una secuencia de 0 o más
 subrayados, dígitos o letras. Su clase léxica será \textit{identificador}.
 
-\section{Símbolos de operación y puntuación}
+\subsection{Símbolos de operación y puntuación}
 
 Cada uno de ellos tendrá su propia clase léxica. En el subconjunto del lenguaje en el que trabajamos, \textit{Tiny(0)}, contamos con
 las siguientes clases:
 
 \begin{itemize}
     \item \textbf{Suma.} Se representa con el símbolo más (+). Su clase léxica será \textit{operadorSuma}.
-    \item \textbf{Resta.}Se representa con el símbolo símbolo menos (-). Su clase léxica será \textit{operadorResta}.
+    \item \textbf{Resta.} Se representa con el símbolo símbolo menos (-). Su clase léxica será \textit{operadorResta}.
     \item \textbf{Multiplicación.} Se representa con el símbolo asterisco (*). Su clase léxica será \textit{operadorMul}.
     \item \textbf{División.} Se representa con el símbolo barra (/). Su clase léxica será \textit{operadorDiv}.
     \item \textbf{Menor.} Se representa con el símbolo menor qué (<). Su clase léxica será \textit{operadorMenor}.
@@ -50,4 +50,5 @@ las siguientes clases:
     \item \textbf{Paréntesis de apertura.} Se representa con el símbolo del paréntesis de apertura (``('', sin comillas). Su clase léxica será \textit{parentesisAp}.
     \item \textbf{Paréntesis de cierre.} Se representa con el símbolo del paréntesis de cierre (``)'', sin comillas). Su clase léxica será \textit{parentesisCi}.
     \item \textbf{Punto y coma.} Se representa con el símbolo punto y coma (;). Su clase léxica será \textit{puntoYComa}.
+    \item \textbf{Coma.} Se representa con el símbolo coma (,). Su clase léxica será \textit{coma}.
 \end{itemize}

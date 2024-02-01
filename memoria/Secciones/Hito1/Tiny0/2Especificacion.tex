@@ -1,0 +1,50 @@
+\section{Especificación formal del léxico}
+
+
+\subsection{Definiciones auxiliares.}
+    
+\begin{math}
+    letra \longrightarrow \textbf A|\textbf B|...|\textbf Z|\textbf a|\textbf b|...|\textbf z\\
+    digitoPositivo \longrightarrow \textbf 1|...|\textbf 9\\
+    digito \longrightarrow digitoPositivo|0\\
+    parteEntera \longrightarrow digitoPositivo \space digito*\\
+    parteDecimal \longrightarrow digito* \space digitoPositivo\\
+    parteExponencial \longrightarrow (e|E)[\backslash{+}|-]parteEntera\\
+\end{math}
+
+\subsection{Definiciones de cadenas ignorables.}
+
+\begin{math}
+    separador \longrightarrow \textbf{SP}|\textbf{TAB}|\textbf{NL}\\
+    comentario \longrightarrow \#\#(\overline{\textbf{NL}|\textbf{EOF}})\\
+\end{math}
+
+\subsection{Definiciones léxicas.}
+
+\begin{math}
+    bool \longrightarrow \textbf{bool}\\
+    int \longrightarrow \textbf{int}\\
+    real \longrightarrow \textbf{real}\\
+    and \longrightarrow \textbf{and}\\
+    or \longrightarrow \textbf{or}\\
+    not \longrightarrow \textbf{not}\\
+    literalBooleano \longrightarrow \textbf{true}|\textbf{false}\\
+    literalEntero \longrightarrow [\backslash{+}|-]parteEntera\\
+    literalReal \longrightarrow [\backslash{+}|-]parteEntera(.parteDecimal|parteExponencial|.parteDecimal parteExponencial)\\
+    identificador \longrightarrow (\_|letra)(letra|digito|\_)*\\
+    operadorSuma \longrightarrow \backslash{+}\\
+    operadorResta \longrightarrow -\\
+    operadorMul \longrightarrow \backslash{*}\\
+    operadorDiv \longrightarrow /\\
+    operadorMenor \longrightarrow  <\\
+    operadorMayor \longrightarrow  >\\
+    operadorIgual \longrightarrow  ==\\
+    operadorMenIgual \longrightarrow  <=\\
+    operadorMayIgual \longrightarrow  >=\\
+    operadorAsig \longrightarrow  =\\
+    parentesisAp \longrightarrow  \backslash{(}\\
+    parentesisCi \longrightarrow  \backslash{)}\\
+    puntoYComa \longrightarrow  ;\\
+    arroba \longrightarrow @\\
+
+\end{math}
