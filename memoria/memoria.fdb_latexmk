@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1706795782 "/home/sergio/Desktop/Estudios/UCM/4º/PL/PL-Practica/memoria/memoria.tex" "memoria.pdf" "memoria" 1706795782
+["pdflatex"] 1706982544 "/home/sergio/Desktop/Estudios/UCM/4º/PL/PL-Practica/memoria/memoria.tex" "memoria.pdf" "memoria" 1706982544
   "/etc/texmf/web2c/texmf.cnf" 1696887252 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/sergio/Desktop/Estudios/UCM/4º/PL/PL-Practica/memoria/memoria.tex" 1706651250 1377 6f5a523b0b5473cdf03bec094915afe1 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -256,17 +256,17 @@
   "Secciones/1Lexico.aux" 0 -1 0 "pdflatex"
   "Secciones/1Lexico.tex" 1706795646 353 864a0d563950a17ceb6e483f15bc4b08 ""
   "Secciones/Hito1/Tiny/0Intro.tex" 1706795464 23 da48b590e301069ded14b96f40a31033 ""
-  "Secciones/Hito1/Tiny/1Clases.tex" 1706795534 3814 acb77c3c1d6cc3a787d76bb536407e4b ""
-  "Secciones/Hito1/Tiny/2Especificacion.tex" 1706795567 1939 8c46a8c98cb418adb2c3975174788b31 ""
+  "Secciones/Hito1/Tiny/1Clases.tex" 1706981861 7099 aad609378da9d2135813f3a84fbf5cc0 ""
+  "Secciones/Hito1/Tiny/2Especificacion.tex" 1706982426 2905 43642a0a6007e3e257a3af6905f9694f ""
   "Secciones/Hito1/Tiny0/0Intro.tex" 1706795567 23 da48b590e301069ded14b96f40a31033 ""
-  "Secciones/Hito1/Tiny0/1Clases.tex" 1706795769 3817 a0da9dde75952fcbfc1060b0e296376c ""
-  "Secciones/Hito1/Tiny0/2Especificacion.tex" 1706795594 1939 8c46a8c98cb418adb2c3975174788b31 ""
+  "Secciones/Hito1/Tiny0/1Clases.tex" 1706982509 4500 89a20e0c3bd0f53ae6175f186f1e3cf2 ""
+  "Secciones/Hito1/Tiny0/2Especificacion.tex" 1706982043 1969 60b0769855603519b42689387a26dd74 ""
   "Secciones/Hito1/Tiny0/3Diagrama.tex" 1706795600 42 1f7156b327fd8f883802e64e5f6f79fb ""
   "glossary.aux" 0 -1 0 "pdflatex"
   "glossary.tex" 1696944159 0 d41d8cd98f00b204e9800998ecf8427e ""
   "logoComplutense.png" 1696944159 645493 33494c3511b6d6c38369d75dce9640f5 ""
-  "memoria.acr" 1706795778 6 9f404503043ec80c08484be9f659189e ""
-  "memoria.aux" 1706795782 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "memoria.acr" 1706982541 6 9f404503043ec80c08484be9f659189e ""
+  "memoria.aux" 1706982544 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
   "memoria.out" 0 -1 0 "pdflatex"
   "memoria.tex" 1706651250 1377 6f5a523b0b5473cdf03bec094915afe1 ""
   (generated)

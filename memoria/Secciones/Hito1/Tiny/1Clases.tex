@@ -34,6 +34,9 @@ Las palabras son las definidas a continuación, contando cada con una clase léx
     \item \textit{call} $\rightarrow$ Invocación procedimiento.
 \end{itemize}
 
+Además de éstas, hay palabras reservadas como \textit{true} o \textit{false}, las cuáles no poseen una clase léxica propia
+porque al detectarse se asignarán como literales booleanos (cómo veremos más adelante).
+
 \subsection{Literales}
 
 \begin{itemize}
@@ -42,8 +45,8 @@ Las palabras son las definidas a continuación, contando cada con una clase léx
     \item \textbf{Literales enteros.} Opcionalmente empiezan con un signo más (+) o menos (-), y después debe aparecer una
         secuencia (que empieza por un número distinto de 0) de 1 o más dígitos. Su clase léxica será \textit{literalEntero}.
     \item \textbf{Literales reales.} Empieza con una parte entera seguida de una parte decimal, exponecial o parte decimal seguida de exponecial. La parte decimal comienza con el signo punto (.) seguido de una secuencia (que puede ser sólo un 0 o números que no acaben en 0) de 1 o más dígitos. Por último, y también opcionalmente, puede aparecer una parte exponencial que se indica con (e) o (E), seguida de una parte entera con o sin parte decimal. Su clase léxica será \textit{literalReal}.
-    \item \textbf{Literales de cadena.} Secuencia de 0 o más caracteres distintos que estan entre "  ". Los caracteres pueden incluir las siguientes secuencias de
-    escape: retroceso (\b), retorno de carro (\r), tabulador (\t), y salto de línea (\n). Su clase léxica será \textit{literalCadena}.
+    \item \textbf{Literales de cadena.} Secuencia de 0 o más caracteres distintos que estan entre comillas dobles(`` ''). Los caracteres pueden incluir las siguientes secuencias de
+    escape: retroceso ($\backslash{b}$), retorno de carro ($\backslash{r}$), tabulador ($\backslash{t}$) y salto de línea ($\backslash{n}$). Su clase léxica será \textit{literalCadena}.
 \end{itemize}
 
 \subsection{Identificadores}
@@ -71,10 +74,10 @@ Cada uno de ellos tendrá su propia clase léxica y son las siguientes clases:
     \item \textbf{Paréntesis de cierre.} Se representa con el símbolo del paréntesis de cierre (``)'', sin comillas). Su clase léxica será \textit{parentesisCi}.
     \item \textbf{Punto y coma.} Se representa con el símbolo punto y coma (;). Su clase léxica será \textit{puntoYComa}.
     \item \textbf{Coma.} Se representa con el símbolo coma (,). Su clase léxica será \textit{coma}.
-    \item \textbf{Indirección.} Se representa con el símbolo coma (^). Su clase léxica será \textit{indireccion}.
-    \item \textbf{Final.} Se representa con el símbolo coma (&&). Su clase léxica será \textit{final}.
-    \item \textbf{Por Referencia.} Se representa con el símbolo coma (&). Su clase léxica será \textit{porReferencia}.
-    \item \textbf{Corchete de apertura.} Se representa con el símbolo coma ({). Su clase léxica será \textit{corcheteAp}.
-    \item \textbf{Corchete de cierre.} Se representa con el símbolo coma (}). Su clase léxica será \textit{corcheteCi}.
+    \item \textbf{Indirección.} Se representa con el símbolo del acento circumflejo (\^{}). Su clase léxica será \textit{indireccion}.
+    \item \textbf{Final.} Se representa con el símbolo ampersand 2 veces consecutivas (\&\&). Su clase léxica será \textit{final}.
+    \item \textbf{Por Referencia.} Se representa con el símbolo ampersand una única vez (\&). Su clase léxica será \textit{porReferencia}.
+    \item \textbf{Corchete de apertura.} Se representa con el símbolo del corchete de apertura ([). Su clase léxica será \textit{corcheteAp}.
+    \item \textbf{Corchete de cierre.} Se representa con el símbolo del corchete de cierre (]). Su clase léxica será \textit{corcheteCi}.
     \item \textbf{Arroba.} Se representa con el símbolo coma (@). Su clase léxica será \textit{arroba}.
 \end{itemize}
