@@ -7,8 +7,8 @@
     letra \longrightarrow \textbf A|\textbf B|...|\textbf Z|\textbf a|\textbf b|...|\textbf z\\
     digitoPositivo \longrightarrow \textbf 1|...|\textbf 9\\
     digito \longrightarrow digitoPositivo|0\\
-    parteEntera \longrightarrow digitoPositivo \space digito*\\
-    parteDecimal \longrightarrow digito* \space digitoPositivo\\
+    parteEntera \longrightarrow digitoPositivo \; digito*\\
+    parteDecimal \longrightarrow (digito* \; digitoPositivo)|0\\
     parteExponencial \longrightarrow (e|E)[\backslash{+}|-]parteEntera\\
 \end{math}
 
@@ -45,7 +45,7 @@
     literalBooleano \longrightarrow \textbf{true}|\textbf{false}\\
     literalEntero \longrightarrow [\backslash{+}|-]parteEntera\\
     literalReal \longrightarrow [\backslash{+}|-]parteEntera(.parteDecimal|parteExponencial|.parteDecimal parteExponencial)\\
-    literalCadena \longrightarrow \textbf{literalCadena}\\
+    literalCadena\footnote{Definimos $\alpha$ como cualquier caracter perteneciente al código ASCII.} \longrightarrow ``\;(\alpha|separador)*"\\
     identificador \longrightarrow (\_|letra)(letra|digito|\_)*\\
     operadorSuma \longrightarrow \backslash{+}\\
     operadorResta \longrightarrow \; -\\
@@ -63,13 +63,13 @@
     puntoYComa \longrightarrow \; ;\\
     arroba \longrightarrow \; @\\
     coma \longrightarrow \; ,\\
-    indireccion \longrightarrow \; \hat{}\\
+    indireccion \longrightarrow \; \backslash{\hat{}}\\
     final \longrightarrow \&\&\\
     porReferencia \longrightarrow \&\\
-    corcheteAp \longrightarrow \; \{\\
-    corcheteCi \longrightarrow \; \}\\
-    corcheteTamAp \longrightarrow \; \[\\
-    corcheteTamCi \longrightarrow \; \]\\
+    llaveAp \longrightarrow \; \{\\
+    llaveCi \longrightarrow \; \}\\
+    corcheteAp \longrightarrow \; [\\
+    corcheteCi \longrightarrow \; ]\\
     arroba \longrightarrow \; @\\
 
 \end{math}
