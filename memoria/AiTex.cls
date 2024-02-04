@@ -219,7 +219,7 @@ Esta plantilla se crea para facilitar el proceso de elaborar apuntes\\\\
 \newcommand{\chapterA}[1]{
     \chapter{#1}
     \vspace{-0.5ex}%
-    \noindent \rule{\textwidth}{0.3pt}
+    \rule{\textwidth}{0.5pt}
 }
 
 \newcommand{\chapterANonNumber}[1]{
