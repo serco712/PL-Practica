@@ -93,6 +93,8 @@ public class AnalizadorLexicoTiny0 {
            case REC_DIV: return unidadDiv();              
            case REC_PAP: return unidadPAp();
            case REC_PCI: return unidadPCi();
+           case REC_LLAP: return unidadLlaveAp();
+           case REC_LLCI: return unidadLlaveCi();
            case REC_ASIG: 
         	   if (hayIgual()) transita(Estado.REC_IGUAL);
         	   else return unidadAsig();
