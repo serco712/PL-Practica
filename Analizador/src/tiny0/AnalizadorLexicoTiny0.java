@@ -221,8 +221,9 @@ public class AnalizadorLexicoTiny0 {
    private UnidadLexica unidadId() {
      switch(lex.toString()) {
          case "true":
+         	return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.TRUE);
          case "false":  
-            return unidadLitBool();
+         	return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.FALSE);
          case "and":
         	return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.AND);
          case "or":
@@ -238,9 +239,6 @@ public class AnalizadorLexicoTiny0 {
          default:    
             return new UnidadLexicaMultivaluada(filaInicio,columnaInicio,ClaseLexica.IDEN,lex.toString());     
       }
-   }  
-   private UnidadLexica unidadLitBool() {
-     return new UnidadLexicaMultivaluada(filaInicio,columnaInicio,ClaseLexica.LIT_BOOL,lex.toString());     
    }   
    private UnidadLexica unidadLitEnt() {
      return new UnidadLexicaMultivaluada(filaInicio,columnaInicio,ClaseLexica.LIT_ENT,lex.toString());     
