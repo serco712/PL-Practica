@@ -18,7 +18,7 @@ public class AnalizadorLexicoTiny0 {
    
    private static enum Estado {
     INICIO, REC_MAYOR, REC_MAYOR_IGUAL, REC_MENOR, REC_MENOR_IGUAL, REC_1DISTINTO, REC_DISTINTO, REC_ASIG, REC_IGUAL,
-    REC_COMA, REC_PUNTO_COMA, REC_PCI, REC_PAP, REC_DIV, REC_MUL, REC_RESTA, REC_SUMA, REC_BOOL, REC_0, REC_ENT,
+    REC_COMA, REC_PUNTO_COMA, REC_PCI, REC_PAP, REC_LLCI, REC_LLAP, REC_DIV, REC_MUL, REC_RESTA, REC_SUMA, REC_BOOL, REC_0, REC_ENT,
     REC_PUNTO_REAL, REC_REAL, REC_0REAL, REC_EXP1REAL, REC_EXP2REAL, REC_EXP3REAL, REC_ID, REC_1COM, REC_COM, REC_EVAL,
     REC_1FIN, REC_FIN, REC_EOF
    }
@@ -50,6 +50,8 @@ public class AnalizadorLexicoTiny0 {
               else if (hayDiv()) transita(Estado.REC_DIV);
               else if (hayPAp()) transita(Estado.REC_PAP);
               else if (hayPCierre()) transita(Estado.REC_PCI);
+              else if (hayLlaveAp()) transita(Estado.REC_LLAP);
+              else if (hayLlaveCierre()) transita(Estado.REC_LLCI);
               else if (hayIgual()) transita(Estado.REC_ASIG);
               else if (hayComa()) transita(Estado.REC_COMA);
               else if (hayPuntoComa()) transita(Estado.REC_PUNTO_COMA);
@@ -204,6 +206,8 @@ public class AnalizadorLexicoTiny0 {
    private boolean hayDiv() {return sigCar == '/';}
    private boolean hayPAp() {return sigCar == '(';}
    private boolean hayPCierre() {return sigCar == ')';}
+   private boolean hayLlaveAp() {return sigCar == '{';}
+   private boolean hayLlaveCierre() {return sigCar == '}';}
    private boolean hayIgual() {return sigCar == '=';}
    private boolean hayMenor() {return sigCar == '<';}
    private boolean hayMayor() {return sigCar == '>';}
@@ -276,7 +280,13 @@ public class AnalizadorLexicoTiny0 {
    }    
    private UnidadLexica unidadPCi() {
      return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.PCIERRE);     
-   }    
+   }  
+   private UnidadLexica unidadLlaveAp() {
+	     return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.LLAVE_AP);     
+	   }    
+   private UnidadLexica unidadLlaveCi() {
+     return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.LLAVE_CIERRE);     
+   }  
    private UnidadLexica unidadPComa() {
      return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.PCOMA);     
    }    
