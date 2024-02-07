@@ -18,9 +18,9 @@ public class AnalizadorLexicoTiny0 {
    
    private static enum Estado {
     INICIO, REC_MAYOR, REC_MAYOR_IGUAL, REC_MENOR, REC_MENOR_IGUAL, REC_1DISTINTO, REC_DISTINTO, REC_ASIG, REC_IGUAL,
-    REC_COMA, REC_PUNTO_COMA, REC_PCI, REC_PAP, REC_LLCI, REC_LLAP, REC_DIV, REC_MUL, REC_RESTA, REC_SUMA, REC_BOOL, REC_0, REC_ENT,
+    REC_COMA, REC_PUNTO_COMA, REC_PCI, REC_PAP, REC_LLCI, REC_LLAP, REC_DIV, REC_MUL, REC_RESTA, REC_SUMA, REC_0, REC_ENT,
     REC_PUNTO_REAL, REC_REAL, REC_0REAL, REC_EXP1REAL, REC_EXP2REAL, REC_EXP3REAL, REC_ID, REC_1COM, REC_COM, REC_EVAL,
-    REC_1FIN, REC_FIN, REC_EOF
+    REC_1FIN, REC_FIN, REC_EOF, REC_EXP0
    }
 
    private Estado estado;
@@ -77,6 +77,7 @@ public class AnalizadorLexicoTiny0 {
                break;
            case REC_0:
                if (hayPunto()) transita(Estado.REC_PUNTO_REAL);
+               else if (hayExponencial()) transita(Estado.REC_EXP1REAL);
                else return unidadLitEnt();
                break;
            case REC_SUMA:
@@ -100,7 +101,6 @@ public class AnalizadorLexicoTiny0 {
         	   else return unidadAsig();
         	   break;
            case REC_IGUAL: return unidadIgual();
-        	   
            case REC_COMA: return unidadComa();
            case REC_PUNTO_COMA: return unidadPComa();
            case REC_1COM: 
@@ -151,17 +151,21 @@ public class AnalizadorLexicoTiny0 {
            case REC_EXP1REAL:
         	   if (haySuma() || hayResta()) transita(Estado.REC_EXP2REAL);
         	   else if (hayDigitoPos()) transita(Estado.REC_EXP3REAL);
+        	   else if (hayCero()) transita(Estado.REC_EXP0);
         	   else error();
         	   break;
            case REC_EXP2REAL:
         	   if (hayDigitoPos()) transita(Estado.REC_EXP3REAL);
+        	   else if (hayCero()) transita(Estado.REC_EXP0);
         	   else error();
         	   break;
            case REC_EXP3REAL:
         	   if (hayDigito()) transita(Estado.REC_EXP3REAL);
         	   else unidadLitReal();
         	   break;
+           case REC_EXP0: return unidadExp0();
            case REC_EOF: return unidadEof();
+           default: error();
          }
      }    
    }
@@ -309,7 +313,10 @@ public class AnalizadorLexicoTiny0 {
    }    
     private UnidadLexica unidadEval() {
      return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.ARROBA);     
-   }   
+   } 
+    private UnidadLexica unidadExp0() {
+     return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.EXP0);
+   }
    private void error() {
      System.err.println("("+filaActual+','+columnaActual+"):Caracter inexperado");  
      System.exit(1);
