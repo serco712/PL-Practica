@@ -5,11 +5,11 @@
     
 \begin{math}
     letra \longrightarrow \textbf A|\textbf B|...|\textbf Z|\textbf a|\textbf b|...|\textbf z\\
-    digitoPositivo \longrightarrow \textbf 1|...|\textbf 9\\
+    digitoPositivo \longrightarrow \textbf 1|...|\textbf 9|0\\
     digito \longrightarrow digitoPositivo|0\\
     parteEntera \longrightarrow digitoPositivo \; digito*\\
     parteDecimal \longrightarrow (digito* \; digitoPositivo)|0\\
-    parteExponencial \longrightarrow (e|E)[\backslash{+}|-]parteEntera\\
+    parteExponencial \longrightarrow (e|E)[\backslash{+}|-]?parteEntera\\
 \end{math}
 
 \subsection{Definiciones de cadenas ignorables.}
@@ -43,9 +43,9 @@
     type \longrightarrow \textbf{type}\\
     call \longrightarrow \textbf{call}\\
     literalBooleano \longrightarrow \textbf{true}|\textbf{false}\\
-    literalEntero \longrightarrow [\backslash{+}|-]parteEntera\\
-    literalReal \longrightarrow [\backslash{+}|-]parteEntera(.parteDecimal|parteExponencial|.parteDecimal parteExponencial)\\
-    literalCadena\footnote{Definimos $\alpha$ como cualquier caracter perteneciente al código ASCII.} \longrightarrow ``\;(\alpha|separador)*"\\
+    literalEntero \longrightarrow [\backslash{+}|-]?parteEntera\\
+    literalReal \longrightarrow [\backslash{+}|-]?parteEntera(.parteDecimal|parteExponencial|.parteDecimal parteExponencial)\\
+    literalCadena\longrightarrow "(^\")*"\\
     identificador \longrightarrow (\_|letra)(letra|digito|\_)*\\
     operadorSuma \longrightarrow \backslash{+}\\
     operadorResta \longrightarrow \; -\\
