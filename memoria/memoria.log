@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2023.10.9)  4 FEB 2024 21:47
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2023.10.9)  7 FEB 2024 20:23
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1350,15 +1350,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 1--2
 (./Secciones/Hito1/Tiny0/0Intro.tex) (./Secciones/Hito1/Tiny0/1Clases.tex
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 44.
+less on input line 42.
 
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 44.
+less on input line 42.
 
 
 Package fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
-less on input line 44.
+less on input line 42.
 
 [2.3
 
@@ -1376,31 +1376,31 @@ Underfull \hbox (badness 10000) in paragraph at lines 17--21
 
  []
 
-./Secciones/Hito1/Tiny0/2Especificacion.tex:49: Missing $ inserted.
+./Secciones/Hito1/Tiny0/2Especificacion.tex:52: Missing $ inserted.
 <inserted text> 
                 $
-l.49 
+l.52 
      
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 24--49
+Underfull \hbox (badness 10000) in paragraph at lines 24--52
 
  []
 
-LaTeX Info: Redefining \. on input line 49.
-LaTeX Info: Redefining \% on input line 49.
+LaTeX Info: Redefining \. on input line 52.
+LaTeX Info: Redefining \% on input line 52.
 [3.4]
 
-./Secciones/Hito1/Tiny0/2Especificacion.tex:50: LaTeX Error: Bad math environme
+./Secciones/Hito1/Tiny0/2Especificacion.tex:53: LaTeX Error: Bad math environme
 nt delimiter.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.50 \end{math}
+l.53 \end{math}
                
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1422,21 +1422,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 11--12
 (./Secciones/Hito1/Tiny/0Intro.tex) (./Secciones/Hito1/Tiny/1Clases.tex
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 45.
+less on input line 37.
 
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 45.
+less on input line 37.
 
 
 Package fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
-less on input line 45.
+less on input line 37.
 
 [5.6
 
 ]
-LaTeX Info: Redefining \. on input line 81.
-LaTeX Info: Redefining \% on input line 81.
+LaTeX Info: Redefining \. on input line 78.
+LaTeX Info: Redefining \% on input line 78.
  [6.7]) (./Secciones/Hito1/Tiny/2Especificacion.tex
 Underfull \hbox (badness 10000) in paragraph at lines 6--14
 
@@ -1515,11 +1515,11 @@ Package rerunfilecheck Info: File `memoria.out' has not changed.
 (rerunfilecheck)             Checksum: FDA895C464BBD093CC487A54D7EB5515;3982.
  ) 
 Here is how much of TeX's memory you used:
- 36001 strings out of 476191
- 681984 string characters out of 5812072
+ 35982 strings out of 476191
+ 681803 string characters out of 5812072
  1123323 words of memory out of 5000000
- 56063 multiletter control sequences out of 15000+600000
- 531272 words of font info for 64 fonts, out of 8000000 for 9000
+ 56053 multiletter control sequences out of 15000+600000
+ 523019 words of font info for 54 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  106i,11n,131p,1164b,32766s stack positions out of 5000i,500n,10000p,200000b,80000s
 
