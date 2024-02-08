@@ -756,12 +756,12 @@ class AnalizadorLexicoTiny {
             // fall through
           case 28: break;
           case 14:
-            { return ops.unidadDonde();
+            { //return ops.unidadDonde();
             }
             // fall through
           case 29: break;
           case 15:
-            { return ops.unidadEvalua();
+            { //return ops.unidadEvalua();
             }
             // fall through
           case 30: break;
