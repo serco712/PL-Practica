@@ -25,8 +25,8 @@ package tiny;
 letra = ([A-Z]|[a-z])
 digitoPositivo = [1-9]
 digito = ({digitoPositivo}|0)
-parteEntera = {digitoPositivo}{digito}*
-parteDecimal = {digito}* {digitoPositivo}
+parteEntera = ({digitoPositivo}{digito}*)|0
+parteDecimal = ({digito}* {digitoPositivo})|0
 parteExponencial = (e|E)[\+,\-]?{parteEntera}
 
 separador = [ \t\r\b\n]
@@ -106,8 +106,8 @@ punto = \.
 {nl} 					  {return ops.unidadNl();}
 {type} 					  {return ops.unidadType();}
 {call} 					  {return ops.unidadCall();}
-{literalEntero}			  {return ops.unidadlitEnt();}
 {literalReal}			  {return ops.unidadlitReal();}
+{literalEntero}			  {return ops.unidadlitEnt();}
 {literalCadena} 		  {return ops.unidadlitCad();}
 
 {separador}               {}
