@@ -6,55 +6,12 @@ public class ALexOperations {
 		this.alex = alex;   
 	}
 	public UnidadLexica unidadIden() {
-		switch(alex.lexema()) {
-		case "true":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.TRUE);
-		case "false":  
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.FALSE);
-		case "and":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.AND);
-		case "or":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.OR);
-		case "not":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.NOT);
-		case "null":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.NULL);
-		case "proc":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.PROC);
-		case "if":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.IF);
-		case "else":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.ELSE);
-		case "while":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.WHILE);
-		case "new":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.NEW);
-		case "delete":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.DELETE);
-		case "read":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.READ);
-		case "write":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.WRITE);
-		case "nl":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.NL);
-		case "type":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.TYPE);
-		case "call":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.CALL);
-		case "int":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.ENT);
-		case "real":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.REAL);
-		case "bool":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.BOOL);
-		case "string":
-			return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.STRING);
-		default:    
-			return new UnidadLexicaMultivaluada(alex.fila(), alex.columna(),ClaseLexica.IDEN,alex.lexema());      
-		}
+	
+		return new UnidadLexicaMultivaluada(alex.fila(), alex.columna(),ClaseLexica.IDEN,alex.lexema());      
+		
 	}
 	public UnidadLexica unidadBool() {
-		return new UnidadLexicaMultivaluada(alex.fila(), alex.columna(),ClaseLexica.LIT_BOOL,alex.lexema()); 
+		return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.BOOL); 
 	}
 	public UnidadLexica unidadlitEnt() {
 		return new UnidadLexicaMultivaluada(alex.fila(), alex.columna(),ClaseLexica.LIT_ENT,alex.lexema());     
@@ -63,7 +20,10 @@ public class ALexOperations {
 		return new UnidadLexicaMultivaluada(alex.fila(), alex.columna(),ClaseLexica.LIT_REAL,alex.lexema());     
 	}  
 	public UnidadLexica unidadInt() {
-		return new UnidadLexicaMultivaluada(alex.fila(), alex.columna(),ClaseLexica.ENT,alex.lexema());     
+		return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.ENT);     
+	}  
+	public UnidadLexica unidadReal() {
+		return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.REAL);     
 	}   
 	public UnidadLexica unidadlitCad() {
 		return new UnidadLexicaMultivaluada(alex.fila(), alex.columna(),ClaseLexica.LIT_CAD,alex.lexema());     
