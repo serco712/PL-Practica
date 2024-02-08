@@ -78,6 +78,7 @@ public class AnalizadorLexicoTiny0 {
            case REC_0:
                if (hayPunto()) transita(Estado.REC_PUNTO_REAL);
                else if (hayExponencial()) transita(Estado.REC_EXP1REAL);
+               else if (hayDigito()) error();
                else return unidadLitEnt();
                break;
            case REC_SUMA:
@@ -132,7 +133,7 @@ public class AnalizadorLexicoTiny0 {
         	   if (hayAmpersand()) transita(Estado.REC_FIN);
         	   else error();
         	   break;
-           case REC_FIN: return unidadEof();
+           case REC_FIN: return unidadFinal();
            case REC_PUNTO_REAL:
         	   if (hayDigito()) transita(Estado.REC_REAL);
         	   else error();
@@ -141,7 +142,7 @@ public class AnalizadorLexicoTiny0 {
         	   if (hayDigitoPos()) transita(Estado.REC_REAL);
         	   else if (hayCero()) transita(Estado.REC_0REAL);
         	   else if (hayExponencial()) transita(Estado.REC_EXP1REAL);
-        	   else unidadLitReal();
+        	   else return unidadLitReal();
         	   break;
            case REC_0REAL:
                if (hayDigitoPos()) transita(Estado.REC_REAL);
@@ -161,7 +162,7 @@ public class AnalizadorLexicoTiny0 {
         	   break;
            case REC_EXP3REAL:
         	   if (hayDigito()) transita(Estado.REC_EXP3REAL);
-        	   else unidadLitReal();
+        	   else return unidadLitReal();
         	   break;
            case REC_EXP0: return unidadExp0();
            case REC_EOF: return unidadEof();
@@ -315,15 +316,18 @@ public class AnalizadorLexicoTiny0 {
      return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.ARROBA);     
    } 
     private UnidadLexica unidadExp0() {
-     return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.EXP0);
+     return new UnidadLexicaMultivaluada(filaInicio,columnaInicio,ClaseLexica.EXP0,lex.toString());
    }
+    private UnidadLexica unidadFinal() {
+        return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.FINAL);     
+      }   
    private void error() {
      System.err.println("("+filaActual+','+columnaActual+"):Caracter inexperado");  
      System.exit(1);
    }
 
    public static void main(String arg[]) throws IOException {
-     Reader input = new InputStreamReader(new FileInputStream("input.txt"));
+     Reader input = new InputStreamReader(new FileInputStream("/Users/lijie/Documents/GitHub/PL-Practica/Analizador/bin/tiny0/input.txt"));
      AnalizadorLexicoTiny0 al = new AnalizadorLexicoTiny0(input);
      UnidadLexica unidad;
      do {
