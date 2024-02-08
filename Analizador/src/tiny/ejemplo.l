@@ -45,7 +45,6 @@ null = (n|N)(u|U)(l|L)(l|L)
 proc = (p|P)(r|R)(o|O)(c|C)
 if = (i|I)(f|F)
 else = (e|E)(l|L)(s|S)(e|E)
-%LI
 while = (w|W)(h|H)(i|I)(l|L)(e|E)
 struct = (s|S)(t|T)(r|R)(u|U)(c|C)(t|T)
 new = (n|N)(e|E)(w|W)
@@ -58,7 +57,6 @@ call = (c|C)(a|A)(l|L)(l|L)
 literalEntero = [\+,\-]?{parteEntera}
 literalReal = [\+,\-]?{parteEntera}(\.{parteDecimal}|{parteExponencial}|\.{parteDecimal}{parteExponencial})
 literalCadena = \"[^\"]\"
-%Laura
 identificador = (\_|{letra})({letra}|{digito}|\_)*
 operadorSuma = \+
 operadorResta = \-
@@ -71,7 +69,6 @@ operadorIgual = \=\=
 operadorMenIgual = \<\=
 operadorMayIgual = \>\=
 operadorAsig = \=
-%Rodrigo
 parentesisAp = \(
 parentesisCi = \)
 puntoYComa = \;
@@ -85,20 +82,63 @@ llaveCi = \}
 corcheteAp = \[
 corcheteCi = \]
 punto = \.
+
 %%
+{bool}  				  {return ops.unidadBool();}
+{int}  					  {return ops.unidadInt();}
+{real}  				  {return ops.unidadReal();}
+{string}   			      {return ops.unidadString();}
+{and}					  {return ops.unidadAnd();}
+{or} 					  {return ops.unidadOr();}
+{not}  					  {return ops.unidadNot();}
+{true} 					  {return ops.unidadTrue();}
+{false}  				  {return ops.unidadFalse();}
+{null} 					  {return ops.unidadNull();}
+{proc}					  {return ops.unidadProc();}
+{if}  					  {return ops.unidadIf();}
+{else} 					  {return ops.unidadElse();}
+
+
+{while}					  {return ops.unidadWhile();}
+{struct} 				  {return ops.unidadStruct();}
+{new}					  {return ops.unidadNew();}
+{delete} 				  {return ops.unidadDel();}
+{read} 					  {return ops.unidadRead();}
+{write}					  {return ops.unidadWrite();}
+{nl} 					  {return ops.unidadNl();}
+{type} 					  {return ops.unidadType();}
+{call} 					  {return ops.unidadCall();}
+{literalEntero}			  {return ops.unidadlitEnt();}
+{literalReal}			  {return ops.unidadlitReal();}
+{literalCadena} 		  {return ops.unidadlitCad();}
+
 {separador}               {}
 {comentario}              {}
-{evalua}                  {return ops.unidadEvalua();}
-{donde}                   {return ops.unidadDonde();}
-{identificador}           {return ops.unidadId();}
-{numeroEntero}            {return ops.unidadEnt();}
-{numeroReal}              {return ops.unidadReal();}
+
+{identificador}           {return ops.unidadIden();}
 {operadorSuma}            {return ops.unidadSuma();}
 {operadorResta}           {return ops.unidadResta();}
-{operadorMultiplicacion}  {return ops.unidadMul();}
-{operadorDivision}        {return ops.unidadDiv();}
-{parentesisApertura}      {return ops.unidadPAp();}
-{parentesisCierre}        {return ops.unidadPCierre();} 
-{igual}                   {return ops.unidadIgual();} 
+{operadorMul}             {return ops.unidadMult();}
+{operadorDiv}             {return ops.unidadDiv();}
+{operadorMod}             {return ops.unidadMod();}
+{operadorMenor}           {return ops.unidadMenor();}
+{operadorMayor}           {return ops.unidadMayor();}
+{operadorIgual}           {return ops.unidadIgual();}
+{operadorMenIgual}        {return ops.unidadMenIgual();}
+{operadorMayIgual}        {return ops.unidadMayIgual();}
+{operadorAsig}            {return ops.unidadAsig();}
+
+{parentesisAp}            {return ops.unidadPAp();}
+{parentesisCierre}        {return ops.unidadPCi();} 
+{puntoYComa}              {return ops.unidadPuntoYComa();} 
+{arroba}                  {return ops.unidadArroba();} 
 {coma}                    {return ops.unidadComa();}
+{indireccion}             {return ops.unidadIndireccion();}
+{final}                   {return ops.unidadFinal();}
+{porReferencia}           {return ops.unidadReferencia();}
+{llaveAp}                 {return ops.unidadLlaveAp();}
+{llaveCi}                 {return ops.unidadLlaveCi();}
+{corcheteAp}              {return ops.unidadCorcheteAp();}
+{corcheteCi}              {return ops.unidadCorcheteCi();}
+{punto}                   {return ops.unidadPunto();}
 [^]                       {ops.error();}  
