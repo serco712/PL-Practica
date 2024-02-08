@@ -97,8 +97,6 @@ punto = \.
 {proc}					  {return ops.unidadProc();}
 {if}  					  {return ops.unidadIf();}
 {else} 					  {return ops.unidadElse();}
-
-
 {while}					  {return ops.unidadWhile();}
 {struct} 				  {return ops.unidadStruct();}
 {new}					  {return ops.unidadNew();}
@@ -127,9 +125,8 @@ punto = \.
 {operadorMenIgual}        {return ops.unidadMenIgual();}
 {operadorMayIgual}        {return ops.unidadMayIgual();}
 {operadorAsig}            {return ops.unidadAsig();}
-
 {parentesisAp}            {return ops.unidadPAp();}
-{parentesisCierre}        {return ops.unidadPCi();} 
+{parentesisCi}        {return ops.unidadPCi();} 
 {puntoYComa}              {return ops.unidadPuntoYComa();} 
 {arroba}                  {return ops.unidadArroba();} 
 {coma}                    {return ops.unidadComa();}
