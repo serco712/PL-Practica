@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2023.10.9)  7 FEB 2024 20:23
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2023.10.9)  8 FEB 2024 21:08
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1376,31 +1376,31 @@ Underfull \hbox (badness 10000) in paragraph at lines 17--21
 
  []
 
-./Secciones/Hito1/Tiny0/2Especificacion.tex:52: Missing $ inserted.
+./Secciones/Hito1/Tiny0/2Especificacion.tex:53: Missing $ inserted.
 <inserted text> 
                 $
-l.52 
+l.53 
      
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 24--52
+Underfull \hbox (badness 10000) in paragraph at lines 24--53
 
  []
 
-LaTeX Info: Redefining \. on input line 52.
-LaTeX Info: Redefining \% on input line 52.
+LaTeX Info: Redefining \. on input line 53.
+LaTeX Info: Redefining \% on input line 53.
 [3.4]
 
-./Secciones/Hito1/Tiny0/2Especificacion.tex:53: LaTeX Error: Bad math environme
+./Secciones/Hito1/Tiny0/2Especificacion.tex:54: LaTeX Error: Bad math environme
 nt delimiter.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.53 \end{math}
+l.54 \end{math}
                
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
