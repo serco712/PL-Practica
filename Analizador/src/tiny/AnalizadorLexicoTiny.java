@@ -736,7 +736,7 @@ class AnalizadorLexicoTiny {
             // fall through
           case 24: break;
           case 10:
-            { return ops.unidadEnt();
+            { return ops.unidadLitEnt();
             }
             // fall through
           case 25: break;
@@ -751,7 +751,7 @@ class AnalizadorLexicoTiny {
             // fall through
           case 27: break;
           case 13:
-            { return ops.unidadReal();
+            { return ops.unidadLitReal();
             }
             // fall through
           case 28: break;
