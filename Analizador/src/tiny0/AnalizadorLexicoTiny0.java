@@ -6,6 +6,12 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 
 public class AnalizadorLexicoTiny0 {
+	
+   public static class ECaracterInesperado extends RuntimeException {
+       public ECaracterInesperado(String msg) {
+           super(msg);
+       }
+   }; 
 
    private Reader input;
    private StringBuffer lex;
@@ -322,8 +328,12 @@ public class AnalizadorLexicoTiny0 {
         return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.FINAL);     
       }   
    private void error() {
-     System.err.println("("+filaActual+','+columnaActual+"):Caracter inexperado");  
-     System.exit(1);
+	   int curCar = sigCar;
+	     try{
+	       sigCar();
+	     }
+	     catch(IOException e) {}
+	     throw new ECaracterInesperado("("+filaActual+','+columnaActual+"):Caracter inexperado:"+(char)curCar);    
    }
 
    public static void main(String arg[]) throws IOException {
