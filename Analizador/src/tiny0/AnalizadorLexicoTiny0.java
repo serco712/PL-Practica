@@ -337,7 +337,7 @@ public class AnalizadorLexicoTiny0 {
    }
 
    public static void main(String arg[]) throws IOException {
-     Reader input = new InputStreamReader(new FileInputStream("/Users/lijie/Documents/GitHub/PL-Practica/Analizador/bin/tiny0/input.txt"));
+     Reader input = new InputStreamReader(new FileInputStream(arg[0]));
      AnalizadorLexicoTiny0 al = new AnalizadorLexicoTiny0(input);
      UnidadLexica unidad;
      do {
