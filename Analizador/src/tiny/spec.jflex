@@ -25,8 +25,8 @@ package tiny;
 letra = ([A-Z]|[a-z])
 digitoPositivo = [1-9]
 digito = ({digitoPositivo}|0)
-parteEntera = {digitoPositivo}{digito}*
-parteDecimal = {digito}* {digitoPositivo}
+parteEntera = ({digitoPositivo}{digito}*)|0
+parteDecimal = ({digito}* {digitoPositivo})|0
 parteExponencial = (e|E)[\+,\-]?{parteEntera}
 
 separador = [ \t\r\b\n]
@@ -54,8 +54,8 @@ write = (w|W)(r|R)(i|I)(t|T)(e|E)
 nl = (n|N)(l|L)
 type = (t|T)(y|Y)(p|P)(e|E)
 call = (c|C)(a|A)(l|L)(l|L)
+literalReal = {literalEntero}({punto}{parteDecimal}|{parteExponencial}|{punto}{parteDecimal}{parteExponencial})
 literalEntero = [\+,\-]?{parteEntera}
-literalReal = [\+,\-]?{parteEntera}(\.{parteDecimal}|{parteExponencial}|\.{parteDecimal}{parteExponencial})
 literalCadena = \"[^\"]\"
 identificador = (\_|{letra})({letra}|{digito}|\_)*
 operadorSuma = \+
@@ -97,8 +97,6 @@ punto = \.
 {proc}					  {return ops.unidadProc();}
 {if}  					  {return ops.unidadIf();}
 {else} 					  {return ops.unidadElse();}
-
-
 {while}					  {return ops.unidadWhile();}
 {struct} 				  {return ops.unidadStruct();}
 {new}					  {return ops.unidadNew();}
@@ -108,8 +106,8 @@ punto = \.
 {nl} 					  {return ops.unidadNl();}
 {type} 					  {return ops.unidadType();}
 {call} 					  {return ops.unidadCall();}
-{literalEntero}			  {return ops.unidadlitEnt();}
 {literalReal}			  {return ops.unidadlitReal();}
+{literalEntero}			  {return ops.unidadlitEnt();}
 {literalCadena} 		  {return ops.unidadlitCad();}
 
 {separador}               {}
@@ -125,11 +123,10 @@ punto = \.
 {operadorMayor}           {return ops.unidadMayor();}
 {operadorIgual}           {return ops.unidadIgual();}
 {operadorMenIgual}        {return ops.unidadMenIgual();}
-{operadorMayIgual}        {return ops.unidadMayIgual
-{operadorAsig}            = \=
-
+{operadorMayIgual}        {return ops.unidadMayIgual();}
+{operadorAsig}            {return ops.unidadAsig();}
 {parentesisAp}            {return ops.unidadPAp();}
-{parentesisCierre}        {return ops.unidadPCi();} 
+{parentesisCi}        {return ops.unidadPCi();} 
 {puntoYComa}              {return ops.unidadPuntoYComa();} 
 {arroba}                  {return ops.unidadArroba();} 
 {coma}                    {return ops.unidadComa();}
