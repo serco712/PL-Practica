@@ -1,6 +1,13 @@
 package tiny;
 
 public class ALexOperations {
+	
+	public static class ECaracterInesperado extends RuntimeException {
+	      public ECaracterInesperado(String msg) {
+	          super(msg);
+	      }
+	}  
+	
 	private AnalizadorLexicoTiny alex;
 	public ALexOperations(AnalizadorLexicoTiny alex) {
 		this.alex = alex;   

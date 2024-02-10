@@ -1,12 +1,13 @@
-import alex.ALexOperations.ECaracterInesperado;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import alex.AnalizadorLexicoTiny;
-import alex.ClaseLexica;
-import alex.UnidadLexica;
+
+import tiny.ALexOperations.ECaracterInesperado;
+import tiny.AnalizadorLexicoTiny;
+import tiny.ClaseLexica;
+import tiny.UnidadLexica;
 
 public class DomJudge {
 	private static void imprime(UnidadLexica unidad) {
