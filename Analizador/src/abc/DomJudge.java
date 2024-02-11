@@ -1,4 +1,4 @@
-import java.io.FileInputStream;
+package abc;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,10 +10,7 @@ import tiny0.UnidadLexica;
 
 public class DomJudge {
 	private static void imprime(UnidadLexica unidad) {
-		switch(unidad.clase()) {
-		   case IDEN: case ENT: case REAL: System.out.println(unidad.lexema()); break;
-               default: System.out.println(unidad.clase().getImage());
-		}
+		System.out.println(unidad.clase().getImage());
 	}	
 
    public static void main(String[] args) throws FileNotFoundException, IOException {
@@ -23,7 +20,7 @@ public class DomJudge {
      do {
        try {  
          unidad = al.sigToken();
-	 imprime(unidad);
+         imprime(unidad);
        }
        catch(ECaracterInesperado e) {
               System.out.println("ERROR");

@@ -1,8 +1,6 @@
 package tiny0;
 
-import java.io.FileInputStream;
 import java.io.Reader;
-import java.io.InputStreamReader;
 import java.io.IOException;
 
 public class AnalizadorLexicoTiny0 {
@@ -236,26 +234,24 @@ public class AnalizadorLexicoTiny0 {
    private boolean hayExponencial() {return sigCar == 'e' || sigCar == 'E';}
    private boolean hayAmpersand() {return sigCar == '&';}
    private UnidadLexica unidadId() {
-     switch(lex.toString()) {
-         case "true":
-         	return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.TRUE);
-         case "false":  
-         	return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.FALSE);
-         case "and":
-        	return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.AND);
-         case "or":
-        	return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.OR);
-         case "not":
-        	return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.NOT);
-         case "int":
-        	return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.ENT);
-         case "real":
-        	return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.REAL);
-         case "bool":
-         	return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.BOOL);
-         default:    
-            return new UnidadLexicaMultivaluada(filaInicio,columnaInicio,ClaseLexica.IDEN,lex.toString());     
-      }
+      if (lex.toString().equalsIgnoreCase("true"))
+        return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.TRUE);
+      else if (lex.toString().equalsIgnoreCase("false"))  
+        return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.FALSE);
+      else if (lex.toString().equalsIgnoreCase("and"))
+        return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.AND);
+      else if (lex.toString().equalsIgnoreCase("or"))
+        return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.OR);
+      else if (lex.toString().equalsIgnoreCase("not"))
+        return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.NOT);
+      else if (lex.toString().equalsIgnoreCase("int"))
+        return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.ENT);
+      else if (lex.toString().equalsIgnoreCase("real"))
+        return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.REAL);
+      else if (lex.toString().equalsIgnoreCase("bool"))
+        return new UnidadLexicaUnivaluada(filaInicio,columnaInicio,ClaseLexica.BOOL);
+      else   
+        return new UnidadLexicaMultivaluada(filaInicio,columnaInicio,ClaseLexica.IDEN,lex.toString());     
    }   
    private UnidadLexica unidadLitEnt() {
      return new UnidadLexicaMultivaluada(filaInicio,columnaInicio,ClaseLexica.LIT_ENT,lex.toString());     
@@ -336,14 +332,14 @@ public class AnalizadorLexicoTiny0 {
 	     throw new ECaracterInesperado("("+filaActual+','+columnaActual+"):Caracter inexperado:"+(char)curCar);    
    }
 
-   public static void main(String arg[]) throws IOException {
-     Reader input = new InputStreamReader(new FileInputStream(arg[0]));
-     AnalizadorLexicoTiny0 al = new AnalizadorLexicoTiny0(input);
-     UnidadLexica unidad;
-     do {
-       unidad = al.sigToken();
-       System.out.println(unidad);
-     }
-     while (unidad.clase() != ClaseLexica.EOF);
-    } 
+  //  public static void main(String arg[]) throws IOException {
+  //    Reader input = new InputStreamReader(new FileInputStream(arg[0]));
+  //    AnalizadorLexicoTiny0 al = new AnalizadorLexicoTiny0(input);
+  //    UnidadLexica unidad;
+  //    do {
+  //      unidad = al.sigToken();
+  //      System.out.println(unidad);
+  //    }
+  //    while (unidad.clase() != ClaseLexica.EOF);
+  //   } 
 }
