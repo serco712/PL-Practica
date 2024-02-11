@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1707423939 "/home/sergio/Desktop/Estudios/UCM/4º/PL/PL-Practica/memoria/memoria.tex" "memoria.pdf" "memoria" 1707423939
+["pdflatex"] 1707677171 "/home/sergio/Desktop/Estudios/UCM/4º/PL/PL-Practica/memoria/memoria.tex" "memoria.pdf" "memoria" 1707677171
   "/etc/texmf/web2c/texmf.cnf" 1696887252 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/sergio/Desktop/Estudios/UCM/4º/PL/PL-Practica/memoria/memoria.tex" 1707077525 1380 f8da82deaf8355249623ac62da02ffc6 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -254,16 +254,16 @@
   "Secciones/1Lexico.tex" 1706795646 353 864a0d563950a17ceb6e483f15bc4b08 ""
   "Secciones/Hito1/Tiny/0Intro.tex" 1707074774 275 0c0b41ff25ff9859cf7a61ed606288b0 ""
   "Secciones/Hito1/Tiny/1Clases.tex" 1707333089 7215 0c97c965f423af759814f9c2a4a89d03 ""
-  "Secciones/Hito1/Tiny/2Especificacion.tex" 1707423937 3146 3d63db51425f74f3bf1adff5ac0af6a0 ""
+  "Secciones/Hito1/Tiny/2Especificacion.tex" 1707677168 3158 244a6802c581fb7937e3fbd3d940b0d5 ""
   "Secciones/Hito1/Tiny0/0Intro.tex" 1707073962 304 f1ce6e928ed854ca179bb152bf66dd30 ""
   "Secciones/Hito1/Tiny0/1Clases.tex" 1707422726 4763 8d81d8e7486a7239494c6f949cc59ce3 ""
-  "Secciones/Hito1/Tiny0/2Especificacion.tex" 1707423239 2154 528429f54a52a54d490d9ace393fbfd4 ""
+  "Secciones/Hito1/Tiny0/2Especificacion.tex" 1707677142 2166 8a7d48351a2cc43788335d06f6fb69b8 ""
   "Secciones/Hito1/Tiny0/3Diagrama.tex" 1707077669 593 bcdff0f79f3c95cb0c7b326ea72cb37e ""
   "Secciones/Hito1/Tiny0/diagrama_afd.jpg" 1707333114 138016 55fc7b89ab5d9b49b68b7babeca369ff ""
   "glossary.aux" 0 -1 0 "pdflatex"
   "glossary.tex" 1696944159 0 d41d8cd98f00b204e9800998ecf8427e ""
   "logoComplutense.png" 1696944159 645493 33494c3511b6d6c38369d75dce9640f5 ""
-  "memoria.aux" 1707423939 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "memoria.aux" 1707677171 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
   "memoria.out" 0 -1 0 "pdflatex"
   "memoria.tex" 1707077525 1380 f8da82deaf8355249623ac62da02ffc6 ""
   (generated)
