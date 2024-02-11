@@ -9,9 +9,6 @@ import tiny0.ClaseLexica;
 import tiny0.UnidadLexica;
 
 public class DomJudge {
-	private static void imprime(UnidadLexica unidad) {
-		System.out.println(unidad.clase().getImage());
-	}	
 
    public static void main(String[] args) throws FileNotFoundException, IOException {
      Reader input  = new InputStreamReader(System.in);
@@ -20,7 +17,7 @@ public class DomJudge {
      do {
        try {  
          unidad = al.sigToken();
-         imprime(unidad);
+         System.out.println(unidad.clase().getImage());
        }
        catch(ECaracterInesperado e) {
               System.out.println("ERROR");
