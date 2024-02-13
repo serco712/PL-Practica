@@ -2,10 +2,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import alex.AnalizadorLexicoTiny;
-import alex.AnalizadorLexicoTiny.ECaracterInesperado;
-import alex.ClaseLexica;
-import alex.UnidadLexica;
+import alextiny.ALexOperations;
+import alextiny.ALexOperations.ECaracterInesperado;
+import alextiny.AnalizadorLexicoTiny;
+import alextiny.ClaseLexica;
+import alextiny.UnidadLexica;
 
 public class DomJudge {
 
@@ -22,7 +23,7 @@ public class DomJudge {
      UnidadLexica unidad = null;
      do {
        try {  
-         unidad = al.sigToken();
+         unidad = al.yylex();
          imprime(unidad);
        }
        catch(ECaracterInesperado e) {

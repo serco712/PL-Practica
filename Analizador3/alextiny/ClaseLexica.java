@@ -1,4 +1,4 @@
-package tiny;
+package alextiny;
 
 public enum ClaseLexica {
 	BOOL("<bool>"),ENT("<int>"),REAL("<real>"),STRING("<string>"),AND("<and>"),OR("<or>"),NOT("<not>"),LIT_ENT,LIT_REAL,LIT_CAD,IDEN,SUMA("+"),

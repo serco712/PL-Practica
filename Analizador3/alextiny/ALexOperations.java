@@ -1,4 +1,4 @@
-package tiny;
+package alextiny;
 
 public class ALexOperations {
 	
@@ -13,9 +13,7 @@ public class ALexOperations {
 		this.alex = alex;   
 	}
 	public UnidadLexica unidadIden() {
-	
 		return new UnidadLexicaMultivaluada(alex.fila(), alex.columna(),ClaseLexica.IDEN,alex.lexema());      
-		
 	}
 	public UnidadLexica unidadBool() {
 		return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.BOOL); 
@@ -174,6 +172,6 @@ public class ALexOperations {
 		return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.FIN); 
 	}
 	public void error() {
-		System.err.println("***"+alex.fila()+" Caracter inexperado: "+alex.lexema());
+		throw new ECaracterInesperado(alex.lexema());
 	}
 }
