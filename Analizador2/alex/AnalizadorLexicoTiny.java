@@ -208,7 +208,7 @@ public class AnalizadorLexicoTiny {
    
    private boolean haySubrayado() { return sigCar == '_'; }
    private boolean hayLetra() {return sigCar >= 'a' && sigCar <= 'z' ||
-                                      sigCar >= 'A' && sigCar <= 'z';}
+                                      sigCar >= 'A' && sigCar <= 'Z';}
    private boolean iniIden() {return hayLetra() || haySubrayado();}
    private boolean hayDigitoPos() {return sigCar >= '1' && sigCar <= '9';}
    private boolean hayCero() {return sigCar == '0';}
