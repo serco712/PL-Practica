@@ -1,3 +1,4 @@
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -18,7 +19,7 @@ public class DomJudge {
 	}
 
    public static void main(String[] args) throws FileNotFoundException, IOException {
-     Reader input  = new InputStreamReader(System.in);
+     Reader input  = new InputStreamReader(new FileInputStream("/Users/lijie/Documents/GitHub/TFG-2324-Sivaria/PL-Practica/AnalizadorLexico/implementacion_jflex/pruebas_tiny/ej1.txt"));
      AnalizadorLexicoTiny al = new AnalizadorLexicoTiny(input);
      UnidadLexica unidad = null;
      do {
