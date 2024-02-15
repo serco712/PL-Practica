@@ -16,7 +16,7 @@
 
 \begin{math}
     separador \longrightarrow [\;\backslash{t}\backslash{r}\backslash{b}\backslash{n}]\\
-    comentario \longrightarrow \#\#(\;\hat{}\;\backslash{n})\\
+    comentario \longrightarrow \#\#[\;\hat{}\;(\backslash{n}|\textbf{EOF})]*\\
 \end{math}
 
 \subsection{Definiciones léxicas.}
@@ -45,7 +45,7 @@
     type \longrightarrow (t|T)(y|Y)(p|P)(e|E)\\
     call \longrightarrow (c|C)(a|A)(l|L)(l|L)\\
     literalEntero \longrightarrow [\backslash{+}|-]?parteEntera\\
-    literalReal \longrightarrow [\backslash{+}|-]?parteEntera(.parteDecimal|parteExponencial|.parteDecimal parteExponencial)\\
+    literalReal \longrightarrow [\backslash{+}|-]?parteEntera(.parteDecimal|parteExponencial|.parteDecimal\;parteExponencial)\\
     literalCadena\longrightarrow ``[\;\hat{}\;``]*"\\
     identificador \longrightarrow (\_|letra)(letra|digito|\_)*\\
     operadorSuma \longrightarrow \backslash{+}\\
