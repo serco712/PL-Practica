@@ -94,7 +94,7 @@ public class ALexOperations {
 		return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.LLCI); 
 	}
 	public UnidadLexica unidadExp0() {
-		return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.EXP0); 
+		return new UnidadLexicaMultivaluada(alex.fila(), alex.columna(),ClaseLexica.LIT_REAL, alex.lexema()); 
 	}
 	public UnidadLexica unidadTrue() {
 		return new UnidadLexicaUnivaluada(alex.fila(), alex.columna(),ClaseLexica.TRUE); 

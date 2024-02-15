@@ -12,7 +12,7 @@ public class DomJudge {
 
   private static void imprime(UnidadLexica unidad) {
 		switch(unidad.clase()) {
-		   case IDEN: case LIT_ENT: case LIT_REAL: System.out.println(unidad.lexema()); break;
+		   case IDEN: case LIT_ENT: case LIT_REAL: case LIT_CAD: System.out.println(unidad.lexema()); break;
                default: System.out.println(unidad.clase().getImage());
 		}
 	}
