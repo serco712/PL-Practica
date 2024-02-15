@@ -66,6 +66,7 @@ operadorMod = \%
 operadorMenor = \<
 operadorMayor = \>
 operadorIgual = \=\=
+operadorDistinto = \!\=
 operadorMenIgual = \<\=
 operadorMayIgual = \>\=
 operadorAsig = \=
@@ -122,6 +123,7 @@ punto = \.
 {operadorMenor}           {return ops.unidadMenor();}
 {operadorMayor}           {return ops.unidadMayor();}
 {operadorIgual}           {return ops.unidadIgual();}
+{operadorDistinto}        {return ops.unidadDistinto();}
 {operadorMenIgual}        {return ops.unidadMenIgual();}
 {operadorMayIgual}        {return ops.unidadMayIgual();}
 {operadorAsig}            {return ops.unidadAsig();}
