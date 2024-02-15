@@ -5,7 +5,7 @@ public enum ClaseLexica {
 	RESTA("-"),MUL("*"),DIV("/"),MOD("%"),MENOR("<"),MAYOR(">"),MEN_IGUAL("<="),MAY_IGUAL(">="),IGUAL("=="),
 	ASIG("="),PAP("("),PCI(")"),COMA(","),PCOMA(";"),EVAL("<eval>"),EOF("EOF"),DISTINTO("!="),TRUE("<true>"),
 	FALSE("<false>"),LLAP("{"),LLCI("}"),NULL("<null>"),PROC("<proc>"),IF("<if>"),ELSE("<else>"),WHILE("<while>"),
-	STRUCT("<struct>"),NEW("<new>"),DELETE("<delete>"),READ("<read>"),WRITE("<write>"),NL("NL"),TYPE("<type>"),
+	STRUCT("<struct>"),NEW("<new>"),DELETE("<delete>"),READ("<read>"),WRITE("<write>"),NL("<nl>"),TYPE("<type>"),
 	CALL("<call>"),INDIRECCION("^"),REFERENCIA("&"),CAP("["),CCI("]"),PUNTO("."),FIN("&&");
 	
 	private String image;
