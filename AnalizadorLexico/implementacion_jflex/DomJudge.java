@@ -3,7 +3,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import alextiny.ALexOperations;
 import alextiny.ALexOperations.ECaracterInesperado;
 import alextiny.AnalizadorLexicoTiny;
 import alextiny.ClaseLexica;
@@ -19,7 +18,7 @@ public class DomJudge {
 	}
 
    public static void main(String[] args) throws FileNotFoundException, IOException {
-     Reader input  = new InputStreamReader(new FileInputStream("/Users/lijie/Documents/GitHub/TFG-2324-Sivaria/PL-Practica/AnalizadorLexico/implementacion_jflex/pruebas_tiny/ej1.txt"));
+     Reader input  = new InputStreamReader(new FileInputStream("implementacion_jflex/pruebas_tiny/ej2.in"));
      AnalizadorLexicoTiny al = new AnalizadorLexicoTiny(input);
      UnidadLexica unidad = null;
      do {
