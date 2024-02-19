@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2023.10.9)  15 FEB 2024 11:10
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2023.10.9)  19 FEB 2024 09:32
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1196,7 +1196,7 @@ File: l3backend-xetex.def 2022-01-12 L3 backend support: XeTeX
 LaTeX Info: Redefining \. on input line 32.
 LaTeX Info: Redefining \% on input line 32.
  (./glossary.aux)
-(./Secciones/1Lexico.aux))
+(./Secciones/2Sintaxis.aux))
 \openout1 = `memoria.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
@@ -1338,27 +1338,26 @@ less on input line 25.
 \openout2 = `glossary.aux'.
 
  (./glossary.tex)
-\openout2 = `Secciones/1Lexico.aux'.
+\openout2 = `Secciones/2Sintaxis.aux'.
 
- (./Secciones/1Lexico.tex
+ (./Secciones/2Sintaxis.tex
 Capítulo 1.
 
 Underfull \hbox (badness 10000) in paragraph at lines 1--2
 
  []
 
-(./Secciones/Hito1/Tiny0/0Intro.tex) (./Secciones/Hito1/Tiny0/1Clases.tex
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 42.
+less on input line 4.
 
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 42.
+less on input line 4.
 
 
 Package fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
-less on input line 42.
+less on input line 4.
 
 [2.3
 
@@ -1366,103 +1365,28 @@ less on input line 42.
 
 
 
-]) (./Secciones/Hito1/Tiny0/2Especificacion.tex
-Underfull \hbox (badness 10000) in paragraph at lines 6--14
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 17--21
-
- []
-
-./Secciones/Hito1/Tiny0/2Especificacion.tex:53: Missing $ inserted.
-<inserted text> 
-                $
-l.53 
-     
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 24--53
-
- []
-
-LaTeX Info: Redefining \. on input line 53.
-LaTeX Info: Redefining \% on input line 53.
-[3.4]
-
-./Secciones/Hito1/Tiny0/2Especificacion.tex:54: LaTeX Error: Bad math environme
-nt delimiter.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.54 \end{math}
-               
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-) (./Secciones/Hito1/Tiny0/3Diagrama.tex
-File: Secciones/Hito1/Tiny0/diagrama_afd.jpg Graphic file (type bmp)
-<Secciones/Hito1/Tiny0/diagrama_afd.jpg>
-)
-LaTeX Info: Redefining \. on input line 11.
-LaTeX Info: Redefining \% on input line 11.
- [4.5]
+]
 Capítulo 2.
-
-Underfull \hbox (badness 10000) in paragraph at lines 11--12
+)
+Underfull \hbox (badness 10000) in paragraph at lines 4--39
 
  []
 
-(./Secciones/Hito1/Tiny/0Intro.tex) (./Secciones/Hito1/Tiny/1Clases.tex
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 37.
+less on input line 39.
 
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 37.
+less on input line 39.
 
 
 Package fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
-less on input line 37.
+less on input line 39.
 
-[5.6
+[3.4
 
-]
-LaTeX Info: Redefining \. on input line 78.
-LaTeX Info: Redefining \% on input line 78.
- [6.7]) (./Secciones/Hito1/Tiny/2Especificacion.tex
-Underfull \hbox (badness 10000) in paragraph at lines 6--14
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 17--21
-
- []
-
-)
-Underfull \hbox (badness 10000) in paragraph at lines 24--18
-$
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 24--18
-
- []
-
-LaTeX Info: Redefining \. on input line 18.
-LaTeX Info: Redefining \% on input line 18.
-[7.8])
-LaTeX Info: Redefining \. on input line 38.
-LaTeX Info: Redefining \% on input line 38.
- [8.9] (./memoria.lof
+] (./memoria.lof
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
 )
@@ -1487,17 +1411,17 @@ File: se-utf32be.def 2019/11/29 v1.12 stringenc: UTF-32BE
 )
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 52.
+less on input line 53.
 
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 52.
+less on input line 53.
 
 
 Package fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
-less on input line 52.
+less on input line 53.
 
-[9.10
+[4.5
 
 
 
@@ -1507,20 +1431,20 @@ r memoria.acn)...disabled (restricted).
 ] (./memoria.aux
 LaTeX Info: Redefining \. on input line 32.
 LaTeX Info: Redefining \% on input line 32.
- (./glossary.aux) (./Secciones/1Lexico.aux))
+ (./glossary.aux) (./Secciones/2Sintaxis.aux))
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `memoria.out' has not changed.
-(rerunfilecheck)             Checksum: FDA895C464BBD093CC487A54D7EB5515;3982.
+(rerunfilecheck)             Checksum: 34333F93FBE617687355D83C3A1C315E;285.
  ) 
 Here is how much of TeX's memory you used:
- 35982 strings out of 476191
- 681803 string characters out of 5812072
- 1123323 words of memory out of 5000000
- 56053 multiletter control sequences out of 15000+600000
- 523019 words of font info for 54 fonts, out of 8000000 for 9000
+ 35881 strings out of 476191
+ 679610 string characters out of 5812072
+ 1109119 words of memory out of 5000000
+ 55981 multiletter control sequences out of 15000+600000
+ 497216 words of font info for 44 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  106i,11n,131p,1164b,32766s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on memoria.pdf (10 pages).
+Output written on memoria.pdf (5 pages).
