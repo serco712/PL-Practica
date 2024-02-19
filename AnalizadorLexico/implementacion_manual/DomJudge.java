@@ -18,7 +18,7 @@ public class DomJudge {
 	}
 
    public static void main(String[] args) throws FileNotFoundException, IOException {
-     Reader input  = new InputStreamReader(new FileInputStream("implementacion_manual/pruebas_tiny_0/ej2.in"));
+     Reader input  = new InputStreamReader(System.in);
      AnalizadorLexicoTiny al = new AnalizadorLexicoTiny(input);
      UnidadLexica unidad = null;
      do {
