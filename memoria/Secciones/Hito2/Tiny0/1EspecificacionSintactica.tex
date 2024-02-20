@@ -1,0 +1,50 @@
+\section{Especificación sintáctica}
+
+\begin{math}
+    programa \longrightarrow bloque \\
+    bloque \longrightarrow \{\;declaraciones\;instrucciones\;\}\\
+    declaraciones \longrightarrow lista$-$declaraciones\;\&\& \\
+    declaraciones \longrightarrow \epsilon\\
+    lista-declaraciones \longrightarrow lista$-$declaraciones\;;\;declaracion\\
+    lista-declaraciones \longrightarrow declaracion\\
+    declaracion \longrightarrow tipo\;\textbf{identificador}\\
+    tipo \longrightarrow \textbf{bool}\\
+    tipo \longrightarrow \textbf{int}\\
+    tipo \longrightarrow \textbf{real}\\
+    instrucciones \longrightarrow lista$-$instrucciones\\
+    instrucciones \longrightarrow \epsilon\\
+    lista$-$instrucciones \longrightarrow lista$-$instrucciones\;;\;instruccion\\
+    lista$-$instrucciones \longrightarrow instruccion\\
+    instruccion \longrightarrow eval\\
+    eval \longrightarrow @\;expresion\\
+    expresion \longrightarrow \textbf{identificador} = E0\\
+    E0 \longrightarrow E1 = E0\\
+    E0 \longrightarrow E1\\
+    E1 \longrightarrow E1\;\;OP1\;\;E2\\
+    E1 \longrightarrow E2\\
+    E2 \longrightarrow E2 + E3\\
+    E2 \longrightarrow E3 - E3\\
+    E2 \longrightarrow E3\\
+    E3 \longrightarrow E3\;\;and\;\;E4\\
+    E3 \longrightarrow E4\;\;or\;\;E4\\
+    E3 \longrightarrow E4\\
+    E4 \longrightarrow E4\;\;OP4\;\;E5\\
+    E4 \longrightarrow E5\\
+    E5 \longrightarrow OP5\;\;E6\\
+    E5 \longrightarrow E6\\
+    E6 \longrightarrow E7\\
+    E7 \longrightarrow \textbf{true}\\
+    E7 \longrightarrow \textbf{false}\\
+    E7 \longrightarrow \textbf{literalEntero}\\
+    E7 \longrightarrow \textbf{literalReal}\\
+    E7 \longrightarrow (\;E0\;)\\
+    OP1 \longrightarrow \;<\\
+    OP1 \longrightarrow \;<=\\
+    OP1 \longrightarrow \;>\\
+    OP1 \longrightarrow \;>=\\
+    OP1 \longrightarrow \;==\\
+    OP1 \longrightarrow \;!=\\
+    OP4 \longrightarrow \;*\\
+    OP4 \longrightarrow \;/\\    
+
+\end{math}
