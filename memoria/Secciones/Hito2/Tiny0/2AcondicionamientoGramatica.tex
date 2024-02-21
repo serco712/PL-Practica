@@ -1,35 +1,41 @@
-\section{Especificación sintáctica}
+\section{Acondicionamiento de gramática}
 
 \begin{math}
     programa \longrightarrow bloque \\
     bloque \longrightarrow \{\;declaraciones\;instrucciones\;\}\\
     declaraciones \longrightarrow lista$-$declaraciones\;\&\& \\
     declaraciones \longrightarrow \epsilon\\
-    lista-declaraciones \longrightarrow lista$-$declaraciones\;;\;declaracion\\
-    lista-declaraciones \longrightarrow declaracion\\
+    lista$-$declaraciones \longrightarrow declaracion\;\; r$-$lista$-$declaraciones\\
+    r$-$lista$-$declaraciones \longrightarrow\;;\;declaracion\;\; r$-$lista$-$declaraciones\\
+    r$-$lista$-$declaraciones \longrightarrow \epsilon\\
     declaracion \longrightarrow tipo\;\textbf{identificador}\\
     tipo \longrightarrow \textbf{bool}\\
     tipo \longrightarrow \textbf{int}\\
     tipo \longrightarrow \textbf{real}\\
     instrucciones \longrightarrow lista$-$instrucciones\\
     instrucciones \longrightarrow \epsilon\\
-    lista$-$instrucciones \longrightarrow lista$-$instrucciones\;;\;instruccion\\
-    lista$-$instrucciones \longrightarrow instruccion\\
-    instruccion \longrightarrow eval\\
+    lista$-$instrucciones \longrightarrow instruccion\;\; r$-$lista$-$instrucciones\\
+    r$-$lista$-$instrucciones \longrightarrow\;;\;instruccion\;\;r$-$lista$-$instrucciones\\
+    r$-$lista$-$instrucciones \longrightarrow \epsilon\\
     eval \longrightarrow @\;expresion\\
     expresion \longrightarrow \textbf{identificador} = E0\\
-    E0 \longrightarrow E0 = E1\\
-    E0 \longrightarrow E1\\
-    E1 \longrightarrow E1\;\;OP1\;\;E2\\
-    E1 \longrightarrow E2\\
-    E2 \longrightarrow E2 + E3\\
-    E2 \longrightarrow E3 - E3\\
-    E2 \longrightarrow E3\\
-    E3 \longrightarrow E3\;\;and\;\;E4\\
-    E3 \longrightarrow E4\;\;or\;\;E4\\
-    E3 \longrightarrow E4\\
-    E4 \longrightarrow E4\;\;OP4\;\;E5\\
-    E4 \longrightarrow E5\\
+    E0 \longrightarrow E1\;\;RE0\\
+    RE0 \longrightarrow =\;\;E1\;\;RE0\\
+    RE0 \longrightarrow \epsilon\\
+    E1 \longrightarrow E2\;\;RE1\\
+    RE1 \longrightarrow OP1\;\;E2\;\;RE1\\
+    RE1 \longrightarrow \epsilon\\
+    E2 \longrightarrow E3\;\;-\;\;E3\;\;RE2\\
+    E2 \longrightarrow E3\;\;RE2\\
+    RE2 \longrightarrow +\;\;E3\;\;RE2\\
+    RE2 \longrightarrow \epsilon\\
+    E3 \longrightarrow E4\;\;or\;\;E4\;\;RE3\\
+    E3 \longrightarrow E4\;\;RE3\\
+    RE3 \longrightarrow \;\;and\;\; \\
+    RE3 \longrightarrow \epsilon\\
+    E4 \longrightarrow E5\;\;RE4\\
+    RE4 \longrightarrow OP4\;\;E5\;\;RE4\\
+    RE4 \longrightarrow \epsilon\\
     E5 \longrightarrow OP5\;\;E6\\
     E5 \longrightarrow E6\\
     E6 \longrightarrow E7\\
