@@ -45,17 +45,18 @@
     E4 \longrightarrow not\;\;E5\\
     E4 \longrightarrow &\;\;E5\\
     E4 \longrightarrow E5\\ 
-    E4\longrightarrow [\;E5\;]\\
     E5 \longrightarrow OP5\;\;E6\\
     E5 \longrightarrow E6\\
-    E6 \longrightarrow E7\\
+    E6 \longrightarrow E7\\  
+    E7\longrightarrow [\;E8\;]\\
     E7 \longrightarrow \textbf{true}\\
     E7 \longrightarrow \textbf{false}\\
     E7 \longrightarrow \textbf{null}\\
-    E7 \longrightarrow \textbf{literalEntero}\\
     E7 \longrightarrow \textbf{literalReal}\\
     E7 \longrightarrow \textbf{literalCadena}\\
-    E7 \longrightarrow (\;E0\;)\\
+    E7 \longrightarrow E8\\  
+    E8 \longrightarrow \textbf{literalEntero}\\
+    E8 \longrightarrow (\;E0\;)\\
     OP1 \longrightarrow \;<\\
     OP1 \longrightarrow \;<=\\
     OP1 \longrightarrow \;>\\
