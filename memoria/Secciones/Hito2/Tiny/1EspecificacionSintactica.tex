@@ -21,14 +21,15 @@
     instruccion2 \longrightarrow \{\;declaraciones\;instrucciones\;\}\\
     instruccion2 \longrightarrow \{\;declaraciones\;instrucciones\;\}\;else\;\{\;declaraciones\;instrucciones\;\}\\
     instruccion \longrightarrow while\;expresion1\\
-    instruccion \longrightarrow struct\;\{\;expresion1\;\}\\
+    instruccion3 \longrightarrow struct\;\{\;expresion1\;\}\;identificador1\;;\\
+    instruccion3 \longrightarrow \land\;identificador1\;identificador;\\
     instruccion \longrightarrow proc\;expresion1\\
     instruccion \longrightarrow new\;expresion1\\
     instruccion \longrightarrow delete\;expresion1\\
     instruccion \longrightarrow read\;expresion1\\
     instruccion \longrightarrow write\;expresion1\\
     instruccion \longrightarrow nl\\
-    instruccion \longrightarrow type\;expresion1\\
+    instruccion \longrightarrow type\;instruccion3\\
     instruccion \longrightarrow call\;expresion1\\
     eval \longrightarrow @\;expresion\\
     expresion1 \longrightarrow E0\\
@@ -59,6 +60,7 @@
     E7 \longrightarrow \textbf{literalCadena}\\
     E7 \longrightarrow E8\\  
     E8 \longrightarrow \textbf{literalEntero}\\
+    E8 \longrightarrow \textbf{identificador}\\
     E8 \longrightarrow \textbf{identificador}\\
     E8 \longrightarrow (\;E0\;)\\
     OP1 \longrightarrow \;<\\
