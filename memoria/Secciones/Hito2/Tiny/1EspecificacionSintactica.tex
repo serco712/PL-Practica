@@ -5,20 +5,21 @@
     bloque \longrightarrow \{\;declaraciones\;instrucciones\;\}\\
     declaraciones \longrightarrow lista$-$declaraciones\;\&\& \\
     declaraciones \longrightarrow \epsilon\\
-    lista-declaraciones \longrightarrow lista$-$declaraciones\;;\;declaracion\\
-    lista-declaraciones \longrightarrow declaracion\\
-    lista-variables \longrightarrow lista$-$variables\;,\;declaracion\\
-    lista-variables \longrightarrow declaracion\\
-    declaracion \longrightarrow tipo2\;\textbf{identificador}\\
-    declaracion \longrightarrow tipo2\; \textbf{[literalEntero]}\; \textbf{identificador}\\
-    declaracion \longrightarrow type\;tipo\\
-    tipo \longrightarrow \land\textbf{ tipo1}\;\textbf{ identificador} \\
-    tipo \longrightarrow tipo2\;\textbf{identificador}\\
-    tipo2 \longrightarrow \textbf{bool}\\
-    tipo2 \longrightarrow \textbf{int}\\
-    tipo2 \longrightarrow \textbf{real}\\
-    tipo2 \longrightarrow \textbf{string}\\
-    tipo \longrightarrow struct\;\{\;lista$-$variables\;\}\;\textbf{tipo1}\;;\\
+    lista$-$declaraciones \longrightarrow lista$-$declaraciones\;;\;declaracion\\
+    lista$-$declaraciones \longrightarrow declaracion\\
+    lista$-$variables \longrightarrow lista$-$variables\;,\;declaracion\\
+    lista$-$variables \longrightarrow declaracion\\
+    declaracion \longrightarrow tipo\;\textbf{identificador}\\
+    declaracion \longrightarrow tipo\; [\textbf{literalEntero}]\; \textbf{identificador}\\
+    declaracion \longrightarrow type\;tipo\;\textbf{identificador}\\
+    declaracion \longrightarrow \textbf{proc}\;\textbf{identificador}\;par$-$formales\;bloque\\
+    tipo \longrightarrow \textbf{bool}\\
+    tipo \longrightarrow \textbf{int}\\
+    tipo \longrightarrow \textbf{real}\\
+    tipo \longrightarrow \textbf{string}\\
+    tipo \longrightarrow \textbf{identificador}\\
+    tipo \longrightarrow \hat{}\;tipo\\
+    tipo \longrightarrow \textbf{struct}\;\{\;lista$-$variables\;\}\\
     instrucciones \longrightarrow lista$-$instrucciones\\
     instrucciones \longrightarrow \epsilon\\
     lista$-$instrucciones \longrightarrow lista$-$instrucciones\;;\;instruccion\\
@@ -31,24 +32,21 @@
     par$-$formal \longrightarrow tipo\;\textbf{identificador}\\
     par$-$reales \longrightarrow (lista$-$par$-$real)\\
     par$-$reales \longrightarrow ()\\
-    lista$-$par$-$real \longrightarrow expresion1,lista$-$par$-$real\\
-    lista$-$par$-$real \longrightarrow expresion1\\
+    lista$-$par$-$real \longrightarrow E0,lista$-$par$-$real\\
+    lista$-$par$-$real \longrightarrow E0\\
     instruccion \longrightarrow eval\\
-    instruccion \longrightarrow \textbf{proc}\;\textbf{identificador}\;par$-$formales\;bloque\\
-    instruccion \longrightarrow \textbf{if}\;expresion1\;\;intruccion2\\
-    instruccion2 \longrightarrow bloque\\
-    instruccion2 \longrightarrow bloque\;\textbf{else}\;bloque\\
-    instruccion \longrightarrow \textbf{while}\;expresion1\;bloque\\
-    instruccion \longrightarrow \textbf{new}\;expresion1\\
-    instruccion \longrightarrow \textbf{delete}\;expresion1\\
-    instruccion \longrightarrow \textbf{read}\;expresion1\\
-    instruccion \longrightarrow \textbf{write}\;expresion1\\
+    instruccion \longrightarrow \textbf{if}\;E0\;\;bloque\\
+    instruccion \longrightarrow \textbf{if}\;E0\;\;bloque\;\textbf{else}\;bloque\\
+    instruccion \longrightarrow \textbf{while}\;E0\;bloque\\
+    instruccion \longrightarrow \textbf{new}\;E0\\
+    instruccion \longrightarrow \textbf{delete}\;E0\\
+    instruccion \longrightarrow \textbf{read}\;E0\\
+    instruccion \longrightarrow \textbf{write}\;E0\\
     instruccion \longrightarrow \textbf{call}\;\textbf{identificador}\;par$-$reales\\
     instruccion \longrightarrow \textbf{nl}\\
     instruccion \longrightarrow bloque\\
-    eval \longrightarrow @\;expresion\\
-    expresion1 \longrightarrow E0\\
-    expresion \longrightarrow \textbf{identificador} = E0\\
+    eval \longrightarrow @\;E0\\
+    E0 \longrightarrow \textbf{identificador} = E0\\
     E0 \longrightarrow E1 = E0\\
     E0 \longrightarrow E1\\
     E1 \longrightarrow E1\;\;OP1\;\;E2\\
@@ -85,7 +83,7 @@
     OP5 \longrightarrow \;+\\  
     OP5 \longrightarrow \;-\\ 
     OP5 \longrightarrow \;\textbf{not}\\ 
-    OP6 \longrightarrow \;[expresion1]\\ 
+    OP6 \longrightarrow \;[E0]\\ 
     OP6 \longrightarrow \;.\textbf{identificador}\\ 
-    OP6 \longrightarrow \;\land.\textbf{identificador}\\
+    OP6 \longrightarrow \;\hat{}\;.\textbf{identificador}\\
 \end{math}

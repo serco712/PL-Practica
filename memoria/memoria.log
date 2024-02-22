@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2023.10.9)  22 FEB 2024 17:46
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2023.10.9)  22 FEB 2024 19:26
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1433,11 +1433,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 6--7
  []
 
 (./Secciones/Hito2/Tiny/1EspecificacionSintactica.tex
-./Secciones/Hito2/Tiny/1EspecificacionSintactica.tex:73: Incompatible glue unit
+./Secciones/Hito2/Tiny/1EspecificacionSintactica.tex:82: Incompatible glue unit
 s.
 \es@sppercent ...fnum \gluestretchorder \lastskip 
                                                   =\z@ \unskip \fi \textorma...
-l.73     OP4 \longrightarrow \;\%
+l.82     OP4 \longrightarrow \;\%
                                  \\
 I'm going to assume that 1mu=1pt when they're mixed.
 
@@ -1523,7 +1523,7 @@ Package rerunfilecheck Info: File `memoria.out' has not changed.
 Here is how much of TeX's memory you used:
  35929 strings out of 476191
  680774 string characters out of 5812072
- 1123119 words of memory out of 5000000
+ 1124119 words of memory out of 5000000
  56014 multiletter control sequences out of 15000+600000
  512394 words of font info for 50 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
