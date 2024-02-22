@@ -7,11 +7,18 @@
     declaraciones \longrightarrow \epsilon\\
     lista-declaraciones \longrightarrow lista$-$declaraciones\;;\;declaracion\\
     lista-declaraciones \longrightarrow declaracion\\
-    declaracion \longrightarrow tipo\;\textbf{identificador}\\
-    tipo \longrightarrow \textbf{bool}\\
-    tipo \longrightarrow \textbf{int}\\
-    tipo \longrightarrow \textbf{real}\\
-    tipo \longrightarrow \textbf{string}\\
+    lista-variables \longrightarrow lista$-$variables\;,\;declaracion\\
+    lista-variables \longrightarrow declaracion\\
+    declaracion \longrightarrow tipo2\;\textbf{identificador}\\
+    declaracion \longrightarrow tipo2\; \textbf{[literalEntero]}\\
+    declaracion \longrightarrow type\;tipo\\
+    tipo \longrightarrow \land \textbf{ tipo1}\;\textbf{ identificador} \\
+    tipo \longrightarrow tipo2\\
+    tipo2 \longrightarrow \textbf{bool}\\
+    tipo2 \longrightarrow \textbf{int}\\
+    tipo2 \longrightarrow \textbf{real}\\
+    tipo2 \longrightarrow \textbf{string}\\
+    tipo \longrightarrow struct\;\{\;lista$-$variables\;\}\;\textbf{tipo1}\;;\\
     instrucciones \longrightarrow lista$-$instrucciones\\
     instrucciones \longrightarrow \epsilon\\
     lista$-$instrucciones \longrightarrow lista$-$instrucciones\;;\;instruccion\\
@@ -21,16 +28,13 @@
     instruccion2 \longrightarrow \{\;declaraciones\;instrucciones\;\}\\
     instruccion2 \longrightarrow \{\;declaraciones\;instrucciones\;\}\;else\;\{\;declaraciones\;instrucciones\;\}\\
     instruccion \longrightarrow while\;expresion1\;\{\;declaraciones\;instrucciones\;\}\\
-    instruccion3 \longrightarrow struct\;\{\;expresion1\;\}\;\textbf{type}\;;\\
-    instruccion3 \longrightarrow \land\;\textbf{type}\;\textbf{identificador};\\
     instruccion \longrightarrow proc\;expresion1\\
     instruccion \longrightarrow new\;expresion1\\
     instruccion \longrightarrow delete\;expresion1\\
     instruccion \longrightarrow read\;expresion1\\
     instruccion \longrightarrow write\;expresion1\\
-    instruccion \longrightarrow nl\\
-    instruccion \longrightarrow type\;instruccion3\\
     instruccion \longrightarrow call\;expresion1\\
+    instruccion \longrightarrow nl\\
     eval \longrightarrow @\;expresion\\
     expresion1 \longrightarrow E0\\
     expresion \longrightarrow \textbf{identificador} = E0\\
