@@ -17,19 +17,21 @@
     lista$-$instrucciones \longrightarrow lista$-$instrucciones\;;\;instruccion\\
     lista$-$instrucciones \longrightarrow instruccion\\
     instruccion \longrightarrow eval\\
-    instruccion \longrightarrow proc\;expresion\\
-    instruccion \longrightarrow if\;expresion\;\;else\;expresion\\
-    instruccion \longrightarrow while\;expresion\\
-    instruccion \longrightarrow struct\;expresion\\
-    instruccion \longrightarrow proc\;expresion\\
-    instruccion \longrightarrow new\;expresion\\
-    instruccion \longrightarrow delete\;expresion\\
-    instruccion \longrightarrow read\;expresion\\
-    instruccion \longrightarrow write\;expresion\\
+    instruccion \longrightarrow if\;expresion1\;\;intruccion2\\
+    instruccion2 \longrightarrow \{\;declaraciones\;instrucciones\;\}\\
+    instruccion2 \longrightarrow \{\;declaraciones\;instrucciones\;\}\;else\;\{\;declaraciones\;instrucciones\;\}\\
+    instruccion \longrightarrow while\;expresion1\\
+    instruccion \longrightarrow struct\;\{\;expresion1\;\}\\
+    instruccion \longrightarrow proc\;expresion1\\
+    instruccion \longrightarrow new\;expresion1\\
+    instruccion \longrightarrow delete\;expresion1\\
+    instruccion \longrightarrow read\;expresion1\\
+    instruccion \longrightarrow write\;expresion1\\
     instruccion \longrightarrow nl\\
-    instruccion \longrightarrow type\;expresion\\
-    instruccion \longrightarrow call\;expresion\\
+    instruccion \longrightarrow type\;expresion1\\
+    instruccion \longrightarrow call\;expresion1\\
     eval \longrightarrow @\;expresion\\
+    expresion1 \longrightarrow E0\\
     expresion \longrightarrow \textbf{identificador} = E0\\
     E0 \longrightarrow E1 = E0\\
     E0 \longrightarrow E1\\
@@ -56,6 +58,7 @@
     E7 \longrightarrow \textbf{literalCadena}\\
     E7 \longrightarrow E8\\  
     E8 \longrightarrow \textbf{literalEntero}\\
+    E8 \longrightarrow \textbf{identificador}\\
     E8 \longrightarrow (\;E0\;)\\
     OP1 \longrightarrow \;<\\
     OP1 \longrightarrow \;<=\\
@@ -65,7 +68,7 @@
     OP1 \longrightarrow \;!=\\
     OP4 \longrightarrow \;*\\
     OP4 \longrightarrow \;/\\  
-    OP4 \longrightarrow \;%\\  
+    OP4 \longrightarrow \;\%\\  
     OP5 \longrightarrow \;+\\  
     OP5 \longrightarrow \;-\\  
 
