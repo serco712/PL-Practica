@@ -10,10 +10,10 @@
     lista-variables \longrightarrow lista$-$variables\;,\;declaracion\\
     lista-variables \longrightarrow declaracion\\
     declaracion \longrightarrow tipo2\;\textbf{identificador}\\
-    declaracion \longrightarrow tipo2\; \textbf{[literalEntero]}\\
+    declaracion \longrightarrow tipo2\; \textbf{[literalEntero]}\; \textbf{identificador}\\
     declaracion \longrightarrow type\;tipo\\
     tipo \longrightarrow \land \textbf{ tipo1}\;\textbf{ identificador} \\
-    tipo \longrightarrow tipo2\\
+    tipo \longrightarrow tipo2\;\textbf{identificador}\\
     tipo2 \longrightarrow \textbf{bool}\\
     tipo2 \longrightarrow \textbf{int}\\
     tipo2 \longrightarrow \textbf{real}\\
@@ -25,52 +25,43 @@
     lista$-$instrucciones \longrightarrow instruccion\\
     instruccion \longrightarrow eval\\
     instruccion \longrightarrow if\;expresion1\;\;intruccion2\\
-    instruccion2 \longrightarrow \{\;declaraciones\;instrucciones\;\}\\
-    instruccion2 \longrightarrow \{\;declaraciones\;instrucciones\;\}\;else\;\{\;declaraciones\;instrucciones\;\}\\
-    instruccion \longrightarrow while\;expresion1\;\{\;declaraciones\;instrucciones\;\}\\
-    instruccion \longrightarrow proc\;expresion1\\
+    instruccion2 \longrightarrow bloque\\
+    instruccion2 \longrightarrow bloque\;else\;bloque\\
+    instruccion \longrightarrow while\;expresion1\;bloque\\
     instruccion \longrightarrow new\;expresion1\\
     instruccion \longrightarrow delete\;expresion1\\
     instruccion \longrightarrow read\;expresion1\\
     instruccion \longrightarrow write\;expresion1\\
-    instruccion \longrightarrow call\;expresion1\\
+    instruccion \longrightarrow proc\;expresion1\;cambiarlo\;tambien\\
+    instruccion \longrightarrow call\;expresion1\; cambiarlo urgente\\
     instruccion \longrightarrow nl\\
     eval \longrightarrow @\;expresion\\
     expresion1 \longrightarrow E0\\
     expresion \longrightarrow \textbf{identificador} = E0\\
     E0 \longrightarrow E1 = E0\\
-    E0 \longrightarrow E1\;E0\\
     E0 \longrightarrow E1\\
     E1 \longrightarrow E1\;\;OP1\;\;E2\\
     E1 \longrightarrow E2\\
     E2 \longrightarrow E2 + E3\\
     E2 \longrightarrow E3 - E3\\
     E2 \longrightarrow E3\\
-    E3 \longrightarrow E3\;\;and\;\;E4\\
+    E3 \longrightarrow E4\;\;and\;\;E3\\
     E3 \longrightarrow E4\;\;or\;\;E4\\
     E3 \longrightarrow E4\\
     E4 \longrightarrow E4\;\;OP4\;\;E5\\
-    E4 \longrightarrow not\;\;E5\\
-    E4 \longrightarrow &\;\;E5\\
     E4 \longrightarrow E5\\ 
     E5 \longrightarrow OP5\;\;E6\\
     E5 \longrightarrow E6\\
-    E6 \longrightarrow E7\\  
-    E7\longrightarrow [\;E8\;]\\
+    E6 \longrightarrow E6\;OP6\\
+    E6 \longrightarrow E7\\
     E7 \longrightarrow \textbf{true}\\
     E7 \longrightarrow \textbf{false}\\
-    E7 \longrightarrow \textbf{null}\\
+    E7 \longrightarrow \textbf{literalEntero}\\
     E7 \longrightarrow \textbf{literalReal}\\
     E7 \longrightarrow \textbf{literalCadena}\\
-    E7 \longrightarrow E8\\  
-    E8 \longrightarrow \textbf{literalEntero}\\
-    E8 \longrightarrow \textbf{type}\;E9\\
-    E8 \longrightarrow E9\\
-    E8 \longrightarrow (\;E0\;)\\
-    E9 \longrightarrow \textbf{identificador}\;;\\
-    E9 \longrightarrow \textbf{identificador}\;E0\\
-    E9 \longrightarrow .\textbf{identificador}\;E0\\
-    E9 \longrightarrow \land\;.\textbf{identificador}\;E0\\
+    E7 \longrightarrow \textbf{identificador}\\
+    E7 \longrightarrow \textbf{null}\\
+    E7 \longrightarrow (\;E0\;)\\
     OP1 \longrightarrow \;<\\
     OP1 \longrightarrow \;<=\\
     OP1 \longrightarrow \;>\\
@@ -81,5 +72,9 @@
     OP4 \longrightarrow \;/\\  
     OP4 \longrightarrow \;\%\\  
     OP5 \longrightarrow \;+\\  
-    OP5 \longrightarrow \;-\\  
+    OP5 \longrightarrow \;-\\ 
+    OP5 \longrightarrow \;\textbf{not}\\ 
+    OP6 \longrightarrow \;[expresion1]\\ 
+    OP6 \longrightarrow \;.\textbf{identificador}\\ 
+    OP6 \longrightarrow \;\land.\textbf{identificador}\\
 \end{math}
