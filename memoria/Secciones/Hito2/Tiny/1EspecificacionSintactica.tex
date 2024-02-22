@@ -12,7 +12,7 @@
     declaracion \longrightarrow tipo2\;\textbf{identificador}\\
     declaracion \longrightarrow tipo2\; \textbf{[literalEntero]}\; \textbf{identificador}\\
     declaracion \longrightarrow type\;tipo\\
-    tipo \longrightarrow \land \textbf{ tipo1}\;\textbf{ identificador} \\
+    tipo \longrightarrow \land\textbf{ tipo1}\;\textbf{ identificador} \\
     tipo \longrightarrow tipo2\;\textbf{identificador}\\
     tipo2 \longrightarrow \textbf{bool}\\
     tipo2 \longrightarrow \textbf{int}\\
@@ -23,18 +23,29 @@
     instrucciones \longrightarrow \epsilon\\
     lista$-$instrucciones \longrightarrow lista$-$instrucciones\;;\;instruccion\\
     lista$-$instrucciones \longrightarrow instruccion\\
+    par$-$formales \longrightarrow (lista$-$par$-$formal)\\
+    par$-$formales \longrightarrow ()\\
+    lista$-$par$-$formal \longrightarrow par$-$formal,lista$-$par$-$formal\\
+    lista$-$par$-$formal \longrightarrow par$-$formal\\
+    par$-$formal \longrightarrow tipo\;\&\textbf{identificador}\\
+    par$-$formal \longrightarrow tipo\;\textbf{identificador}\\
+    par$-$reales \longrightarrow (lista$-$par$-$real)\\
+    par$-$reales \longrightarrow ()\\
+    lista$-$par$-$real \longrightarrow expresion1,lista$-$par$-$real\\
+    lista$-$par$-$real \longrightarrow expresion1\\
     instruccion \longrightarrow eval\\
-    instruccion \longrightarrow if\;expresion1\;\;intruccion2\\
+    instruccion \longrightarrow \textbf{proc}\;\textbf{identificador}\;par$-$formales\;bloque\\
+    instruccion \longrightarrow \textbf{if}\;expresion1\;\;intruccion2\\
     instruccion2 \longrightarrow bloque\\
-    instruccion2 \longrightarrow bloque\;else\;bloque\\
-    instruccion \longrightarrow while\;expresion1\;bloque\\
-    instruccion \longrightarrow new\;expresion1\\
-    instruccion \longrightarrow delete\;expresion1\\
-    instruccion \longrightarrow read\;expresion1\\
-    instruccion \longrightarrow write\;expresion1\\
-    instruccion \longrightarrow proc\;expresion1\;cambiarlo\;tambien\\
-    instruccion \longrightarrow call\;expresion1\; cambiarlo urgente\\
-    instruccion \longrightarrow nl\\
+    instruccion2 \longrightarrow bloque\;\textbf{else}\;bloque\\
+    instruccion \longrightarrow \textbf{while}\;expresion1\;bloque\\
+    instruccion \longrightarrow \textbf{new}\;expresion1\\
+    instruccion \longrightarrow \textbf{delete}\;expresion1\\
+    instruccion \longrightarrow \textbf{read}\;expresion1\\
+    instruccion \longrightarrow \textbf{write}\;expresion1\\
+    instruccion \longrightarrow \textbf{call}\;\textbf{identificador}\;par$-$reales\\
+    instruccion \longrightarrow \textbf{nl}\\
+    instruccion \longrightarrow bloque\\
     eval \longrightarrow @\;expresion\\
     expresion1 \longrightarrow E0\\
     expresion \longrightarrow \textbf{identificador} = E0\\
