@@ -20,9 +20,9 @@
     instruccion \longrightarrow if\;expresion1\;\;intruccion2\\
     instruccion2 \longrightarrow \{\;declaraciones\;instrucciones\;\}\\
     instruccion2 \longrightarrow \{\;declaraciones\;instrucciones\;\}\;else\;\{\;declaraciones\;instrucciones\;\}\\
-    instruccion \longrightarrow while\;expresion1\\
-    instruccion3 \longrightarrow struct\;\{\;expresion1\;\}\;identificador1\;;\\
-    instruccion3 \longrightarrow \land\;identificador1\;identificador;\\
+    instruccion \longrightarrow while\;expresion1\;\{\;declaraciones\;instrucciones\;\}\\
+    instruccion3 \longrightarrow struct\;\{\;expresion1\;\}\;\textbf{type}\;;\\
+    instruccion3 \longrightarrow \land\;\textbf{type}\;\textbf{identificador};\\
     instruccion \longrightarrow proc\;expresion1\\
     instruccion \longrightarrow new\;expresion1\\
     instruccion \longrightarrow delete\;expresion1\\
@@ -60,9 +60,13 @@
     E7 \longrightarrow \textbf{literalCadena}\\
     E7 \longrightarrow E8\\  
     E8 \longrightarrow \textbf{literalEntero}\\
-    E8 \longrightarrow \textbf{identificador}\\
-    E8 \longrightarrow \textbf{identificador}\\
+    E8 \longrightarrow \textbf{type}\;E9\\
+    E8 \longrightarrow E9\\
     E8 \longrightarrow (\;E0\;)\\
+    E9 \longrightarrow \textbf{identificador}\;;\\
+    E9 \longrightarrow \textbf{identificador}\;E0\\
+    E9 \longrightarrow .\textbf{identificador}\;E0\\
+    E9 \longrightarrow \land\;.\textbf{identificador}\;E0\\
     OP1 \longrightarrow \;<\\
     OP1 \longrightarrow \;<=\\
     OP1 \longrightarrow \;>\\
@@ -74,5 +78,4 @@
     OP4 \longrightarrow \;\%\\  
     OP5 \longrightarrow \;+\\  
     OP5 \longrightarrow \;-\\  
-
 \end{math}
