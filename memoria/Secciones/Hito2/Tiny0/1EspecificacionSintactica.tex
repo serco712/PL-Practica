@@ -5,8 +5,8 @@
     bloque \longrightarrow \{\;declaraciones\;instrucciones\;\}\\
     declaraciones \longrightarrow lista$-$declaraciones\;\&\& \\
     declaraciones \longrightarrow \epsilon\\
-    lista-declaraciones \longrightarrow lista$-$declaraciones\;;\;declaracion\\
-    lista-declaraciones \longrightarrow declaracion\\
+    lista$-$declaraciones \longrightarrow lista$-$declaraciones\;;\;declaracion\\
+    lista$-$declaraciones \longrightarrow declaracion\\
     declaracion \longrightarrow tipo\;\textbf{identificador}\\
     tipo \longrightarrow \textbf{bool}\\
     tipo \longrightarrow \textbf{int}\\
@@ -16,9 +16,8 @@
     lista$-$instrucciones \longrightarrow lista$-$instrucciones\;;\;instruccion\\
     lista$-$instrucciones \longrightarrow instruccion\\
     instruccion \longrightarrow eval\\
-    eval \longrightarrow @\;expresion\\
-    expresion \longrightarrow \textbf{identificador} = E0\\
-    E0 \longrightarrow E0 = E1\\
+    eval \longrightarrow @\;E0\\
+    E0 \longrightarrow \textbf{identificador} = E0\\
     E0 \longrightarrow E1\\
     E1 \longrightarrow E1\;\;OP1\;\;E2\\
     E1 \longrightarrow E2\\
