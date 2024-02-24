@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1708626358 "/home/sergio/Desktop/Estudios/UCM/4º/PL/PL-Practica/memoria/memoria.tex" "memoria.pdf" "memoria" 1708626358
+["pdflatex"] 1708816461 "/home/sergio/Desktop/Estudios/UCM/4º/PL/PL-Practica/memoria/memoria.tex" "memoria.pdf" "memoria" 1708816461
   "/etc/texmf/web2c/texmf.cnf" 1696887252 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/sergio/Desktop/Estudios/UCM/4º/PL/PL-Practica/memoria/memoria.tex" 1708331454 1416 afee0052b2d9c96f438cd675bc32e0a4 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -246,14 +246,16 @@
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1696887335 2799526 73a5afefd7ca1177d87268da21b46e92 ""
   "AiTex.cls" 1707077446 8576 1fe5450e7fef6fddc52ee53a827ffd28 ""
   "Secciones/2Sintaxis.aux" 0 -1 0 "pdflatex"
-  "Secciones/2Sintaxis.tex" 1708618120 218 ef94d8893611c3bbdfb407d31112a0ea ""
+  "Secciones/2Sintaxis.tex" 1708814287 325 b2a38f4a56b43c9d0dbcebe1d142258f ""
   "Secciones/Hito2/Tiny/1EspecificacionSintactica.tex" 1708626356 4103 1f56c49894862fdb2b8a8030d13fec26 ""
-  "Secciones/Hito2/Tiny0/1EspecificacionSintactica.tex" 1708620351 1883 ef5396fc6661760b888ae2e2bfbbef08 ""
-  "Secciones/Hito2/Tiny0/2AcondicionamientoGramatica.tex" 1708618120 2340 89e7dd5135808fe61b7a8c2e7a427e96 ""
+  "Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex" 1708812439 4620 337f0678d75ced6cda790faf9f344146 ""
+  "Secciones/Hito2/Tiny0/1EspecificacionSintactica.tex" 1708812439 1946 683aceb94af2213172c2d6fc5f55a59d ""
+  "Secciones/Hito2/Tiny0/2AcondicionamientoGramatica.tex" 1708815666 2515 91c0483a535d7165f9c627115fccda36 ""
+  "Secciones/Hito2/Tiny0/3Directores.tex" 1708816458 1962 d87886b6efb691bf8482015c37829221 ""
   "glossary.aux" 0 -1 0 "pdflatex"
   "glossary.tex" 1696944159 0 d41d8cd98f00b204e9800998ecf8427e ""
   "logoComplutense.png" 1696944159 645493 33494c3511b6d6c38369d75dce9640f5 ""
-  "memoria.aux" 1708626358 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "memoria.aux" 1708816461 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
   "memoria.out" 0 -1 0 "pdflatex"
   "memoria.tex" 1708331454 1416 afee0052b2d9c96f438cd675bc32e0a4 ""
   (generated)

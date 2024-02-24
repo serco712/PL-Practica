@@ -1,0 +1,34 @@
+\section{Directores}
+
+\begin{table}[h]
+    \centering
+	\begin{tabular}{l|c|c}
+        \hline
+		\textbf{Regla} & \textbf{Directores} & \textbf{Anulable} \\
+		\hline\hline
+		$programa \longrightarrow bloque$ & \{ & No\\ \hline
+		$bloque \longrightarrow \{\;declaraciones\;instrucciones\;\}$ & \{ & No\\ \hline
+		$declaraciones \longrightarrow lista$-$declaraciones\;\&\&$ & \textbf{bool} \textbf{int}
+        \textbf{real} \textbf{identificador} & No\\ \hline
+		$declaraciones \longrightarrow \epsilon$ &  & Sí\\ \hline
+		$lista$-$declaraciones \longrightarrow declaracion\;\; r$-$lista$-$declaraciones$
+            & \textbf{bool} \textbf{int} \textbf{real} \textbf{identificador} & No\\ \hline
+		$r$-$lista$-$declaraciones \longrightarrow\;;\;declaracion\;\; r$-$lista$-$declaraciones$ & ; & No\\ 
+            \hline
+        $r$-$lista$-$declaraciones \longrightarrow \epsilon$ & & Sí \\ \hline
+        $declaracion \longrightarrow tipo\;\textbf{identificador}$ & \textbf{bool} \textbf{int}
+            \textbf{real} \textbf{identificador} & No \\ \hline
+        $tipo \longrightarrow \textbf{bool}$ & \textbf{bool} & No \\ \hline
+        $tipo \longrightarrow \textbf{int}$ & \textbf{int} & No \\ \hline
+        $tipo \longrightarrow \textbf{real}$ & \textbf{real} & No \\ \hline
+        $tipo \longrightarrow \textbf{identificador}$ & \textbf{identificador} & No \\ \hline
+        $instrucciones \longrightarrow lista$-$instrucciones$ & @ & No \\ \hline
+        $instrucciones \longrightarrow \epsilon$ &  & Sí \\ \hline
+        $instruccion \longrightarrow eval$ & @ & No \\ \hline
+        $eval \longrightarrow @\;E0$ & @ & No \\ \hline
+        $E0 \longrightarrow \textbf{identificador} = E0$ & \textbf{identificador} & No \\ \hline
+        $E0 \longrightarrow E1\;\;RE0$ & \textbf{true} \textbf{false} \textbf{literalEntero} \textbf{literalReal}
+            \textbf{identificador} ( & No \\ \hline
+	\end{tabular}
+	\label{tab:tablaDirectores}
+\end{table}
