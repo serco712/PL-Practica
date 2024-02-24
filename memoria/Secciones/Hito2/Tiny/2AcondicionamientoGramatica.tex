@@ -1,0 +1,97 @@
+\section{Acondicionamiento de gramática}
+
+\begin{math}
+    programa \longrightarrow bloque \\
+    bloque \longrightarrow \{\;declaraciones\;instrucciones\;\}\\
+    declaraciones \longrightarrow lista$-$declaraciones\;\&\& \\
+    declaraciones \longrightarrow \epsilon\\
+    lista$-$declaraciones \longrightarrow declaracion\;\; r$-$lista$-$declaraciones\\
+    r$-$lista$-$declaraciones \longrightarrow\;;\;declaracion\;\; r$-$lista$-$declaraciones\\
+    r$-$lista$-$declaraciones \longrightarrow \epsilon\\
+    declaracion \longrightarrow tipo\;\textbf{identificador}\\
+    declaracion \longrightarrow tipo\;\textbf{[literalEntero] identificador}\\
+    declaracion \longrightarrow tipo\;\textbf{type tipo identificador}\\
+    declaracion \longrightarrow \textbf{proc}\;\textbf{identificador}\;par$-$formales\;bloque\\
+    tipo \longrightarrow \textbf{bool}\\
+    tipo \longrightarrow \textbf{int}\\
+    tipo \longrightarrow \textbf{real}\\
+    tipo \longrightarrow \textbf{string}\\
+    tipo \longrightarrow \textbf{identificador}\\
+    tipo \longrightarrow \hat{}\;tipo\\
+    tipo \longrightarrow \textbf{struct}\;\{\;lista$-$variables\;\}\\
+    instrucciones \longrightarrow lista$-$instrucciones\\
+    instrucciones \longrightarrow \epsilon\\
+    lista$-$instrucciones \longrightarrow instruccion\;\; r$-$lista$-$instrucciones\\
+    r$-$lista$-$instrucciones \longrightarrow\;;\;instruccion\;\;r$-$lista$-$instrucciones\\
+    r$-$lista$-$instrucciones \longrightarrow \epsilon\\
+    par$-$formales \longrightarrow (lista$-$par$-$formal)\\
+    par$-$formales \longrightarrow ()\\
+    lista$-$par$-$formal \longrightarrow par$-$formal\;\;lista$-$par$-$formal\\
+    lista$-$par$-$formal \longrightarrow\; , \;\;par$-$formal\;\;lista$-$par$-$formal\\
+    lista$-$par$-$formal \longrightarrow \epsilon\\
+    par$-$formales \longrightarrow tipo \;\; identificador \\
+    par$-$formales \longrightarrow tipo \;\; identificador \;\; \& \\
+    par$-$reales \longrightarrow (lista$-$par$-$real)\\
+    par$-$reales \longrightarrow ()\\
+    lista$-$par$-$real \longrightarrow E0\;\;r$-$lista$-$par$-$real\\
+    r-lista$-$par$-$real \longrightarrow \;;\;\;E0\;\;r$-$lista$-$par$-$real\\
+    r-lista$-$par$-$real \longrightarrow \epsilon\\
+    instruccion \longrightarrow  eval\\
+    instruccion \longrightarrow  \textbf{if}\;E0\;bloque\\
+    instruccion \longrightarrow  \textbf{if}\;E0\;bloque\;e\textbf{lse}\;bloque\\
+    instruccion \longrightarrow  \textbf{while}\;E0\;bloque\\
+    instruccion \longrightarrow  \textbf{new}\;E0\\
+    instruccion \longrightarrow  \textbf{delete}\;E0\\
+    instruccion \longrightarrow  \textbf{read}\;E0\\
+    instruccion \longrightarrow  \textbf{write}\;E0\\
+    instruccion \longrightarrow  \textbf{call identificador}\;par-reales\\
+    instruccion \longrightarrow  \textbf{nl}\\
+    instruccion \longrightarrow  \textbf{bloque}\\
+     eval \longrightarrow @\;E0\\
+    E0 \longrightarrow \textbf{identificador}\;\;RE0\\
+    RE0 \longrightarrow =\;E1\;\;RE0\\
+    RE0 \longrightarrow \epsilon\\
+    E1 \longrightarrow E2\;\;RE1\\
+    RE1 \longrightarrow OP1\;\;E2\;\;RE1\\
+    RE1 \longrightarrow \epsilon\\
+    E2 \longrightarrow E3\;\;-\;\;E3\;\;RE2\\
+    E2 \longrightarrow E3\;\;RE2\\
+    RE2 \longrightarrow +\;\;E3\;\;RE2\\
+    RE2 \longrightarrow \epsilon\\
+    E3 \longrightarrow E4\;\;or\;\;E4\;\;RE3\\
+    E3 \longrightarrow E4\;\;RE3\\
+    RE3 \longrightarrow \;\;and\;\; \\
+    RE3 \longrightarrow \epsilon\\
+    E4 \longrightarrow E5\;\;RE4\\
+    RE4 \longrightarrow OP4\;\;E5\;\;RE4\\
+    RE4 \longrightarrow \epsilon\\
+    E5 \longrightarrow OP5\;\;E6\\
+    E5 \longrightarrow E6\\
+    E6 \longrightarrow E7\;\;RE6\\
+    RE6 \longrightarrow OP6\;\;E7\;\;RE6\\
+    RE6 \longrightarrow \epsilon\\
+    E7 \longrightarrow \textbf{true}\\
+    E7 \longrightarrow \textbf{false}\\
+    E7 \longrightarrow \textbf{literalEntero}\\
+    E7 \longrightarrow \textbf{literalReal}\\
+    E7 \longrightarrow \textbf{literalCadena}\\
+    E7 \longrightarrow \textbf{identificador}\\
+    E7 \longrightarrow \textbf{null}\\
+    E7 \longrightarrow (\;E0\;)\\
+    OP1 \longrightarrow \;<\\
+    OP1 \longrightarrow \;<=\\
+    OP1 \longrightarrow \;>\\
+    OP1 \longrightarrow \;>=\\
+    OP1 \longrightarrow \;==\\
+    OP1 \longrightarrow \;!=\\
+    OP4 \longrightarrow \;*\\
+    OP4 \longrightarrow \;/\\
+    OP4 \longrightarrow \;\%\\
+    OP5 \longrightarrow \;+\\
+    OP5 \longrightarrow \;-\\
+    OP5 \longrightarrow \;\textbf{not}\\
+    OP6 \longrightarrow \;\left[E0\right]\\
+    OP6 \longrightarrow \;\textbf{.identificador}\\
+    OP6 \longrightarrow \;\textbf{\^\;.identificador}\\
+
+\end{math}
