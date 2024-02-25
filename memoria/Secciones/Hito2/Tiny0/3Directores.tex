@@ -29,6 +29,52 @@
         $E0 \longrightarrow \textbf{identificador} = E0$ & \textbf{identificador} & No \\ \hline
         $E0 \longrightarrow E1\;\;RE0$ & \textbf{true} \textbf{false} \textbf{literalEntero} \textbf{literalReal}
             \textbf{identificador} ( & No \\ \hline
+        $RE0 \longrightarrow =\;E1\;\;RE0$ & = & No \\ \hline
+        $RE0 \longrightarrow \epsilon$ & & Si \\ \hline
+        $E1 \longrightarrow E2\;\;RE1$ &  \textbf{true} \textbf{false} \textbf{literalEntero} \textbf{literalReal}
+            \textbf{identificador} ( & No  \\ \hline
+        $RE1 \longrightarrow OP1\;E2\;\;RE1$ & <\;\;<=\;\;>\;\;>=\;\;==\;\;!= & No \\
+        \hline
+        $RE1 \longrightarrow \epsilon$ & & Si \\ \hline
+        $\textbf{E2} \longrightarrow E3\;\;-\;\;E3\;RE2$ &  \textbf{true} \textbf{false} \textbf{literalEntero} \textbf{literalReal}
+            \textbf{identificador} ( & No  \\ \hline
+        $E2 \longrightarrow E3\;RE2$ &  \textbf{true} \textbf{false} \textbf{literalEntero} \textbf{literalReal}
+            \textbf{identificador} ( & No  \\ \hline
+        $RE2 \longrightarrow +\;E3\;\;RE2$ & + & No \\ \hline
+        $RE2 \longrightarrow \epsilon$ & & Si \\ \hline
+        $\textbf{E3} \longrightarrow E4\;\;\textbf{or}\;\;E4\;RE3$ &  \textbf{true} \textbf{false} \textbf{literalEntero} \textbf{literalReal}
+            \textbf{identificador} ( & No  \\ \hline
+        $E3 \longrightarrow E4\;RE3$ &  \textbf{true} \textbf{false} \textbf{literalEntero} \textbf{literalReal}
+            \textbf{identificador} ( & No  \\ \hline
+        $RE3 \longrightarrow \textbf{and}$ & \textbf{and} & No \\ \hline
+        $RE3 \longrightarrow \epsilon$ & & Si \\ \hline
+        $E4 \longrightarrow E5\;RE4$ &  \textbf{true} \textbf{false} \textbf{literalEntero} \textbf{literalReal}
+            \textbf{identificador} ( & No  \\ \hline
+        $RE4 \longrightarrow OP4\;E5\;\;RE4$ & *\;\;/ & No \\
+        \hline
+        $RE4 \longrightarrow \epsilon$ & & Si \\ \hline
+        $\textbf{E5} \longrightarrow RE5\;E6$ & +\;\-/ & No \\
+        \hline
+        $RE5 \longrightarrow OP5$ & +\;\-/ & No \\
+        \hline
+        $RE5 \longrightarrow \epsilon$ & & Si \\ \hline
+        $E6 \longrightarrow E7$ &  \textbf{true} \textbf{false} \textbf{literalEntero} \textbf{literalReal}
+            \textbf{identificador} ( & No  \\ \hline
+        $E7 \longrightarrow \textbf{true}$ &  \textbf{true} & No  \\ \hline
+        $E7 \longrightarrow \textbf{false}$ &  \textbf{false} & No  \\ \hline
+        $E7 \longrightarrow \textbf{literalEntero}$ &  \textbf{literalEntero} & No  \\ \hline
+        $E7 \longrightarrow \textbf{literalReal}$ &  \textbf{literalReal} & No \\ \hline
+        $E7 \longrightarrow (EO)$ & ( & No \\ \hline
+        $OP1 \longrightarrow \;<$ & < & No \\ \hline
+        $OP1 \longrightarrow \;<=$ & <= & No \\ \hline
+        $OP1 \longrightarrow \;>$ & > & No \\ \hline
+        $OP1 \longrightarrow \;>=$ & >= & No \\ \hline
+        $OP1 \longrightarrow \;==$ & == & No \\ \hline
+        $OP1 \longrightarrow \;!=$ & != & No \\ \hline
+        $OP4 \longrightarrow \;*$ & * & No \\ \hline
+        $OP4 \longrightarrow \;/$ & / & No \\ \hline
+        $OP5 \longrightarrow \;+$ & + & No \\ \hline
+        $OP5 \longrightarrow \;-$ & - & No \\ \hline
 	\end{tabular}
 	\label{tab:tablaDirectores}
 \end{table}
