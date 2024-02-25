@@ -28,6 +28,8 @@
 \usepackage[spanish]{babel}
 \usepackage{epigraph}
 \usepackage{tabularx}
+\usepackage{tabularray}
+\usepackage{xcolor}
 \usepackage{eurosym}
 \usepackage[autostyle=true]{csquotes} % Required to generate language-dependent quotes in the bibliography
 \usepackage{hyperref}
@@ -96,6 +98,10 @@
     version={4.0},
 ]{doclicense}
 \usepackage{tcolorbox}
+
+\def\tablename{Tabla}
+\DefTblrTemplate{contfoot-text}{default}{Continúa en la siguiente página}
+\DefTblrTemplate{conthead-text}{default}{(Continuación)}
 
 %----------------------------------------------------------
 % New commands
