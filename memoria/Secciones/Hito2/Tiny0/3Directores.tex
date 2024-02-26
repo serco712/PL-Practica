@@ -36,9 +36,7 @@
     $instruccion \longrightarrow eval$ & @ & No \\ \hline
     $eval \longrightarrow @\;E0$ & @ & No \\ \hline
     $E0 \longrightarrow \textbf{identificador} = E0$ & \textbf{identificador} & No \\ \hline
-    $E0 \longrightarrow E1\;\;RE0$ & $+\;-$ & No \\ \hline
-    $RE0 \longrightarrow =\;E1\;\;RE0$ & $=$ & No \\ \hline
-    $RE0 \longrightarrow \epsilon$ & & h \\ \hline
+    $E0 \longrightarrow E1$ & $+\;-$ & No \\ \hline
     $E1 \longrightarrow E2\;\;RE1$ & $+\;-$ & No  \\ \hline
     $RE1 \longrightarrow OP1\;E2\;\;RE1$ & $<\;<=\;>\;>=\;==\;!=$ & No \\
     \hline
@@ -66,6 +64,7 @@
     $E7 \longrightarrow \textbf{false}$ &  \textbf{false} & No  \\ \hline
     $E7 \longrightarrow \textbf{literalEntero}$ &  \textbf{literalEntero} & No  \\ \hline
     $E7 \longrightarrow \textbf{literalReal}$ &  \textbf{literalReal} & No \\ \hline
+    $E7 \longrightarrow \textbf{identificador}$ &  \textbf{identificador} & No \\ \hline
     $E7 \longrightarrow (EO)$ & ( & No \\ \hline
     $OP1 \longrightarrow \;<$ & $<$ & No \\ \hline
     $OP1 \longrightarrow \;<=$ & $<=$ & No \\ \hline
