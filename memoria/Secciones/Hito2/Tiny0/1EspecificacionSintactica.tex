@@ -17,7 +17,7 @@
     lista$-$instrucciones \longrightarrow instruccion\\
     instruccion \longrightarrow eval\\
     eval \longrightarrow @\;E0\\
-    E0 \longrightarrow \textbf{identificador} = E0\\
+    E0 \longrightarrow E1 = E0\\
     E0 \longrightarrow E1\\
     E1 \longrightarrow E1\;\;OP1\;\;E2\\
     E1 \longrightarrow E2\\
@@ -31,13 +31,12 @@
     E4 \longrightarrow E5\\
     E5 \longrightarrow OP5\;\;E6\\
     E5 \longrightarrow E6\\
-    E6 \longrightarrow E7\\
-    E7 \longrightarrow \textbf{true}\\
-    E7 \longrightarrow \textbf{false}\\
-    E7 \longrightarrow \textbf{literalEntero}\\
-    E7 \longrightarrow \textbf{literalReal}\\
-    E7 \longrightarrow \textbf{identificador}\\
-    E7 \longrightarrow (\;E0\;)\\
+    E6 \longrightarrow \textbf{true}\\
+    E6 \longrightarrow \textbf{false}\\
+    E6 \longrightarrow \textbf{literalEntero}\\
+    E6 \longrightarrow \textbf{literalReal}\\
+    E6 \longrightarrow \textbf{identificador}\\
+    E6 \longrightarrow (\;E0\;)\\
     OP1 \longrightarrow \;<\\
     OP1 \longrightarrow \;<=\\
     OP1 \longrightarrow \;>\\

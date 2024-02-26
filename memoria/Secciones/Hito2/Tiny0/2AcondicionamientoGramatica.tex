@@ -19,20 +19,20 @@
     r$-$lista$-$instrucciones \longrightarrow \epsilon\\
     instruccion \longrightarrow eval\\
     eval \longrightarrow @\;E0\\
-    E0 \longrightarrow \textbf{identificador} = E0\\
-    E0 \longrightarrow E1\\
+    E0 \longrightarrow E1\;\;RE0\\
+    RE0 \longrightarrow =\;\;E0\\
+    RE0 \longrightarrow \epsilon\\
     E1 \longrightarrow E2\;\;RE1\\
     RE1 \longrightarrow OP1\;\;E2\;\;RE1\\
     RE1 \longrightarrow \epsilon\\
-    E2 \longrightarrow E3\;\;RE2'\;\;RE2\\
-    RE2' \longrightarrow -\;\;E3\\
-    RE2' \longrightarrow \epsilon\\
-    RE2 \longrightarrow +\;\;E3\;\;RE2\\
+    E2 \longrightarrow E3\;\;RE2\;\;RE2'\\
+    RE2 \longrightarrow -\;\;E3\\
     RE2 \longrightarrow \epsilon\\
-    E3 \longrightarrow E4\;\;RE3';\;RE3\\
-    RE3' \longrightarrow or\;\;E4\\
-    RE3' \longrightarrow \epsilon\\
-    RE3 \longrightarrow \;\;and\;\; \\
+    RE2' \longrightarrow +\;\;E3\;\;RE2'\\
+    RE2' \longrightarrow \epsilon\\
+    E3 \longrightarrow E4\;\;RE3\\
+    RE3 \longrightarrow and\;\;E3\\
+    RE3 \longrightarrow or\;\;E4\\
     RE3 \longrightarrow \epsilon\\
     E4 \longrightarrow E5\;\;RE4\\
     RE4 \longrightarrow OP4\;\;E5\;\;RE4\\
@@ -40,13 +40,12 @@
     E5 \longrightarrow RE5\;\;E6\\
     RE5 \longrightarrow OP5\\
     RE5 \longrightarrow \epsilon\\
-    E6 \longrightarrow E7\\
-    E7 \longrightarrow \textbf{true}\\
-    E7 \longrightarrow \textbf{false}\\
-    E7 \longrightarrow \textbf{literalEntero}\\
-    E7 \longrightarrow \textbf{literalReal}\\
-    E7 \longrightarrow \textbf{identificador}\\
-    E7 \longrightarrow (\;E0\;)\\
+    E6 \longrightarrow \textbf{true}\\
+    E6 \longrightarrow \textbf{false}\\
+    E6 \longrightarrow \textbf{literalEntero}\\
+    E6 \longrightarrow \textbf{literalReal}\\
+    E6 \longrightarrow \textbf{identificador}\\
+    E6 \longrightarrow (\;E0\;)\\
     OP1 \longrightarrow \;<\\
     OP1 \longrightarrow \;<=\\
     OP1 \longrightarrow \;>\\

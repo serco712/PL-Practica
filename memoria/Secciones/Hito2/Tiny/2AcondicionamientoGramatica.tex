@@ -48,22 +48,21 @@
     instruccion \longrightarrow  \textbf{call identificador}\;par-reales\\
     instruccion \longrightarrow  \textbf{nl}\\
     instruccion \longrightarrow  \textbf{bloque}\\
-     eval \longrightarrow @\;E0\\
-    E0 \longrightarrow \textbf{identificador}\;\;RE0\\
-    RE0 \longrightarrow =\;E1\;\;RE0\\
+    eval \longrightarrow @\;E0\\
+    E0 \longrightarrow E1\;\;RE0\\
+    RE0 \longrightarrow =\;\;E0\\
     RE0 \longrightarrow \epsilon\\
     E1 \longrightarrow E2\;\;RE1\\
     RE1 \longrightarrow OP1\;\;E2\;\;RE1\\
     RE1 \longrightarrow \epsilon\\
-    E2 \longrightarrow E3\;\;RE2'\;\;RE2\\
-    RE2' \longrightarrow -\;\;E3\\
-    RE2' \longrightarrow \epsilon\\
-    RE2 \longrightarrow +\;\;E3\;\;RE2\\
+    E2 \longrightarrow E3\;\;RE2\;\;RE2'\\
+    RE2 \longrightarrow -\;\;E3\\
     RE2 \longrightarrow \epsilon\\
-    E3 \longrightarrow E4\;\;RE3';\;RE3\\
-    RE3' \longrightarrow or\;\;E4\\
-    RE3' \longrightarrow \epsilon\\
-    RE3 \longrightarrow \;\;and\;\; \\
+    RE2' \longrightarrow +\;\;E3\;\;RE2'\\
+    RE2' \longrightarrow \epsilon\\
+    E3 \longrightarrow E4\;\;RE3\\
+    RE3 \longrightarrow and\;\;E3\\
+    RE3 \longrightarrow or\;\;E4\\
     RE3 \longrightarrow \epsilon\\
     E4 \longrightarrow E5\;\;RE4\\
     RE4 \longrightarrow OP4\;\;E5\;\;RE4\\
