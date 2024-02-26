@@ -1,5 +1,5 @@
 # Fdb version 3
-["pdflatex"] 1708878335 "/home/sergio/Desktop/Estudios/UCM/4º/PL/PL-Practica/memoria/memoria.tex" "memoria.pdf" "memoria" 1708878335
+["pdflatex"] 1708936815 "/home/sergio/Desktop/Estudios/UCM/4º/PL/PL-Practica/memoria/memoria.tex" "memoria.pdf" "memoria" 1708936815
   "/etc/texmf/web2c/texmf.cnf" 1696887252 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/sergio/Desktop/Estudios/UCM/4º/PL/PL-Practica/memoria/memoria.tex" 1708876494 1417 acca7c63c36132c6ed67728c408ce2ec ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -252,13 +252,13 @@
   "Secciones/2Sintaxis.tex" 1708814287 325 b2a38f4a56b43c9d0dbcebe1d142258f ""
   "Secciones/Hito2/Tiny/1EspecificacionSintactica.tex" 1708868437 4140 5b8a9d9160b32b2892895880ab2112b8 ""
   "Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex" 1708868437 4727 1724c120a702383966718f7d1a2102ba ""
-  "Secciones/Hito2/Tiny0/1EspecificacionSintactica.tex" 1708812439 1946 683aceb94af2213172c2d6fc5f55a59d ""
-  "Secciones/Hito2/Tiny0/2AcondicionamientoGramatica.tex" 1708815666 2515 91c0483a535d7165f9c627115fccda36 ""
-  "Secciones/Hito2/Tiny0/3Directores.tex" 1708878343 4799 2a8eed58cb928b810c41f063f95140f4 ""
+  "Secciones/Hito2/Tiny0/1EspecificacionSintactica.tex" 1708935260 1946 1f9d1ad69d2fde31291c66ea6ba31c5c ""
+  "Secciones/Hito2/Tiny0/2AcondicionamientoGramatica.tex" 1708936806 2527 db740339a169de91fc459e3e4a5639a6 ""
+  "Secciones/Hito2/Tiny0/3Directores.tex" 1708936549 4393 6dafb8f7244366e5904b41ba2be9d28a ""
   "glossary.aux" 0 -1 0 "pdflatex"
   "glossary.tex" 1696944159 0 d41d8cd98f00b204e9800998ecf8427e ""
   "logoComplutense.png" 1696944159 645493 33494c3511b6d6c38369d75dce9640f5 ""
-  "memoria.aux" 1708878335 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
+  "memoria.aux" 1708936815 32 3985256e7290058c681f74d7a3565a19 "pdflatex"
   "memoria.out" 0 -1 0 "pdflatex"
   "memoria.tex" 1708876494 1417 acca7c63c36132c6ed67728c408ce2ec ""
   (generated)
