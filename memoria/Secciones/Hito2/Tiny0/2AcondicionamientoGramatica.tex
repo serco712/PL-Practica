@@ -27,12 +27,14 @@
     E1 \longrightarrow E2\;\;RE1\\
     RE1 \longrightarrow OP1\;\;E2\;\;RE1\\
     RE1 \longrightarrow \epsilon\\
-    E2 \longrightarrow E3\;\;-\;\;E3\;\;RE2\\
-    E2 \longrightarrow E3\;\;RE2\\
+    E2 \longrightarrow E3\;\;RE2'\;\;RE2\\
+    RE2' \longrightarrow -\;\;E3\\
+    RE2' \longrightarrow \epsilon\\
     RE2 \longrightarrow +\;\;E3\;\;RE2\\
     RE2 \longrightarrow \epsilon\\
-    E3 \longrightarrow E4\;\;or\;\;E4\;\;RE3\\
-    E3 \longrightarrow E4\;\;RE3\\
+    E3 \longrightarrow E4\;\;RE3';\;RE3\\
+    RE3' \longrightarrow or\;\;E4\\
+    RE3' \longrightarrow \epsilon\\
     RE3 \longrightarrow \;\;and\;\; \\
     RE3 \longrightarrow \epsilon\\
     E4 \longrightarrow E5\;\;RE4\\
