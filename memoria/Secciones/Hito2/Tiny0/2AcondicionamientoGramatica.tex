@@ -12,7 +12,6 @@
     tipo \longrightarrow \textbf{bool}\\
     tipo \longrightarrow \textbf{int}\\
     tipo \longrightarrow \textbf{real}\\
-    tipo \longrightarrow \textbf{identificador}\\
     instrucciones \longrightarrow lista$-$instrucciones\\
     instrucciones \longrightarrow \epsilon\\
     lista$-$instrucciones \longrightarrow instruccion\;\; r$-$lista$-$instrucciones\\
@@ -21,9 +20,7 @@
     instruccion \longrightarrow eval\\
     eval \longrightarrow @\;E0\\
     E0 \longrightarrow \textbf{identificador} = E0\\
-    E0 \longrightarrow E1\;\;RE0\\
-    RE0 \longrightarrow =\;\;E1\;\;RE0\\
-    RE0 \longrightarrow \epsilon\\
+    E0 \longrightarrow E1\\
     E1 \longrightarrow E2\;\;RE1\\
     RE1 \longrightarrow OP1\;\;E2\;\;RE1\\
     RE1 \longrightarrow \epsilon\\
@@ -48,6 +45,7 @@
     E7 \longrightarrow \textbf{false}\\
     E7 \longrightarrow \textbf{literalEntero}\\
     E7 \longrightarrow \textbf{literalReal}\\
+    E7 \longrightarrow \textbf{identificador}\\
     E7 \longrightarrow (\;E0\;)\\
     OP1 \longrightarrow \;<\\
     OP1 \longrightarrow \;<=\\
