@@ -84,15 +84,19 @@ public class AnalizadorSintacticoEval {
       tipo();
       empareja(ClaseLexica.IDEN);
    }
+   
+   private void tipo() {
+      switch(anticipo.clase()) {
+         case BOOL:
+         	empareja(ClaseLexica.BOOL);
+         case ENT:
+         	empar
+      }
+   }
+   
 
 	private void expresion() {
 		empareja(ClaseLexica.EVALUA);
-		E0();
-	}
-
-	private void declaracion() {
-		empareja(ClaseLexica.IDEN);
-		empareja(ClaseLexica.IGUAL);
 		E0();
 	}
 
