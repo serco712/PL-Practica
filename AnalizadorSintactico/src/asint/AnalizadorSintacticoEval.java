@@ -65,51 +65,42 @@ public class AnalizadorSintacticoEval {
 
 	private void lista_declaraciones() {
 		declaracion();
-		r_lista_declaraciones();
+		rlista_declaraciones();
 	}
 
-	private void r_lista_declaraciones() {
-      switch (anticipo.clase()) {
-         case PCOMA:
-         	empareja(ClaseLexica.PCOMA);
-         	declaracion();
-         	r_lista_declaraciones();
-         default:
-         	esperados(ClaseLexica.PCOMA);
-         	break;
-      }
-   }
-   
-   private void declaracion() {
-      tipo();
-      empareja(ClaseLexica.IDEN);
-   }
-   
-   private void tipo() {
-      switch(anticipo.clase()) {
-         case BOOL:
-         	empareja(ClaseLexica.BOOL);
-         case ENT:
-         	empar
-      }
-   }
-   
-
-	private void expresion() {
-		empareja(ClaseLexica.EVALUA);
-		E0();
-	}
-
-	private void rlista_decs() {
+	private void rlista_declaraciones() {
 		switch (anticipo.clase()) {
-		case COMA:
-			empareja(ClaseLexica.COMA);
-			declaracion();
-			rlista_decs();
-			break;
-		default:
-			esperados(ClaseLexica.COMA);
-			break;
+			case PCOMA:
+				empareja(ClaseLexica.PCOMA);
+				declaracion();
+				rlista_declaraciones();
+				break;
+			default:
+				esperados(ClaseLexica.PCOMA);
+				break;
+		}
+	}
+
+	private void declaracion() {
+		tipo();
+		empareja(ClaseLexica.IDEN);
+	}
+   
+	private void tipo() {
+		switch(anticipo.clase()) {
+			case BOOL:
+				empareja(ClaseLexica.BOOL);
+				break;
+			case ENT:
+				empareja(ClaseLexica.ENT);
+				break;
+			case REAL:
+				empareja(ClaseLexica.REAL);
+				break;
+			default:
+				esperados(ClaseLexica.BOOL, ClaseLexica.ENT, ClaseLexica.REAL);
+				error();
+				break;
 		}
 	}
 
