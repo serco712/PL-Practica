@@ -19,8 +19,8 @@
     r$-$lista$-$instrucciones \longrightarrow \epsilon\\
     instruccion \longrightarrow eval\\
     eval \longrightarrow @\;E0\\
-    E0 \longrightarrow E1\;\;RE0\\
-    RE0 \longrightarrow =\;\;E0\\
+    E0 \longrightarrow E1\;RE0\\
+    RE0 \longrightarrow \;=\;E0\\
     RE0 \longrightarrow \epsilon\\
     E1 \longrightarrow E2\;\;RE1\\
     RE1 \longrightarrow OP1\;\;E2\;\;RE1\\
@@ -37,9 +37,8 @@
     E4 \longrightarrow E5\;\;RE4\\
     RE4 \longrightarrow OP4\;\;E5\;\;RE4\\
     RE4 \longrightarrow \epsilon\\
-    E5 \longrightarrow RE5\;\;E6\\
-    RE5 \longrightarrow OP5\\
-    RE5 \longrightarrow \epsilon\\
+    E5 \longrightarrow OP5\;\;E6\\
+    E5 \longrightarrow E6\\
     E6 \longrightarrow \textbf{true}\\
     E6 \longrightarrow \textbf{false}\\
     E6 \longrightarrow \textbf{literalEntero}\\
@@ -58,4 +57,4 @@
     OP5 \longrightarrow \;-\\ 
 \end{math}
 
-\vspace{3em}
+\vspace{5em}
