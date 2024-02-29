@@ -54,6 +54,7 @@ write = (w|W)(r|R)(i|I)(t|T)(e|E)
 nl = (n|N)(l|L)
 type = (t|T)(y|Y)(p|P)(e|E)
 call = (c|C)(a|A)(l|L)(l|L)
+
 literalReal = {literalEntero}({punto}{parteDecimal}|{parteExponencial}|{punto}{parteDecimal}{parteExponencial})
 literalEntero = [\+,\-]?{parteEntera}
 literalCadena = \"[^\"]*\"
