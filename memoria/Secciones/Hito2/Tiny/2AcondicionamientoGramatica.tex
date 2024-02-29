@@ -1,4 +1,4 @@
-\section{Acondicionamiento de gramática}
+\section{Acondicionamiento de la gramática}
 
 \begin{math}
     programa \longrightarrow bloque \\
@@ -9,14 +9,19 @@
     r$-$lista$-$declaraciones \longrightarrow\;;\;declaracion\;\; r$-$lista$-$declaraciones\\
     r$-$lista$-$declaraciones \longrightarrow \epsilon\\
     declaracion \longrightarrow tipo\;\textbf{identificador}\\
-    declaracion \longrightarrow tipo\;\textbf{type tipo identificador}\\
+    declaracion \longrightarrow \textbf{type}\;tipo\;\textbf{identificador}\\
     declaracion \longrightarrow \textbf{proc}\;\textbf{identificador}\;par$-$formales\;bloque\\
-    declaracion \longrightarrow type\;\textbf{struct}\;\{\;lista$-$variables\;\}\;\textbf{identificador}\\
-    tipo \longrightarrow \textbf{bool}\\
-    tipo \longrightarrow \textbf{int}\\
-    tipo \longrightarrow \textbf{real}\\
-    tipo \longrightarrow \textbf{string}\\
-    tipo \longrightarrow \textbf{identificador}\\
+    declaracion \longrightarrow \textbf{type}\;\textbf{struct}\;\{\;lista$-$variables\;\}\;\textbf{identificador}\\
+    tipo \longrightarrow tipo2\;rtipo\\
+    rtipo \longrightarrow [\textbf{literalEntero}]\;rtipo\\
+    rtipo \longrightarrow \epsilon\\
+    tipo2 \longrightarrow \hat{}\;tipo2\\
+    tipo2 \longrightarrow tipo3\\
+    tipo3 \longrightarrow \textbf{bool}\\
+    tipo3 \longrightarrow \textbf{int}\\
+    tipo3 \longrightarrow \textbf{real}\\
+    tipo3 \longrightarrow \textbf{string}\\
+    tipo3 \longrightarrow \textbf{identificador}\\
     tipo \longrightarrow \hat{}\;tipo\\
     tipo \longrightarrow \textbf{struct}\;\{\;lista$-$variables\;\}\\
     instrucciones \longrightarrow lista$-$instrucciones\\
@@ -24,32 +29,35 @@
     lista$-$instrucciones \longrightarrow instruccion\;\; r$-$lista$-$instrucciones\\
     r$-$lista$-$instrucciones \longrightarrow\;;\;instruccion\;\;r$-$lista$-$instrucciones\\
     r$-$lista$-$instrucciones \longrightarrow \epsilon\\
-    par$-$formales \longrightarrow (lista$-$par$-$formal)\\
-    par$-$formales \longrightarrow ()\\
+    par$-$formales \longrightarrow (r$-$par$-$formales\\
+    r$-$par$-$formales \longrightarrow lista$-$par$-$formal)\\
+    r$-$par$-$formales \longrightarrow )\\
     lista$-$par$-$formal \longrightarrow par$-$formal\;\;lista$-$par$-$formal\\
     lista$-$par$-$formal \longrightarrow\; , \;\;par$-$formal\;\;lista$-$par$-$formal\\
     lista$-$par$-$formal \longrightarrow \epsilon\\
-    par$-$formales \longrightarrow tipo \;\; identificador \\
-    par$-$formales \longrightarrow tipo \;\; identificador \;\; \& \\
-    par$-$reales \longrightarrow (lista$-$par$-$real)\\
-    par$-$reales \longrightarrow ()\\
+    par$-$formales \longrightarrow tipo\;r$-$par$-$formales\\
+    r$-$par$-$formales \longrightarrow  \&\textbf{identificador}\\
+    r$-$par$-$formales \longrightarrow  \textbf{identificador}\\
+    par$-$reales \longrightarrow (r$-$par$-$reales\\
+    r$-$par$-$reales \longrightarrow lista$-$par$-$real)\\
+    r$-$par$-$reales \longrightarrow )\\
     lista$-$par$-$real \longrightarrow E0\;\;r$-$lista$-$par$-$real\\
-    r-lista$-$par$-$real \longrightarrow \;;\;\;E0\;\;r$-$lista$-$par$-$real\\
+    r-lista$-$par$-$real \longrightarrow \;,\;\;E0\;\;r$-$lista$-$par$-$real\\
     r-lista$-$par$-$real \longrightarrow \epsilon\\
     instruccion \longrightarrow  eval\\
     instruccion \longrightarrow  \textbf{if}\;E0\;bloque\\
-    instruccion \longrightarrow  \textbf{if}\;E0\;bloque\;e\textbf{lse}\;bloque\\
+    instruccion \longrightarrow  \textbf{if}\;E0\;bloque\;\textbf{else}\;bloque\\
     instruccion \longrightarrow  \textbf{while}\;E0\;bloque\\
     instruccion \longrightarrow  \textbf{new}\;E0\\
     instruccion \longrightarrow  \textbf{delete}\;E0\\
     instruccion \longrightarrow  \textbf{read}\;E0\\
     instruccion \longrightarrow  \textbf{write}\;E0\\
-    instruccion \longrightarrow  \textbf{call identificador}\;par-reales\\
+    instruccion \longrightarrow  \textbf{call identificador}\;par$-$reales\\
     instruccion \longrightarrow  \textbf{nl}\\
     instruccion \longrightarrow  \textbf{bloque}\\
     eval \longrightarrow @\;E0\\
     E0 \longrightarrow E1\;\;RE0\\
-    RE0 \longrightarrow =\;\;E0\\
+    RE0 \longrightarrow \;=\;E0\\
     RE0 \longrightarrow \epsilon\\
     E1 \longrightarrow E2\;\;RE1\\
     RE1 \longrightarrow OP1\;\;E2\;\;RE1\\
@@ -66,11 +74,10 @@
     E4 \longrightarrow E5\;\;RE4\\
     RE4 \longrightarrow OP4\;\;E5\;\;RE4\\
     RE4 \longrightarrow \epsilon\\
-    E5 \longrightarrow RE5\;\;E6\\
-    RE5 \longrightarrow OP5\\
-    RE5 \longrightarrow \epsilon\\
+    E5 \longrightarrow OP5\;\;E6\\
+    E5 \longrightarrow E6\\
     E6 \longrightarrow E7\;\;RE6\\
-    RE6 \longrightarrow OP6\;\;E7\;\;RE6\\
+    RE6 \longrightarrow OP6\;\;RE6\\
     RE6 \longrightarrow \epsilon\\
     E7 \longrightarrow \textbf{true}\\
     E7 \longrightarrow \textbf{false}\\
