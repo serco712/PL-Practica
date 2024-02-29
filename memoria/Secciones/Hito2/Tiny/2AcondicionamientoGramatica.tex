@@ -45,8 +45,9 @@
     r-lista$-$par$-$real \longrightarrow \;,\;\;E0\;\;r$-$lista$-$par$-$real\\
     r-lista$-$par$-$real \longrightarrow \epsilon\\
     instruccion \longrightarrow  eval\\
-    instruccion \longrightarrow  \textbf{if}\;E0\;bloque\\
-    instruccion \longrightarrow  \textbf{if}\;E0\;bloque\;\textbf{else}\;bloque\\
+    instruccion \longrightarrow  \textbf{if}\;E0\;bloque\;r$-$if\\
+    r$-$if \longrightarrow \;\textbf{else}\;bloque\\
+    r$-$if \longrightarrow \epsilon\\
     instruccion \longrightarrow  \textbf{while}\;E0\;bloque\\
     instruccion \longrightarrow  \textbf{new}\;E0\\
     instruccion \longrightarrow  \textbf{delete}\;E0\\
