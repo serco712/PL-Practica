@@ -1,16 +1,13 @@
 package alex;
 
 import java.io.Reader;
+
+import errors.GestionErroresEval;
+
 import java.io.IOException;
 
 public class AnalizadorLexicoEval {
 	
-   public static class ECaracterInesperado extends RuntimeException {
-       public ECaracterInesperado(String msg) {
-           super(msg);
-       }
-   }; 
-
    private Reader input;
    private StringBuffer lex;
    private int sigCar;
@@ -19,6 +16,7 @@ public class AnalizadorLexicoEval {
    private int filaActual;
    private int columnaActual;
    private static String NL = System.getProperty("line.separator");
+   private GestionErroresEval errores;
    
    private static enum Estado {
     INICIO, REC_MAYOR, REC_MAYOR_IGUAL, REC_MENOR, REC_MENOR_IGUAL, REC_1DISTINTO, REC_DISTINTO, REC_ASIG, REC_IGUAL,
@@ -29,7 +27,7 @@ public class AnalizadorLexicoEval {
 
    private Estado estado;
 
-   public AnalizadorLexicoEval(Reader input) throws IOException {
+   public AnalizadorLexicoEval(Reader input, GestionErroresEval errores) throws IOException {
     this.input = input;
     lex = new StringBuffer();
     sigCar = input.read();
@@ -323,12 +321,7 @@ public class AnalizadorLexicoEval {
   //       return new UnidadLexicaUnivaluada(0,0, null);
   //  } 
    private void error() {
-	   int curCar = sigCar;
-	     try{
-          sigCar();
-	     }
-	     catch(IOException e) {}
-	     throw new ECaracterInesperado("("+filaActual+','+columnaActual+"):Caracter inexperado:"+(char)curCar);    
+	  errores.errorLexico(filaActual,columnaActual,(char)sigCar);     
    }
 
   //  public static void main(String arg[]) throws IOException {
