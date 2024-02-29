@@ -351,8 +351,10 @@ public class AnalizadorSintacticoEval {
 	}
 
 	private void empareja(ClaseLexica claseEsperada) {
-		if (anticipo.clase() == claseEsperada)
+		if (anticipo.clase() == claseEsperada) {
+			traza_emparejamiento(anticipo);
 			sigToken();
+		}
 		else {
 			esperados(claseEsperada);
 			error();
@@ -371,5 +373,7 @@ public class AnalizadorSintacticoEval {
 	private void error() {
 		errores.errorSintactico(anticipo.fila(), anticipo.columna(), anticipo.clase(), esperados);
 	}
+	
+	protected void traza_emparejamiento(UnidadLexica anticipo) {}  
 
 }
