@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2023.10.9)  29 FEB 2024 16:56
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2023.10.9)  29 FEB 2024 17:42
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1582,42 +1582,42 @@ less on input line 1.
 [6.7
 
 ]
-./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:99: Incompatible glue un
+./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:97: Incompatible glue un
 its.
 \es@sppercent ...fnum \gluestretchorder \lastskip 
                                                   =\z@ \unskip \fi \textorma...
-l.99     OP4 \longrightarrow \;\%
+l.97     OP4 \longrightarrow \;\%
                                  \\
 I'm going to assume that 1mu=1pt when they're mixed.
 
-./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:106: Missing $ inserted.
+./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:104: Missing $ inserted.
 <inserted text> 
                 $
-l.106 
+l.104 
       
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3--106
+Underfull \hbox (badness 10000) in paragraph at lines 3--104
 
  []
 
-LaTeX Info: Redefining \. on input line 106.
-LaTeX Info: Redefining \% on input line 106.
+LaTeX Info: Redefining \. on input line 104.
+LaTeX Info: Redefining \% on input line 104.
 [7.8]
-LaTeX Info: Redefining \. on input line 106.
-LaTeX Info: Redefining \% on input line 106.
+LaTeX Info: Redefining \. on input line 104.
+LaTeX Info: Redefining \% on input line 104.
  [8.9]
 
-./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:107: LaTeX Error: Bad ma
+./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:105: LaTeX Error: Bad ma
 th environment delimiter.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.107 \end{math}
+l.105 \end{math}
                 
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,

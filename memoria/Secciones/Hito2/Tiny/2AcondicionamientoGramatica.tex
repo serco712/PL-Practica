@@ -22,8 +22,6 @@
     tipo3 \longrightarrow \textbf{real}\\
     tipo3 \longrightarrow \textbf{string}\\
     tipo3 \longrightarrow \textbf{identificador}\\
-    tipo \longrightarrow \hat{}\;tipo\\
-    tipo \longrightarrow \textbf{struct}\;\{\;lista$-$variables\;\}\\
     instrucciones \longrightarrow lista$-$instrucciones\\
     instrucciones \longrightarrow \epsilon\\
     lista$-$instrucciones \longrightarrow instruccion\;\; r$-$lista$-$instrucciones\\
@@ -33,17 +31,17 @@
     r$-$par$-$formales \longrightarrow lista$-$par$-$formal)\\
     r$-$par$-$formales \longrightarrow )\\
     lista$-$par$-$formal \longrightarrow par$-$formal\;\;lista$-$par$-$formal\\
-    lista$-$par$-$formal \longrightarrow\; , \;\;par$-$formal\;\;lista$-$par$-$formal\\
+    lista$-$par$-$formal \longrightarrow\;,\;par$-$formal\;\;lista$-$par$-$formal\\
     lista$-$par$-$formal \longrightarrow \epsilon\\
-    par$-$formales \longrightarrow tipo\;r$-$par$-$formales\\
-    r$-$par$-$formales \longrightarrow  \&\textbf{identificador}\\
-    r$-$par$-$formales \longrightarrow  \textbf{identificador}\\
+    par$-$formal \longrightarrow tipo\;r$-$par$-$formales\\
+    r$-$par$-$formal \longrightarrow  \&\textbf{identificador}\\
+    r$-$par$-$formal \longrightarrow  \textbf{identificador}\\
     par$-$reales \longrightarrow (r$-$par$-$reales\\
     r$-$par$-$reales \longrightarrow lista$-$par$-$real)\\
     r$-$par$-$reales \longrightarrow )\\
     lista$-$par$-$real \longrightarrow E0\;\;r$-$lista$-$par$-$real\\
-    r-lista$-$par$-$real \longrightarrow \;,\;\;E0\;\;r$-$lista$-$par$-$real\\
-    r-lista$-$par$-$real \longrightarrow \epsilon\\
+    r$-$lista$-$par$-$real \longrightarrow \;,\;\;E0\;\;r$-$lista$-$par$-$real\\
+    r$-$lista$-$par$-$real \longrightarrow \epsilon\\
     instruccion \longrightarrow  eval\\
     instruccion \longrightarrow  \textbf{if}\;E0\;bloque\;r$-$if\\
     r$-$if \longrightarrow \;\textbf{else}\;bloque\\
@@ -69,8 +67,8 @@
     RE2' \longrightarrow +\;\;E3\;\;RE2'\\
     RE2' \longrightarrow \epsilon\\
     E3 \longrightarrow E4\;\;RE3\\
-    RE3 \longrightarrow and\;\;E3\\
-    RE3 \longrightarrow or\;\;E4\\
+    RE3 \longrightarrow \textbf{and}\;\;E3\\
+    RE3 \longrightarrow \textbf{or}\;\;E4\\
     RE3 \longrightarrow \epsilon\\
     E4 \longrightarrow E5\;\;RE4\\
     RE4 \longrightarrow OP4\;\;E5\;\;RE4\\
