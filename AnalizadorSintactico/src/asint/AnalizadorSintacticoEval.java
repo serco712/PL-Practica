@@ -244,16 +244,17 @@ public class AnalizadorSintacticoEval {
 	
 	private void E5() {
 		switch (anticipo.clase()) {
-		case SUMA: case RESTA:
+		case SUMA: case RESTA: case NOT:
 			OP5();
-			E6();
+			E5();
 			break;
-		case TRUE: case FALSE: case LIT_ENT: case LIT_REAL: case PAP:
+		case TRUE: case FALSE: case LIT_ENT: case LIT_REAL: case PAP: case IDEN:
 			E6();
 			break;
 		default:
-			esperados(ClaseLexica.SUMA,ClaseLexica.RESTA,ClaseLexica.TRUE,
-			ClaseLexica.FALSE,ClaseLexica.LIT_ENT,ClaseLexica.LIT_REAL,ClaseLexica.PAP);
+			esperados(ClaseLexica.SUMA,ClaseLexica.RESTA,ClaseLexica.NOT,ClaseLexica.TRUE,
+			ClaseLexica.FALSE,ClaseLexica.LIT_ENT,ClaseLexica.LIT_REAL,
+			ClaseLexica.PAP,ClaseLexica.IDEN);
 			error();
 		}
 	}
@@ -335,8 +336,11 @@ public class AnalizadorSintacticoEval {
 		case RESTA:
 			empareja(ClaseLexica.RESTA);
 			break;
+		case NOT:
+			empareja(ClaseLexica.NOT);
+			break;
 		default:
-			esperados(ClaseLexica.SUMA, ClaseLexica.RESTA);
+			esperados(ClaseLexica.SUMA, ClaseLexica.RESTA, ClaseLexica.NOT);
 			error();
 		}
 	}
