@@ -8,10 +8,14 @@
     lista$-$declaraciones \longrightarrow declaracion\;\; r$-$lista$-$declaraciones\\
     r$-$lista$-$declaraciones \longrightarrow\;;\;declaracion\;\; r$-$lista$-$declaraciones\\
     r$-$lista$-$declaraciones \longrightarrow \epsilon\\
+    lista$-$variables \longrightarrow declaracion\;r$-$lista$-$variables\\
+    r$-$lista$-$variables \longrightarrow ,\;declaracion\;r$-$lista$-$variables\\
+    r$-$lista$-$variables \longrightarrow \epsilon\\
     declaracion \longrightarrow tipo\;\textbf{identificador}\\
-    declaracion \longrightarrow \textbf{type}\;tipo\;\textbf{identificador}\\
+    declaracion \longrightarrow \textbf{type}\;r$-$declaracion\\
     declaracion \longrightarrow \textbf{proc}\;\textbf{identificador}\;par$-$formales\;bloque\\
-    declaracion \longrightarrow \textbf{type}\;\textbf{struct}\;\{\;lista$-$variables\;\}\;\textbf{identificador}\\
+    r$-$declaracion \longrightarrow \textbf{struct}\;\{\;lista$-$variables\;\}\;\textbf{identificador}\\
+    r$-$declaracion \longrightarrow tipo\;\textbf{identificador}\\
     tipo \longrightarrow tipo2\;rtipo\\
     rtipo \longrightarrow [\textbf{literalEntero}]\;rtipo\\
     rtipo \longrightarrow \epsilon\\
