@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2023.10.9)  29 FEB 2024 11:48
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2023.10.9)  29 FEB 2024 16:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1582,42 +1582,42 @@ less on input line 1.
 [6.7
 
 ]
-./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:98: Incompatible glue un
+./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:99: Incompatible glue un
 its.
 \es@sppercent ...fnum \gluestretchorder \lastskip 
                                                   =\z@ \unskip \fi \textorma...
-l.98     OP4 \longrightarrow \;\%
+l.99     OP4 \longrightarrow \;\%
                                  \\
 I'm going to assume that 1mu=1pt when they're mixed.
 
-./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:105: Missing $ inserted.
+./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:106: Missing $ inserted.
 <inserted text> 
                 $
-l.105 
+l.106 
       
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3--105
+Underfull \hbox (badness 10000) in paragraph at lines 3--106
 
  []
 
-LaTeX Info: Redefining \. on input line 105.
-LaTeX Info: Redefining \% on input line 105.
+LaTeX Info: Redefining \. on input line 106.
+LaTeX Info: Redefining \% on input line 106.
 [7.8]
-LaTeX Info: Redefining \. on input line 105.
-LaTeX Info: Redefining \% on input line 105.
+LaTeX Info: Redefining \. on input line 106.
+LaTeX Info: Redefining \% on input line 106.
  [8.9]
 
-./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:106: LaTeX Error: Bad ma
+./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:107: LaTeX Error: Bad ma
 th environment delimiter.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.106 \end{math}
+l.107 \end{math}
                 
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1675,16 +1675,13 @@ LaTeX Info: Redefining \% on input line 32.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `memoria.out' has not changed.
 (rerunfilecheck)             Checksum: A18E5FDA5BF9068392BC024AE1E247C9;1227.
  ) 
 Here is how much of TeX's memory you used:
  38588 strings out of 476191
  758279 string characters out of 5812072
- 1310627 words of memory out of 5000000
+ 1310618 words of memory out of 5000000
  58659 multiletter control sequences out of 15000+600000
  516148 words of font info for 53 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
