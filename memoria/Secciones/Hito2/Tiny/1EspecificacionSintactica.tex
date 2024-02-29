@@ -10,16 +10,18 @@
     lista$-$variables \longrightarrow lista$-$variables\;,\;declaracion\\
     lista$-$variables \longrightarrow declaracion\\
     declaracion \longrightarrow tipo\;\textbf{identificador}\\
-    declaracion \longrightarrow tipo\; [\textbf{literalEntero}]\; \textbf{identificador}\\
-    declaracion \longrightarrow type\;tipo\;\textbf{identificador}\\
+    declaracion \longrightarrow \textbf{type}\;tipo\;\textbf{identificador}\\
     declaracion \longrightarrow \textbf{proc}\;\textbf{identificador}\;par$-$formales\;bloque\\
-    declaracion \longrightarrow type\;\textbf{struct}\;\{\;lista$-$variables\;\}\;\textbf{identificador}\\
-    tipo \longrightarrow \textbf{bool}\\
-    tipo \longrightarrow \textbf{int}\\
-    tipo \longrightarrow \textbf{real}\\
-    tipo \longrightarrow \textbf{string}\\
-    tipo \longrightarrow \textbf{identificador}\\
-    tipo \longrightarrow \hat{}\;tipo\\
+    declaracion \longrightarrow \textbf{type}\;\textbf{struct}\;\{\;lista$-$variables\;\}\;\textbf{identificador}\\
+    tipo \longrightarrow tipo[\textbf{literalEntero}]\\
+    tipo \longrightarrow tipo2\\
+    tipo2 \longrightarrow \hat{}\;tipo2 \\
+    tipo2 \longrightarrow tipo3\\
+    tipo3 \longrightarrow \textbf{bool}\\
+    tipo3 \longrightarrow \textbf{int}\\
+    tipo3 \longrightarrow \textbf{real}\\
+    tipo3 \longrightarrow \textbf{string}\\
+    tipo3 \longrightarrow \textbf{identificador}\\
     instrucciones \longrightarrow lista$-$instrucciones\\
     instrucciones \longrightarrow \epsilon\\
     lista$-$instrucciones \longrightarrow lista$-$instrucciones\;;\;instruccion\\

@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2023.10.9)  26 FEB 2024 20:35
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2023.10.9)  29 FEB 2024 11:48
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1492,21 +1492,21 @@ Type  I <command> <return>  to replace it with another command,
 or  <return>  to continue without it.
 
 ) (./Secciones/Hito2/Tiny0/2AcondicionamientoGramatica.tex
-Underfull \hbox (badness 10000) in paragraph at lines 3--60
+Underfull \hbox (badness 10000) in paragraph at lines 3--59
 
  []
 
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 60.
+less on input line 59.
 
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 60.
+less on input line 59.
 
 
 Package fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
-less on input line 60.
+less on input line 59.
 
 [2.3
 
@@ -1525,198 +1525,23 @@ LaTeX Info: Redefining \% on input line 1.
 > Step: parse table inner spec.
 > Step: execute table commands.
 > Step: calculate cell and line sizes.
-
-./Secciones/Hito2/Tiny0/3Directores.tex:80: Undefined control sequence.
-\l_tmpa_tl ->$RE0 \longrightarrow =\;\E 
-                                        0$
-l.80 \end
-         {tabular}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./Secciones/Hito2/Tiny0/3Directores.tex:80: Undefined control sequence.
-\l__tblr_c_tl ->$RE0 \longrightarrow =\;\E 
-                                           0$
-l.80 \end
-         {tabular}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./Secciones/Hito2/Tiny0/3Directores.tex:80: Undefined control sequence.
-\l__tblr_c_tl ->$RE0 \longrightarrow =\;\E 
-                                           0$
-l.80 \end
-         {tabular}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./Secciones/Hito2/Tiny0/3Directores.tex:80: Undefined control sequence.
-\l_tmpa_tl ->$RE0 \longrightarrow =\;\E 
-                                        0$
-l.80 \end
-         {tabular}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./Secciones/Hito2/Tiny0/3Directores.tex:80: Undefined control sequence.
-\l__tblr_c_tl ->$RE0 \longrightarrow =\;\E 
-                                           0$
-l.80 \end
-         {tabular}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./Secciones/Hito2/Tiny0/3Directores.tex:80: Undefined control sequence.
-\l__tblr_c_tl ->$RE0 \longrightarrow =\;\E 
-                                           0$
-l.80 \end
-         {tabular}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
 > Step: build the whole table.
-./Secciones/Hito2/Tiny0/3Directores.tex:80: Undefined control sequence.
-\l_tmpa_tl ->$RE0 \longrightarrow =\;\E 
-                                        0$
-l.80 \end
-         {tabular}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
 
-./Secciones/Hito2/Tiny0/3Directores.tex:80: Undefined control sequence.
-\l__tblr_c_tl ->$RE0 \longrightarrow =\;\E 
-                                           0$
-l.80 \end
-         {tabular}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-./Secciones/Hito2/Tiny0/3Directores.tex:80: Undefined control sequence.
-\l__tblr_c_tl ->$RE0 \longrightarrow =\;\E 
-                                           0$
-l.80 \end
-         {tabular}
-The control sequence at the end of the top line
-of your error message was never \def'ed. If you have
-misspelled it (e.g., `\hobx'), type `I' and the correct
-spelling (e.g., `I\hbox'). Otherwise just continue,
-and I'll forget about whatever was undefined.
-
-
-Overfull \hbox (30.0pt too wide) in paragraph at lines 80--80
+Overfull \hbox (30.0pt too wide) in paragraph at lines 83--83
 [] 
  []
 
-LaTeX Info: Redefining \. on input line 80.
-LaTeX Info: Redefining \% on input line 80.
+LaTeX Info: Redefining \. on input line 83.
+LaTeX Info: Redefining \% on input line 83.
 [4.5]
-Overfull \vbox (0.2099pt too high) has occurred while \output is active []
-
-LaTeX Info: Redefining \. on input line 80.
-LaTeX Info: Redefining \% on input line 80.
-
-[5.6]
-Overfull \hbox (30.0pt too wide) in paragraph at lines 80--80
+Overfull \hbox (30.0pt too wide) in paragraph at lines 83--83
 [] 
  []
-
-./Secciones/Hito2/Tiny0/3Directores.tex:80: Misplaced \crcr.
-\endarray ->\crcr 
-                  \egroup \egroup \@arrayright \gdef \@preamble {}
-l.80 \end{tabular}
-                  
-I can't figure out why you would want to use a tab mark
-or \cr or \span just now. If something like a right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
-./Secciones/Hito2/Tiny0/3Directores.tex:80: Extra }, or forgotten \endgroup.
-\endarray ->\crcr \egroup 
-                          \egroup \@arrayright \gdef \@preamble {}
-l.80 \end{tabular}
-                  
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-./Secciones/Hito2/Tiny0/3Directores.tex:80: Extra }, or forgotten \endgroup.
-\endarray ->\crcr \egroup \egroup 
-                                  \@arrayright \gdef \@preamble {}
-l.80 \end{tabular}
-                  
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-./Secciones/Hito2/Tiny0/3Directores.tex:80: Extra }, or forgotten $.
-<recently read> \egroup 
-                        
-l.80 \end{tabular}
-                  
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-
-./Secciones/Hito2/Tiny0/3Directores.tex:80: LaTeX Error: \begin{longtblr} on in
-put line 3 ended by \end{tabular}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.80 \end{tabular}
-                  
-Your command was ignored.
-Type  I <command> <return>  to replace it with another command,
-or  <return>  to continue without it.
-
-./Secciones/Hito2/Tiny0/3Directores.tex:80: Missing $ inserted.
-<inserted text> 
-                $
-l.80 \end{tabular}
-                  
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
 
 )
 LaTeX Info: Redefining \. on input line 7.
 LaTeX Info: Redefining \% on input line 7.
- [6.7]
+ [5.6]
 Capítulo 2.
 
 Underfull \hbox (badness 10000) in paragraph at lines 7--8
@@ -1724,11 +1549,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 7--8
  []
 
 (./Secciones/Hito2/Tiny/1EspecificacionSintactica.tex
-./Secciones/Hito2/Tiny/1EspecificacionSintactica.tex:81: Incompatible glue unit
+./Secciones/Hito2/Tiny/1EspecificacionSintactica.tex:83: Incompatible glue unit
 s.
 \es@sppercent ...fnum \gluestretchorder \lastskip 
                                                   =\z@ \unskip \fi \textorma...
-l.81     OP4 \longrightarrow \;\%
+l.83     OP4 \longrightarrow \;\%
                                  \\
 I'm going to assume that 1mu=1pt when they're mixed.
 
@@ -1754,45 +1579,45 @@ less on input line 1.
 Package fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
 less on input line 1.
 
-[7.8
+[6.7
 
 ]
-./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:92: Incompatible glue un
+./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:98: Incompatible glue un
 its.
 \es@sppercent ...fnum \gluestretchorder \lastskip 
                                                   =\z@ \unskip \fi \textorma...
-l.92     OP4 \longrightarrow \;\%
+l.98     OP4 \longrightarrow \;\%
                                  \\
 I'm going to assume that 1mu=1pt when they're mixed.
 
-./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:99: Missing $ inserted.
+./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:105: Missing $ inserted.
 <inserted text> 
                 $
-l.99 
-     
+l.105 
+      
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 3--99
+Underfull \hbox (badness 10000) in paragraph at lines 3--105
 
  []
 
-LaTeX Info: Redefining \. on input line 99.
-LaTeX Info: Redefining \% on input line 99.
-[8.9]
-LaTeX Info: Redefining \. on input line 99.
-LaTeX Info: Redefining \% on input line 99.
- [9.10]
+LaTeX Info: Redefining \. on input line 105.
+LaTeX Info: Redefining \% on input line 105.
+[7.8]
+LaTeX Info: Redefining \. on input line 105.
+LaTeX Info: Redefining \% on input line 105.
+ [8.9]
 
-./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:100: LaTeX Error: Bad ma
+./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:106: LaTeX Error: Bad ma
 th environment delimiter.
 
 See the LaTeX manual or LaTeX Companion for explanation.
 Type  H <return>  for immediate help.
  ...                                              
                                                   
-l.100 \end{math}
+l.106 \end{math}
                 
 Your command was ignored.
 Type  I <command> <return>  to replace it with another command,
@@ -1801,7 +1626,7 @@ or  <return>  to continue without it.
 ))
 LaTeX Info: Redefining \. on input line 40.
 LaTeX Info: Redefining \% on input line 40.
- [10.11] (./memoria.lof
+ [9.10] (./memoria.lof
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
 )
@@ -1836,7 +1661,7 @@ less on input line 54.
 Package fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
 less on input line 54.
 
-[11.12
+[10.11
 
 
 
@@ -1850,16 +1675,19 @@ LaTeX Info: Redefining \% on input line 32.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
 Package rerunfilecheck Info: File `memoria.out' has not changed.
-(rerunfilecheck)             Checksum: 50F9B4FF3B31B2EAF78F66FADAFC194D;1191.
+(rerunfilecheck)             Checksum: A18E5FDA5BF9068392BC024AE1E247C9;1227.
  ) 
 Here is how much of TeX's memory you used:
- 38614 strings out of 476191
- 759275 string characters out of 5812072
- 1322628 words of memory out of 5000000
- 58685 multiletter control sequences out of 15000+600000
- 516252 words of font info for 53 fonts, out of 8000000 for 9000
+ 38588 strings out of 476191
+ 758279 string characters out of 5812072
+ 1310627 words of memory out of 5000000
+ 58659 multiletter control sequences out of 15000+600000
+ 516148 words of font info for 53 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  106i,12n,131p,1164b,32766s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on memoria.pdf (12 pages).
+Output written on memoria.pdf (11 pages).
