@@ -29,6 +29,7 @@ public class AnalizadorLexicoEval {
 
    public AnalizadorLexicoEval(Reader input, GestionErroresEval errores) throws IOException {
     this.input = input;
+    this.errores = errores;
     lex = new StringBuffer();
     sigCar = input.read();
     filaActual=1;
