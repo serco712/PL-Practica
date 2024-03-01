@@ -12,7 +12,7 @@
     declaracion \longrightarrow tipo\;\textbf{identificador}\\
     declaracion \longrightarrow \textbf{type}\;tipo\;\textbf{identificador}\\
     declaracion \longrightarrow \textbf{proc}\;\textbf{identificador}\;par$-$formales\;bloque\\
-    declaracion \longrightarrow \textbf{type}\;\textbf{struct}\;\{\;lista$-$variables\;\}\;\textbf{identificador}\\
+   % declaracion \longrightarrow \textbf{type}\;\textbf{struct}\;\{\;lista$-$variables\;\}\;\textbf{identificador}\\
     tipo \longrightarrow tipo[\textbf{literalEntero}]\\
     tipo \longrightarrow tipo2\\
     tipo2 \longrightarrow \hat{}\;tipo2 \\
@@ -22,6 +22,7 @@
     tipo3 \longrightarrow \textbf{real}\\
     tipo3 \longrightarrow \textbf{string}\\
     tipo3 \longrightarrow \textbf{identificador}\\
+    tipo3 \longrightarrow \textbf{struct}\;\{\;lista$-$variables\;\}\\
     instrucciones \longrightarrow lista$-$instrucciones\\
     instrucciones \longrightarrow \epsilon\\
     lista$-$instrucciones \longrightarrow lista$-$instrucciones\;;\;instruccion\\

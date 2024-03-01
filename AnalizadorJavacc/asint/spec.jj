@@ -79,19 +79,19 @@ PARSER_END(AnalizadorSintacticoTiny)
   void r_lista_declaraciones(): {} { <puntoYComa> declaracion() r_lista_declaraciones() | {}}
   void lista_variables(): {} { declaracion() r_lista_variables()}
   void r_lista_variables(): {} { <coma> declaracion() r_lista_variables() | {}}
-  void declaracion() : {} {tipo() <identificador> | <type> r_declaracion() | <proc> <identificador> par_formales() bloque()}
-  void r_declaracion() : {} { tipo() <identificador> | <struct> <llaveAp> lista_variables() <llaveCi> <identificador> }
+  void declaracion() : {} {tipo() <identificador> | <type> tipo() <identificador> | <proc> <identificador> par_formales() bloque()}
   void tipo() : {} {tipo2() rtipo() }
   void rtipo() : {} {<corcheteAp> <literalEntero> <corcheteCi> rtipo() | {} }
   void tipo2(): {} {<indireccion> tipo2() | tipo3()}
-  void tipo3(): {} {<bool> | <INT> | <real> | <string> | <identificador>}
+  void tipo3(): {} {<bool> | <INT> | <real> | <string> | <identificador> | <struct> <llaveAp> lista_variables() <llaveCi> }
   void instrucciones(): {} {lista_instrucciones() | {} }
   void lista_instrucciones(): {} {instruccion() r_lista_instrucciones() | {}}
   void r_lista_instrucciones(): {} { <puntoYComa> instruccion() r_lista_instrucciones() | {}}
-  void par_formales(): {} { r_par_formales() }
-  void r_par_formales(): {} {lista_par_formal() | <porReferencia> <identificador> | <identificador> | {} }
+  void par_formales(): {} { <parentesisAp> r_par_formales() }
+  void r_par_formales(): {} {lista_par_formal() }
   void lista_par_formal(): {} {par_formal() lista_par_formal() | <coma> par_formal() lista_par_formal() | {} }
-  void par_formal() : {} { tipo() r_par_formales() }
+  void par_formal() : {} { tipo() r_par_formal() }
+  void r_par_formal() : {} { <porReferencia> <identificador> | <identificador> }
   void par_reales(): {} { r_par_reales() }
   void r_par_reales(): {} { lista_par_real() | {} }
   void lista_par_real() : {} { e0() r_lista_par_real() }

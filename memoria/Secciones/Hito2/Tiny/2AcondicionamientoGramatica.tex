@@ -12,10 +12,10 @@
     r$-$lista$-$variables \longrightarrow ,\;declaracion\;r$-$lista$-$variables\\
     r$-$lista$-$variables \longrightarrow \epsilon\\
     declaracion \longrightarrow tipo\;\textbf{identificador}\\
-    declaracion \longrightarrow \textbf{type}\;r$-$declaracion\\
+    declaracion \longrightarrow \textbf{type}\;tipo\;\textbf{identificador}\\
     declaracion \longrightarrow \textbf{proc}\;\textbf{identificador}\;par$-$formales\;bloque\\
-    r$-$declaracion \longrightarrow \textbf{struct}\;\{\;lista$-$variables\;\}\;\textbf{identificador}\\
-    r$-$declaracion \longrightarrow tipo\;\textbf{identificador}\\
+   % r$-$declaracion \longrightarrow \textbf{struct}\;\{\;lista$-$variables\;\}\;\textbf{identificador}\\
+    %r$-$declaracion \longrightarrow tipo\;\textbf{identificador}\\
     tipo \longrightarrow tipo2\;rtipo\\
     rtipo \longrightarrow [\textbf{literalEntero}]\;rtipo\\
     rtipo \longrightarrow \epsilon\\
@@ -26,6 +26,7 @@
     tipo3 \longrightarrow \textbf{real}\\
     tipo3 \longrightarrow \textbf{string}\\
     tipo3 \longrightarrow \textbf{identificador}\\
+    tipo3 \longrightarrow \textbf{struct}\;\{\;lista$-$variables\;\}\\
     instrucciones \longrightarrow lista$-$instrucciones\\
     instrucciones \longrightarrow \epsilon\\
     lista$-$instrucciones \longrightarrow instruccion\;\; r$-$lista$-$instrucciones\\
