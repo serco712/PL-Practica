@@ -6,7 +6,7 @@ PARSER_BEGIN(AnalizadorSintacticoTiny)
 package asint;
 
 public class AnalizadorSintacticoTiny {
-    protected void newToken(ClaseLexica t) {}
+    protected void newToken(Token t) {}
 }
 PARSER_END(AnalizadorSintacticoTiny)
 
@@ -73,7 +73,7 @@ PARSER_END(AnalizadorSintacticoTiny)
 
   void analiza()   : {} {programa() <EOF> }
   void programa() : {} {bloque()}
-  void bloque() : {} { declaraciones() instrucciones()}
+  void bloque() : {} { <llaveAp> declaraciones() instrucciones() <llaveCi> }
   void declaraciones(): {} {lista_declaraciones() <FINAL> | {} }
   void lista_declaraciones(): {} {declaracion() r_lista_declaraciones()}
   void r_lista_declaraciones(): {} { <puntoYComa> declaracion() r_lista_declaraciones() | {}}

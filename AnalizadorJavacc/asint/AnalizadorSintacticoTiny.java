@@ -26,8 +26,10 @@ public class AnalizadorSintacticoTiny implements AnalizadorSintacticoTinyConstan
   final public void bloque() throws ParseException {
     trace_call("bloque");
     try {
+      jj_consume_token(llaveAp);
       declaraciones();
       instrucciones();
+      jj_consume_token(llaveCi);
     } finally {
       trace_return("bloque");
     }
@@ -1064,7 +1066,7 @@ public class AnalizadorSintacticoTiny implements AnalizadorSintacticoTinyConstan
     }
   }
 
-  private void trace_token(Token t, String where) {
+  protected void trace_token(Token t, String where) {
     if (trace_enabled) {
       for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
       System.out.print("Consumed token: <" + tokenImage[t.kind]);
