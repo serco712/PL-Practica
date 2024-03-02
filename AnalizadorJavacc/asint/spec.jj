@@ -88,15 +88,16 @@ PARSER_END(AnalizadorSintacticoTiny)
   void lista_instrucciones(): {} {instruccion() r_lista_instrucciones() | {}}
   void r_lista_instrucciones(): {} { <puntoYComa> instruccion() r_lista_instrucciones() | {}}
   void par_formales(): {} { <parentesisAp> r_par_formales() }
-  void r_par_formales(): {} {lista_par_formal() }
-  void lista_par_formal(): {} {par_formal() lista_par_formal() | <coma> par_formal() lista_par_formal() | {} }
+  void r_par_formales(): {} { lista_par_formal() <parentesisCi> | <parentesisCi> }
+  void lista_par_formal(): {} { par_formal() r_lista_par_formal() }
+  void r_lista_par_formal(): {} { <coma> par_formal() r_lista_par_formal() | {} }
   void par_formal() : {} { tipo() r_par_formal() }
   void r_par_formal() : {} { <porReferencia> <identificador> | <identificador> }
-  void par_reales(): {} { r_par_reales() }
-  void r_par_reales(): {} { lista_par_real() | {} }
+  void par_reales(): {} { <parentesisAp> r_par_reales() }
+  void r_par_reales(): {} { lista_par_real() <parentesisCi> | <parentesisCi> }
   void lista_par_real() : {} { e0() r_lista_par_real() }
   void r_lista_par_real() : {} { <coma> e0() r_lista_par_real() | {} }
-  void instruccion() : {} { eval() | <IF> e0() bloque() r_if() | <WHILE> e0() bloque() | <NEW> e0() | <delete> e0() | <read> e0() | <write> e0() | <call> <identificador> par_reales() | <nl> }
+  void instruccion() : {} { eval() | <IF> e0() bloque() r_if() | <WHILE> e0() bloque() | <NEW> e0() | <delete> e0() | <read> e0() | <write> e0() | <call> <identificador> par_reales() | <nl> | bloque() }
   void r_if() : {} { <ELSE> bloque() | {} }
   void eval() : {} { <arroba> e0() }
   void e0() : {} { e1() re0() }
@@ -109,13 +110,13 @@ PARSER_END(AnalizadorSintacticoTiny)
   void e3() : {} { e4() re3() }
   void re3() : {} { <and> e3() | <or> e4() | {} }
   void e4() : {} { e5() re4() }
-  void re4() : {} { op4() e5() re4() }
+  void re4() : {} { op4() e5() re4() | {} }
   void e5() : {} { op5() e6() | e6() }
   void e6() : {} { e7() re6() }
   void re6() : {} { op6() re6() | {} }
   void e7() : {} { <TRUE> | <FALSE> | <literalEntero> | <literalReal> | <literalCadena> | <identificador> | <NULL> | <parentesisAp> e0() <parentesisCi> }
   void op1() : {} { <operadorMenor> | <operadorMenIgual> | <operadorMayor> | <operadorMayIgual> | <operadorIgual> | <operadorDistinto> }
   void op4() : {} { <operadorMul> | <operadorDiv> | <operadorMod> }
-  void op5() : {} { <operadorSuma> | <operadorResta> | <not> }
-  void op6() : {} { <corcheteAp> e0() <corcheteCi> | <punto> <identificador> }
+  void op5() : {} { <operadorResta> | <not> }
+  void op6() : {} { <corcheteAp> e0() <corcheteCi> | <punto> <identificador> | <indireccion> }
   
