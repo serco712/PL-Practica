@@ -714,7 +714,7 @@ public class AnalizadorSintacticoTiny implements AnalizadorSintacticoTinyConstan
       case not:
       case operadorResta:
         op5();
-        e6();
+        e5();
         break;
       case TRUE:
       case FALSE:
