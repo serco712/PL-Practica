@@ -35,10 +35,10 @@
     par$-$formales \longrightarrow (r$-$par$-$formales\\
     r$-$par$-$formales \longrightarrow lista$-$par$-$formal)\\
     r$-$par$-$formales \longrightarrow )\\
-    lista$-$par$-$formal \longrightarrow par$-$formal\;\;lista$-$par$-$formal\\
-    lista$-$par$-$formal \longrightarrow\;,\;par$-$formal\;\;lista$-$par$-$formal\\
-    lista$-$par$-$formal \longrightarrow \epsilon\\
-    par$-$formal \longrightarrow tipo\;r$-$par$-$formales\\
+    lista$-$par$-$formal \longrightarrow par$-$formal\;\;r$-$lista$-$par$-$formal\\
+    r$-$lista$-$par$-$formal \longrightarrow\;,\;par$-$formal\;\;r$-$lista$-$par$-$formal\\
+    r$-$lista$-$par$-$formal \longrightarrow \epsilon\\
+    par$-$formal \longrightarrow tipo\;r$-$par$-$formal\\
     r$-$par$-$formal \longrightarrow  \&\textbf{identificador}\\
     r$-$par$-$formal \longrightarrow  \textbf{identificador}\\
     par$-$reales \longrightarrow (r$-$par$-$reales\\
@@ -105,6 +105,6 @@
     OP5 \longrightarrow \;\textbf{not}\\
     OP6 \longrightarrow \;\left[E0\right]\\
     OP6 \longrightarrow \;\textbf{.identificador}\\
-    OP6 \longrightarrow \;\textbf{\^\;.identificador}\\
+    OP6 \longrightarrow \;\textbf{\^}\\
 
 \end{math}
