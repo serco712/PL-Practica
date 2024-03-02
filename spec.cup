@@ -1,0 +1,121 @@
+package asint;
+
+import java_cup.runtime.*;
+import alex.AnalizadorLexicoEval;
+import alex.UnidadLexica;
+import errors.GestionErroresEval;
+
+scan with {: 
+  return getScanner().next_token(); 
+:};
+parser code {: 
+   private GestionErroresEval errores;
+   public void syntax_error(Symbol unidadLexica) {
+     errores.errorSintactico((UnidadLexica)unidadLexica);
+   }
+:};
+init with {: 
+   errores = new GestionErroresEval();
+   AnalizadorLexicoEval alex = (AnalizadorLexicoEval)getScanner();
+   alex.fijaGestionErrores(errores);
+:};
+
+
+terminal    BOOL,ENT,REAL,STRING,AND,OR,NOT,LIT_ENT,LIT_REAL,LIT_CAD,IDEN,SUMA,
+			RESTA,MUL,DIV,MOD,MENOR,MAYOR,MEN_IGUAL,MAY_IGUAL,IGUAL,
+			ASIG,PAP,PCI,COMA,PCOMA,EVAL,DISTINTO,TRUE,
+			FALSE,LLAP,LLCI,NULL,PROC,IF,ELSE,WHILE,
+			STRUCT,NEW,DELETE,READ,WRITE,NL,TYPE,
+			CALL,INDIRECCION,REFERENCIA,CAP,CCI,PUNTO,FIN;
+
+non terminal  programa, bloque, declaraciones, lista_declaraciones, lista_variables,
+			  declaracion, tipo, tipo2,tipo3, instrucciones, lista_instrucciones, 
+			  par_formales, lista_par_formal, par_formal, par_reales, lista_par_real,
+			  instruccion, eval, E0, E1, E2, E3, E4, E5, E6, E7, OP1, OP4, OP5, OP6;
+
+programa   ::= bloque;
+bloque     ::= LLAP declaraciones instrucciones LLCI ;
+declaraciones ::= lista_declaraciones FIN ;
+declaraciones ::= ;
+lista_declaraciones ::= lista_declaraciones PCOMA declaracion ;
+lista_declaraciones ::= declaracion ;
+lista_variables ::= lista_variables COMA declaracion ;
+lista_variables ::= declaracion ;
+declaracion ::= tipo IDEN ;
+declaracion ::= TYPE tipo IDEN ;
+declaracion ::= PROC IDEN par_formales bloque ;
+tipo ::= tipo CAP LIT_ENT CCI ;
+tipo ::= tipo2 ;
+tipo2 ::= INDIRECCION tipo2 ;
+tipo2 ::= tipo3 ;
+tipo3 ::= BOOL ;
+tipo3 ::= ENT ;
+tipo3 ::= REAL ;
+tipo3 ::= STRING ;
+tipo3 ::= IDEN ;
+tipo3 ::= STRUCT LLAP lista_variables LLCI ;
+instrucciones ::= lista_instrucciones ;
+instrucciones ::= ;
+lista_instrucciones ::= lista_instrucciones PCOMA instruccion ;
+lista_instrucciones ::= instruccion ;
+par_formales ::= PAP lista_par_formal PCI ;
+par_formales ::= PAP PCI ;
+lista_par_formal ::= par_formal COMA lista_par_formal ;
+lista_par_formal ::= par_formal ;
+par_formal ::= tipo REFERENCIA IDEN ;
+par_formal ::= tipo IDEN ;
+par_reales ::= PAP lista_par_real PCI ;
+par_reales ::= PAP PCI ;
+lista_par_real ::= E0 COMA lista_par_real ;
+lista_par_real ::= E0 ;
+instruccion ::= EVAL ;
+instruccion ::= IF E0 bloque ;
+instruccion ::= IF E0 bloque ELSE bloque ;
+instruccion ::= WHILE E0 bloque ;
+instruccion ::= NEW E0 ;
+instruccion ::= DELETE E0 ;
+instruccion ::= READ E0 ;
+instruccion ::= WRITE E0 ;
+instruccion ::= CALL IDEN par_reales ;
+instruccion ::= NL ;
+instruccion ::= bloque ;
+eval ::= EVAL E0 ;
+E0 ::= E1 ASIG E0 ;
+E0 ::= E1 ;
+E1 ::= E1 OP1 E2 ;
+E1 ::= E2 ;
+E2 ::= E2 SUMA E3 ;
+E2 ::= E3 RESTA E3 ;
+E2 ::= E3 ;
+E3 ::= E4 AND E3 ;
+E3 ::= E4 OR E4 ;
+E3 ::= E4 ;
+E4 ::= E4 OP4 E5 ;
+E4 ::= E5 ;
+E5 ::= OP5 E6 ;
+E5 ::= E6 ;
+E6 ::= E6 OP6 ;
+E6 ::= E7 ;
+E7 ::= TRUE ;
+E7 ::= FALSE ;
+E7 ::= LIT_ENT ;
+E7 ::= LIT_REAL ;
+E7 ::= LIT_CAD ;
+E7 ::= IDEN ;
+E7 ::= NULL ;
+E7 ::= PAP E0 PCI ;
+OP1 ::= MENOR ;
+OP1 ::= MEN_IGUAL ;
+OP1 ::= MAYOR ;
+OP1 ::= MAY_IGUAL ;
+OP1 ::= IGUAL ;
+OP1 ::= DISTINTO ;
+OP4 ::= MUL ;
+OP4 ::= DIV ;
+OP4 ::= MOD ;
+OP5 ::= SUMA ;
+OP5 ::= RESTA ;
+OP5 ::= NOT ;
+OP6 ::= CAP E0 CCI ;
+OP6 ::= PUNTO IDEN ;
+OP6 ::= INDIRECCION ;
