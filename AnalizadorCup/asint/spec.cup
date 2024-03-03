@@ -1,29 +1,29 @@
 package asint;
 
 import java_cup.runtime.*;
-import alex.AnalizadorLexicoEval;
-import alex.UnidadLexica;
-import errors.GestionErroresEval;
+import alextiny.AnalizadorLexicoTiny;
+import alextiny.UnidadLexica;
+import errors.GestionErroresTiny;
 
 scan with {: 
   return getScanner().next_token(); 
 :};
 parser code {: 
-   private GestionErroresEval errores;
+   private GestionErroresTiny errores;
    public void syntax_error(Symbol unidadLexica) {
      errores.errorSintactico((UnidadLexica)unidadLexica);
    }
 :};
 init with {: 
-   errores = new GestionErroresEval();
-   AnalizadorLexicoEval alex = (AnalizadorLexicoEval)getScanner();
+   errores = new GestionErroresTiny();
+   AnalizadorLexicoTiny alex = (AnalizadorLexicoTiny)getScanner();
    alex.fijaGestionErrores(errores);
 :};
 
 
 terminal    BOOL,ENT,REAL,STRING,AND,OR,NOT,LIT_ENT,LIT_REAL,LIT_CAD,IDEN,SUMA,
 			RESTA,MUL,DIV,MOD,MENOR,MAYOR,MEN_IGUAL,MAY_IGUAL,IGUAL,
-			ASIG,PAP,PCI,COMA,PCOMA,EVAL,EOF,DISTINTO,TRUE,
+			ASIG,PAP,PCI,COMA,PCOMA,EVAL,DISTINTO,TRUE,
 			FALSE,LLAP,LLCI,NULL,PROC,IF,ELSE,WHILE,
 			STRUCT,NEW,DELETE,READ,WRITE,NL,TYPE,
 			CALL,INDIRECCION,REFERENCIA,CAP,CCI,PUNTO,FIN;
@@ -31,10 +31,10 @@ terminal    BOOL,ENT,REAL,STRING,AND,OR,NOT,LIT_ENT,LIT_REAL,LIT_CAD,IDEN,SUMA,
 non terminal  programa, bloque, declaraciones, lista_declaraciones, lista_variables,
 			  declaracion, tipo, tipo2,tipo3, instrucciones, lista_instrucciones, 
 			  par_formales, lista_par_formal, par_formal, par_reales, lista_par_real,
-			  instruccion, eval, E0, E1, E2, E3, E4, E5, E6, E7, 0P1, OP4, OP5, OP6;
+			  instruccion, eval, E0, E1, E2, E3, E4, E5, E6, E7, OP1, OP4, OP5, OP6;
 
-programa   ::= bloque ;
-bloque     ::= LLAP declaraciones intrucciones LLCI ;
+programa   ::= bloque;
+bloque     ::= LLAP declaraciones instrucciones LLCI ;
 declaraciones ::= lista_declaraciones FIN ;
 declaraciones ::= ;
 lista_declaraciones ::= lista_declaraciones PCOMA declaracion ;
@@ -68,7 +68,7 @@ par_reales ::= PAP lista_par_real PCI ;
 par_reales ::= PAP PCI ;
 lista_par_real ::= E0 COMA lista_par_real ;
 lista_par_real ::= E0 ;
-instruccion ::= EVAL ;
+instruccion ::= eval ;
 instruccion ::= IF E0 bloque ;
 instruccion ::= IF E0 bloque ELSE bloque ;
 instruccion ::= WHILE E0 bloque ;
@@ -79,7 +79,7 @@ instruccion ::= WRITE E0 ;
 instruccion ::= CALL IDEN par_reales ;
 instruccion ::= NL ;
 instruccion ::= bloque ;
-eval ::= ARROBA E0 ;
+eval ::= EVAL E0 ;
 E0 ::= E1 ASIG E0 ;
 E0 ::= E1 ;
 E1 ::= E1 OP1 E2 ;
@@ -92,7 +92,7 @@ E3 ::= E4 OR E4 ;
 E3 ::= E4 ;
 E4 ::= E4 OP4 E5 ;
 E4 ::= E5 ;
-E5 ::= OP5 E6 ;
+E5 ::= OP5 E5 ;
 E5 ::= E6 ;
 E6 ::= E6 OP6 ;
 E6 ::= E7 ;
@@ -110,12 +110,12 @@ OP1 ::= MAYOR ;
 OP1 ::= MAY_IGUAL ;
 OP1 ::= IGUAL ;
 OP1 ::= DISTINTO ;
-OP4 ::= POR ;
+OP4 ::= MUL ;
 OP4 ::= DIV ;
 OP4 ::= MOD ;
-OP5 ::= MAS ;
-OP5 ::= MENOS ;
+OP5 ::= SUMA ;
+OP5 ::= RESTA ;
 OP5 ::= NOT ;
 OP6 ::= CAP E0 CCI ;
 OP6 ::= PUNTO IDEN ;
-OP6 ::= INDERICCION ;
+OP6 ::= INDIRECCION ;

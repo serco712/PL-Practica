@@ -1,8 +1,8 @@
 package errors;
 
-import alex.UnidadLexica;
+import alextiny.UnidadLexica;
 
-public class GestionErroresEval {
+public class GestionErroresTiny {
    public class ErrorLexico extends RuntimeException {
        public ErrorLexico(String msg) {
            super(msg);
