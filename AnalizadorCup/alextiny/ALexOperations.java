@@ -1,18 +1,17 @@
 package alextiny;
 
 import asint.ClaseLexica;
+import errors.GestionErroresTiny;
 
 public class ALexOperations {
 	
-	public static class ECaracterInesperado extends RuntimeException {
-	      public ECaracterInesperado(String msg) {
-	          super(msg);
-	      }
-	}  
+	 
+	private GestionErroresTiny errores;
 	
 	private AnalizadorLexicoTiny alex;
 	public ALexOperations(AnalizadorLexicoTiny alex) {
-		this.alex = alex;   
+		this.alex = alex; 
+		errores = new GestionErroresTiny();
 	}
 	public UnidadLexica unidadIden() {
 		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.IDEN,alex.lexema());      
@@ -174,6 +173,7 @@ public class ALexOperations {
 		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.FIN,"&&"); 
 	}
 	public void error() {
-		throw new ECaracterInesperado(alex.lexema());
+		errores.errorLexico(alex.fila(), alex.columna(), alex.lexema());
+		
 	}
 }
