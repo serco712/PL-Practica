@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2023.10.9)  2 MAR 2024 00:07
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2023.10.9)  4 MAR 2024 09:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1590,6 +1590,102 @@ l.102     OP4 \longrightarrow \;\%
                                   \\
 I'm going to assume that 1mu=1pt when they're mixed.
 
+./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:108: Argument of \T1\^ h
+as an extra }.
+<inserted text> 
+                \par 
+l.108     OP6 \longrightarrow \;\textbf{\^}
+                                           \\
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:108: Paragraph ended bef
+ore \T1\^ was complete.
+<to be read again> 
+                   \par 
+l.108     OP6 \longrightarrow \;\textbf{\^}
+                                           \\
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:108: Argument of \T1\^ h
+as an extra }.
+<inserted text> 
+                \par 
+l.108     OP6 \longrightarrow \;\textbf{\^}
+                                           \\
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:108: Paragraph ended bef
+ore \T1\^ was complete.
+<to be read again> 
+                   \par 
+l.108     OP6 \longrightarrow \;\textbf{\^}
+                                           \\
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:108: Argument of \T1\^ h
+as an extra }.
+<inserted text> 
+                \par 
+l.108     OP6 \longrightarrow \;\textbf{\^}
+                                           \\
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:108: Paragraph ended bef
+ore \T1\^ was complete.
+<to be read again> 
+                   \par 
+l.108     OP6 \longrightarrow \;\textbf{\^}
+                                           \\
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
+./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:108: Argument of \T1\^ h
+as an extra }.
+<inserted text> 
+                \par 
+l.108     OP6 \longrightarrow \;\textbf{\^}
+                                           \\
+I've run across a `}' that doesn't seem to match anything.
+For example, `\def\a#1{...}' and `\a}' would produce
+this error. If you simply proceed now, the `\par' that
+I've just inserted will cause me to report a runaway
+argument that might be the root of the problem. But if
+your `}' was spurious, just type `2' and it will go away.
+
+Runaway argument?
+./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:108: Paragraph ended bef
+ore \T1\^ was complete.
+<to be read again> 
+                   \par 
+l.108     OP6 \longrightarrow \;\textbf{\^}
+                                           \\
+I suspect you've forgotten a `}', causing me to apply this
+control sequence to too much text. How can we recover?
+My plan is to forget the whole thing and hope for the best.
+
 ./Secciones/Hito2/Tiny/2AcondicionamientoGramatica.tex:109: Missing $ inserted.
 <inserted text> 
                 $
@@ -1679,10 +1775,10 @@ Package rerunfilecheck Info: File `memoria.out' has not changed.
 (rerunfilecheck)             Checksum: A18E5FDA5BF9068392BC024AE1E247C9;1227.
  ) 
 Here is how much of TeX's memory you used:
- 38588 strings out of 476191
- 758279 string characters out of 5812072
- 1310616 words of memory out of 5000000
- 58659 multiletter control sequences out of 15000+600000
+ 38587 strings out of 476191
+ 758271 string characters out of 5812072
+ 1310618 words of memory out of 5000000
+ 58658 multiletter control sequences out of 15000+600000
  516148 words of font info for 53 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  106i,12n,131p,1164b,32766s stack positions out of 5000i,500n,10000p,200000b,80000s

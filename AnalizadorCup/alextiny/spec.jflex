@@ -1,4 +1,5 @@
 package alextiny;
+import errors.GestionErroresTiny
 
 %%
 %line
@@ -6,12 +7,18 @@ package alextiny;
 %class AnalizadorLexicoTiny
 %type  UnidadLexica
 %unicode
+%public
+%cup
 
 %{
   private ALexOperations ops;
   public String lexema() {return yytext();}
   public int fila() {return yyline+1;}
   public int columna() {return yycolumn+1;}
+  private GestionErroresTiny errores;
+  public void fijaGestionErrores(GestionErroresTiny errores){
+  	this.errores = errores;
+  }
 %}
 
 %eofval{
