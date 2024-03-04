@@ -3,7 +3,7 @@
 // source: AnalizadorCup/alextiny/spec.jflex
 
 package alextiny;
-import errors.GestionErroresTiny
+import errors.GestionErroresTiny;
 
 
 // See https://github.com/jflex-de/jflex/issues/222
