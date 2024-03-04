@@ -1,5 +1,5 @@
 package alextiny;
-import errors.GestionErroresTiny
+import errors.GestionErroresTiny;
 
 %%
 %line
