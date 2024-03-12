@@ -1,0 +1,5 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {chapter}{\numberline {1}Especificación de la sintaxis abstracta}{2}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Eliminación de terminales sin carga semántica}{2}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Simplificación de la sintaxis}{3}{section.1.2}%
+\contentsline {chapter}{Índice de figuras}{5}{chapter*.3}%
