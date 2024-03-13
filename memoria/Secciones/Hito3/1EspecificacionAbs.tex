@@ -107,15 +107,13 @@
     declaracion \longrightarrow \textbf{identificador}\;par$-$formales\;bloque\\
    % declaracion \longrightarrow \textbf{type}\;\textbf{struct}\;\{\;lista$-$variables\;\}\;\textbf{identificador}\\
     tipo \longrightarrow tipo\;\textbf{literalEntero}\\
-    tipo \longrightarrow tipo2\\
-    tipo2 \longrightarrow \hat{}\;tipo2 \\
-    tipo2 \longrightarrow tipo3\\
-    tipo3 \longrightarrow \textbf{bool}\\
-    tipo3 \longrightarrow \textbf{int}\\
-    tipo3 \longrightarrow \textbf{real}\\
-    tipo3 \longrightarrow \textbf{string}\\
-    tipo3 \longrightarrow \textbf{identificador}\\
-    tipo3 \longrightarrow \textbf{struct}\;lista$-$variables\\
+    tipo \longrightarrow \hat{}\;tipo \\
+    tipo \longrightarrow \textbf{bool}\\
+    tipo \longrightarrow \textbf{int}\\
+    tipo \longrightarrow \textbf{real}\\
+    tipo \longrightarrow \textbf{string}\\
+    tipo \longrightarrow \textbf{identificador}\\
+    tipo \longrightarrow \textbf{struct}\;lista$-$variables\\
     instrucciones \longrightarrow lista$-$instrucciones\\
     instrucciones \longrightarrow \epsilon\\
     lista$-$instrucciones \longrightarrow lista$-$instrucciones\;instruccion\\
@@ -142,14 +140,24 @@
     instruccion \longrightarrow \textbf{nl}\\
     instruccion \longrightarrow bloque\\
     E \longrightarrow E = E\\
-    E \longrightarrow E\;\;OP1\;\;E\\
+    E \longrightarrow E < E\\
+    E \longrightarrow E <= E\\
+    E \longrightarrow E > E\\
+    E \longrightarrow E >= E\\
+    E \longrightarrow E == E\\
+    E \longrightarrow E\;!= E\\
     E \longrightarrow E + E\\
     E \longrightarrow E - E\\
+    E \longrightarrow E * E\\
+    E \longrightarrow E\;/\;E\\
+    E \longrightarrow E \%\;E\\
     E \longrightarrow E\;and\;E\\
     E \longrightarrow E\;or\;E\\
-    E \longrightarrow E\;OP4\;E\\
-    E \longrightarrow OP5\;E\\
-    E \longrightarrow E\;OP6\\
+    E \longrightarrow - E\\
+    E \longrightarrow \textbf{not}\;E\\
+    E \longrightarrow E\;E\\
+    E \longrightarrow E\;.\textbf{identificador}\\
+    E \longrightarrow E\;\hat{}\\
     E \longrightarrow \textbf{true}\\
     E \longrightarrow \textbf{false}\\
     E \longrightarrow \textbf{literalEntero}\\
@@ -157,19 +165,117 @@
     E \longrightarrow \textbf{literalCadena}\\
     E \longrightarrow \textbf{identificador}\\
     E \longrightarrow \textbf{null}\\
-    OP1 \longrightarrow \;<\\
-    OP1 \longrightarrow \;<=\\
-    OP1 \longrightarrow \;>\\
-    OP1 \longrightarrow \;>=\\
-    OP1 \longrightarrow \;==\\
-    OP1 \longrightarrow \;!=\\
-    OP4 \longrightarrow \;*\\
-    OP4 \longrightarrow \;/\\  
-    OP4 \longrightarrow \;\%\\  
-    OP5 \longrightarrow \;+\\  
-    OP5 \longrightarrow \;-\\ 
-    OP5 \longrightarrow \;\textbf{not}\\ 
-    OP6 \longrightarrow \;E\\ 
-    OP6 \longrightarrow \;\textbf{identificador}\\ 
-    OP6 \longrightarrow \;\hat{}\\
 \end{math}
+
+\section{Asignación de géneros a cada no-terminal}
+
+\begin{longtblr}[
+    caption = {Géneros de los no-terminales}
+]{
+    colspec = {|X|X|},
+    rowhead = 1,
+    row{even} = {gray9},
+    row{1} = {olive9},
+}
+    \hline
+    \textbf{No terminal} & \textbf{Género} \\ \hline\hline
+    bloque & Blo \\ \hline
+    declaraciones & Decs \\ \hline
+    lista-declaraciones & LDecs \\ \hline
+    lista-variables & LVar \\ \hline
+    declaracion & Dec \\ \hline
+    tipo & Tipo \\ \hline
+    instrucciones & Insts \\ \hline
+    lista-instrucciones & LInst \\ \hline
+    par-formales & PFmls \\ \hline
+    lista-par-formal & LPFml \\ \hline
+    par-formal & PFml \\ \hline
+    par-reales & PReales \\ \hline
+    lista-par-reas & LPReal \\ \hline
+    instruccion & Inst \\ \hline
+    E & Exp \\ \hline
+\end{longtblr}
+
+\section{Constructores de las reglas}
+
+\begin{longtblr}[
+    caption = {Constructores de las diferentes reglas}
+]{
+    colspec = {|X|X|},
+    rowhead = 1,
+    row{even} = {gray9},
+    row{1} = {olive9},
+}
+    \hline
+    \textbf{Regla} & \textbf{Constructor} \\ \hline\hline
+    $bloque \longrightarrow \;declaraciones\;instrucciones$ & bloq: Decs $\times$ Insts $\rightarrow$ Blo \\ \hline
+    $declaraciones \longrightarrow lista$-$declaraciones$ & si\_decs: LDecs $\rightarrow$ Decs\\ \hline
+    $declaraciones \longrightarrow \epsilon$ & no\_decs: $\rightarrow$ Decs \\ \hline
+    $declaraciones \longrightarrow $ & LVar \\ \hline
+    $lista$-$declaraciones \longrightarrow lista$-$declaraciones\;declaracion$ & muchas\_decs: LDecs $\times$ Dec $\rightarrow$ LDecs\\ \hline
+    $lista$-$declaraciones \longrightarrow declaracion$ & una\_dec: Dec $\rightarrow$ LDecs \\ \hline
+    $lista$-$variables \longrightarrow lista$-$variables\;declaracion$ & muchas\_var: LVar $\times$ Dec $\rightarrow$ LVar \\ \hline
+    $lista$-$variables \longrightarrow declaracion$ & una\_var: Dec $\rightarrow$ LVar \\ \hline
+    $declaracion \longrightarrow tipo\;\textbf{identificador}$ & dec\_simple: Tipo $\times$ \textbf{string} $\rightarrow$ Dec \\ \hline
+    $declaracion \longrightarrow \textbf{type}\;tipo\;\textbf{identificador}$ & dec\_type: Tipo $\times$ \textbf{string} $\rightarrow$ Dec \\ \hline
+    $declaracion \longrightarrow \textbf{identificador}\;par$-$formales\;bloque$ & dec\_proc: \textbf{string} $\times$ PFmls $\times$ Blo $\rightarrow$ Dec\\ \hline
+    $tipo \longrightarrow tipo\;\textbf{literalEntero}$ & tipo\_array: Tipo $\times$ \textbf{string} $\rightarrow$ Tipo\\ \hline
+    $tipo \longrightarrow \hat{}\;tipo$ & tipo\_punt: Tipo $\rightarrow$ Tipo\\ \hline
+    $tipo \longrightarrow \textbf{bool}$ & tipo\_bool: $\rightarrow$ Tipo \\ \hline
+    $tipo \longrightarrow \textbf{int}$ & tipo\_int: $\rightarrow$ Tipo \\ \hline
+    $tipo \longrightarrow \textbf{real}$ & tipo\_real: $\rightarrow$ Tipo \\ \hline
+    $tipo \longrightarrow \textbf{string}$ & tipo\_string: $\rightarrow$ Tipo \\ \hline
+    $tipo \longrightarrow \textbf{identificador}$ & tipo\_ident: \textbf{string} $\rightarrow$ Tipo \\ \hline
+    $tipo \longrightarrow \textbf{struct}\;lista$-$variables$ & tipo\_struct: LVar $\rightarrow$ Tipo \\ \hline
+    $instrucciones \longrightarrow lista$-$instrucciones$ & si\_inst: LInst $\rightarrow$ Insts \\ \hline
+    $instrucciones \longrightarrow \epsilon$ & no\_inst: $\rightarrow$ Insts \\ \hline
+    $lista$-$instrucciones \longrightarrow lista$-$instrucciones\;instruccion$ & muchas\_inst: LInst $\times$ Inst $\rightarrow$ LInst\\ \hline
+    $lista$-$instrucciones \longrightarrow instruccion$ & una\_inst: Inst $\rightarrow$ LInst \\ \hline
+    $par$-$formales \longrightarrow lista$-$par$-$formal$ & si\_pformal: LPFml $\rightarrow$ PFmls \\ \hline
+    $par$-$formales \longrightarrow \epsilon$ & no\_pformal: $\rightarrow$ PFmls \\ \hline
+    $lista$-$par$-$formal \longrightarrow par$-$formal\;lista$-$par$-$formal$ & muchos\_pformal: PFml $\times$ LPFml $\rightarrow$ LPFml \\ \hline
+    $lista$-$par$-$formal \longrightarrow par$-$formal$ & un\_pformal: PFml $\rightarrow$ LPFml \\ \hline
+    $par$-$formal \longrightarrow tipo\;\&\textbf{identificador}$ & pformal\_ref: Tipo $\times$ \textbf{string} $\rightarrow$ PFml \\ \hline
+    $par$-$formal \longrightarrow tipo\;\textbf{identificador}$ & pformal\_noref: Tipo $\times$ \textbf{string} $\rightarrow$ PFml \\ \hline
+    $par$-$reales \longrightarrow lista$-$par$-$real$ & si\_preales: LPReal $\rightarrow$ PReales \\ \hline
+    $par$-$reales \longrightarrow \epsilon$ & no\_preales: $\rightarrow$ PReales \\ \hline
+    $lista$-$par$-$real \longrightarrow E\;lista$-$par$-$real$ & muchas\_exp: Exp $\times$ LPReal $\rightarrow$ LPReal \\ \hline
+    $lista$-$par$-$real \longrightarrow E$ & una\_exp: Exp $\rightarrow$ LPReal\\ \hline
+    $instruccion \longrightarrow E$ & inst\_eval: Exp $\rightarrow$ Inst \\ \hline
+    $instruccion \longrightarrow \textbf{if}\;E\;\;bloque$ & inst\_if: Exp $\times$ Blo $\rightarrow$ Inst \\ \hline
+    $instruccion \longrightarrow \textbf{if}\;E\;\;bloque\;\textbf{else}\;bloque$ & inst\_else: Exp $\times$ Blo $\times$ Blo $\rightarrow$ Inst  \\ \hline
+    $instruccion \longrightarrow \textbf{while}\;E\;bloque$ & inst\_while: Exp $\times$ Blo $\rightarrow$ Inst \\ \hline
+    $instruccion \longrightarrow \textbf{new}\;E$ & inst\_new: Exp $\rightarrow$ Inst \\ \hline
+    $instruccion \longrightarrow \textbf{delete}\;E$ & inst\_delete: Exp $\rightarrow$ Inst \\ \hline
+    $instruccion \longrightarrow \textbf{read}\;E$ & inst\_read: Exp $\rightarrow$ Inst \\ \hline
+    $instruccion \longrightarrow \textbf{write}\;E$ & inst\_write: Exp $\rightarrow$ Inst \\ \hline
+    $instruccion \longrightarrow \textbf{call}\;\textbf{identificador}\;par$-$reales$ & inst\_call: \textbf{string} $\times$ PReales $\rightarrow$ Inst \\ \hline
+    $instruccion \longrightarrow \textbf{nl}$ & inst\_nl: $\rightarrow$ Inst \\ \hline
+    $instruccion \longrightarrow bloque$ & inst\_blo: Blo $\rightarrow$ Inst \\ \hline
+    $E \longrightarrow E = E$ & exp\_asig: Exp $\times$ Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow E < E$ & exp\_menor: Exp $\times$ Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow E <= E$ & exp\_menIgual: Exp $\times$ Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow E > E$ & exp\_mayor: Exp $\times$ Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow E >= E$ & exp\_mayIgual: Exp $\times$ Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow E == E$ & exp\_igual: Exp $\times$ Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow E\;!= E$ & exp\_dist: Exp $\times$ Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow E + E$ & exp\_sum: Exp $\times$ Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow E - E$ & exp\_resta: Exp $\times$ Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow E * E$ & exp\_mult: Exp $\times$ Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow E\;/\;E$ & exp\_div: Exp $\times$ Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow E \%\;E$ & exp\_mod: Exp $\times$ Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow E\;and\;E$ & exp\_and: Exp $\times$ Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow E\;or\;E$ & exp\_or: Exp $\times$ Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow - E$ & exp\_menos: Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow \textbf{not}\;E$ & exp\_not: Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow E\;E$ & exp\_index: Exp $\times$ Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow E\;.\textbf{identificador}$ & exp\_reg: Exp $\times$ \textbf{string} $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow E\;\hat{}$ & exp\_ind: Exp $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow \textbf{true}$ & exp\_true: $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow \textbf{false}$ & exp\_false: $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow \textbf{literalEntero}$ & exp\_litEnt: \textbf{string} $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow \textbf{literalReal}$ & exp\_litReal: \textbf{string} $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow \textbf{literalCadena}$ & exp\_litCad: \textbf{string} $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow \textbf{identificador}$ & exp\_iden: \textbf{string} $\rightarrow$ Exp \\ \hline
+    $E \longrightarrow \textbf{null}$ & exp\_null: $\rightarrow$ Exp \\ \hline
+\end{longtblr}
