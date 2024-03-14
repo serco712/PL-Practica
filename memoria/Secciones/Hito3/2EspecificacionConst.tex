@@ -1,0 +1,199 @@
+\chapterA{Especificación del constructor ATS's mediante una gramatica s-atribuida   }
+.
+\section{Especificación del Constructor de ASTs}
+
+\begin{math}
+
+    bloque \longrightarrow \;declaraciones\;instrucciones\\
+    | \hspace{1cm}  bloque.\textbf{a} \;= \textbf{bloq}(declaraciones.\textbf{a},instrucciones.\textbf{a})\\
+    declaraciones \longrightarrow lista$-$declaraciones\\
+    | \hspace{1cm}declaraciones.\textbf{a} \;= \textbf{si$\_$decs}(lista$-$declaraciones.\textbf{a})\\
+    declaraciones \longrightarrow \epsilon\\
+    | \hspace{1cm}declaraciones.\textbf{a} \;= \textbf{no$\_$decs}()\\
+    lista$-$declaraciones \longrightarrow lista$-$declaraciones\;declaracion\\
+    | \hspace{1cm}lista$-$declaraciones_0.\textbf{a} \;= \textbf{muchas$\_$decs}(lista$-$declaraciones_1.\textbf{a},declaraciones.\textbf{a})\\
+    lista$-$declaraciones \longrightarrow declaracion\\ 
+    | \hspace{1cm}lista$-$declaraciones.\textbf{a} \;= \textbf{una$\_$dec}(declaraciones.\textbf{a})\\  
+    lista$-$variables \longrightarrow lista$-$variables\;declaracion\\
+    | \hspace{1cm}lista$-$variables_0.\textbf{a} \;= \textbf{muchas$\_$var}(lista$-$variables_1.\textbf{a},declaraciones.\textbf{a})\\
+    lista$-$variables \longrightarrow declaracion\\
+    | \hspace{1cm}lista$-$variables.\textbf{a} \;= \textbf{una$\_$var}(  declaraciones.\textbf{a})\\
+    declaracion \longrightarrow tipo\;\textbf{identificador}\\
+    | \hspace{1cm}declaracion.\textbf{a} \;=\textbf{dec$\_$simple}(tipo.\textbf{a},\textbf{identificador.lex})\\
+    declaracion \longrightarrow \textbf{type}\;tipo\;\textbf{identificador}\\
+    | \hspace{1cm}declaracion.\textbf{a} \;=\textbf{dec$\_$type}(tipo.\textbf{a},\textbf{identificador.lex})\\
+    declaracion \longrightarrow \textbf{identificador}\;par$-$formales\;bloque\\
+    | \hspace{1cm}declaracion.\textbf{a} \;=\textbf{dec$\_$proc}(\textbf{identificador.lex}, par$-$formales.\textbf{a},bloque.\textbf{a})\\
+   % declaracion \longrightarrow \textbf{type}\;\textbf{struct}\;\{\;lista$-$variables\;\}\;\textbf{identificador}\\
+    tipo \longrightarrow tipo\;\textbf{literalEntero}\\
+    | \hspace{1cm}tipo.\textbf{a} \;=\textbf{tipo$\_$array}(tipo.\textbf{a},\textbf{literalEntero.lex})\\
+    tipo \longrightarrow \hat{}\;tipo \\
+    | \hspace{1cm}tipo.\textbf{a} \;=\textbf{tipo$\_$punt}(tipo.\textbf{a})\\
+    tipo \longrightarrow \textbf{bool}\\
+    tipo \longrightarrow \textbf{int}\\
+    tipo \longrightarrow \textbf{real}\\
+    tipo \longrightarrow \textbf{string}\\
+    tipo \longrightarrow \textbf{identificador}\\
+    | \hspace{1cm}tipo.\textbf{a} \;=\textbf{tipo$\_$ident}(\textbf{identificador.lex})\\
+    tipo \longrightarrow \textbf{struct}\;lista$-$variables\\
+    | \hspace{1cm}tipo.\textbf{a} \;=\textbf{tipo$\_$struct}(lista$-$variables.\textbf{a})\\
+    instrucciones \longrightarrow lista$-$instrucciones\\
+    | \hspace{1cm}instrucciones.\textbf{a} \;=\textbf{si$\_$inst}(lista$-$instrucciones.\textbf{a})\\
+    instrucciones \longrightarrow \epsilon\\
+    | \hspace{1cm}instrucciones.\textbf{a} \;=\textbf{no$\_$inst}()\\
+    lista$-$instrucciones \longrightarrow lista$-$instrucciones\;instruccion\\
+    | \hspace{1cm}lista$-$instrucciones_0.\textbf{a} \;= \textbf{muchas$\_$inst}(lista$-$instrucciones_1.\textbf{a},instruccion.\textbf{a})\\
+    lista$-$instrucciones \longrightarrow instruccion\\
+    | \hspace{1cm}lista$-$instrucciones.\textbf{a} \;= \textbf{una$\_$inst}(instruccion.\textbf{a})\\
+    par$-$formales \longrightarrow lista$-$par$-$formal\\
+    | \hspace{1cm}par$-$formales.\textbf{a} \;= \textbf{si$\_$pformal}(lista$-$par$-$formal.\textbf{a})\\
+    par$-$formales \longrightarrow \epsilon\\
+    | \hspace{1cm}par$-$formales.\textbf{a} \;= \textbf{no$\_$pformal}()\\
+    lista$-$par$-$formal \longrightarrow par$-$formal\;lista$-$par$-$formal\\
+    | \hspace{1cm}lista$-$par$-$formal_0.\textbf{a} \;= \textbf{muchos$\_$pformal}(par$-$formal.\textbf{a},lista$-$par$-$formal_1.\textbf{a})\\ 
+    lista$-$par$-$formal \longrightarrow par$-$formal\\
+    | \hspace{1cm}lista$-$par$-$formal.\textbf{a} \;= \textbf{un$\_$pformal}(par$-$formal.\textbf{a})\\ 
+    par$-$formal \longrightarrow tipo\;\&\textbf{identificador}\\
+    | \hspace{1cm}par$-$formal.\textbf{a} \;= \textbf{pformal$\_$ref}(tipo.\textbf{a},\textbf{indentificador.lex})\\
+    par$-$formal \longrightarrow tipo\;\textbf{identificador}\\
+    | \hspace{1cm}par$-$formal.\textbf{a} \;= \textbf{pformal$\_$noref}(tipo.\textbf{a},\textbf{indentificador.lex})\\
+    par$-$reales \longrightarrow lista$-$par$-$real\\
+    | \hspace{1cm}par$-$reales.\textbf{a} \;= \textbf{si$\_$preales}(lista$-$par$-$real.\textbf{a})\\
+    par$-$reales \longrightarrow \epsilon\\
+    | \hspace{1cm}par$-$reales.\textbf{a} \;= \textbf{no$\_$preales}()\\
+    lista$-$par$-$real \longrightarrow E\;lista$-$par$-$real\\
+    | \hspace{1cm}lista$-$par$-$real_0.\textbf{a} \;=  \textbf{muchas$\_$exp}(E.\textbf{a},lista$-$par$-$real_1.\textbf{a})\\ 
+    lista$-$par$-$real \longrightarrow E\\
+    | \hspace{1cm}lista$-$par$-$real.\textbf{a} \;=  \textbf{una$\_$exp}(E.\textbf{a})\\ 
+    instruccion \longrightarrow E\\
+    | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$eval}(E.\textbf{a})\\
+    instruccion \longrightarrow \textbf{if}\;E\;\;bloque\\
+    | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$if}(E.\textbf{a}, bloque.\textbf{a})\\
+    instruccion \longrightarrow \textbf{if}\;E\;\;bloque\;\textbf{else}\;bloque\\
+    | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$else}(E.\textbf{a}, bloque.\textbf{a},bloque.\textbf{a})\\
+    instruccion \longrightarrow \textbf{while}\;E\;bloque\\
+    | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$while}(E.\textbf{a}, bloque.\textbf{a})\\
+    instruccion \longrightarrow \textbf{new}\;E\\
+    | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$new}(E.\textbf{a})\\
+    instruccion \longrightarrow \textbf{delete}\;E\\
+    | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$delete}(E.\textbf{a})\\
+    instruccion \longrightarrow \textbf{read}\;E\\
+    | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$read}(E.\textbf{a})\\
+    instruccion \longrightarrow \textbf{write}\;E\\
+    | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$write}(E.\textbf{a})\\
+    instruccion \longrightarrow \textbf{call}\;\textbf{identificador}\;par$-$reales\\
+    | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$call}(\textbf{identificador.a},par$-$reales.\textbf{a})\\
+    instruccion \longrightarrow \textbf{nl}\\
+    instruccion \longrightarrow bloque\\
+    | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$blo}(bloque.\textbf{a})\\
+    E \longrightarrow E1 = E\\
+    | \hspace{1cm}E_0.\textbf{a} \;= \textbf{exp$\_$asig}(E1.\textbf{a},E_1.\textbf{a})\\
+    E \longrightarrow E1\\
+    | \hspace{1cm}E.\textbf{a} \;= E1.\textbf{a}\\
+    E1 \longrightarrow E1\;\;OP1\;\;E2\\
+    | \hspace{1cm}E1_0.\textbf{a} \;= \textbf{mkop}(OP1.\textbf{op},E1_1.\textbf{a},E2.\textbf{a})\\
+    E1 \longrightarrow E2\\
+    | \hspace{1cm}E1.\textbf{a} \;= E2.\textbf{a}\\
+    E2 \longrightarrow E2 + E3\\
+    | \hspace{1cm}E2_0.\textbf{a} \;= \textbf{exp$\_$suma}(E2_1.\textbf{a},E3.\textbf{a})\\
+    E2 \longrightarrow E3 - E3\\
+    | \hspace{1cm}E2.\textbf{a} \;= \textbf{exp$\_$resta}(E3_0.\textbf{a},E3_1.\textbf{a})\\
+    E2 \longrightarrow E3\\
+    | \hspace{1cm}E2.\textbf{a} \;= E3.\textbf{a}\\
+    E3 \longrightarrow E4\;\;and\;\;E3\\
+    | \hspace{1cm}E3_0.\textbf{a} \;= \textbf{exp$\_$and}(E4.\textbf{a},E3_1.\textbf{a})\\ 
+    E3 \longrightarrow E4\;\;or\;\;E4\\
+    | \hspace{1cm}E3.\textbf{a} \;= \textbf{exp$\_$or}(E4_0.\textbf{a},E4_1.\textbf{a})\\
+    E3 \longrightarrow E4\\
+    | \hspace{1cm}E3.\textbf{a} \;= E4.\textbf{a}\\
+    E4 \longrightarrow E4\;\;OP4\;\;E5\\
+    | \hspace{1cm}E4_0.\textbf{a} \;= \textbf{mkop}(OP4.\textbf{op},E4_1.\textbf{a},E5.\textbf{a})\\
+    E4 \longrightarrow E5\\ 
+    | \hspace{1cm}E4.\textbf{a} \;= E5.\textbf{a}\\
+    E5 \longrightarrow OP5\;\;E6\\
+    | \hspace{1cm}E5.\textbf{a} \;= \textbf{mkop}(OP5.\textbf{op},E6.\textbf{a})\\
+    E5 \longrightarrow E6\\
+    | \hspace{1cm}E5.\textbf{a} \;= E6.\textbf{a}\\
+    E6 \longrightarrow E6\;OP6\\
+    | \hspace{1cm}E6.\textbf{a} \;= \textbf{mkop}(E6.\textbf{a},OP6.\textbf{op})\\    
+    E6 \longrightarrow E7\\
+    | \hspace{1cm}E6.\textbf{a} \;= E7.\textbf{a}\\
+    E7 \longrightarrow \textbf{true}\\
+    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$true}(\textbf{true.lex})\\
+    E7 \longrightarrow \textbf{false}\\
+    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$false}(\textbf{false.lex})\\
+    E7 \longrightarrow \textbf{literalEntero}\\
+    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$litEnt}(\textbf{literalEntero.lex})\\
+    E7 \longrightarrow \textbf{literalReal}\\
+    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$litReal}(\textbf{literalReal.lex})\\
+    E7 \longrightarrow \textbf{literalCadena}\\
+    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$litCad}(\textbf{literalCadena.lex})\\
+    E7 \longrightarrow \textbf{identificador}\\
+    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$iden}(\textbf{identificador.lex})\\
+    E7 \longrightarrow \textbf{null}\\
+    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$null}(\textbf{null.lex})\\
+    E7 \longrightarrow (\;E\;)\\
+    | \hspace{1cm}E7.\textbf{a} \;= E.\textbf{a}\\
+    OP1 \longrightarrow \;<\\
+    | \hspace{1cm}OP1.\textbf{op} \;=\; \textbf{``\;<\;''}\\  
+    OP1 \longrightarrow \;<=\\
+    | \hspace{1cm}OP1.\textbf{op} \;=\; \textbf{``\;<=\;''}\\  
+    OP1 \longrightarrow \;>\\
+    | \hspace{1cm}OP1.\textbf{op} \;=\; \textbf{``\;>\;''}\\  
+    OP1 \longrightarrow \;>=\\
+    | \hspace{1cm}OP1.\textbf{op} \;=\; \textbf{``\;>=\;''}\\  
+    OP1 \longrightarrow \;==\\
+    | \hspace{1cm}OP1.\textbf{op} \;=\; \textbf{``\;==\;''}\\  
+    OP1 \longrightarrow \;!=\\
+    | \hspace{1cm}OP1.\textbf{op} \;=\; \textbf{``\;!=\;''}\\  
+    OP4 \longrightarrow \;*\\
+    | \hspace{1cm}OP4.\textbf{op} \;=\; \textbf{``\;*\;''}\\  
+    OP4 \longrightarrow \;/\\
+    | \hspace{1cm}OP4.\textbf{op} \;=\; \textbf{``\;/\;''}\\  
+    OP4 \longrightarrow \;\%\\  
+    | \hspace{1cm}OP4.\textbf{op} \;=\; \textbf{``\;\%\;''}\\  
+    OP5 \longrightarrow \;-\\
+    | \hspace{1cm}OP5.\textbf{op} \;=\; \textbf{``\;-\;''}\\  
+    OP5 \longrightarrow \;\textbf{not}\\
+    | \hspace{1cm}OP5.\textbf{op} \;=\; \textbf{``\;not\;''}\\  
+    OP6 \longrightarrow \;[\;E\;]\\
+    | \hspace{1cm}OP6.\textbf{op} \;=\; E.\textbf{a}\\  
+    OP6 \longrightarrow \;\textbf{identificador}\\
+    | \hspace{1cm}OP6.\textbf{op} \;=\; \textbf{identificador.lex}\\  
+    OP6 \longrightarrow \;\hat{}\\
+    | \hspace{1cm}OP6.\textbf{op} \;=\; ``\;\hat{}\;'' \\  
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+\\
+    fun \;\textbf{mkop}(op,opnd1,opnd2):\\
+    | \hspace{1cm}op\;=\;"<" \longrightarrow return\;\textbf{exp$\_$menor}(opnd1,opnd2)\\
+    | \hspace{1cm}op\;=\;"<=" \longrightarrow return\;\textbf{exp$\_$menIgual}(opnd1,opnd2)\\
+    | \hspace{1cm}op\;=\;">" \longrightarrow return\;\textbf{exp$\_$mayor}(opnd1,opnd2)\\
+    | \hspace{1cm}op\;=\;">=" \longrightarrow return\;\textbf{exp$\_$mayIgual}(opnd1,opnd2)\\
+    | \hspace{1cm}op\;=\;"==" \longrightarrow return\;\textbf{exp$\_$igual}(opnd1,opnd2)\\
+    | \hspace{1cm}op\;=\;"\!=" \longrightarrow return\;\textbf{exp$\_$dist}(opnd1,opnd2)\\
+    | \hspace{1cm}op\;=\;"*" \longrightarrow return\;\textbf{exp$\_$mult}(opnd1,opnd2)\\
+    | \hspace{1cm}op\;=\;"/" \longrightarrow return\;\textbf{exp$\_$div}(opnd1,opnd2)\\
+    | \hspace{1cm}op\;=\;"\%" \longrightarrow return\;\textbf{exp$\_$mod}(opnd1,opnd2)\\
+\\
+\\
+\\
+ fun \;\textbf{mkop}(op,opnd1):\\
+    | \hspace{1cm}op\;=\;"-" \longrightarrow return\;\textbf{exp$\_$menos}(opnd1)\\
+    | \hspace{1cm}op\;=\;"\textbf{not}" \longrightarrow return\;\textbf{exp$\_$not}(opnd1)\\
+
+
+
+    
+\end{math}
+
+
+
+    
