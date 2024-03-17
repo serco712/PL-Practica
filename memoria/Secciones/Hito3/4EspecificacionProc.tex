@@ -17,49 +17,63 @@ imprime(Bloque(Decs,Instr)):
 
 imprime(si_decs(LDecs):
     imprime(Ldecs)
+    nl
+    
 imprime(no_decs(LDecs): noop
 imprime(muchas_decs(Ldecs, Dec):
     imprime(ldecs)
+    nl
     print ","
+    nl
     imprime(Dec)
+    nl
 imprime(una_dec(Dec):
     imprime(Dec)
     
 imprime(muchas_var(lvar, Dec):
     imprime(lvar)
     print ","
+    nl
     imprime(Dec)
-imprime(una_var(Dec)
-
-
-
-
+    nl
+imprime(una_var(Dec)):
+    imprime(Dec)
+    nl
 
 imprime(si_inst(lInstr):
     imprime(linstr)
 imprime(no_inst(): noop
 imprime(muchas_inst(linstr, instr):
     imprime(linstr)
+    nl
     print ","
+    nl
     imprime(instr)
+    nl
+    
 imprime(una_inst(intr):
     imprime(instr)
 
 imprime(dec_simple(Tipo, Id):
     imprime(Tipo)
-    print ","
-    imprime(Id)
+    nl
+    print " "
+    nl
+    print Id
+    nl
 
 
 imprime(dec_proc(Id, Par-formal,Bloque):
-    imprime(Id)
-    print ","
+    print Id
+    nl
     imprime(Par-formal)
     imprime(Bloque)
 
 imprime(Tipo_array(Tipo, N):
     imprime(Tipo)
+    nl
     print ","
+    nl
     imprime(litEnt)
     
 imprime(Tipo2):
@@ -73,29 +87,40 @@ imprime(Tipo_bool(bool)):
     print "<"
     print Bool
     print ">"
+    nl
+    
 imprime(Tipo_int(int)):
     print "<"
     print int
     print ">"
+    nl
+    
 imprime(Tipo_real(real)):
     print "<"
     print real
     print ">"
+    nl
 imprime(Tipo_string(string)):
     print "<"
     print string
     print ">"
+    nl
  
 imprime(Tipo_ident(Id)):
     print Id
+    nl
 
 imprime(Tipo_struct(lvar)):
     print "<"
     print struct
     print ">"
+    nl
     print "{"
+    nl
     imprime(lvar)
+    nl
     print "}"
+    nl
 
 imprime(si_pformal(l-par-formal):
     imprime(l-par-formal)
@@ -104,7 +129,9 @@ imprime(no_pformal():noop
 
 imprime(muchos_pformal(par-formal,l-par-formal):
     imprime(par-formal)
+    nl
     print ","
+    nl
     imprime(l-par-formal)
 
 imprime(un_pformal(par-formal):
@@ -113,12 +140,13 @@ imprime(un_pformal(par-formal):
 imprime(pformal-ref(Tipo,Id):
     imprime(Tipo)
     nl
-    imprime(id)
+    print Id
+    nl
 
 imprime(pformal_noref(Tipo, Id):
     imprime(Tipo)
     nl
-    imprime(id)
+    print Id
 
 imprime(si_preales(l-par-real):
     imprime(l-par-real)
@@ -211,7 +239,7 @@ imprime(inst_call(Id, par-real):
     print call
     print ">"
     nl
-    imprime(Id)
+    print Id
     imprime(par-real)
     nl
 
@@ -223,7 +251,9 @@ imprime(dec_proc(Id, par-formales, Bloque)):
     print "<"
     print proc
     print ">"
-    imprime(Id)
+    nl
+    print Id
+    nl
     imprime(par-formales)
     imprime(Bloque)
     nl
@@ -234,35 +264,52 @@ imprime(dec_type(tipo, Id)):
     print ">"
     nl
     imprime(tipo)
-    imprime(Id)
-    nl
+    print Id
+    
     
 imprime(nl):
     print "<"
     print nl
     print ">"
     nl
+
+imprime(exp_true(true):
+    print "<"
+    print true
+    print ">"
+    nl
+
+    imprime(exp_false(false):
+    print "<"
+    print false
+    print ">"
+    nl
     
 imprime(exp_and(Exp4, Exp3)):
+    imprime(Exp4)
+    nl
     print "<"
     print and
     print ">"
-imprime(exp_or(or)):
+    nl
+    imprime(Exp3)
+    nl
+    
+imprime(exp_or(Exp4, exp4)):
+    imprime(Exp4)
+    nl
     print "<"
     print or
     print ">"
+    nl
+    imprime(Exp4)
+    nl
+    
 imprime("not"(not)):
     print "<"
     print not
     print ">"
-imprime(exp_true(true)):
-    print "<"
-    print true
-    print ">"
-imprime(exp_false(false)):
-    print "<"
-    print false
-    print ">"
+
 imprime(exp_null(null)):
     print "<"
     print null
@@ -279,6 +326,8 @@ imprime (EOF(eof)):
     print EOF
     print ">"
 
+imprime(exp_asig(Opnd0,Opnd1)):
+    imprimeExpBin(Opnd0,"=",Opnd1,1,0)
 imprime(exp_suma(Opnd0,Opnd1)):
     imprimeExpBin(Opnd0,"+",Opnd1,2,3)
 imprime(exp_resta(Opnd0,Opnd1)):
@@ -330,10 +379,13 @@ imprimeExpBin(Opnd0,Op,Opnd1,np0,np1):
 imprimeOpnd(Opnd,MinPrior):
     if prioridad(Opnd) < MinPrior
         print “(“
+        nl
     end if
     imprime(Opnd)
+    ml
     if prioridad(Opnd) < MinPrior
         print “)“
+        l
     end if    
 
 
@@ -345,6 +397,7 @@ prioridad(exp_mul(_,_)): return 4
 prioridad(exp_div(_,_)): return 4
 prioridad(exp_mod(_,_)): return 4
 
+prioridad(exp_asig(_,_)): return 0
 prioridad(exp_men(_,_)): return 1
 prioridad(exp_menorIgual(_,_)): return 1
 prioridad(exp_mayor(_,_)): return 1
