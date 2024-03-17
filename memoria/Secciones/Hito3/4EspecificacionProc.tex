@@ -1,0 +1,365 @@
+\chapterA{Especificación del procesamiento de impresión} 
+
+\begin{lstlisting}
+
+imprime(prog(Bloque):
+    imprime(Bloque)
+    
+imprime(Bloque(Decs,Instr)):
+    print"{"
+    nl
+    imprime(Decs)
+    nl
+    imprime (Instr)
+    nl
+    print"}"
+    nl
+
+imprime(si_decs(LDecs):
+    imprime(Ldecs)
+imprime(no_decs(LDecs): noop
+imprime(muchas_decs(Ldecs, Dec):
+    imprime(ldecs)
+    print ","
+    imprime(Dec)
+imprime(una_dec(Dec):
+    imprime(Dec)
+    
+imprime(muchas_var(lvar, Dec):
+    imprime(lvar)
+    print ","
+    imprime(Dec)
+imprime(una_var(Dec)
+
+
+
+
+
+imprime(si_inst(lInstr):
+    imprime(linstr)
+imprime(no_inst(): noop
+imprime(muchas_inst(linstr, instr):
+    imprime(linstr)
+    print ","
+    imprime(instr)
+imprime(una_inst(intr):
+    imprime(instr)
+
+imprime(dec_simple(Tipo, Id):
+    imprime(Tipo)
+    print ","
+    imprime(Id)
+
+
+imprime(dec_proc(Id, Par-formal,Bloque):
+    imprime(Id)
+    print ","
+    imprime(Par-formal)
+    imprime(Bloque)
+
+imprime(Tipo_array(Tipo, N):
+    imprime(Tipo)
+    print ","
+    imprime(litEnt)
+    
+imprime(Tipo2):
+
+imprime(Tipo_punt(Tipo2):
+    imprime(Tipo2)
+
+imprime(Tipo3):
+
+imprime(Tipo_bool(bool)):
+    print "<"
+    print Bool
+    print ">"
+imprime(Tipo_int(int)):
+    print "<"
+    print int
+    print ">"
+imprime(Tipo_real(real)):
+    print "<"
+    print real
+    print ">"
+imprime(Tipo_string(string)):
+    print "<"
+    print string
+    print ">"
+ 
+imprime(Tipo_ident(Id)):
+    print Id
+
+imprime(Tipo_struct(lvar)):
+    print "<"
+    print struct
+    print ">"
+    print "{"
+    imprime(lvar)
+    print "}"
+
+imprime(si_pformal(l-par-formal):
+    imprime(l-par-formal)
+
+imprime(no_pformal():noop
+
+imprime(muchos_pformal(par-formal,l-par-formal):
+    imprime(par-formal)
+    print ","
+    imprime(l-par-formal)
+
+imprime(un_pformal(par-formal):
+    imprime(par-formal)
+
+imprime(pformal-ref(Tipo,Id):
+    imprime(Tipo)
+    nl
+    imprime(id)
+
+imprime(pformal_noref(Tipo, Id):
+    imprime(Tipo)
+    nl
+    imprime(id)
+
+imprime(si_preales(l-par-real):
+    imprime(l-par-real)
+
+imprime(no_preales()):noop
+
+imprime(muchas_exp(Exp, l-par-real):
+    imprime(Exp)
+    nl
+    print ","
+    nl
+    imprime(l-par-real)
+    nl
+
+imprime(una_exp(Exp):
+    imprime(Exp)
+    nl
+
+imprime(Eval)
+
+imprime(inst_eval(Exp)):
+    imprime(Exp)
+
+imprime(inst_if(Exp, Bloque):
+    print "<"
+    print if
+    print ">"
+    nl
+    imprime(Exp)
+    nl
+    imprime(Bloque)
+    nl
+
+imprime(inst_else(Exp, Bloque, Bloque):
+    print "<"
+    print else
+    print ">"
+    nl
+    imprime(Exp)
+    nl
+    imprime(Bloque)
+    nl
+
+imprime(inst_while(Exp, Bloque):
+    print "<"
+    print while
+    print ">"
+    nl
+    imprime(Exp)
+    nl
+    imprime(Bloque)
+    nl   
+
+imprime(inst_new(Exp)):
+    print "<"
+    print new
+    print ">"
+    nl
+    imprime(Exp)
+    nl
+
+
+imprime(inst_delete(Exp)):
+    print "<"
+    print delete
+    print ">"
+    nl
+    imprime(Exp)
+    nl
+    
+imprime(inst_read(read)):
+    print "<"
+    print read
+    print ">"
+    nl
+    imprime(Exp)
+    nl
+
+imprime(inst_write(write)):
+    print "<"
+    print write
+    print ">"
+     nl
+    imprime(Exp)
+    nl
+
+
+imprime(inst_call(Id, par-real):
+    print "<"
+    print call
+    print ">"
+    nl
+    imprime(Id)
+    imprime(par-real)
+    nl
+
+imprime(inst_blo(Bloque):
+    imprime(Bloque)
+    nl
+   
+imprime(dec_proc(Id, par-formales, Bloque)):
+    print "<"
+    print proc
+    print ">"
+    imprime(Id)
+    imprime(par-formales)
+    imprime(Bloque)
+    nl
+    
+imprime(dec_type(tipo, Id)):
+    print "<"
+    print type
+    print ">"
+    nl
+    imprime(tipo)
+    imprime(Id)
+    nl
+    
+imprime(nl):
+    print "<"
+    print nl
+    print ">"
+    nl
+    
+imprime(exp_and(Exp4, Exp3)):
+    print "<"
+    print and
+    print ">"
+imprime(exp_or(or)):
+    print "<"
+    print or
+    print ">"
+imprime("not"(not)):
+    print "<"
+    print not
+    print ">"
+imprime(exp_true(true)):
+    print "<"
+    print true
+    print ">"
+imprime(exp_false(false)):
+    print "<"
+    print false
+    print ">"
+imprime(exp_null(null)):
+    print "<"
+    print null
+    print ">"
+    
+imprime(lit_Ent(N)):
+    print N
+imprime(lit_Real(R)):
+    print R
+imprime(lit_Cad(C)):
+    print C
+imprime (EOF(eof)):
+    print "<"
+    print EOF
+    print ">"
+
+imprime(exp_suma(Opnd0,Opnd1)):
+    imprimeExpBin(Opnd0,"+",Opnd1,2,3)
+imprime(exp_resta(Opnd0,Opnd1)):
+    imprimeExpBin(Opnd0,"-",Opnd1,3,3)
+imprime(exp_and(Opnd0,Opnd1)):
+    imprimeExpBin(Opnd0,"and",Opnd1,4,3)
+imprime(exp_or(Opnd0,Opnd1)):
+    imprimeExpBin(Opnd0,"or",Opnd1,4,4)
+imprime(exp_mult(Opnd0,Opnd1)):
+    imprimeExpBin(Opnd0,"*",Opnd1,4,5)
+imprime(exp_div(Opnd0,Opnd1)):
+    imprimeExpBin(Opnd0,“/",Opnd1,4,5)
+imprime(exp_mod(Opnd0,Opnd1)):
+    imprimeExpBin(Opnd0,“%",Opnd1,4,5)
+
+imprime(exp_men(Opnd0,Opnd1)):
+    imprimeExpBin(Opnd0,“<",Opnd1,1,2)
+imprime(exp_menIgual(Opnd0,Opnd1)):
+    imprimeExpBin(Opnd0,“<=",Opnd1,1,2)
+imprime(exp_mayor(Opnd0,Opnd1)):
+    imprimeExpBin(Opnd0,“>",Opnd1,1,2)
+imprime(exp_mayIgual(Opnd0,Opnd1)):
+    imprimeExpBin(Opnd0,“>=",Opnd1,1,2)
+imprime(exp_igual(Opnd0,Opnd1)):
+    imprimeExpBin(Opnd0,“==",Opnd1,1,2)
+imprime(exp_dist(Opnd0,Opnd1)):
+    imprimeExpBin(Opnd0,“!=",Opnd1,1,2)
+
+imprime(exp_menos(Opnd0)):
+    imprimeExpBin(“-",Opnd0,6)
+imprime(exp_not(Opnd0)):
+    imprimeExpBin(“not",Opnd0,6)
+imprime(exp_index(Opnd0)):
+    imprimeExpBin(“Exp",Opnd0,6)
+imprime(exp_reg(Opnd0)):
+    imprimeExpBin(“Id",Opnd0,6)
+imprime(exp_ind(Opnd0)):
+    imprimeExpBin("^",Opnd0,6)
+
+imprimeExpUnario(Opnd0,Op,np0):
+    print " "++Op++" "
+    imprimeOpnd(Opnd0,np0)
+       
+imprimeExpBin(Opnd0,Op,Opnd1,np0,np1):
+    imprimeOpnd(Opnd0,np0)
+    print " "++Op++" "
+    imprimeOpnd(Opnd1,np1)
+    
+imprimeOpnd(Opnd,MinPrior):
+    if prioridad(Opnd) < MinPrior
+        print “(“
+    end if
+    imprime(Opnd)
+    if prioridad(Opnd) < MinPrior
+        print “)“
+    end if    
+
+
+prioridad(exp_suma(_,_)): return 2
+prioridad(exp_resta(_,_)): return 2
+prioridad(exp_and(_,_)): return 3
+prioridad(exp_or(_,_)): return 3
+prioridad(exp_mul(_,_)): return 4
+prioridad(exp_div(_,_)): return 4
+prioridad(exp_mod(_,_)): return 4
+
+prioridad(exp_men(_,_)): return 1
+prioridad(exp_menorIgual(_,_)): return 1
+prioridad(exp_mayor(_,_)): return 1
+prioridad(exp_mayIgual(_,_)): return 1
+prioridad(exp_igual(_,_)): return 1
+prioridad(exp_dist(_,_)): return 1
+
+
+prioridad(exp_menos(_)): return 5
+prioridad(exp_not(_)): return 5
+prioridad(exp_index(_)): return 6
+prioridad(exp_reg(_)): return 6
+prioridad(exp_ind(_)): return 6
+
+
+
+
+\end{lstlisting}
