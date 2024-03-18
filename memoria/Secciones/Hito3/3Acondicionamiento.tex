@@ -66,34 +66,54 @@
     | \hspace{1cm}rlista$-$inst_0.\textbf{a} \;= rlista$-$inst_1.\textbf{a}\\
     rlista$-$inst \longrightarrow \epsilon\\
     | \hspace{1cm}rlista$-$inst.\textbf{a} \;= rlista$-$inst.\textbf{ah}\\
-    par$-$formales \longrightarrow (lista$-$par$-$formal)\\
-    | \hspace{1cm}par$-$formales.\textbf{a} \;= \textbf{si$\_$pformal}(lista$-$par$-$formal.\textbf{a})\\
-    par$-$formales \longrightarrow ()\\
-    | \hspace{1cm}par$-$formales.\textbf{a} \;= \textbf{no$\_$pformal}()\\
-    lista$-$par$-$formal \longrightarrow par$-$formal,lista$-$par$-$formal\\
-    | \hspace{1cm}lista$-$par$-$formal_0.\textbf{a} \;= \textbf{muchos$\_$pformal}(par$-$formal.\textbf{a},lista$-$par$-$formal_1.\textbf{a})\\ 
-    lista$-$par$-$formal \longrightarrow par$-$formal\\
-    | \hspace{1cm}lista$-$par$-$formal.\textbf{a} \;= \textbf{un$\_$pformal}(par$-$formal.\textbf{a})\\ 
-    par$-$formal \longrightarrow tipo\;\&\textbf{identificador}\\
-    | \hspace{1cm}par$-$formal.\textbf{a} \;= \textbf{pformal$\_$ref}(tipo.\textbf{a},\textbf{indentificador.lex})\\
-    par$-$formal \longrightarrow tipo\;\textbf{identificador}\\
-    | \hspace{1cm}par$-$formal.\textbf{a} \;= \textbf{pformal$\_$noref}(tipo.\textbf{a},\textbf{indentificador.lex})\\
-    par$-$reales \longrightarrow (lista$-$par$-$real)\\
-    | \hspace{1cm}par$-$reales.\textbf{a} \;= \textbf{si$\_$preales}(lista$-$par$-$real.\textbf{a})\\
-    par$-$reales \longrightarrow ()\\
-    | \hspace{1cm}par$-$reales.\textbf{a} \;= \textbf{no$\_$preales}()\\
-    lista$-$par$-$real \longrightarrow E0,lista$-$par$-$real\\
-    | \hspace{1cm}lista$-$par$-$real_0.\textbf{a} \;=  \textbf{muchas$\_$exp}(E0.\textbf{a},lista$-$par$-$real_1.\textbf{a})\\ 
-    lista$-$par$-$real \longrightarrow E0\\
-    | \hspace{1cm}lista$-$par$-$real.\textbf{a} \;=  \textbf{una$\_$exp}(E0.\textbf{a})\\ 
+    par$-$formales \longrightarrow (rpar$-$formales\\
+    | \hspace{1cm}rpar$-$formales.\textbf{ah} \;= \textbf{no$\_$pformal}()\\
+    | \hspace{1cm}par$-$formales.\textbf{a} \;= }rpar$-$formales.\textbf{a}\\
+    rpar$-$formales \longrightarrow lista$-$par$-$formal)\\
+    | \hspace{1cm}rpar$-$formales.\textbf{a} \;= \textbf{si$\_$pformal}(lista$-$par$-$formal.\textbf{a})\\
+    rpar$-$formales \longrightarrow )\\
+    | \hspace{1cm}rpar$-$formales.\textbf{a} \;= \textbf{no$\_$pformal}()\\
+    lista$-$par$-$formal \longrightarrow par$-$formal\; rlista$-$par$-$formal\\
+    | \hspace{1cm}rlista$-$par$-$formal.\textbf{ah} \;= \textbf{un$\_$pformal}(par$-$formal.\textbf{a})\\
+    | \hspace{1cm}lista$-$par$-$formal.\textbf{a} \;= rlista$-$par$-$formal.\textbf{a}\\
+    rlista$-$par$-$formal \longrightarrow ,\;par$-$formal\; rlista$-$par$-$formal\\
+    | \hspace{1cm}rlista$-$par$-$formal_1.\textbf{ah} \;= \textbf{muchos$\_$pformal}(par$-$formal.\textbf{a},rlista$-$par$-$formal_0.\textbf{ah})\\ 
+    | \hspace{1cm}rlista$-$par$-$formal_0.\textbf{a} \;= rlista$-$par$-$formal_1.\textbf{a}\\
+    rlista$-$par$-$formal \longrightarrow \epsilon\\
+    | \hspace{1cm}rlista$-$par$-$formal.\textbf{a} \;= rlista$-$par$-$formal.\textbf{ah}\\
+    par$-$formal \longrightarrow tipo\;rpar$-$formal\\
+    | \hspace{1cm}rpar$-$formal.\textbf{ah} \;= \textbf{pformal$\_$noref}(tipo.\textbf{a},\textbf{indentificador.lex})\\
+    | \hspace{1cm}par$-$formal.\textbf{a} \;= rpar$-$formal.\textbf{a}\\
+    rpar$-$formal \longrightarrow \&\textbf{identificador}\\
+    | \hspace{1cm}rpar$-$formal.\textbf{a} \;= \textbf{pformal$\_$ref}(tipo.\textbf{a},\textbf{indentificador.lex})\\
+    rpar$-$formal \longrightarrow \textbf{identificador}\\
+    | \hspace{1cm}rpar$-$formal.\textbf{a} \;= \textbf{pformal$\_$noref}(tipo.\textbf{a},\textbf{indentificador.lex})\\
+    par$-$reales \longrightarrow (rpar$-$reales\\
+    | \hspace{1cm}rpar$-$reales.\textbf{ah} \;= \textbf{no$\_$preales}()\\
+    | \hspace{1cm}par$-$reales.\textbf{a} \;= rpar$-$reales.\textbf{a}\\
+    rpar$-$reales \longrightarrow lista$-$par$-$real)\\
+    | \hspace{1cm}rpar$-$reales.\textbf{a} \;= \textbf{si$\_$preales}(lista$-$par$-$real.\textbf{a})\\
+    rpar$-$reales \longrightarrow )\\
+    | \hspace{1cm}rpar$-$reales.\textbf{a} \;= \textbf{no$\_$preales}()\\
+    lista$-$par$-$real \longrightarrow E0\;rlista$-$par$-$real\\
+    | \hspace{1cm}rlista$-$par$-$real.\textbf{ah} \;= \textbf{una$\_$exp}(E0.\textbf{a})\\ 
+    | \hspace{1cm}lista$-$par$-$real.\textbf{a} \;= lista$-$par$-$real.\textbf{a}\\ 
+    rlista$-$par$-$real \longrightarrow ,\;lista$-$par$-$real\\
+    | \hspace{1cm}rlista$-$par$-$real_1.\textbf{ah} \;=  \textbf{muchas$\_$exp}(E0.\textbf{a},rlista$-$par$-$real_0.\textbf{ah})\\ 
+    | \hspace{1cm}rlista$-$par$-$real_0.\textbf{a} \;=  rlista$-$par$-$real_1.\textbf{a}\\ 
+    rlista$-$par$-$real \longrightarrow \epsilon\\
+    | \hspace{1cm}rlista$-$par$-$real.\textbf{a} \;=  \textbf{una$\_$exp}(E0.\textbf{a})\\ 
     instruccion \longrightarrow eval\\
     | \hspace{1cm}instruccion.\textbf{a} \;= eval.\textbf{a}\\
     instruccion \longrightarrow E0\\
     | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$eval}(E0.\textbf{a})\\
-    instruccion \longrightarrow \textbf{if}\;E0\;\;bloque\\
-    | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$if}(E0.\textbf{a}, bloque.\textbf{a})\\
-    instruccion \longrightarrow \textbf{if}\;E0\;\;bloque\;\textbf{else}\;bloque\\
-    | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$else}(E0.\textbf{a}, bloque.\textbf{a},bloque.\textbf{a})\\
+    instruccion \longrightarrow \textbf{if}\;E0\;\;bloque\;rif\\
+    | \hspace{1cm}rif.\textbf{ah} \;= \textbf{inst$\_$if}(E0.\textbf{a}, bloque.\textbf{a})\\
+    | \hspace{1cm}instruccion.\textbf{a} \;= rif.\textbf{a}\\
+    rif \longrightarrow \textbf{else}\;bloque\\
+    | \hspace{1cm}rif.\textbf{a} \;= \textbf{inst$\_$else}(E0.\textbf{a}, bloque.\textbf{a},bloque.\textbf{a})\\
+    rif \longrightarrow \epsilon\\
+    | \hspace{1cm}rif.\textbf{a} \;= \textbf{inst$\_$if}(E0.\textbf{a}, bloque.\textbf{a})\\
     instruccion \longrightarrow \textbf{while}\;E0\;bloque\\
     | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$while}(E0.\textbf{a}, bloque.\textbf{a})\\
     instruccion \longrightarrow \textbf{new}\;E0\\
@@ -111,10 +131,13 @@
     | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$blo}(bloque.\textbf{a})\\
     eval \longrightarrow @\;E0\\
     | \hspace{1cm}eval.\textbf{a} \;= E0.\textbf{a}\\
-    E0 \longrightarrow E1 = E0\\
-    | \hspace{1cm}E0_0.\textbf{a} \;= \textbf{exp$\_$asig}(E1.\textbf{a},E0_1.\textbf{a})\\
-    E0 \longrightarrow E1\\
-    | \hspace{1cm}E.\textbf{a} \;= E1.\textbf{a}\\
+    E0 \longrightarrow E1\;rE0\\
+    | \hspace{1cm}rE0.\textbf{ah} \;= E1.\textbf{a}\\
+    | \hspace{1cm}E0.\textbf{a} \;= rE0.\textbf{a}\\
+    rE0 \longrightarrow = E0\\
+    | \hspace{1cm}rE0.\textbf{a} \;= \textbf{exp$\_$asig}(E1.\textbf{a},E0.\textbf{a})\\
+    rE0 \longrightarrow \epsilon\\
+    | \hspace{1cm}rE0.\textbf{a} \;= E1.\textbf{a}\\
     E1 \longrightarrow E2\;rE1\\
     | \hspace{1cm}rE1.\textbf{ah} \;= E2.a\\
     | \hspace{1cm}E1.\textbf{a} \;= rE1.\textbf{a}\\  
@@ -134,12 +157,15 @@
     | \hspace{1cm}rE2_0.\textbf{a} \;= rE2_1.\textbf{a}\\
     rE2 \longrightarrow \epsilon\\
     | \hspace{1cm}rE2.\textbf{a} \;= rE2.\textbf{ah}\\
-    E3 \longrightarrow E4\;\;and\;\;E3\\
-    | \hspace{1cm}E3_0.\textbf{a} \;= \textbf{exp$\_$and}(E4.\textbf{a},E3_1.\textbf{a})\\ 
-    E3 \longrightarrow E4\;\;or\;\;E4\\
-    | \hspace{1cm}E3.\textbf{a} \;= \textbf{exp$\_$or}(E4_0.\textbf{a},E4_1.\textbf{a})\\
-    E3 \longrightarrow E4\\
-    | \hspace{1cm}E3.\textbf{a} \;= E4.\textbf{a}\\
+    E3 \longrightarrow E4\;rE3\\
+    | \hspace{1cm}rE3.\textbf{ah} \;= E4.\textbf{a}\\
+    | \hspace{1cm}E3.\textbf{a} \;= rE3.\textbf{a}\\
+    rE3 \longrightarrow and\;\;E3\\
+    | \hspace{1cm}rE3.\textbf{a} \;= \textbf{exp$\_$and}(E4.\textbf{a},E3.\textbf{a})\\ 
+    rE3 \longrightarrow or\;\;E4\\
+    | \hspace{1cm}rE3.\textbf{a} \;= \textbf{exp$\_$or}(E4_0.\textbf{a},E4_1.\textbf{a})\\
+    rE3 \longrightarrow \epsilon\\
+    | \hspace{1cm}rE3.\textbf{a} \;= E4.\textbf{a}\\
     E4 \longrightarrow E5\;rE4\\
     | \hspace{1cm}rE4.\textbf{ah} \;= E5.a\\
     | \hspace{1cm}E4.\textbf{a} \;= rE4.\textbf{a}\\  
