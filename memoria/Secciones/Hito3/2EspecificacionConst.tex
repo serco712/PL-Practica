@@ -4,7 +4,7 @@
 
 \begin{math}
     programa \longrightarrow bloque \\
-    | \hspace{1cm}  programa.\textbf{a} \;= broque.\textbf{a}\\
+    | \hspace{1cm}  programa.\textbf{a} \;= bloque.\textbf{a}\\
      bloque \longrightarrow \{\;declaraciones\;instrucciones\;\}\\
     | \hspace{1cm}  bloque.\textbf{a} \;= \textbf{bloq}(declaraciones.\textbf{a},instrucciones.\textbf{a})\\
     declaraciones \longrightarrow lista$-$declaraciones\;\&\& \\
@@ -102,7 +102,7 @@
     E0 \longrightarrow E1 = E0\\
     | \hspace{1cm}E0_0.\textbf{a} \;= \textbf{exp$\_$asig}(E1.\textbf{a},E0_1.\textbf{a})\\
     E0 \longrightarrow E1\\
-    | \hspace{1cm}E.\textbf{a} \;= E1.\textbf{a}\\
+    | \hspace{1cm}E0.\textbf{a} \;= E1.\textbf{a}\\
     E1 \longrightarrow E1\;\;OP1\;\;E2\\
     | \hspace{1cm}E1_0.\textbf{a} \;= \textbf{mkop}(OP1.\textbf{op},E1_1.\textbf{a},E2.\textbf{a})\\
     E1 \longrightarrow E2\\
