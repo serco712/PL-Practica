@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2023.10.9)  13 MAR 2024 13:44
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.3.15)  18 MAR 2024 11:07
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1308,20 +1308,7 @@ Package: ccicons 2017/10/30 v1.6 LaTeX support for Creative Commons icons
 LaTeX Info: Redefining \. on input line 32.
 LaTeX Info: Redefining \% on input line 32.
 
-(./glossary.aux) (./Secciones/3AST.aux)
-
-./memoria.aux:39: LaTeX Error: Missing \begin{document}.
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.39 g
-      e@last{9}
-You're in trouble here.  Try typing  <return>  to proceed.
-If that doesn't work, type  X <return>  to quit.
-
-)
+(./glossary.aux) (./Secciones/3AST.aux))
 \openout1 = `memoria.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 9.
@@ -1335,7 +1322,8 @@ LaTeX Font Info:    ... okay on input line 9.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 9.
 LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 9
 .
- (/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 9.
@@ -1404,11 +1392,6 @@ Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
 Couldn't patch \ttl@straight@ii
 Couldn't patch \ttl@straight@ii
-[1.1
-
-\openout3 = `memoria.xdy'.
-
-]
 
 LaTeX Font Warning: Font shape `T1/lmr/bx/sc' undefined
 (Font)              using `T1/lmr/bx/n' instead on input line 17.
@@ -1440,7 +1423,10 @@ LaTeX Font Warning: Font shape `T1/lmr/m/scit' undefined
 
 File: ./logoComplutense.png Graphic file (type bmp)
 <./logoComplutense.png>
-[1.2
+[1.1
+
+\openout3 = `memoria.xdy'.
+
 
 ] (./memoria.toc
 LaTeX Info: Redefining \. on input line 1.
@@ -1462,7 +1448,7 @@ less on input line 26.
 Package fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
 less on input line 26.
 
-[1.3
+[1.2
 
 ]
 \openout2 = `glossary.aux'.
@@ -1502,7 +1488,7 @@ less on input line 94.
 Package fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
 less on input line 94.
 
-[2.4
+[2.3
 
 
 
@@ -1515,7 +1501,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 97--169
 
 LaTeX Info: Redefining \. on input line 169.
 LaTeX Info: Redefining \% on input line 169.
-[3.5]
+[3.4]
 > Step: init table outer spec.
 > Step: parse table options.
 > Step: split table.
@@ -1526,7 +1512,7 @@ LaTeX Info: Redefining \% on input line 169.
 > Step: build the whole table.
 LaTeX Info: Redefining \. on input line 197.
 LaTeX Info: Redefining \% on input line 197.
- [4.6]
+ [4.5]
 Overfull \hbox (30.0pt too wide) in paragraph at lines 197--197
 [] 
  []
@@ -1546,24 +1532,215 @@ Overfull \hbox (30.0pt too wide) in paragraph at lines 281--281
 
 LaTeX Info: Redefining \. on input line 281.
 LaTeX Info: Redefining \% on input line 281.
-[5.7]
+[5.6]
 Overfull \hbox (30.0pt too wide) in paragraph at lines 281--281
 [] 
  []
 
 LaTeX Info: Redefining \. on input line 281.
 LaTeX Info: Redefining \% on input line 281.
-[6.8]
+[6.7]
 Overfull \hbox (30.0pt too wide) in paragraph at lines 281--281
 [] 
  []
 
-) (./Secciones/Hito3/2EspecificacionConst.tex)
-(./Secciones/Hito3/3Acondicionamiento.tex)
-(./Secciones/Hito3/4EspecificacionProc.tex))
+) (./Secciones/Hito3/2EspecificacionConst.tex
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+ [7.8]
+Capítulo 2.
+
+Overfull \hbox (17.187pt too wide) in paragraph at lines 1--1
+|[]\T1/lmr/bx/n/24.88 Especificación del cons-truc-tor ATS's
+ []
+
+
+Overfull \hbox (7.66214pt too wide) in paragraph at lines 1--1
+\T1/lmr/bx/n/24.88 me-dian-te una gra-ma-ti-ca s-atribuida
+ []
+
+./Secciones/Hito3/2EspecificacionConst.tex:166: Incompatible glue units.
+\es@sppercent ...fnum \gluestretchorder \lastskip 
+                                                  =\z@ \unskip \fi \textorma...
+l.166     OP4 \longrightarrow \;\%
+                                  \\
+I'm going to assume that 1mu=1pt when they're mixed.
+
+./Secciones/Hito3/2EspecificacionConst.tex:200: Missing $ inserted.
+<inserted text> 
+                $
+l.200 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 5--200
+
+ []
+
+
+Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
+less on input line 200.
+
+
+Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
+less on input line 200.
+
+
+Package fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
+less on input line 200.
+
+[8.9
+
+]
+LaTeX Info: Redefining \. on input line 200.
+LaTeX Info: Redefining \% on input line 200.
+ [9.10]
+LaTeX Info: Redefining \. on input line 200.
+LaTeX Info: Redefining \% on input line 200.
+ [10.11]
+
+./Secciones/Hito3/2EspecificacionConst.tex:203: LaTeX Error: Bad math environme
+nt delimiter.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.203 \end{math}
+                
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+) (./Secciones/Hito3/3Acondicionamiento.tex
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+ [11.12]
+Capítulo 3.
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--2
+
+ []
+
+./Secciones/Hito3/3Acondicionamiento.tex:195: Incompatible glue units.
+\es@sppercent ...fnum \gluestretchorder \lastskip 
+                                                  =\z@ \unskip \fi \textorma...
+l.195     OP4 \longrightarrow \;\%
+                                  \\
+I'm going to assume that 1mu=1pt when they're mixed.
+
+./Secciones/Hito3/3Acondicionamiento.tex:207: Missing $ inserted.
+<inserted text> 
+                $
+l.207 
+      
+I've inserted a begin-math/end-math symbol since I think
+you left one out. Proceed, with fingers crossed.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 3--207
+
+ []
+
+
+Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
+less on input line 207.
+
+
+Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
+less on input line 207.
+
+
+Package fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
+less on input line 207.
+
+[12.13
+
+]
+LaTeX Info: Redefining \. on input line 207.
+LaTeX Info: Redefining \% on input line 207.
+ [13.14]
+LaTeX Info: Redefining \. on input line 207.
+LaTeX Info: Redefining \% on input line 207.
+ [14.15]
+
+./Secciones/Hito3/3Acondicionamiento.tex:208: LaTeX Error: Bad math environment
+ delimiter.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.208 \end{math}
+                
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+) (./Secciones/Hito3/4EspecificacionProc.tex
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+ [15.16]
+Capítulo 4.
+
+Overfull \hbox (8.366pt too wide) in paragraph at lines 1--1
+|[]\T1/lmr/bx/n/24.88 Especificación del pro-ce-sa-mien-to de
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 1--2
+
+ []
+
+
+Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
+less on input line 59.
+
+
+Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
+less on input line 59.
+
+
+Package fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
+less on input line 59.
+
+[16.17
+
+]
+LaTeX Info: Redefining \. on input line 119.
+LaTeX Info: Redefining \% on input line 119.
+ [17.18]
+LaTeX Info: Redefining \. on input line 179.
+LaTeX Info: Redefining \% on input line 179.
+ [18.19]
+LaTeX Info: Redefining \. on input line 239.
+LaTeX Info: Redefining \% on input line 239.
+ [19.20]
+Missing character: There is no “ ("201C) in font ec-lmr10!
+Missing character: There is no “ ("201C) in font ec-lmr10!
+Missing character: There is no “ ("201C) in font ec-lmr10!
+Missing character: There is no “ ("201C) in font ec-lmr10!
+Missing character: There is no “ ("201C) in font ec-lmr10!
+Missing character: There is no “ ("201C) in font ec-lmr10!
+Missing character: There is no “ ("201C) in font ec-lmr10!
+Missing character: There is no “ ("201C) in font ec-lmr10!
+Missing character: There is no “ ("201C) in font ec-lmr10!
+Missing character: There is no “ ("201C) in font ec-lmr10!
+Missing character: There is no “ ("201C) in font ec-lmr10!
+LaTeX Info: Redefining \. on input line 299.
+LaTeX Info: Redefining \% on input line 299.
+[20.21]
+Missing character: There is no “ ("201C) in font ec-lmr10!
+Missing character: There is no “ ("201C) in font ec-lmr10!
+Missing character: There is no “ ("201C) in font ec-lmr10!
+Missing character: There is no “ ("201C) in font ec-lmr10!
+Missing character: There is no “ ("201C) in font ec-lmr10!
+))
 LaTeX Info: Redefining \. on input line 41.
 LaTeX Info: Redefining \% on input line 41.
- [7.9] (./memoria.lof
+ [21.22] (./memoria.lof
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
 )
@@ -1598,7 +1775,7 @@ less on input line 55.
 Package fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
 less on input line 55.
 
-[8.10
+[22.23
 
 
 
@@ -1612,19 +1789,16 @@ LaTeX Info: Redefining \% on input line 32.
 
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package rerunfilecheck Info: File `memoria.out' has not changed.
-(rerunfilecheck)             Checksum: 4A8BF02DDD0414F85D77CC9605956B23;1375.
+(rerunfilecheck)             Checksum: 53E3C11B5BC1D577D6934A249B5E2258;2715.
  ) 
 Here is how much of TeX's memory you used:
- 38574 strings out of 476191
- 757794 string characters out of 5812072
- 1393972 words of memory out of 5000000
- 58647 multiletter control sequences out of 15000+600000
- 517478 words of font info for 56 fonts, out of 8000000 for 9000
+ 38590 strings out of 476191
+ 758013 string characters out of 5812072
+ 1394973 words of memory out of 5000000
+ 58662 multiletter control sequences out of 15000+600000
+ 517843 words of font info for 57 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  106i,12n,131p,1164b,32766s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on memoria.pdf (10 pages).
+Output written on memoria.pdf (23 pages).
