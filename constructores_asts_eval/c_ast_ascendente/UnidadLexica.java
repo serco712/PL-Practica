@@ -15,6 +15,7 @@ public class UnidadLexica extends Symbol {
      public int fila() {return fila;}
      public int col() {return col;}
      public String str() {return s;}
+     public String toString() {return s;}
    }
    public UnidadLexica(int fila, int columna, int clase, String lexema) {
      super(clase, new StringLocalizado(lexema,fila,columna));  

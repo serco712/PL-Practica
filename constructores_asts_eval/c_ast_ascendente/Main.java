@@ -4,13 +4,24 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
+import errors.GestionErroresTiny.ErrorLexico;
+import errors.GestionErroresTiny.ErrorSintactico;
+
 public class Main {
    public static void main(String[] args) throws Exception {
-         Reader input = new InputStreamReader(new FileInputStream(args[0]));
+         Reader input = new InputStreamReader(System.in);
 	 AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(input);
-	 AnalizadorSintacticoTiny asint = new AnalizadorSintacticoTiny(alex);
+	 AnalizadorSintacticoTiny asint = new AnalizadorSintacticoTinyDJ(alex);
 	 //asint.setScanner(alex);
-	 System.out.println(asint.parse().value);
+	 try {    
+        asint.debug_parse();
+     }
+     catch(ErrorLexico e) {
+        System.out.println("ERROR_LEXICO"); 
+     }
+     catch(ErrorSintactico e) {
+        System.out.println("ERROR_SINTACTICO"); 
+     }
  }
 }   
    
