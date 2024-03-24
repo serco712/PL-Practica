@@ -1,9 +1,5 @@
 package asint;
 
-import java.lang.invoke.LambdaConversionException;
-
-import asint.SintaxisAbstractaTiny.Nodo;
-
 public class SintaxisAbstractaTiny {
 
     public static abstract class Nodo  {
@@ -132,17 +128,17 @@ public class SintaxisAbstractaTiny {
             this.opnd0 = opnd0;
             this.opnd1 = opnd1;
         }
+
     }
+
     public static class Prog extends Nodo {
-        private Exp exp;
-        private Decs decs;
-        public Prog(Exp exp, Decs decs) {
+        private Blo b;
+        public Prog(Blo b) {
             super();
-            this.exp = exp;
-            this.decs = decs;
+            this.b = b;
         }   
         public String toString() {
-             return "prog("+exp+","+decs+")";
+             return "prog("+b+")";
          } 
     }
     
@@ -997,8 +993,8 @@ public class SintaxisAbstractaTiny {
     }
     
      // Constructoras    
-    public Prog prog(Exp exp, Decs decs) {
-        return new Prog(exp,decs);
+    public Prog prog(Blo b) {
+        return new Prog(b);
     }
     public Blo bloq(Decs d, Insts i) {
         return new Bloq(d,i);
