@@ -982,13 +982,11 @@ public class SintaxisAbstractaTiny {
     }
     
 	public static class Exp_null extends Exp{
-        private Exp exp;
-        public Exp_null(Exp exp){
+        public Exp_null(){
             super();
-            this.exp = exp;
         }
         public String toString() {
-            return "exp_null("+exp+")";
+            return "exp_null()";
         } 
     }
     
@@ -1239,7 +1237,7 @@ public class SintaxisAbstractaTiny {
         return new Exp_iden(s);
     }
     
-    public Exp exp_null(Exp exp){
-        return new Exp_null(exp);
+    public Exp exp_null(){
+        return new Exp_null();
     }
 }
