@@ -1,6 +1,5 @@
 package c_ast_ascendente;
 
-import asint.ClaseLexica;
 import errors.GestionErroresTiny;
 
 public class ALexOperations {
