@@ -908,14 +908,14 @@ public class SintaxisAbstractaTiny {
         } 
     }
     
-    public static class Exp_ind extends Exp{
+    public static class Exp_indir extends Exp{
         private Exp exp;
-        public Exp_ind(Exp exp){
+        public Exp_indir(Exp exp){
             super();
             this.exp = exp;
         }
         public String toString() {
-            return "exp_ind("+exp+")";
+            return "exp_indir("+exp+")";
         } 
     }
     
@@ -1211,8 +1211,8 @@ public class SintaxisAbstractaTiny {
         return new Exp_reg(exp,s);
     }
     
-    public Exp exp_ind(Exp exp){
-        return new Exp_ind(exp);
+    public Exp exp_indir(Exp exp){
+        return new Exp_indir(exp);
     }
 	
 	public Exp exp_true(){

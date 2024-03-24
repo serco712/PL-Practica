@@ -25,7 +25,6 @@ public class ClaseSemanticaTiny extends SintaxisAbstractaTiny {
         switch(op) {
             case "-": return exp_menos(opnd);
             case "not": return exp_not(opnd);
-            case "^": return exp_ind(opnd);
             default: throw new UnsupportedOperationException("Bad op");
         }
     }
