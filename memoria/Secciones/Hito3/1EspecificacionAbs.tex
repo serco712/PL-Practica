@@ -9,10 +9,11 @@
     declaraciones \longrightarrow \epsilon\\
     lista$-$declaraciones \longrightarrow lista$-$declaraciones\;declaracion\\
     lista$-$declaraciones \longrightarrow declaracion\\
-    lista$-$variables \longrightarrow lista$-$variables\;declaracion\\
-    lista$-$variables \longrightarrow declaracion\\
-    declaracion \longrightarrow tipo\;\textbf{identificador}\\
-    declaracion \longrightarrow \textbf{type}\;tipo\;\textbf{identificador}\\
+    lista$-$variables \longrightarrow lista$-$variables\;variable\\
+    lista$-$variables \longrightarrow variable\\
+    variable \longrightarrow tipo\;\textbf{identificador}\\
+    declaracion \longrightarrow variable\\
+    declaracion \longrightarrow \textbf{type}\;variable\\
     declaracion \longrightarrow \textbf{identificador}\;par$-$formales\;bloque\\
    % declaracion \longrightarrow \textbf{type}\;\textbf{struct}\;\{\;lista$-$variables\;\}\;\textbf{identificador}\\
     tipo \longrightarrow tipo\;\textbf{literalEntero}\\
@@ -100,10 +101,11 @@
     declaraciones \longrightarrow \epsilon\\
     lista$-$declaraciones \longrightarrow lista$-$declaraciones\;declaracion\\
     lista$-$declaraciones \longrightarrow declaracion\\
-    lista$-$variables \longrightarrow lista$-$variables\;declaracion\\
-    lista$-$variables \longrightarrow declaracion\\
-    declaracion \longrightarrow tipo\;\textbf{identificador}\\
-    declaracion \longrightarrow \textbf{type}\;tipo\;\textbf{identificador}\\
+    lista$-$variables \longrightarrow lista$-$variables\;variable\\
+    lista$-$variables \longrightarrow variable\\
+    variable \longrightarrow tipo\;\textbf{identificador}\\
+    declaracion \longrightarrow variable\\
+    declaracion \longrightarrow \textbf{type}\;variable\\
     declaracion \longrightarrow \textbf{identificador}\;par$-$formales\;bloque\\
    % declaracion \longrightarrow \textbf{type}\;\textbf{struct}\;\{\;lista$-$variables\;\}\;\textbf{identificador}\\
     tipo \longrightarrow tipo\;\textbf{literalEntero}\\
@@ -183,6 +185,7 @@
     declaraciones & Decs \\ \hline
     lista-declaraciones & LDecs \\ \hline
     lista-variables & LVar \\ \hline
+    variable & Var \\ \hline
     declaracion & Dec \\ \hline
     tipo & Tipo \\ \hline
     instrucciones & Insts \\ \hline
@@ -214,10 +217,11 @@
     $declaraciones \longrightarrow $ & LVar \\ \hline
     $lista$-$declaraciones \longrightarrow lista$-$declaraciones\;declaracion$ & muchas\_decs: LDecs $\times$ Dec $\rightarrow$ LDecs\\ \hline
     $lista$-$declaraciones \longrightarrow declaracion$ & una\_dec: Dec $\rightarrow$ LDecs \\ \hline
-    $lista$-$variables \longrightarrow lista$-$variables\;declaracion$ & muchas\_var: LVar $\times$ Dec $\rightarrow$ LVar \\ \hline
-    $lista$-$variables \longrightarrow declaracion$ & una\_var: Dec $\rightarrow$ LVar \\ \hline
-    $declaracion \longrightarrow tipo\;\textbf{identificador}$ & dec\_simple: Tipo $\times$ \textbf{string} $\rightarrow$ Dec \\ \hline
-    $declaracion \longrightarrow \textbf{type}\;tipo\;\textbf{identificador}$ & dec\_type: Tipo $\times$ \textbf{string} $\rightarrow$ Dec \\ \hline
+    $lista$-$variables \longrightarrow lista$-$variables\;variable$ & muchas\_var: LVar $\times$ Var $\rightarrow$ LVar \\ \hline
+    $lista$-$variables \longrightarrow variable$ & una\_var: Var $\rightarrow$ LVar \\ \hline
+    $variable \longrightarrow tipo\;\textbf{identificador}$ & var: Tipo $\times$ \textbf{string} $\rightarrow$ Var \\ \hline
+    $declaracion \longrightarrow variable$ & dec\_simple: Var $\rightarrow$ Dec \\ \hline
+    $declaracion \longrightarrow \textbf{type}\;variable$ & dec\_type: Var $\rightarrow$ Dec \\ \hline
     $declaracion \longrightarrow \textbf{identificador}\;par$-$formales\;bloque$ & dec\_proc: \textbf{string} $\times$ PFmls $\times$ Blo $\rightarrow$ Dec\\ \hline
     $tipo \longrightarrow tipo\;\textbf{literalEntero}$ & tipo\_array: Tipo $\times$ \textbf{string} $\rightarrow$ Tipo\\ \hline
     $tipo \longrightarrow \hat{}\;tipo$ & tipo\_punt: Tipo $\rightarrow$ Tipo\\ \hline

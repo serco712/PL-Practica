@@ -15,14 +15,16 @@
     | \hspace{1cm}lista$-$declaraciones_0.\textbf{a} \;= \textbf{muchas$\_$decs}(lista$-$declaraciones_1.\textbf{a},declaraciones.\textbf{a})\\
     lista$-$declaraciones \longrightarrow declaracion\\ 
     | \hspace{1cm}lista$-$declaraciones.\textbf{a} \;= \textbf{una$\_$dec}(declaraciones.\textbf{a})\\  
-    lista$-$variables \longrightarrow lista$-$variables\;,\;declaracion\\
-    | \hspace{1cm}lista$-$variables_0.\textbf{a} \;= \textbf{muchas$\_$var}(lista$-$variables_1.\textbf{a},declaraciones.\textbf{a})\\
-    lista$-$variables \longrightarrow declaracion\\
-    | \hspace{1cm}lista$-$variables.\textbf{a} \;= \textbf{una$\_$var}(  declaraciones.\textbf{a})\\
-    declaracion \longrightarrow tipo\;\textbf{identificador}\\
-    | \hspace{1cm}declaracion.\textbf{a} \;=\textbf{dec$\_$simple}(tipo.\textbf{a},\textbf{identificador.lex})\\
-    declaracion \longrightarrow \textbf{type}\;tipo\;\textbf{identificador}\\
-    | \hspace{1cm}declaracion.\textbf{a} \;=\textbf{dec$\_$type}(tipo.\textbf{a},\textbf{identificador.lex})\\
+    lista$-$variables \longrightarrow lista$-$variables\;,\;variable\\
+    | \hspace{1cm}lista$-$variables_0.\textbf{a} \;= \textbf{muchas$\_$var}(lista$-$variables_1.\textbf{a},variable.\textbf{a})\\
+    lista$-$variables \longrightarrow variable\\
+    | \hspace{1cm}lista$-$variables.\textbf{a} \;= \textbf{una$\_$var}(  variable.\textbf{a})\\
+    variable \longrightarrow tipo\;\textbf{identificador}\\
+    | \hspace{1cm}variable.\textbf{a} \;= \textbf{var}(tipo.\textbf{a},\textbf{identificador.lex})\\
+    declaracion \longrightarrow variable\\
+    | \hspace{1cm}declaracion.\textbf{a} \;=\textbf{dec$\_$simple}(variable.\textbf{a})\\
+    declaracion \longrightarrow \textbf{type}\;variable\\
+    | \hspace{1cm}declaracion.\textbf{a} \;=\textbf{dec$\_$type}(variable.\textbf{a})\\
     declaracion \longrightarrow \textbf{identificador}\;par$-$formales\;bloque\\
     | \hspace{1cm}declaracion.\textbf{a} \;=\textbf{dec$\_$proc}(\textbf{identificador.lex}, par$-$formales.\textbf{a},bloque.\textbf{a})\\
    % declaracion \longrightarrow \textbf{type}\;\textbf{struct}\;\{\;lista$-$variables\;\}\;\textbf{identificador}\\
@@ -123,12 +125,18 @@
     | \hspace{1cm}E4_0.\textbf{a} \;= \textbf{mkop}(OP4.\textbf{op},E4_1.\textbf{a},E5.\textbf{a})\\
     E4 \longrightarrow E5\\ 
     | \hspace{1cm}E4.\textbf{a} \;= E5.\textbf{a}\\
-    E5 \longrightarrow OP5\;\;E6\\
-    | \hspace{1cm}E5.\textbf{a} \;= \textbf{mkop}(OP5.\textbf{op},E6.\textbf{a})\\
+    E5 \longrightarrow -\;E6\\
+    | \hspace{1cm}E5.\textbf{a} \;= \textbf{exp$\_$menos}(E6.\textbf{a})\\
+    E5 \longrightarrow not\;E6\\
+    | \hspace{1cm}E5.\textbf{a} \;= \textbf{exp$\_$not}(E6.\textbf{a})\\
     E5 \longrightarrow E6\\
     | \hspace{1cm}E5.\textbf{a} \;= E6.\textbf{a}\\
-    E6 \longrightarrow E6\;OP6\\
-    | \hspace{1cm}E6.\textbf{a} \;= \textbf{mkop}(E6.\textbf{a},OP6.\textbf{op})\\    
+    E6 \longrightarrow E6\;[\;E0\;]\\
+    | \hspace{1cm}E6.\textbf{a} \;= \textbf{exp$\_$index}(E6.\textbf{a})\\  
+    E6 \longrightarrow E6.\textbf{identificador}\\
+    | \hspace{1cm}E6.\textbf{a} \;= \textbf{exp$\_$reg}(\textbf{identificador.lex})\\  
+    E6 \longrightarrow E6\;\hat{}\\
+    | \hspace{1cm}E6.\textbf{a} \;= \textbf{exp$\_$ind}(E6.\textbf{a})\\    
     E6 \longrightarrow E7\\
     | \hspace{1cm}E6.\textbf{a} \;= E7.\textbf{a}\\
     E7 \longrightarrow \textbf{true}\\
@@ -179,15 +187,15 @@
 \\
 \\
     fun \;\textbf{mkop}(op,opnd1,opnd2):\\
-    | \hspace{1cm}op\;=\;"<" \longrightarrow return\;\textbf{exp$\_$menor}(opnd1,opnd2)\\
-    | \hspace{1cm}op\;=\;"<=" \longrightarrow return\;\textbf{exp$\_$menIgual}(opnd1,opnd2)\\
-    | \hspace{1cm}op\;=\;">" \longrightarrow return\;\textbf{exp$\_$mayor}(opnd1,opnd2)\\
-    | \hspace{1cm}op\;=\;">=" \longrightarrow return\;\textbf{exp$\_$mayIgual}(opnd1,opnd2)\\
-    | \hspace{1cm}op\;=\;"==" \longrightarrow return\;\textbf{exp$\_$igual}(opnd1,opnd2)\\
-    | \hspace{1cm}op\;=\;"\!=" \longrightarrow return\;\textbf{exp$\_$dist}(opnd1,opnd2)\\
-    | \hspace{1cm}op\;=\;"*" \longrightarrow return\;\textbf{exp$\_$mult}(opnd1,opnd2)\\
-    | \hspace{1cm}op\;=\;"/" \longrightarrow return\;\textbf{exp$\_$div}(opnd1,opnd2)\\
-    | \hspace{1cm}op\;=\;"\%" \longrightarrow return\;\textbf{exp$\_$mod}(opnd1,opnd2)\\
+    | \hspace{1cm}op\;=\; ``<" \longrightarrow return\;\textbf{exp$\_$menor}(opnd1,opnd2)\\
+    | \hspace{1cm}op\;=\; ``<=" \longrightarrow return\;\textbf{exp$\_$menIgual}(opnd1,opnd2)\\
+    | \hspace{1cm}op\;=\; ``>" \longrightarrow return\;\textbf{exp$\_$mayor}(opnd1,opnd2)\\
+    | \hspace{1cm}op\;=\; ``>=" \longrightarrow return\;\textbf{exp$\_$mayIgual}(opnd1,opnd2)\\
+    | \hspace{1cm}op\;=\; ``==" \longrightarrow return\;\textbf{exp$\_$igual}(opnd1,opnd2)\\
+    | \hspace{1cm}op\;=\; ``\!=" \longrightarrow return\;\textbf{exp$\_$dist}(opnd1,opnd2)\\
+    | \hspace{1cm}op\;=\; ``*" \longrightarrow return\;\textbf{exp$\_$mult}(opnd1,opnd2)\\
+    | \hspace{1cm}op\;=\; ``/" \longrightarrow return\;\textbf{exp$\_$div}(opnd1,opnd2)\\
+    | \hspace{1cm}op\;=\; ``\%" \longrightarrow return\;\textbf{exp$\_$mod}(opnd1,opnd2)\\
 \\
 \\
 \\
