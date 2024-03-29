@@ -78,12 +78,12 @@
     | \hspace{1cm}lista$-$par$-$real.\textbf{a} \;=  \textbf{una$\_$exp}(E0.\textbf{a})\\ 
     instruccion \longrightarrow eval\\
     | \hspace{1cm}instruccion.\textbf{a} \;= eval.\textbf{a}\\
-    instruccion \longrightarrow E0\\
+    instruccion \longrightarrow @\;E0\\
     | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$eval}(E0.\textbf{a})\\
     instruccion \longrightarrow \textbf{if}\;E0\;\;bloque\\
     | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$if}(E0.\textbf{a}, bloque.\textbf{a})\\
     instruccion \longrightarrow \textbf{if}\;E0\;\;bloque\;\textbf{else}\;bloque\\
-    | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$else}(E0.\textbf{a}, bloque.\textbf{a},bloque.\textbf{a})\\
+    | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$else}(E0.\textbf{a}, bloque_0.\textbf{a},bloque_1.\textbf{a})\\
     instruccion \longrightarrow \textbf{while}\;E0\;bloque\\
     | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$while}(E0.\textbf{a}, bloque.\textbf{a})\\
     instruccion \longrightarrow \textbf{new}\;E0\\
@@ -97,10 +97,9 @@
     instruccion \longrightarrow \textbf{call}\;\textbf{identificador}\;par$-$reales\\
     | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$call}(\textbf{identificador.a},par$-$reales.\textbf{a})\\
     instruccion \longrightarrow \textbf{nl}\\
+    | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$nl}()\\
     instruccion \longrightarrow bloque\\
     | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$blo}(bloque.\textbf{a})\\
-    eval \longrightarrow @\;E0\\
-    | \hspace{1cm}eval.\textbf{a} \;= E0.\textbf{a}\\
     E0 \longrightarrow E1 = E0\\
     | \hspace{1cm}E0_0.\textbf{a} \;= \textbf{exp$\_$asig}(E1.\textbf{a},E0_1.\textbf{a})\\
     E0 \longrightarrow E1\\
@@ -125,24 +124,24 @@
     | \hspace{1cm}E4_0.\textbf{a} \;= \textbf{mkop}(OP4.\textbf{op},E4_1.\textbf{a},E5.\textbf{a})\\
     E4 \longrightarrow E5\\ 
     | \hspace{1cm}E4.\textbf{a} \;= E5.\textbf{a}\\
-    E5 \longrightarrow -\;E6\\
-    | \hspace{1cm}E5.\textbf{a} \;= \textbf{exp$\_$menos}(E6.\textbf{a})\\
-    E5 \longrightarrow not\;E6\\
-    | \hspace{1cm}E5.\textbf{a} \;= \textbf{exp$\_$not}(E6.\textbf{a})\\
+    E5 \longrightarrow -\;E5\\
+    | \hspace{1cm}E5_0.\textbf{a} \;= \textbf{exp$\_$menos}(E5_1.\textbf{a})\\
+    E5 \longrightarrow \textbf{not}\;E5\\
+    | \hspace{1cm}E5_0.\textbf{a} \;= \textbf{exp$\_$not}(E5_1.\textbf{a})\\
     E5 \longrightarrow E6\\
     | \hspace{1cm}E5.\textbf{a} \;= E6.\textbf{a}\\
     E6 \longrightarrow E6\;[\;E0\;]\\
     | \hspace{1cm}E6.\textbf{a} \;= \textbf{exp$\_$index}(E6.\textbf{a})\\  
     E6 \longrightarrow E6.\textbf{identificador}\\
-    | \hspace{1cm}E6.\textbf{a} \;= \textbf{exp$\_$reg}(\textbf{identificador.lex})\\  
+    | \hspace{1cm}E6.\textbf{a} \;= \textbf{exp$\_$reg}(E6.\textbf{a},\textbf{identificador.lex})\\  
     E6 \longrightarrow E6\;\hat{}\\
     | \hspace{1cm}E6.\textbf{a} \;= \textbf{exp$\_$ind}(E6.\textbf{a})\\    
     E6 \longrightarrow E7\\
     | \hspace{1cm}E6.\textbf{a} \;= E7.\textbf{a}\\
     E7 \longrightarrow \textbf{true}\\
-    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$true}(\textbf{true.lex})\\
+    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$true}()\\
     E7 \longrightarrow \textbf{false}\\
-    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$false}(\textbf{false.lex})\\
+    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$false}()\\
     E7 \longrightarrow \textbf{literalEntero}\\
     | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$litEnt}(\textbf{literalEntero.lex})\\
     E7 \longrightarrow \textbf{literalReal}\\
@@ -152,9 +151,9 @@
     E7 \longrightarrow \textbf{identificador}\\
     | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$iden}(\textbf{identificador.lex})\\
     E7 \longrightarrow \textbf{null}\\
-    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$null}(\textbf{null.lex})\\
+    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$null}()\\
     E7 \longrightarrow (\;E0\;)\\
-    | \hspace{1cm}E7.\textbf{a} \;= E.\textbf{a}\\
+    | \hspace{1cm}E7.\textbf{a} \;= E0.\textbf{a}\\
     OP1 \longrightarrow \;<\\
     | \hspace{1cm}OP1.\textbf{op} \;=\; \textbf{``\;<\;''}\\  
     OP1 \longrightarrow \;<=\\
@@ -171,18 +170,8 @@
     | \hspace{1cm}OP4.\textbf{op} \;=\; \textbf{``\;*\;''}\\  
     OP4 \longrightarrow \;/\\
     | \hspace{1cm}OP4.\textbf{op} \;=\; \textbf{``\;/\;''}\\  
-    OP4 \longrightarrow \;\%\\  
-    | \hspace{1cm}OP4.\textbf{op} \;=\; \textbf{``\;\%\;''}\\  
-    OP5 \longrightarrow \;-\\
-    | \hspace{1cm}OP5.\textbf{op} \;=\; \textbf{``\;-\;''}\\  
-    OP5 \longrightarrow \;\textbf{not}\\
-    | \hspace{1cm}OP5.\textbf{op} \;=\; \textbf{``\;not\;''}\\  
-    OP6 \longrightarrow \;[\;E0\;]\\
-    | \hspace{1cm}OP6.\textbf{op} \;=\; E0.\textbf{a}\\  
-    OP6 \longrightarrow \;\textbf{identificador}\\
-    | \hspace{1cm}OP6.\textbf{op} \;=\; \textbf{identificador.lex}\\  
-    OP6 \longrightarrow \;\hat{}\\
-    | \hspace{1cm}OP6.\textbf{op} \;=\; ``\;\hat{}\;'' \\  
+    OP4 \longrightarrow \; \%\\  
+    | \hspace{1cm}OP4.\textbf{op} \;=\; \textbf{``\;\%\;''}\\ 
 \\
 \\
 \\
@@ -197,15 +186,6 @@
     | \hspace{1cm}op\;=\; ``/" \longrightarrow return\;\textbf{exp$\_$div}(opnd1,opnd2)\\
     | \hspace{1cm}op\;=\; ``\%" \longrightarrow return\;\textbf{exp$\_$mod}(opnd1,opnd2)\\
 \\
-\\
-\\
- fun \;\textbf{mkop}(op,opnd1):\\
-    | \hspace{1cm}op\;=\;"-" \longrightarrow return\;\textbf{exp$\_$menos}(opnd1)\\
-    | \hspace{1cm}op\;=\;"\textbf{not}" \longrightarrow return\;\textbf{exp$\_$not}(opnd1)\\
-    | \hspace{1cm}op\;=\;E0.a \longrightarrow return\;\textbf{exp$\_$index}(opnd1)\\
-    | \hspace{1cm}op\;=\;\textbf{identificador.lex} \longrightarrow return\;\textbf{exp$\_$reg}(opnd1)\\
-    | \hspace{1cm}op\;=\; ``\;\hat{}\;'' \longrightarrow return\;\textbf{exp$\_$ind}(opnd1)\\
-
 
     
 \end{math}

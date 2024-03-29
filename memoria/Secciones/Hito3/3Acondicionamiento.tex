@@ -17,18 +17,20 @@
     | \hspace{1cm}rlista$-$decs_0.\textbf{a} \;= rlista$-$decs_1.\textbf{a}\\
     rlista$-$decs \longrightarrow \epsilon\\
     | \hspace{1cm}rlista$-$decs.\textbf{a} \;= rlista$-$decs.\textbf{ah}\\
-    lista$-$variables \longrightarrow declaracion\;rlista$-$var\\
-    | \hspace{1cm}rlista$-$var.\textbf{ah} \;= \textbf{una$\_$var}(declaracion.\textbf{a})\\
+    lista$-$variables \longrightarrow variable\;rlista$-$var\\
+    | \hspace{1cm}rlista$-$var.\textbf{ah} \;= \textbf{una$\_$var}(variable.\textbf{a})\\
     | \hspace{1cm}lista$-$variables.\textbf{a} \;= rlista$-$var.\textbf{a}\\  
-    rlista$-$var \longrightarrow ,\;declaracion\;rlista$-$var\\ 
-    | \hspace{1cm}rlista$-$var_1.\textbf{ah} \;= \textbf{muchas$\_$var}(rlista$-$var_0.\textbf{ah},declaraciones.\textbf{a})\\  
+    rlista$-$var \longrightarrow ,\;variable\;rlista$-$var\\ 
+    | \hspace{1cm}rlista$-$var_1.\textbf{ah} \;= \textbf{muchas$\_$var}(rlista$-$var_0.\textbf{ah},variable.\textbf{a})\\  
     | \hspace{1cm}rlista$-$var_0.\textbf{a} \;= rlista$-$var_1.\textbf{a}\\
     rlista$-$var \longrightarrow \epsilon\\
     | \hspace{1cm}rlista$-$var.\textbf{a} \;= rlista$-$var.\textbf{ah}\\
-    declaracion \longrightarrow tipo\;\textbf{identificador}\\
-    | \hspace{1cm}declaracion.\textbf{a} \;=\textbf{dec$\_$simple}(tipo.\textbf{a},\textbf{identificador.lex})\\
-    declaracion \longrightarrow \textbf{type}\;tipo\;\textbf{identificador}\\
-    | \hspace{1cm}declaracion.\textbf{a} \;=\textbf{dec$\_$type}(tipo.\textbf{a},\textbf{identificador.lex})\\
+    variable \longrightarrow tipo\;\textbf{identificador}\\
+    | \hspace{1cm}variable.\textbf{a}\;= \textbf{var}(tipo.\textbf{a},\textbf{identificador.lex})\\
+    declaracion \longrightarrow variable\\
+    | \hspace{1cm}declaracion.\textbf{a} \;=\textbf{dec$\_$simple}(variable.\textbf{a})\\
+    declaracion \longrightarrow \textbf{type}\;variable\\
+    | \hspace{1cm}declaracion.\textbf{a} \;=\textbf{dec$\_$type}(variable.\textbf{a})\\
     declaracion \longrightarrow \textbf{identificador}\;par$-$formales\;bloque\\
     | \hspace{1cm}declaracion.\textbf{a} \;=\textbf{dec$\_$proc}(\textbf{identificador.lex}, par$-$formales.\textbf{a},bloque.\textbf{a})\\
    % declaracion \longrightarrow \textbf{type}\;\textbf{struct}\;\{\;lista$-$variables\;\}\;\textbf{identificador}\\
@@ -105,13 +107,13 @@
     | \hspace{1cm}rlista$-$par$-$real.\textbf{a} \;=  \textbf{una$\_$exp}(E0.\textbf{a})\\ 
     instruccion \longrightarrow eval\\
     | \hspace{1cm}instruccion.\textbf{a} \;= eval.\textbf{a}\\
-    instruccion \longrightarrow E0\\
+    instruccion \longrightarrow @\;E0\\
     | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$eval}(E0.\textbf{a})\\
     instruccion \longrightarrow \textbf{if}\;E0\;\;bloque\;rif\\
     | \hspace{1cm}rif.\textbf{ah} \;= \textbf{inst$\_$if}(E0.\textbf{a}, bloque.\textbf{a})\\
     | \hspace{1cm}instruccion.\textbf{a} \;= rif.\textbf{a}\\
     rif \longrightarrow \textbf{else}\;bloque\\
-    | \hspace{1cm}rif.\textbf{a} \;= \textbf{inst$\_$else}(E0.\textbf{a}, bloque.\textbf{a},bloque.\textbf{a})\\
+    | \hspace{1cm}rif.\textbf{a} \;= \textbf{inst$\_$else}(E0.\textbf{a}, bloque_0.\textbf{a},bloque_1.\textbf{a})\\
     rif \longrightarrow \epsilon\\
     | \hspace{1cm}rif.\textbf{a} \;= \textbf{inst$\_$if}(E0.\textbf{a}, bloque.\textbf{a})\\
     instruccion \longrightarrow \textbf{while}\;E0\;bloque\\
@@ -127,10 +129,9 @@
     instruccion \longrightarrow \textbf{call}\;\textbf{identificador}\;par$-$reales\\
     | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$call}(\textbf{identificador.a},par$-$reales.\textbf{a})\\
     instruccion \longrightarrow \textbf{nl}\\
+    | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$nl}()\\
     instruccion \longrightarrow bloque\\
     | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$blo}(bloque.\textbf{a})\\
-    eval \longrightarrow @\;E0\\
-    | \hspace{1cm}eval.\textbf{a} \;= E0.\textbf{a}\\
     E0 \longrightarrow E1\;rE0\\
     | \hspace{1cm}rE0.\textbf{ah} \;= E1.\textbf{a}\\
     | \hspace{1cm}E0.\textbf{a} \;= rE0.\textbf{a}\\
