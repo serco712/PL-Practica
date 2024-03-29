@@ -143,7 +143,7 @@ PARSER_END(ConstructorASTsTiny)
   LVar rlista_var(LVar varsh) :
        {Var v; LVar vars;} 
        {
-         "," v = variable() vars = rlista_decs(sem.muchas_decs(varsh,v))  
+         "," v = variable() vars = rlista_var(sem.muchas_var(varsh,v))  
            {return vars;}
          | 
            {return varsh;}
@@ -160,9 +160,9 @@ PARSER_END(ConstructorASTsTiny)
        {Var v; Token type, id; PFmls pfmls; Blo bloq;} 
        {
          v = variable()
-          {return (Dec)sem.dec_simple(v).ponFila(id.beginLine).ponCol(id.beginColumn);}
+          {return (Dec)sem.dec_simple(v);}
          v = variable()
-          {return (Dec)sem.dec_type(v).ponFila(id.beginLine).ponCol(id.beginColumn);}
+          {return (Dec)sem.dec_type(v);}
          id = <iden> pfmls = par_formales() bloq = bloq()
           {return (Dec)sem.dec_proc(id.image, pfmls, bloq).ponFila(id.beginLine).ponCol(id.beginColumn);}         
        }
@@ -171,13 +171,13 @@ PARSER_END(ConstructorASTsTiny)
   	   {Tipo tip2, tiparray;}
   	   {
   	   	 tip2 = tipo2() tiparray = rtipo(tipo2())
-  	   	  {return tiparrays;}
+  	   	  {return tiparray;}
   	   }
  
   Tipo rtipo(Tipo tiph) :
   	   {Token lent; Tipo tip;}
   	   {
-  	   	 "[" lent = <literalEntero> "]" tip = rtipo(sem.tipo_array(tiph, lent.image).ponFila(lent.beginLine).ponCol(lent.beginColumn))
+  	   	 "[" lent = <literalEntero> "]" tip = rtipo((Tipo)sem.tipo_array(tiph, lent.image).ponFila(lent.beginLine).ponCol(lent.beginColumn))
   	   	   {return tip;}
          | 
            {return tiph;}  
@@ -228,25 +228,25 @@ PARSER_END(ConstructorASTsTiny)
   LInst rlista_inst(LInst instsh) :
        {Inst inst; LInst insts;} 
        {
-         ";" inst = instruccion() insts = rlista_inst(sem.muchas_decs(instsh,instrucciones()))  
+         ";" inst = instruccion() insts = rlista_inst(sem.muchas_inst(instsh,inst))  
            {return insts;}
          | 
            {return instsh;}
        } 
   
   PFmls par_formales() :
-       {LPFml pfmls;} 
+       {PFml pfmls;} 
        {
          "(" pfmls = rpar_formales()  
-           {return (PFmls)sem.no_pformal();}
+           {return pfmls;}
        } 
   
   PFmls rpar_formales() :
        {LPFml pfmls;} 
        {
-         pfmls = lista_par_formal()  
-           {return (PFml)sem.si_pformal(pfmls);}
-         | 
+         pfmls = lista_par_formal() ")"
+           {return (PFmls)sem.si_pformal(pfmls);}
+         ")"
            {return (PFmls)sem.no_pformal();}
        }   
   
@@ -269,8 +269,8 @@ PARSER_END(ConstructorASTsTiny)
   PFml par_formal() :
   	   {Tipo tipo; LPFml lpfml; Token id;}
   	   {
-  	     tipo = tipo() id = <iden> lpfml = rpar_formal(sem.pformal_ref(tipo,id.image))
-  	     {return (PFml)lpfml.ponFila(id.beginLine).ponCol(id.beginColumn);}
+  	     tipo = tipo() id = <iden> lpfml = rpar_formal()
+  	     {return lpfml;}
   	   }  
   
   PFml rpar_formal() :
@@ -284,9 +284,9 @@ PARSER_END(ConstructorASTsTiny)
   	   }	 	
 
   PReales par_reales() :
-  	   {LPReal lpreal;}
+  	   {PReales lpreal;}
   	   {
-  	     "(" lpreal = rpar_reales(sem.no_preales())
+  	     "(" lpreal = rpar_reales()
   	     {return lpreal;}
   	   }
   
@@ -302,15 +302,15 @@ PARSER_END(ConstructorASTsTiny)
   LPReal lista_par_real() :
        {Exp e0; LPReal rlpreal;}
        {
-         e0=e0() rlpreal= rlista_par_real(sem.una_exp(e0))
+         e0=e0() rlpreal= rlista_par_real(e0)
          {return rlpreal;} 
        }
        
-   LPReal rlista_par_real(LPReal rlprealh, Exp e0) :
+   LPReal rlista_par_real(Exp e0) :
        {LPReal lpreal;}
        {
-         "," lpreal = rlista_par_real(sem.muchas_exp(e0, rlprealh))
-         {return lpreal;}
+         "," lpreal = lista_par_real()
+         {return sem.muchas_exp(e0, lpreal);}
   		 |
   		 {return sem.una_exp(e0);}
   	   }
@@ -320,33 +320,42 @@ PARSER_END(ConstructorASTsTiny)
        {
          "@" e0= e0()
          {return sem.inst_eval(e0);}
-         tok= <IF> e0=e0() bloq=bloq() rif=rif(sem.inst_if(e0, bloq))
+         |
+         <IF> e0=e0() bloq=bloq() rif=rif(sem.inst_if(e0, bloq))
          {return rif;}
-         tok= <WHILE> e0=e0() bloq=bloq()
+         |
+         <WHILE> e0=e0() bloq=bloq()
          {return sem.inst_while(e0, bloq);}
-         tok = <NEW> e0=e0()
+         |
+         <NEW> e0=e0()
          {return sem.inst_new(e0);}
-         tok = <delete> e0=e0()
+         |
+         <delete> e0=e0()
          {return sem.inst_delete(e0);}
-         tok = <read> e0=e0()
+         |
+         <read> e0=e0()
          {return sem.inst_read(e0);}
-         tok = <write> e0=e0()
+         |
+         <write> e0=e0()
          {return sem.inst_write(e0);}
-         tok = <call> <iden> preales= par_reales()
-         {return sem.inst_call(id, preales);}
-         tok = <nl>
+         |
+         <call> tok = <iden> preales= par_reales()
+         {return sem.inst_call(tok.image, preales);}
+         |
+         <nl>
          {return sem.inst_nl();}
+         |
          bloq=bloq()
-         {return sem.inst_bloq(bloq);}
+         {return sem.inst_blo(bloq);}
        }
    
-   Inst rif(Exp e0) :
-       {Blo bloq;}
+   Inst rif(Exp e0, Blo bloq1) :
+       {Blo bloq2;}
        {
-         <ELSE> bloq= bloq()
-         {return sem.inst_else(e0, bloq, bloq);}
+         <ELSE> bloq2= bloq()
+         {return sem.inst_else(e0, bloq1, bloq2);}
          |
-         {return inst_if(e0,bloq);}
+         {return inst_if(e0,bloq1);}
 	}
       
   Exp e0() : 
@@ -472,13 +481,13 @@ PARSER_END(ConstructorASTsTiny)
           {return (Exp)sem.exp_false();} 
         |
         t = <iden> 
-          {return (Exp)sem.exp_litEnt(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);} 
+          {return (Exp)sem.exp_iden(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);} 
         |
         t = <literalEntero> 
-          {return (Exp)sem.exp_litReal(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);} 
+          {return (Exp)sem.exp_litEnt(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);} 
         |  
         t = <literalReal> 
-          {return (Exp)sem.exp_iden(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);} 
+          {return (Exp)sem.exp_litReal(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);} 
         | 
         t = <literalCadena> 
           {return (Exp)sem.exp_litCad(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);} 

@@ -138,7 +138,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
       case coma:
         jj_consume_token(coma);
         v = variable();
-        vars = rlista_decs(sem.muchas_decs(varsh,v));
+        vars = rlista_var(sem.muchas_var(varsh,v));
             {if (true) return vars;}
         break;
       default:
@@ -169,9 +169,9 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
     try {
         Var v; Token type, id; PFmls pfmls; Blo bloq;
       v = variable();
-           {if (true) return (Dec)sem.dec_simple(v).ponFila(id.beginLine).ponCol(id.beginColumn);}
+           {if (true) return (Dec)sem.dec_simple(v);}
       v = variable();
-           {if (true) return (Dec)sem.dec_type(v).ponFila(id.beginLine).ponCol(id.beginColumn);}
+           {if (true) return (Dec)sem.dec_type(v);}
       id = jj_consume_token(iden);
       pfmls = par_formales();
       bloq = bloq();
@@ -188,7 +188,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
             Tipo tip2, tiparray;
       tip2 = tipo2();
       tiparray = rtipo(tipo2());
-                   {if (true) return tiparrays;}
+                   {if (true) return tiparray;}
     throw new Error("Missing return statement in function");
     } finally {
       trace_return("tipo");
@@ -204,7 +204,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
         jj_consume_token(corcheteAp);
         lent = jj_consume_token(literalEntero);
         jj_consume_token(corcheteCi);
-        tip = rtipo(sem.tipo_array(tiph, lent.image).ponFila(lent.beginLine).ponCol(lent.beginColumn));
+        tip = rtipo((Tipo)sem.tipo_array(tiph, lent.image).ponFila(lent.beginLine).ponCol(lent.beginColumn));
                     {if (true) return tip;}
         break;
       default:
@@ -262,7 +262,16 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
     try {
         LInst insts;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case IF:
+      case WHILE:
+      case NEW:
+      case delete:
+      case read:
+      case write:
+      case nl:
+      case call:
       case arroba:
+      case llaveAp:
         insts = lista_instrucciones();
             {if (true) return (Insts)sem.si_inst(insts);}
         break;
@@ -297,7 +306,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
       case puntoYComa:
         jj_consume_token(puntoYComa);
         inst = instruccion();
-        insts = rlista_inst(sem.muchas_decs(instsh,instrucciones()));
+        insts = rlista_inst(sem.muchas_inst(instsh,inst));
             {if (true) return insts;}
         break;
       default:
@@ -313,10 +322,10 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
   final public PFmls par_formales() throws ParseException {
     trace_call("par_formales");
     try {
-        LPFml pfmls;
+        PFml pfmls;
       jj_consume_token(parentesisAp);
       pfmls = rpar_formales();
-            {if (true) return (PFmls)sem.no_pformal();}
+            {if (true) return pfmls;}
     throw new Error("Missing return statement in function");
     } finally {
       trace_return("par_formales");
@@ -327,15 +336,11 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
     trace_call("rpar_formales");
     try {
         LPFml pfmls;
-      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case indireccion:
-        pfmls = lista_par_formal();
-            {if (true) return (PFml)sem.si_pformal(pfmls);}
-        break;
-      default:
-        jj_la1[6] = jj_gen;
+      pfmls = lista_par_formal();
+      jj_consume_token(parentesisCi);
+            {if (true) return (PFmls)sem.si_pformal(pfmls);}
+      jj_consume_token(parentesisCi);
             {if (true) return (PFmls)sem.no_pformal();}
-      }
     throw new Error("Missing return statement in function");
     } finally {
       trace_return("rpar_formales");
@@ -367,7 +372,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
             {if (true) return pfmls;}
         break;
       default:
-        jj_la1[7] = jj_gen;
+        jj_la1[6] = jj_gen;
             {if (true) return pfmlsh;}
       }
     throw new Error("Missing return statement in function");
@@ -382,8 +387,8 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
             Tipo tipo; LPFml lpfml; Token id;
       tipo = tipo();
       id = jj_consume_token(iden);
-      lpfml = rpar_formal(sem.pformal_ref(tipo,id.image));
-              {if (true) return (PFml)lpfml.ponFila(id.beginLine).ponCol(id.beginColumn);}
+      lpfml = rpar_formal();
+              {if (true) return lpfml;}
     throw new Error("Missing return statement in function");
     } finally {
       trace_return("par_formal");
@@ -405,7 +410,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
                   {if (true) return (PFml)sem.pformal_noref(tipo(), id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}
         break;
       default:
-        jj_la1[8] = jj_gen;
+        jj_la1[7] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -418,9 +423,9 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
   final public PReales par_reales() throws ParseException {
     trace_call("par_reales");
     try {
-            LPReal lpreal;
+            PReales lpreal;
       jj_consume_token(parentesisAp);
-      lpreal = rpar_reales(sem.no_preales());
+      lpreal = rpar_reales();
               {if (true) return lpreal;}
     throw new Error("Missing return statement in function");
     } finally {
@@ -444,7 +449,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
            {if (true) return (PReales)sem.no_preales();}
         break;
       default:
-        jj_la1[9] = jj_gen;
+        jj_la1[8] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -459,7 +464,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
     try {
         Exp e0; LPReal rlpreal;
       e0 = e0();
-      rlpreal = rlista_par_real(sem.una_exp(e0));
+      rlpreal = rlista_par_real(e0);
           {if (true) return rlpreal;}
     throw new Error("Missing return statement in function");
     } finally {
@@ -467,18 +472,18 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
     }
   }
 
-  final public LPReal rlista_par_real(LPReal rlprealh, Exp e0) throws ParseException {
+  final public LPReal rlista_par_real(Exp e0) throws ParseException {
     trace_call("rlista_par_real");
     try {
         LPReal lpreal;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case coma:
         jj_consume_token(coma);
-        lpreal = rlista_par_real(sem.muchas_exp(e0, rlprealh));
-          {if (true) return lpreal;}
+        lpreal = lista_par_real();
+          {if (true) return sem.muchas_exp(e0, lpreal);}
         break;
       default:
-        jj_la1[10] = jj_gen;
+        jj_la1[9] = jj_gen;
                   {if (true) return sem.una_exp(e0);}
       }
     throw new Error("Missing return statement in function");
@@ -491,57 +496,83 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
     trace_call("instruccion");
     try {
         Exp e0; Blo bloq; Inst rif; Token tok; PReales preales;
-      jj_consume_token(arroba);
-      e0 = e0();
+      switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+      case arroba:
+        jj_consume_token(arroba);
+        e0 = e0();
           {if (true) return sem.inst_eval(e0);}
-      tok = jj_consume_token(IF);
-      e0 = e0();
-      bloq = bloq();
-      rif = rif(sem.inst_if(e0, bloq));
+        break;
+      case IF:
+        jj_consume_token(IF);
+        e0 = e0();
+        bloq = bloq();
+        rif = rif(sem.inst_if(e0, bloq));
           {if (true) return rif;}
-      tok = jj_consume_token(WHILE);
-      e0 = e0();
-      bloq = bloq();
+        break;
+      case WHILE:
+        jj_consume_token(WHILE);
+        e0 = e0();
+        bloq = bloq();
           {if (true) return sem.inst_while(e0, bloq);}
-      tok = jj_consume_token(NEW);
-      e0 = e0();
+        break;
+      case NEW:
+        jj_consume_token(NEW);
+        e0 = e0();
           {if (true) return sem.inst_new(e0);}
-      tok = jj_consume_token(delete);
-      e0 = e0();
+        break;
+      case delete:
+        jj_consume_token(delete);
+        e0 = e0();
           {if (true) return sem.inst_delete(e0);}
-      tok = jj_consume_token(read);
-      e0 = e0();
+        break;
+      case read:
+        jj_consume_token(read);
+        e0 = e0();
           {if (true) return sem.inst_read(e0);}
-      tok = jj_consume_token(write);
-      e0 = e0();
+        break;
+      case write:
+        jj_consume_token(write);
+        e0 = e0();
           {if (true) return sem.inst_write(e0);}
-      tok = jj_consume_token(call);
-      jj_consume_token(iden);
-      preales = par_reales();
-          {if (true) return sem.inst_call(id, preales);}
-      tok = jj_consume_token(nl);
+        break;
+      case call:
+        jj_consume_token(call);
+        tok = jj_consume_token(iden);
+        preales = par_reales();
+          {if (true) return sem.inst_call(tok.image, preales);}
+        break;
+      case nl:
+        jj_consume_token(nl);
           {if (true) return sem.inst_nl();}
-      bloq = bloq();
-          {if (true) return sem.inst_bloq(bloq);}
+        break;
+      case llaveAp:
+        bloq = bloq();
+          {if (true) return sem.inst_blo(bloq);}
+        break;
+      default:
+        jj_la1[10] = jj_gen;
+        jj_consume_token(-1);
+        throw new ParseException();
+      }
     throw new Error("Missing return statement in function");
     } finally {
       trace_return("instruccion");
     }
   }
 
-  final public Inst rif(Exp e0) throws ParseException {
+  final public Inst rif(Exp e0, Blo bloq1) throws ParseException {
     trace_call("rif");
     try {
-        Blo bloq;
+        Blo bloq2;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case ELSE:
         jj_consume_token(ELSE);
-        bloq = bloq();
-          {if (true) return sem.inst_else(e0, bloq, bloq);}
+        bloq2 = bloq();
+          {if (true) return sem.inst_else(e0, bloq1, bloq2);}
         break;
       default:
         jj_la1[11] = jj_gen;
-          {if (true) return inst_if(e0,bloq);}
+          {if (true) return inst_if(e0,bloq1);}
       }
     throw new Error("Missing return statement in function");
     } finally {
@@ -822,15 +853,15 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
         break;
       case iden:
         t = jj_consume_token(iden);
-           {if (true) return (Exp)sem.exp_litEnt(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);}
+           {if (true) return (Exp)sem.exp_iden(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);}
         break;
       case literalEntero:
         t = jj_consume_token(literalEntero);
-           {if (true) return (Exp)sem.exp_litReal(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);}
+           {if (true) return (Exp)sem.exp_litEnt(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);}
         break;
       case literalReal:
         t = jj_consume_token(literalReal);
-           {if (true) return (Exp)sem.exp_iden(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);}
+           {if (true) return (Exp)sem.exp_litReal(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);}
         break;
       case literalCadena:
         t = jj_consume_token(literalCadena);
@@ -959,10 +990,10 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
       jj_la1_init_1();
    }
    private static void jj_la1_init_0() {
-      jj_la1_0 = new int[] {0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x0,0x8000,0x0,0x200000,0x0,0x0,0x0,0x0,0x6000,0x0,0x80000000,0x30000,0x0,0x0,0x8000,};
+      jj_la1_0 = new int[] {0x0,0x0,0x0,0x0,0x5f500000,0x0,0x0,0x0,0x8000,0x0,0x5f500000,0x200000,0x0,0x0,0x0,0x0,0x6000,0x0,0x80000000,0x30000,0x0,0x0,0x8000,};
    }
    private static void jj_la1_init_1() {
-      jj_la1_1 = new int[] {0x200000,0x40000,0x100000,0x4000000,0x80000,0x40000,0x200000,0x100000,0x800008,0x20020,0x100000,0x0,0x8000,0x7e00,0x20,0x10,0x0,0x1c0,0x4200000,0x1000f,0x7e00,0x1c0,0x20,};
+      jj_la1_1 = new int[] {0x200000,0x40000,0x100000,0x4000000,0x1080000,0x40000,0x100000,0x800008,0x20020,0x100000,0x1080000,0x0,0x8000,0x7e00,0x20,0x10,0x0,0x1c0,0x4200000,0x1000f,0x7e00,0x1c0,0x20,};
    }
 
   /** Constructor with InputStream. */
