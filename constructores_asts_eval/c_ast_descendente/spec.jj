@@ -4,6 +4,7 @@ options  {
 }  
 PARSER_BEGIN(ConstructorASTsTiny)
 package c_ast_descendente;
+import asint.SintaxisAbstractaTiny;
 import asint.SintaxisAbstractaTiny.Prog;
 import asint.SintaxisAbstractaTiny.Blo;
 import asint.SintaxisAbstractaTiny.Decs;
@@ -23,8 +24,7 @@ import asint.SintaxisAbstractaTiny.Exp;
 import c_ast_ascendente.UnidadLexica.StringLocalizado;
 
 public class ConstructorASTsTiny {
-	protected void newToken(Token t) {}
-   private ClaseSemanticaTiny sem = new ClaseSemanticaTiny();   
+   private SintaxisAbstractaTiny sem = new SintaxisAbstractaTiny();   
 }
 PARSER_END(ConstructorASTsTiny)
 
@@ -94,17 +94,18 @@ PARSER_END(ConstructorASTsTiny)
          prog = programa() <EOF> 
             {return prog;} 
       }
-   Prog programa()  : 
-     {Bloq bloq;} 
-     {
-         bloq = bloq() 
-           {return sem.prog(bloq);}
-     }     
-      
-  Prog bloq()  : 
+  
+  Prog programa()  : 
+    {Blo bloq;} 
+    {
+        bloq = bloq() 
+          {return sem.prog(bloq);}
+    }     
+    
+  Blo bloq()  : 
      {Insts insts; Decs decs;} 
      {
-         "{" Insts = instrucciones() decs = declaraciones() "}"
+         "{" insts = instrucciones() decs = declaraciones() "}"
            {return sem.bloq(decs, insts);}
      }
 
