@@ -13,6 +13,7 @@ public class ClaseSemanticaTiny extends SintaxisAbstractaTiny {
             case ">": return exp_mayor(opnd1,opnd2);
             case ">=": return exp_mayIgual(opnd1,opnd2);
             case "==": return exp_igual(opnd1,opnd2);
+            case "!=": return exp_dist(opnd1,opnd2);
             case "=": return exp_asig(opnd1,opnd2);
             case "*": return exp_mult(opnd1,opnd2);
             case "/": return exp_div(opnd1,opnd2);

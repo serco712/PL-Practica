@@ -2,6 +2,17 @@ package asint;
 
 public class SintaxisAbstractaTiny {
 
+    private static void imprimeOpnd(Exp opnd, int np) {
+        if(opnd.prioridad() < np) {System.out.println("(");};
+        opnd.imprime();
+        if(opnd.prioridad() < np) {System.out.println(")");};        
+    }
+    private static void imprimeExpBin(Exp opnd0, String op, Exp opnd1, int np0, int np1) {
+        imprimeOpnd(opnd0,np0);
+        System.out.println(op);
+        imprimeOpnd(opnd1,np1);
+    }
+
     public static abstract class Nodo  {
        public Nodo() {
 		   fila=col=-1;
@@ -22,6 +33,8 @@ public class SintaxisAbstractaTiny {
 	   public int leeCol() {
 		  return col; 
 	   }
+
+       public abstract void imprime();
     }
     
     public static class Prog extends Nodo {
@@ -29,7 +42,10 @@ public class SintaxisAbstractaTiny {
         public Prog(Blo b) {
             super();
             this.b = b;
-        }   
+        }
+        public void imprime() {
+            b.imprime();
+        }
         public String toString() {
              return "prog("+b+")";
          } 
@@ -42,6 +58,12 @@ public class SintaxisAbstractaTiny {
             super();
             decla = d;
             instr = i;
+        }
+        public void imprime() {
+            System.out.println("{");
+            decla.imprime();
+            instr.imprime();
+            System.out.println("}");
         }
     }
     
@@ -70,6 +92,10 @@ public class SintaxisAbstractaTiny {
            super();
            this.tipo = tipo;
            this.str = str;
+        }
+        public void imprime() {
+            tipo.imprime();
+            System.out.println(str);
         }
         public String toString() {
             return "var("+tipo+","+str+")";
@@ -140,6 +166,8 @@ public class SintaxisAbstractaTiny {
        public Exp() {
 		   super();
        }   
+
+       public abstract int prioridad();
     }
    
    // ----------------------------------------------------
@@ -160,6 +188,7 @@ public class SintaxisAbstractaTiny {
         public Bloq(Decs decla, Insts instr) {
             super(decla, instr);
         }
+      
         public String toString() {
             return "bloq("+decla+","+instr+")";
         }
@@ -171,6 +200,10 @@ public class SintaxisAbstractaTiny {
           super();
           this.decs = decs;
        }   
+        public void imprime() {
+           decs.imprime();
+           System.out.println("&&");
+       }
         public String toString() {
             return "si_decs("+decs+")";
         } 
@@ -179,7 +212,9 @@ public class SintaxisAbstractaTiny {
     public static class No_decs extends Decs {
        public No_decs() {
           super();
-       }   
+       } 
+       public void imprime() {
+       }  
        public String toString() {
             return "no_decs()";
         } 
@@ -193,6 +228,12 @@ public class SintaxisAbstractaTiny {
           this.dec = dec;
           this.decs = decs;
        }
+       public void imprime() {
+           decs.imprime();
+           System.out.println(";");
+           dec.imprime();
+       }
+           
        public String toString() {
             return "muchas_decs("+decs+","+dec+")";
         } 
@@ -203,6 +244,9 @@ public class SintaxisAbstractaTiny {
        public Una_dec(Dec dec) {
           super();
           this.dec = dec;
+       }
+       public void imprime() {
+           dec.imprime();
        }
        public String toString() {
             return "una_dec("+dec+")";
@@ -217,6 +261,11 @@ public class SintaxisAbstractaTiny {
           this.v = v;
           this.vars = vars;
        }
+       public void imprime() {
+           vars.imprime();
+           System.out.println(",");
+           v.imprime();
+       }
        public String toString() {
             return "muchas_var("+vars+","+v+")";
         } 
@@ -228,6 +277,9 @@ public class SintaxisAbstractaTiny {
           super();
           this.v = v;
        }
+       public void imprime() {
+            v.imprime();
+        }
        public String toString() {
             return "una_var("+v+")";
         } 
@@ -239,6 +291,9 @@ public class SintaxisAbstractaTiny {
           super();
           this.v = v;
        }
+       public void imprime() {
+            v.imprime();
+        }
        public String toString() {
             return "dec_simple("+v+")";
         } 
@@ -250,6 +305,10 @@ public class SintaxisAbstractaTiny {
           super();
           this.v = v;
        }
+       public void imprime() {
+           System.out.println("<type>");
+           v.imprime();
+        }
        public String toString() {
             return "dec_type("+v+")";
        } 
@@ -265,6 +324,12 @@ public class SintaxisAbstractaTiny {
           this.parfor = parfor;
           this.bloq = bloq;
        }
+       public void imprime() {
+           System.out.println("<proc>");
+           System.out.println(str);
+           parfor.imprime();
+           bloq.imprime();
+        }
        public String toString() {
             return "dec_proc("+str+","+parfor+","+bloq+")";
         } 
@@ -278,6 +343,11 @@ public class SintaxisAbstractaTiny {
           this.tipo = tipo;
           this.str = str;
       }
+      public void imprime() {
+            tipo.imprime();
+            System.out.println(",");
+            System.out.println(str);
+        }
       public String toString() {
             return "tipo_array("+tipo+","+str+")";
       } 
@@ -289,6 +359,10 @@ public class SintaxisAbstractaTiny {
           super();
           this.tipo = tipo;
       }
+      public void imprime() {
+          System.out.println("^");
+          tipo.imprime();
+        }
       public String toString() {
             return "tipo_array("+tipo+")";
       } 
@@ -298,6 +372,9 @@ public class SintaxisAbstractaTiny {
       public Tipo_bool() {
           super();
       }
+      public void imprime() {
+          System.out.println("<bool>");
+        }
       public String toString() {
             return "tipo_bool()";
       } 
@@ -307,6 +384,9 @@ public class SintaxisAbstractaTiny {
       public Tipo_int() {
           super();
       }
+      public void imprime() {
+          System.out.println("<int>");
+        }
       public String toString() {
             return "tipo_int()";
       } 
@@ -316,6 +396,9 @@ public class SintaxisAbstractaTiny {
       public Tipo_real() {
           super();
       }
+      public void imprime() {
+          System.out.println("<real>");
+        }
       public String toString() {
             return "tipo_real()";
       } 
@@ -325,6 +408,9 @@ public class SintaxisAbstractaTiny {
       public Tipo_string() {
           super();
       }
+      public void imprime() {
+          System.out.println("<string>");
+        }
       public String toString() {
             return "tipo_string()";
       } 
@@ -336,6 +422,9 @@ public class SintaxisAbstractaTiny {
           super();
           this.ident = ident;
       }
+      public void imprime() {
+          System.out.println(ident);
+        }
       public String toString() {
             return "tipo_ident("+ident+")";
       } 
@@ -347,6 +436,12 @@ public class SintaxisAbstractaTiny {
           super();
           this.lvar = lvar;
       }
+      public void imprime() {
+          System.out.println("<struct>");
+          System.out.println("{");
+          lvar.imprime();
+          System.out.println("}");
+      }
       public String toString() {
             return "tipo_struct("+lvar+")";
       } 
@@ -357,7 +452,10 @@ public class SintaxisAbstractaTiny {
        public Si_inst(LInst insts) {
           super();
           this.insts = insts;
-       }
+        }
+       public void imprime() {
+            insts.imprime();
+        }
        public String toString() {
             return "si_inst("+insts+")";
         } 
@@ -366,7 +464,9 @@ public class SintaxisAbstractaTiny {
     public static class No_inst extends Insts {
        public No_inst() {
           super();
-       }
+        }
+       public void imprime() {
+        }
        public String toString() {
             return "no_inst()";
         } 
@@ -380,6 +480,11 @@ public class SintaxisAbstractaTiny {
           this.insts = insts;
           this.inst = inst;
        }
+       public void imprime() {
+            insts.imprime();
+            System.out.println(";");
+            inst.imprime();
+        }
        public String toString() {
             return "muchas_inst("+insts+","+inst+")";
         } 
@@ -391,6 +496,9 @@ public class SintaxisAbstractaTiny {
           super();
           this.inst = inst;
        }
+       public void imprime() {
+            inst.imprime();
+        }
        public String toString() {
             return "una_inst("+inst+")";
         } 
@@ -402,6 +510,9 @@ public class SintaxisAbstractaTiny {
           super();
           this.lpfml = lpfml;
        }
+       public void imprime() {
+            lpfml.imprime();
+        }
        public String toString() {
             return "si_pformal("+lpfml+")";
         } 
@@ -411,6 +522,8 @@ public class SintaxisAbstractaTiny {
        public No_pformal() {
           super();
        }
+       public void imprime() {
+        }
        public String toString() {
             return "no_pformal()";
         } 
@@ -424,6 +537,11 @@ public class SintaxisAbstractaTiny {
           this.pfml = pfml;
           this.lpfml = lpfml;
        }
+       public void imprime() {
+            pfml.imprime();
+            System.out.println(",");
+            lpfml.imprime();
+        }
        public String toString() {
             return "muchas_pformal("+pfml+","+lpfml+")";
         } 
@@ -435,6 +553,9 @@ public class SintaxisAbstractaTiny {
           super();
           this.pfml = pfml;
        }
+       public void imprime() {
+            pfml.imprime();
+        }
        public String toString() {
             return "una_pformal("+pfml+")";
         } 
@@ -448,6 +569,10 @@ public class SintaxisAbstractaTiny {
           this.tipo = tipo;
           this.str = str;
        }
+       public void imprime() {
+            tipo.imprime();
+            System.out.println(str);
+        }
        public String toString() {
             return "pformal_ref("+tipo+","+str+")";
         } 
@@ -461,6 +586,10 @@ public class SintaxisAbstractaTiny {
            this.tipo = tipo;
            this.str = str;
         }
+        public void imprime() {
+            tipo.imprime();
+            System.out.println(str);
+        }
         public String toString() {
              return "pformal_noref("+tipo+","+str+")";
          } 
@@ -472,6 +601,9 @@ public class SintaxisAbstractaTiny {
            super();
            this.lpr = lpr;
         }
+        public void imprime() {
+            lpr.imprime();
+        }
         public String toString() {
              return "si_preales("+lpr+")";
         } 
@@ -480,6 +612,8 @@ public class SintaxisAbstractaTiny {
     public static class No_preales extends PReales {
         public No_preales() {
            super();
+        }
+        public void imprime() {
         }
         public String toString() {
              return "no_preales()";
@@ -494,6 +628,11 @@ public class SintaxisAbstractaTiny {
            this.e = e;
            this.lpr = lpr;
         }
+        public void imprime() {
+            e.imprime();
+            System.out.println(",");
+            lpr.imprime();
+        }
         public String toString() {
              return "una_exp("+e+","+lpr+")";
         } 
@@ -504,6 +643,9 @@ public class SintaxisAbstractaTiny {
         public Una_exp(Exp e) {
            super();
            this.e = e;
+        }
+        public void imprime() {
+            e.imprime();
         }
         public String toString() {
              return "una_exp("+e+")";
@@ -516,7 +658,10 @@ public class SintaxisAbstractaTiny {
             super();
             this.e = e;
         }
-
+        public void imprime() {
+            System.out.println("@");
+            e.imprime();
+        }
         public String toString() {
             return "inst_eval("+e+")";
         } 
@@ -530,7 +675,11 @@ public class SintaxisAbstractaTiny {
             this.e = e;
             this.b = b;
         }
-
+        public void imprime() {
+            System.out.println("<if>");
+            e.imprime();
+            b.imprime();
+        }
         public String toString() {
             return "inst_if("+e+","+b+")";
         } 
@@ -546,7 +695,13 @@ public class SintaxisAbstractaTiny {
             this.b1 = b1;
             this.b2 = b2;
         }
-
+        public void imprime() {
+            System.out.println("<if>");
+            e.imprime();
+            b1.imprime();
+            System.out.println("<else>");
+            b2.imprime();
+        }
         public String toString() {
             return "inst_else("+e+","+b1+","+b2+")";
         } 
@@ -560,7 +715,11 @@ public class SintaxisAbstractaTiny {
             this.e = e;
             this.b = b;
         }
-
+        public void imprime() {
+            System.out.println("<while>");
+            e.imprime();
+            b.imprime();
+        }
         public String toString() {
             return "inst_while("+e+","+b+")";
         } 
@@ -572,7 +731,10 @@ public class SintaxisAbstractaTiny {
             super();
             this.e = e;
         }
-
+        public void imprime() {
+            System.out.println("<new>");
+            e.imprime();
+        }
         public String toString() {
             return "inst_new("+e+")";
         } 
@@ -584,7 +746,10 @@ public class SintaxisAbstractaTiny {
             super();
             this.e = e;
         }
-
+        public void imprime() {
+            System.out.println("<delete>");
+            e.imprime();
+        }
         public String toString() {
             return "inst_delete("+e+")";
         } 
@@ -597,7 +762,10 @@ public class SintaxisAbstractaTiny {
             super();
             this.e = e;
         }
-
+        public void imprime() {
+            System.out.println("<read>");
+            e.imprime();
+        }
         public String toString() {
             return "inst_read("+e+")";
         } 
@@ -610,7 +778,10 @@ public class SintaxisAbstractaTiny {
             super();
             this.e = e;
         }
-
+        public void imprime() {
+            System.out.println("<write>");
+            e.imprime();
+        }
         public String toString() {
             return "inst_write("+e+")";
         } 
@@ -625,7 +796,11 @@ public class SintaxisAbstractaTiny {
             id = iden;
             pr = p;
         }
-
+        public void imprime() {
+            System.out.println("<call>");
+            System.out.println(id);
+            pr.imprime();
+        }
         public String toString() {
             return "inst_call("+id+","+pr+")";
         } 
@@ -636,7 +811,8 @@ public class SintaxisAbstractaTiny {
         public Inst_nl() {
             super();
         }
-
+        public void imprime() {
+        }
         public String toString() {
             return "inst_nl()";
         } 
@@ -648,45 +824,14 @@ public class SintaxisAbstractaTiny {
             super();
             this.b = b;
         }
-
+        public void imprime() {
+            b.imprime();
+        }
         public String toString() {
             return "inst_blo("+b+")";
         } 
     }
     
-    public static class Lit_ent extends Exp {
-        private String num;
-        public Lit_ent(String num) {
-            super();
-            this.num = num;
-        }
-        public String toString() {
-            return "lit_ent("+num+"["+leeFila()+","+leeCol()+"])";
-        } 
-    }
-
-    public static class Lit_real extends Exp {
-        private String num;
-        public Lit_real(String num) {
-            super();
-            this.num = num;
-        }
-        public String toString() {
-            return "lit_real("+num+"["+leeFila()+","+leeCol()+"])";
-        } 
-    }
-	
-	
-    public static class Iden extends Exp {
-        private String id;
-        public Iden(String id) {
-            super();
-            this.id = id;
-        }
-        public String toString() {
-            return "iden("+id+"["+leeFila()+","+leeCol()+"])";
-        } 
-    }   
     
     public static class Exp_asig extends Exp{
         private Exp exp1;
@@ -696,6 +841,10 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
+        public int prioridad() { return 0; }
+        public void imprime() {
+           imprimeExpBin(exp1, "=", exp2, 1, 0);
+       }
         public String toString() {
             return "exp_asig("+exp1+","+exp2+")";
         }  
@@ -709,6 +858,10 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
+        public int prioridad() { return 1; }
+        public void imprime() {
+           imprimeExpBin(exp1, "<", exp2, 1, 2);
+       }
         public String toString() {
             return "exp_menor("+exp1+","+exp2+")";
         }  
@@ -722,6 +875,10 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
+        public int prioridad() { return 1; }
+        public void imprime() {
+           imprimeExpBin(exp1, "<=", exp2, 1, 2);
+       }
         public String toString() {
             return "exp_menIgual("+exp1+","+exp2+")";
         }  
@@ -735,6 +892,10 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
+        public int prioridad() { return 1; }
+        public void imprime() {
+           imprimeExpBin(exp1, ">", exp2, 1, 2);
+       }
         public String toString() {
             return "exp_mayor("+exp1+","+exp2+")";
         }  
@@ -748,6 +909,10 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
+        public int prioridad() { return 1; }
+        public void imprime() {
+           imprimeExpBin(exp1, ">=", exp2, 1, 2);
+       }
         public String toString() {
             return "exp_mayIgual("+exp1+","+exp2+")";
         }  
@@ -761,6 +926,10 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
+        public int prioridad() { return 1; }
+        public void imprime() {
+           imprimeExpBin(exp1, "==", exp2, 1, 2);
+       }
         public String toString() {
             return "exp_igual("+exp1+","+exp2+")";
         }  
@@ -773,6 +942,10 @@ public class SintaxisAbstractaTiny {
             super();
             this.exp1 = exp1;
             this.exp2 = exp2;
+        }
+        public int prioridad() { return 1; }
+        public void imprime() { 
+            imprimeExpBin(exp1, "!=", exp2, 1, 2);
         }
         public String toString() {
             return "exp_dist("+exp1+","+exp2+")";
@@ -787,6 +960,10 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
+        public int prioridad() { return 2; }
+        public void imprime() { 
+            imprimeExpBin(exp1, "+", exp2, 2, 3);
+        }
         public String toString() {
             return "exp_suma("+exp1+","+exp2+")";
         }  
@@ -799,6 +976,10 @@ public class SintaxisAbstractaTiny {
             super();
             this.exp1 = exp1;
             this.exp2 = exp2;
+        }
+        public int prioridad() { return 2; }
+        public void imprime() { 
+            imprimeExpBin(exp1, "-", exp2, 3, 3);
         }
         public String toString() {
             return "exp_resta("+exp1+","+exp2+")";
@@ -813,6 +994,10 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
+        public int prioridad() { return 4; }
+        public void imprime() { 
+            imprimeExpBin(exp1, "*", exp2, 4, 5);
+        }
         public String toString() {
             return "exp_mult("+exp1+","+exp2+")";
         }  
@@ -826,17 +1011,25 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
+        public int prioridad() { return 4; }
+        public void imprime() { 
+            imprimeExpBin(exp1, "/", exp2, 4, 5);
+        }
         public String toString() {
             return "exp_div("+exp1+","+exp2+")";
         }  
      }
     public static class Exp_mod extends Exp{
         private Exp exp1;
-         private Exp exp2;
+        private Exp exp2;
         public Exp_mod(Exp exp1,Exp exp2){
             super();
             this.exp1 = exp1;
             this.exp2 = exp2;
+        }
+        public int prioridad() { return 4; }
+        public void imprime() { 
+            imprimeExpBin(exp1, "%", exp2, 4, 5);
         }
         public String toString() {
             return "exp_mod("+exp1+","+exp2+")";
@@ -851,6 +1044,10 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
+        public int prioridad() { return 3; }
+        public void imprime() { 
+            imprimeExpBin(exp1, "<and>", exp2, 4, 3);
+        }
         public String toString() {
             return "exp_and("+exp1+","+exp2+")";
         }  
@@ -864,6 +1061,10 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
+        public int prioridad() { return 3; }
+        public void imprime() { 
+            imprimeExpBin(exp1, "<or>", exp2, 4, 4);
+        }
         public String toString() {
             return "exp_or("+exp1+","+exp2+")";
         }  
@@ -875,6 +1076,11 @@ public class SintaxisAbstractaTiny {
             super();
             this.exp = exp;
         }
+        public int prioridad() { return 5; }
+        public void imprime() { 
+            System.out.println("-");
+            imprimeOpnd(exp, 5);
+        }
         public String toString() {
             return "exp_menos("+exp+")";
         }  
@@ -885,6 +1091,11 @@ public class SintaxisAbstractaTiny {
         public Exp_not(Exp exp){
             super();
             this.exp = exp;
+        }
+        public int prioridad() { return 5; }
+        public void imprime() { 
+            System.out.println("not");
+            imprimeOpnd(exp, 5);
         }
         public String toString() {
             return "exp_not("+exp+")";
@@ -899,6 +1110,13 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
+        public int prioridad() { return 6; }
+        public void imprime() { 
+            imprimeOpnd(exp1, 6);
+            System.out.println("[");
+            imprimeOpnd(exp2, 0);
+            System.out.println("]");
+        }
         public String toString() {
             return "exp_index("+exp1+","+exp2+")";
         } 
@@ -912,6 +1130,12 @@ public class SintaxisAbstractaTiny {
             this.exp = exp;
             this.s = s;
         }
+        public int prioridad() { return 6; }
+        public void imprime() { 
+            imprimeOpnd(exp, 6);
+            System.out.println(".");
+            System.out.println(s);
+        }
         public String toString() {
             return "exp_reg("+exp+","+s+")";
         } 
@@ -923,6 +1147,11 @@ public class SintaxisAbstractaTiny {
             super();
             this.exp = exp;
         }
+        public int prioridad() { return 6; }
+        public void imprime() { 
+            imprimeOpnd(exp, 6);
+            System.out.println("^");
+        }
         public String toString() {
             return "exp_indir("+exp+")";
         } 
@@ -932,6 +1161,10 @@ public class SintaxisAbstractaTiny {
         public Exp_true(){
  			super();
         }
+        public int prioridad() { return 7; }
+        public void imprime() { 
+            System.out.println("<true>");
+        }
         public String toString() {
             return "exp_true()";
         } 
@@ -940,6 +1173,10 @@ public class SintaxisAbstractaTiny {
     public static class Exp_false extends Exp{
         public Exp_false(){
  			super();
+        }
+        public int prioridad() { return 7; }
+        public void imprime() { 
+            System.out.println("<false>");
         }
         public String toString() {
             return "exp_false()";
@@ -952,6 +1189,10 @@ public class SintaxisAbstractaTiny {
             super();
             this.s = s;
         }
+        public int prioridad() { return 7; }
+        public void imprime() { 
+            System.out.println(s);
+        }
         public String toString() {
             return "exp_litEnt("+s+")";
         } 
@@ -962,6 +1203,10 @@ public class SintaxisAbstractaTiny {
         public Exp_litReal(String s){
             super();
             this.s = s;
+        }
+        public int prioridad() { return 7; }
+        public void imprime() { 
+            System.out.println(s);
         }
         public String toString() {
             return "exp_litReal("+s+")";
@@ -974,6 +1219,10 @@ public class SintaxisAbstractaTiny {
             super();
             this.s = s;
         }
+        public int prioridad() { return 7; }
+        public void imprime() { 
+            System.out.println(s);
+        }
         public String toString() {
             return "exp_litCad("+s+")";
         } 
@@ -985,6 +1234,10 @@ public class SintaxisAbstractaTiny {
             super();
             this.s = s;
         }
+        public int prioridad() { return 7; }
+        public void imprime() { 
+            System.out.println(s);
+        }
         public String toString() {
             return "exp_iden("+s+")";
         } 
@@ -993,6 +1246,10 @@ public class SintaxisAbstractaTiny {
 	public static class Exp_null extends Exp{
         public Exp_null(){
             super();
+        }
+        public int prioridad() { return 7; }
+        public void imprime() {
+            System.out.println("<null>");
         }
         public String toString() {
             return "exp_null()";

@@ -106,7 +106,7 @@ PARSER_END(ConstructorASTsTiny)
   Blo bloq()  : 
      {Insts insts; Decs decs;} 
      {
-         "{" insts = instrucciones() decs = declaraciones() "}"
+         "{" decs = declaraciones() insts = instrucciones() "}"
            {return sem.bloq(decs, insts);}
      }
 
@@ -127,7 +127,7 @@ PARSER_END(ConstructorASTsTiny)
   LDecs rlista_decs(LDecs decsh) : 
        {Dec dec; LDecs decs;} 
        {
-         ";" dec = declaracion() decs = rlista_decs(sem.muchas_decs(decsh,dec))  
+         <puntoYComa> dec = declaracion() decs = rlista_decs(sem.muchas_decs(decsh,dec))  
            {return decs;}
          | 
            {return decsh;}
@@ -157,20 +157,22 @@ PARSER_END(ConstructorASTsTiny)
         }
   
   Dec declaracion() : 
-       {Var v; Token type, id; PFmls pfmls; Blo bloq;} 
+       {Var v; Token id; PFmls pfmls; Blo bloq;} 
        {
          v = variable()
           {return (Dec)sem.dec_simple(v);}
-         v = variable()
+          |
+         <type> v = variable()
           {return (Dec)sem.dec_type(v);}
-         id = <iden> pfmls = par_formales() bloq = bloq()
+          |
+         <proc> id = <iden> pfmls = par_formales() bloq = bloq()
           {return (Dec)sem.dec_proc(id.image, pfmls, bloq).ponFila(id.beginLine).ponCol(id.beginColumn);}         
        }
        
   Tipo tipo() :
   	   {Tipo tip2, tiparray;}
   	   {
-  	   	 tip2 = tipo2() tiparray = rtipo(tipo2())
+  	   	 tip2 = tipo2() tiparray = rtipo(tip2)
   	   	  {return tiparray;}
   	   }
  
@@ -188,6 +190,7 @@ PARSER_END(ConstructorASTsTiny)
   	   {
   	   	 "^" tip = tipo2()
   	   	  {return (Tipo)sem.tipo_punt(tip);}
+          |
   	   	 tip = tipo3()
   	   	  {return tip;}
   	   }
@@ -197,14 +200,19 @@ PARSER_END(ConstructorASTsTiny)
   	   {
   	   	 tok = <bool>
   	   	  {return (Tipo)sem.tipo_bool();}
+          |
   	   	 tok = <INT>
   	   	  {return (Tipo)sem.tipo_int();}
+          |
   	   	 tok = <real>
   	   	  {return (Tipo)sem.tipo_real();}
+          |
   	   	 tok = <string>
   	   	  {return (Tipo)sem.tipo_string();}
+          |
   	   	 tok = <iden>
   	   	  {return (Tipo)sem.tipo_ident(tok.image).ponFila(tok.beginLine).ponCol(tok.beginColumn);}
+          |
   	   	 tok = <struct> "{" vars = lista_variables() "}"
   	   	  {return (Tipo)sem.tipo_struct(vars);}
   	   }
@@ -235,7 +243,7 @@ PARSER_END(ConstructorASTsTiny)
        } 
   
   PFmls par_formales() :
-       {PFml pfmls;} 
+       {PFmls pfmls;} 
        {
          "(" pfmls = rpar_formales()  
            {return pfmls;}
@@ -246,6 +254,7 @@ PARSER_END(ConstructorASTsTiny)
        {
          pfmls = lista_par_formal() ")"
            {return (PFmls)sem.si_pformal(pfmls);}
+           |
          ")"
            {return (PFmls)sem.no_pformal();}
        }   
@@ -267,20 +276,20 @@ PARSER_END(ConstructorASTsTiny)
        } 
   
   PFml par_formal() :
-  	   {Tipo tipo; LPFml lpfml; Token id;}
+  	   {Tipo tipo; PFml lpfml; Token id;}
   	   {
-  	     tipo = tipo() id = <iden> lpfml = rpar_formal()
+  	     tipo = tipo() lpfml = rpar_formal(tipo)
   	     {return lpfml;}
   	   }  
   
-  PFml rpar_formal() :
+  PFml rpar_formal(Tipo t) :
   	   {Token id;}
   	   {
   	     "&" id = <iden> 
-  	     {return (PFml)sem.pformal_ref(tipo(), id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}	  
+  	     {return (PFml)sem.pformal_ref(t, id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}	  
   	     | 	 
   	   	 id = <iden>
-  	   	 {return (PFml)sem.pformal_noref(tipo(), id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}
+  	   	 {return (PFml)sem.pformal_noref(t, id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}
   	   }	 	
 
   PReales par_reales() :
@@ -321,7 +330,7 @@ PARSER_END(ConstructorASTsTiny)
          "@" e0= e0()
          {return sem.inst_eval(e0);}
          |
-         <IF> e0=e0() bloq=bloq() rif=rif(sem.inst_if(e0, bloq))
+         <IF> e0=e0() bloq=bloq() rif=rif(e0, bloq)
          {return rif;}
          |
          <WHILE> e0=e0() bloq=bloq()
@@ -355,7 +364,7 @@ PARSER_END(ConstructorASTsTiny)
          <ELSE> bloq2= bloq()
          {return sem.inst_else(e0, bloq1, bloq2);}
          |
-         {return inst_if(e0,bloq1);}
+         {return sem.inst_if(e0,bloq1);}
 	}
       
   Exp e0() : 
@@ -381,7 +390,7 @@ PARSER_END(ConstructorASTsTiny)
   Exp re1(Exp eh) : 
         {String op; Exp e1,e2;} 
         {
-          op = op1() e1 = e2() e2 = re0(sem.mkopBin(op,eh,e1))
+          op = op1() e1 = e2() e2 = re1(sem.mkopBin(op,eh,e1))
              {return e2;} 
         | 
              {return eh;}
@@ -447,9 +456,11 @@ PARSER_END(ConstructorASTsTiny)
   Exp e5() : 
         {String op; Exp e6;} 
         {
-          op = op5() e6 = e6()
+          op = op5() e6 = e5()
             {return (Exp)sem.mkopUn(op,e6);}
+            |
           e6 = e6()
+            {return e6;}
         }
   Exp e6() : 
         {Exp e6,e7;} 
@@ -458,16 +469,16 @@ PARSER_END(ConstructorASTsTiny)
              {return e7;}
         }
   Exp re6(Exp eh) : 
-        {Token t; Exp e6;} 
+        {Token t; Exp e6, e7;} 
         {
-           "[" e6 = e0() "]"
-              {return (Exp)sem.exp_index(eh,e6);} 
+           "[" e6 = e0() "]" e7 = re6(sem.exp_index(eh,e6))
+              {return e7;} 
         | 
-           "." t = <iden> 
-              {return (Exp)sem.exp_reg(eh,t);} 
+           "." t = <iden> e7 = re6(sem.exp_reg(eh,t.image))
+              {return e7;} 
         | 
-           "^"
-              {return (Exp)sem.exp_indir(eh);} 
+           "^" e7 = re6(sem.exp_indir(eh))
+              {return e7;} 
         | 
               {return eh;}
         }
@@ -491,6 +502,9 @@ PARSER_END(ConstructorASTsTiny)
         | 
         t = <literalCadena> 
           {return (Exp)sem.exp_litCad(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);} 
+        | 
+        t = <NULL> 
+          {return (Exp)sem.exp_null().ponFila(t.beginLine).ponCol(t.beginColumn);} 
         | 
         "(" e =e0() ")" 
           {return e;}
