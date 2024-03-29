@@ -133,28 +133,35 @@ PARSER_END(ConstructorASTsTiny)
        }
   
   LVar lista_variables() :
-       {Dec dec; LVar vars;} 
+       {Var v; LVar vars;} 
        {
-          dec = declaracion() vars = rlista_var(sem.una_var(dec)) 
+          v = variable() vars = rlista_var(sem.una_var(v)) 
            {return vars;}
        }    
        
   LVar rlista_var(LVar varsh) :
-       {Dec dec; LVar vars;} 
+       {Var v; LVar vars;} 
        {
-         "," dec = declaracion() vars = rlista_decs(sem.muchas_decs(varsh,dec))  
+         "," v = variable() vars = rlista_decs(sem.muchas_decs(varsh,v))  
            {return vars;}
          | 
            {return varsh;}
        } 
+
+  Var variable() :
+        {Tipo t; Token id;}
+        {
+          t = tipo() id = <iden>
+            {return (Var)sem.var(t,id.image);}
+        }
   
   Dec declaracion() : 
-       {Tipo tipo; Token type, id; PFmls pfmls; Bloq bloq;} 
+       {Var v; Token type, id; PFmls pfmls; Blo bloq;} 
        {
-         tipo = tipo() id = <iden>
-          {return (Dec)sem.dec_simple(tipo,id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}
-         type = <type> tipo = tipo() id = <iden>
-          {return (Dec)sem.dec_type(tipo,id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}
+         v = variable()
+          {return (Dec)sem.dec_simple(v).ponFila(id.beginLine).ponCol(id.beginColumn);}
+         v = variable()
+          {return (Dec)sem.dec_type(v).ponFila(id.beginLine).ponCol(id.beginColumn);}
          id = <iden> pfmls = par_formales() bloq = bloq()
           {return (Dec)sem.dec_proc(id.image, pfmls, bloq).ponFila(id.beginLine).ponCol(id.beginColumn);}         
        }
@@ -210,7 +217,7 @@ PARSER_END(ConstructorASTsTiny)
            {return (Insts)sem.no_inst();}
        } 
   
-  Insts lista_instrucciones() :
+  LInst lista_instrucciones() :
        {Inst inst; LInst insts;} 
        {
          inst = instruccion() insts = rlista_inst(sem.una_inst(inst))  
@@ -258,19 +265,20 @@ PARSER_END(ConstructorASTsTiny)
            {return pfmlsh;}
        } 
   
-  PFml par_formal(Token id) :
-  	   {Tipo tipo; LPFml lpfml;}
+  PFml par_formal() :
+  	   {Tipo tipo; LPFml lpfml; Token id;}
   	   {
-  	     tipo = tipo() lpfml = rpar_formal(sem.pformal_ref(tipo,id.image))
-  	     {return lpfml.ponFila(id.beginLine).ponCol(id.beginColumn);}
+  	     tipo = tipo() id = <iden> lpfml = rpar_formal(sem.pformal_ref(tipo,id.image))
+  	     {return (PFml)lpfml.ponFila(id.beginLine).ponCol(id.beginColumn);}
   	   }  
   
   PFml rpar_formal() :
   	   {Token id;}
   	   {
   	     "&" id = <iden> 
-  	     {return (PFml)sem.pformal_ref(tipo(), id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}	   	 
-  	   	 id =<iden>
+  	     {return (PFml)sem.pformal_ref(tipo(), id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}	  
+  	     | 	 
+  	   	 id = <iden>
   	   	 {return (PFml)sem.pformal_noref(tipo(), id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}
   	   }	 	
 
@@ -281,13 +289,14 @@ PARSER_END(ConstructorASTsTiny)
   	     {return lpreal;}
   	   }
   
-  LPReal rpar_reales() :
+  PReales rpar_reales() :
        {LPReal lpreal;}
        {
          lpreal = lista_par_real() ")"
-         {return sem.si_preales(lpreal);}
+         {return (PReales)sem.si_preales(lpreal);}
+         |
        	 ")"
-       	  {return sem.no_preales();}
+       	  {return (PReales)sem.no_preales();}
        }
   LPReal lista_par_real() :
        {Exp e0; LPReal rlpreal;}
@@ -302,17 +311,17 @@ PARSER_END(ConstructorASTsTiny)
          "," lpreal = rlista_par_real(sem.muchas_exp(e0, rlprealh))
          {return lpreal;}
   		 |
-  		 {return sem.una_exp(e0());}
+  		 {return sem.una_exp(e0);}
   	   }
   
    Inst instruccion() : 
-       {Exp e0; Bloq bloq; Rif rif; Token tok; PReales preales;}
+       {Exp e0; Blo bloq; Inst rif; Token tok; PReales preales;}
        {
          "@" e0= e0()
          {return sem.inst_eval(e0);}
          tok= <IF> e0=e0() bloq=bloq() rif=rif(sem.inst_if(e0, bloq))
          {return rif;}
-         tok= <WHILE> eo=e0() bloq=bloq()
+         tok= <WHILE> e0=e0() bloq=bloq()
          {return sem.inst_while(e0, bloq);}
          tok = <NEW> e0=e0()
          {return sem.inst_new(e0);}
@@ -322,7 +331,7 @@ PARSER_END(ConstructorASTsTiny)
          {return sem.inst_read(e0);}
          tok = <write> e0=e0()
          {return sem.inst_write(e0);}
-         tok = <call> id= <iden> preales= par_reales()
+         tok = <call> <iden> preales= par_reales()
          {return sem.inst_call(id, preales);}
          tok = <nl>
          {return sem.inst_nl();}
@@ -330,8 +339,8 @@ PARSER_END(ConstructorASTsTiny)
          {return sem.inst_bloq(bloq);}
        }
    
-   Rif rif(Exp e0) :
-       {Bloq bloq;}
+   Inst rif(Exp e0) :
+       {Blo bloq;}
        {
          <ELSE> bloq= bloq()
          {return sem.inst_else(e0, bloq, bloq);}
@@ -370,14 +379,21 @@ PARSER_END(ConstructorASTsTiny)
                 
  	
  Exp e2() : 
-        {Exp e1,e2, e3;} 
+        {Exp e1, e2, e3;} 
         {
-          e1 = e3() "-" e2 = e3() e3 = re2((Exp)sem.exp_resta(e1,e2)) 
+          e1 = e3() e2 = re2p(e1) e3 = re2((Exp)e2) 
             {return e3;}
-         |
-          e1 = e3() e2 = re2(e1) 
-            {return e2;}
         }
+
+  Exp re2p(Exp eh) :
+        {Exp e3;} 
+        {
+          "-"  e3 = e3()
+             {return (Exp)sem.exp_resta(eh,e3);} 
+        | 
+             {return eh;}
+        }
+  
   Exp re2(Exp eh) : 
         {Exp e1,e2;} 
         {
@@ -402,7 +418,7 @@ PARSER_END(ConstructorASTsTiny)
          <or> e1 = e4()
              {return (Exp)sem.exp_or(e1,e);} 
         | 
-             {return e1;}
+             {return e;}
         }     
   Exp e4() : 
         {Exp e1,e2;} 
@@ -424,7 +440,6 @@ PARSER_END(ConstructorASTsTiny)
           op = op5() e6 = e6()
             {return (Exp)sem.mkopUn(op,e6);}
           e6 = e6()
-          	{return e6;}
         }
   Exp e6() : 
         {Exp e6,e7;} 
@@ -436,13 +451,13 @@ PARSER_END(ConstructorASTsTiny)
         {Token t; Exp e6;} 
         {
            "[" e6 = e0() "]"
-              {return (Exp)sem.exp_index(e6);} 
+              {return (Exp)sem.exp_index(eh,e6);} 
         | 
            "." t = <iden> 
-              {return (Exp)sem.exp_reg(t);} 
+              {return (Exp)sem.exp_reg(eh,t);} 
         | 
            "^"
-              {return (Exp)sem.exp_indir();} 
+              {return (Exp)sem.exp_indir(eh);} 
         | 
               {return eh;}
         }

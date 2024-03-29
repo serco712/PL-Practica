@@ -211,51 +211,47 @@ public class SintaxisAbstractaTiny {
     
     public static class Muchas_var extends LVar {
        private LVar vars;
-       private Dec dec;
-       public Muchas_var(LVar vars, Dec dec) {
+       private Var v;
+       public Muchas_var(LVar vars, Var v) {
           super();
-          this.dec = dec;
+          this.v = v;
           this.vars = vars;
        }
        public String toString() {
-            return "muchas_var("+vars+","+dec+")";
+            return "muchas_var("+vars+","+v+")";
         } 
     }
 
     public static class Una_var extends LVar {
-       private Dec dec;
-       public Una_var(Dec dec) {
+       private Var v;
+       public Una_var(Var v) {
           super();
-          this.dec = dec;
+          this.v = v;
        }
        public String toString() {
-            return "una_var("+dec+")";
+            return "una_var("+v+")";
         } 
     } 
     
      public static class Dec_simple extends Dec {
-       private Tipo tipo;
-       private String str;
-       public Dec_simple(Tipo tipo, String str) {
+       private Var v;
+       public Dec_simple(Var v) {
           super();
-          this.tipo = tipo;
-          this.str = str;
+          this.v = v;
        }
        public String toString() {
-            return "dec_simple("+tipo+","+str+")";
+            return "dec_simple("+v+")";
         } 
     }   
     
     public static class Dec_type extends Dec {
-       private Tipo tipo;
-       private String str;
-       public Dec_type(Tipo tipo, String str) {
+       private Var v;
+       public Dec_type(Var v) {
           super();
-          this.tipo = tipo;
-          this.str = str;
+          this.v = v;
        }
        public String toString() {
-            return "dec_type("+tipo+","+str+")";
+            return "dec_type("+v+")";
        } 
     }
     
@@ -1022,20 +1018,20 @@ public class SintaxisAbstractaTiny {
     public LDecs una_dec(Dec dec) {
         return new Una_dec(dec);
     }
-    public LVar muchas_var(LVar vars, Dec dec) {
-        return new Muchas_var(vars,dec);
+    public LVar muchas_var(LVar vars, Var v) {
+        return new Muchas_var(vars,v);
     }
-    public LVar una_var(Dec dec) {
-        return new Una_var(dec);
+    public LVar una_var(Var v) {
+        return new Una_var(v);
     }
     public Var var(Tipo t, String str) {
         return new Var(t, str);
     }
-    public Dec dec_simple(Tipo t, String id) {
-        return new Dec_simple(t,id);
+    public Dec dec_simple(Var v) {
+        return new Dec_simple(v);
     }
-    public Dec dec_type(Tipo t, String id) {
-        return new Dec_type(t,id);
+    public Dec dec_type(Var v) {
+        return new Dec_type(v);
     }
     public Dec dec_proc(String id, PFmls pfs, Blo b) {
         return new Dec_proc(id, pfs, b);
