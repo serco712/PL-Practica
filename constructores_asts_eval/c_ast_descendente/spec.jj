@@ -2,20 +2,20 @@ options  {
   STATIC=false;
   DEBUG_PARSER=true;
 }  
-PARSER_BEGIN(ConstructorASTsEval)
+PARSER_BEGIN(ConstructorASTsTiny)
 package c_ast_descendente;
-import asint.ClaseSemanticaEval;
-import asint.SintaxisAbstractaEval.Exp;
-import asint.SintaxisAbstractaEval.Decs;
-import asint.SintaxisAbstractaEval.LDecs;
-import asint.SintaxisAbstractaEval.Dec;
-import asint.SintaxisAbstractaEval.Prog;
+import asint.ClaseSemanticaTiny;
+import asint.SintaxisAbstractaTiny.Exp;
+import asint.SintaxisAbstractaTiny.Decs;
+import asint.SintaxisAbstractaTiny.LDecs;
+import asint.SintaxisAbstractaTiny.Dec;
+import asint.SintaxisAbstractaTiny.Prog;
 import c_ast_ascendente.UnidadLexica.StringLocalizado;
 
-public class ConstructorASTsEval {
-   private ClaseSemanticaEval sem = new ClaseSemanticaEval();   
+public class ConstructorASTsTiny {
+   private ClaseSemanticaTiny sem = new ClaseSemanticaTiny();   
 }
-PARSER_END(ConstructorASTsEval)
+PARSER_END(ConstructorASTsTiny)
 
   TOKEN:{<#letra:["a"-"z","A"-"Z"]>}
   TOKEN:{<#digitoPositivo:["1"-"9"]>}
@@ -308,17 +308,17 @@ PARSER_END(ConstructorASTsEval)
          {return rif;}
          tok= <while> eo=e0() bloq=bloq()
          {return sem.inst_while(e0, bloq);}
-         tok= <new> e0=e0()
+         <new> e0=e0()
          {return sem.inst_new(e0);}
-         tok= <delete> e0=e0()
+         <delete> e0=e0()
          {return sem.inst_delete(e0);}
-         tok= <read> e0=e0()
+         <read> e0=e0()
          {return sem.inst_read(e0);}
-         tok= <write> e0=e0()
+         <write> e0=e0()
          {return sem.inst_write(e0);}
-         tok= <call> id= <iden> preales= par_reales()
+         <call> id= <iden> preales= par_reales()
          {return sem.inst_call(id, preales);}
-         tok= <nl>
+         <nl>
          {return }
          bloq=bloq()
          {return sem.inst_bloq(bloq);}
