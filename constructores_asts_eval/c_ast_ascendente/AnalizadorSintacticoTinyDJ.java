@@ -1,4 +1,4 @@
-package asint;
+package c_ast_ascendente;
 
 import java_cup.runtime.Scanner;
 import java_cup.runtime.Symbol;
