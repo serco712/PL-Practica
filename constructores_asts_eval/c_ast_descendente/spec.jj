@@ -10,6 +10,7 @@ import asint.SintaxisAbstractaTiny.Blo;
 import asint.SintaxisAbstractaTiny.Decs;
 import asint.SintaxisAbstractaTiny.LDecs;
 import asint.SintaxisAbstractaTiny.LVar;
+import asint.SintaxisAbstractaTiny.Var;
 import asint.SintaxisAbstractaTiny.Dec;
 import asint.SintaxisAbstractaTiny.Tipo;
 import asint.SintaxisAbstractaTiny.Insts;
