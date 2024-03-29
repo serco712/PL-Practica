@@ -147,12 +147,14 @@
     | \hspace{1cm}rE1_0.\textbf{a} \;= rE1_1.\textbf{a}\\
     rE1 \longrightarrow \epsilon\\
     | \hspace{1cm}rE1.\textbf{a} \;= rE1.\textbf{ah}\\
-    E2 \longrightarrow E3 - E3\;rE2\\
-    | \hspace{1cm}rE1.\textbf{ah} \;= \textbf{exp$\_$resta}(E3_0.\textbf{a},E3_1.\textbf{a})\\
+    E2 \longrightarrow E3\;rE2'\;rE2\\
+    | \hspace{1cm}rE2'.\textbf{ah} \;= E3.\textbf{a}\\
+    | \hspace{1cm}rE2.\textbf{ah} \;= rE2'.\textbf{a}\\
     | \hspace{1cm}E2.\textbf{a} \;= rE2.\textbf{a}\\  
-    E2 \longrightarrow E3\;rE2\\
-    | \hspace{1cm}rE2.\textbf{ah} \;= E3.\textbf{a}\\
-    | \hspace{1cm}E2.\textbf{a} \;= rE2.\textbf{a}\\  
+    rE2' \longrightarrow -\;E3\\ 
+    | \hspace{1cm}rE2'.\textbf{a} \;= \textbf{exp$\_$resta}(rE3_0.\textbf{a},E3_1.\textbf{a})\\ 
+    rE2' \longrightarrow \epsilon\\ 
+    | \hspace{1cm}rE2'.\textbf{a} \;= rE2'.\textbf{ah}\\  
     rE2 \longrightarrow +\;E3\;rE2\\ 
     | \hspace{1cm}rE2_1.\textbf{ah} \;= \textbf{exp$\_$suma}(rE2_0.\textbf{ah},E3.\textbf{a})\\ 
     | \hspace{1cm}rE2_0.\textbf{a} \;= rE2_1.\textbf{a}\\
