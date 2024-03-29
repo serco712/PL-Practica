@@ -63,6 +63,19 @@ public class SintaxisAbstractaTiny {
         }
     }
 
+    public static class Var extends Nodo {
+        private Tipo tipo;
+        private String str;
+        public Var(Tipo tipo, String str) {
+           super();
+           this.tipo = tipo;
+           this.str = str;
+        }
+        public String toString() {
+            return "var("+tipo+","+str+")";
+        } 
+    }
+
     public abstract static class Dec extends Nodo {
         public Dec() {
             super();
@@ -1014,6 +1027,9 @@ public class SintaxisAbstractaTiny {
     }
     public LVar una_var(Dec dec) {
         return new Una_var(dec);
+    }
+    public Var var(Tipo t, String str) {
+        return new Var(t, str);
     }
     public Dec dec_simple(Tipo t, String id) {
         return new Dec_simple(t,id);
