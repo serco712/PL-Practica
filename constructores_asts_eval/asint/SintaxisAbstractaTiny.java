@@ -23,6 +23,17 @@ public class SintaxisAbstractaTiny {
 		  return col; 
 	   }
     }
+    
+    public static class Prog extends Nodo {
+        private Blo b;
+        public Prog(Blo b) {
+            super();
+            this.b = b;
+        }   
+        public String toString() {
+             return "prog("+b+")";
+         } 
+    }
 
     public static abstract class Blo extends Nodo {
         protected Decs decla;
@@ -129,17 +140,6 @@ public class SintaxisAbstractaTiny {
             this.opnd1 = opnd1;
         }
 
-    }
-
-    public static class Prog extends Nodo {
-        private Blo b;
-        public Prog(Blo b) {
-            super();
-            this.b = b;
-        }   
-        public String toString() {
-             return "prog("+b+")";
-         } 
     }
     
     

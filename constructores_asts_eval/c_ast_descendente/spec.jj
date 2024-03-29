@@ -4,15 +4,26 @@ options  {
 }  
 PARSER_BEGIN(ConstructorASTsTiny)
 package c_ast_descendente;
-import asint.ClaseSemanticaTiny;
-import asint.SintaxisAbstractaTiny.Exp;
+import asint.SintaxisAbstractaTiny.Prog;
+import asint.SintaxisAbstractaTiny.Blo;
 import asint.SintaxisAbstractaTiny.Decs;
 import asint.SintaxisAbstractaTiny.LDecs;
+import asint.SintaxisAbstractaTiny.LVar;
 import asint.SintaxisAbstractaTiny.Dec;
-import asint.SintaxisAbstractaTiny.Prog;
+import asint.SintaxisAbstractaTiny.Tipo;
+import asint.SintaxisAbstractaTiny.Insts;
+import asint.SintaxisAbstractaTiny.LInst;
+import asint.SintaxisAbstractaTiny.PFmls;
+import asint.SintaxisAbstractaTiny.LPFml;
+import asint.SintaxisAbstractaTiny.PFml;
+import asint.SintaxisAbstractaTiny.PReales;
+import asint.SintaxisAbstractaTiny.LPReal;
+import asint.SintaxisAbstractaTiny.Inst;
+import asint.SintaxisAbstractaTiny.Exp;
 import c_ast_ascendente.UnidadLexica.StringLocalizado;
 
 public class ConstructorASTsTiny {
+	protected void newToken(Token t) {}
    private ClaseSemanticaTiny sem = new ClaseSemanticaTiny();   
 }
 PARSER_END(ConstructorASTsTiny)
@@ -96,17 +107,11 @@ PARSER_END(ConstructorASTsTiny)
          "{" Insts = instrucciones() decs = declaraciones() "}"
            {return sem.bloq(decs, insts);}
      }
-  Exp expresion() : 
-      {Exp exp;} 
-      {
-         <evalua> exp =e0() 
-           {return exp;}
-      }
-      
+
   Decs declaraciones() : 
       {LDecs decs;} 
       {
-        decs "&&" = lista_declaraciones() 
+        decs = lista_declaraciones() "&&"
            {return sem.si_decs(decs);} 
         | 
            {return sem.no_decs();}
@@ -163,7 +168,7 @@ PARSER_END(ConstructorASTsTiny)
   Tipo rtipo(Tipo tiph) :
   	   {Token lent; Tipo tip;}
   	   {
-  	   	 "[" lent = <literalEntero> "]" tip = rtipo(sem.tipo_array(tiph, lent.image)).ponFila(lent.beginLine).ponCol(lent.beginColumn))
+  	   	 "[" lent = <literalEntero> "]" tip = rtipo(sem.tipo_array(tiph, lent.image).ponFila(lent.beginLine).ponCol(lent.beginColumn))
   	   	   {return tip;}
          | 
            {return tiph;}  
@@ -239,33 +244,33 @@ PARSER_END(ConstructorASTsTiny)
   LPFml lista_par_formal() :
        {PFml pfml; LPFml pfmls;} 
        {
-         pfml = par_formal pfmls = rlista_par_formal(sem.un_pformal(par_formal)  
+         pfml = par_formal() pfmls = rlista_par_formal(sem.un_pformal(pfml))  
            {return pfmls;}
        }  
        
   LPFml rlista_par_formal(LPFml pfmlsh) :
        {PFml pfml; LPFml pfmls;} 
        {
-         "," pfml = par_formal pfmls = rlista_par_formal(sem.muchos_pformal(par_formal, pfmlsh)  
+         "," pfml = par_formal() pfmls = rlista_par_formal(sem.muchos_pformal(pfml, pfmlsh))
            {return pfmls;}
          | 
            {return pfmlsh;}
        } 
   
   PFml par_formal(Token id) :
-  	   {Tipo tipo; LPFml lpfml}
+  	   {Tipo tipo; LPFml lpfml;}
   	   {
-  	     tipo = tipo() lpfml = rpar_formal(sem.pformal_ref(tipo,id.image)
+  	     tipo = tipo() lpfml = rpar_formal(sem.pformal_ref(tipo,id.image))
   	     {return lpfml.ponFila(id.beginLine).ponCol(id.beginColumn);}
   	   }  
   
   PFml rpar_formal() :
-  	   {Token id}
+  	   {Token id;}
   	   {
   	     "&" id = <iden> 
-  	     {return (Pfml)sem.pformal_ref(tipo(), id.image)ponFila(id.beginLine).ponCol(id.beginColumn);}	   	 
+  	     {return (PFml)sem.pformal_ref(tipo(), id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}	   	 
   	   	 id =<iden>
-  	   	 {return (Pfml)sem.pformal_noref(tipo(), id.image)ponFila(id.beginLine).ponCol(id.beginColumn);}
+  	   	 {return (PFml)sem.pformal_noref(tipo(), id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}
   	   }	 	
 
   PReales par_reales() :
@@ -293,33 +298,33 @@ PARSER_END(ConstructorASTsTiny)
    LPReal rlista_par_real(LPReal rlprealh, Exp e0) :
        {LPReal lpreal;}
        {
-         lpreal = rlista_par_real(sem.muchas_exp(e0, rlprealh))
+         "," lpreal = rlista_par_real(sem.muchas_exp(e0, rlprealh))
          {return lpreal;}
   		 |
   		 {return sem.una_exp(e0());}
   	   }
   
    Inst instruccion() : 
-       {Exp e0; Bloq bloq; Rif rif, Token tok, PReales preales}
+       {Exp e0; Bloq bloq; Rif rif; Token tok; PReales preales;}
        {
          "@" e0= e0()
          {return sem.inst_eval(e0);}
-         tok= <if> e0=e0() bloq=bloq() rif=rif(sem.inst_if(e0, bloq))
+         tok= <IF> e0=e0() bloq=bloq() rif=rif(sem.inst_if(e0, bloq))
          {return rif;}
-         tok= <while> eo=e0() bloq=bloq()
+         tok= <WHILE> eo=e0() bloq=bloq()
          {return sem.inst_while(e0, bloq);}
-         <new> e0=e0()
+         tok = <NEW> e0=e0()
          {return sem.inst_new(e0);}
-         <delete> e0=e0()
+         tok = <delete> e0=e0()
          {return sem.inst_delete(e0);}
-         <read> e0=e0()
+         tok = <read> e0=e0()
          {return sem.inst_read(e0);}
-         <write> e0=e0()
+         tok = <write> e0=e0()
          {return sem.inst_write(e0);}
-         <call> id= <iden> preales= par_reales()
+         tok = <call> id= <iden> preales= par_reales()
          {return sem.inst_call(id, preales);}
-         <nl>
-         {return }
+         tok = <nl>
+         {return sem.inst_nl();}
          bloq=bloq()
          {return sem.inst_bloq(bloq);}
        }
@@ -327,11 +332,11 @@ PARSER_END(ConstructorASTsTiny)
    Rif rif(Exp e0) :
        {Bloq bloq;}
        {
-         <else> bloq= bloq()
+         <ELSE> bloq= bloq()
          {return sem.inst_else(e0, bloq, bloq);}
          |
          {return inst_if(e0,bloq);}
-
+	}
       
   Exp e0() : 
         {Exp e1,e2;} 
@@ -364,7 +369,7 @@ PARSER_END(ConstructorASTsTiny)
                 
  	
  Exp e2() : 
-        {Exp e1,,e2, e3;} 
+        {Exp e1,e2, e3;} 
         {
           e1 = e3() "-" e2 = e3() e3 = re2((Exp)sem.exp_resta(e1,e2)) 
             {return e3;}
@@ -390,10 +395,10 @@ PARSER_END(ConstructorASTsTiny)
         {Exp e1;} 
         {
           
-        "and" e1 = e3() 
+        <and> e1 = e3() 
             {return (Exp)sem.exp_and(e1,e);} 
         | 
-         "or" e1 = e4()
+         <or> e1 = e4()
              {return (Exp)sem.exp_or(e1,e);} 
         | 
              {return e1;}
@@ -401,7 +406,7 @@ PARSER_END(ConstructorASTsTiny)
   Exp e4() : 
         {Exp e1,e2;} 
         {
-          e1 = e1() e2 = re4(e1) 
+          e1 = e5() e2 = re4(e1) 
             {return e2;}
         }
   Exp re4(Exp eh) : 
@@ -443,22 +448,22 @@ PARSER_END(ConstructorASTsTiny)
   Exp e7() : 
        {Token t; Exp e;} 
        {
-        t = <true> 
+        t = <TRUE> 
           {return (Exp)sem.exp_true();} 
         |
-        t = <false> 
+        t = <FALSE> 
           {return (Exp)sem.exp_false();} 
         |
         t = <iden> 
           {return (Exp)sem.exp_litEnt(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);} 
         |
-        t = <lit_ent> 
+        t = <literalEntero> 
           {return (Exp)sem.exp_litReal(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);} 
         |  
-        t = <lit_real> 
+        t = <literalReal> 
           {return (Exp)sem.exp_iden(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);} 
         | 
-        t = <lit_cad> 
+        t = <literalCadena> 
           {return (Exp)sem.exp_litCad(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);} 
         | 
         "(" e =e0() ")" 
@@ -497,7 +502,7 @@ PARSER_END(ConstructorASTsTiny)
        }
   String op5()  :       
        {} 
-       {"not" 
+       {<not> 
           {return "not";} 
         |
         "-" 
