@@ -106,14 +106,14 @@ PARSER_END(ConstructorASTsTiny)
   Blo bloq()  : 
      {Insts insts; Decs decs;} 
      {
-         "{" decs = declaraciones() insts = instrucciones() "}"
+         <llaveAp> decs = declaraciones() insts = instrucciones() <llaveCi>
            {return sem.bloq(decs, insts);}
      }
 
   Decs declaraciones() : 
       {LDecs decs;} 
       {
-        decs = lista_declaraciones() "&&"
+        decs = lista_declaraciones() <FINAL>
            {return sem.si_decs(decs);} 
         | 
            {return sem.no_decs();}
@@ -143,7 +143,7 @@ PARSER_END(ConstructorASTsTiny)
   LVar rlista_var(LVar varsh) :
        {Var v; LVar vars;} 
        {
-         "," v = variable() vars = rlista_var(sem.muchas_var(varsh,v))  
+         <coma> v = variable() vars = rlista_var(sem.muchas_var(varsh,v))  
            {return vars;}
          | 
            {return varsh;}
@@ -179,7 +179,7 @@ PARSER_END(ConstructorASTsTiny)
   Tipo rtipo(Tipo tiph) :
   	   {Token lent; Tipo tip;}
   	   {
-  	   	 "[" lent = <literalEntero> "]" tip = rtipo((Tipo)sem.tipo_array(tiph, lent.image).ponFila(lent.beginLine).ponCol(lent.beginColumn))
+  	   	 <corcheteAp> lent = <literalEntero> <corcheteCi> tip = rtipo((Tipo)sem.tipo_array(tiph, lent.image).ponFila(lent.beginLine).ponCol(lent.beginColumn))
   	   	   {return tip;}
          | 
            {return tiph;}  
@@ -188,7 +188,7 @@ PARSER_END(ConstructorASTsTiny)
   Tipo tipo2() :
   	   {Tipo tip;}
   	   {
-  	   	 "^" tip = tipo2()
+  	   	 <indireccion> tip = tipo2()
   	   	  {return (Tipo)sem.tipo_punt(tip);}
           |
   	   	 tip = tipo3()
@@ -213,7 +213,7 @@ PARSER_END(ConstructorASTsTiny)
   	   	 tok = <iden>
   	   	  {return (Tipo)sem.tipo_ident(tok.image).ponFila(tok.beginLine).ponCol(tok.beginColumn);}
           |
-  	   	 tok = <struct> "{" vars = lista_variables() "}"
+  	   	 tok = <struct> <llaveAp> vars = lista_variables() <llaveCi>
   	   	  {return (Tipo)sem.tipo_struct(vars);}
   	   }
   
@@ -236,7 +236,7 @@ PARSER_END(ConstructorASTsTiny)
   LInst rlista_inst(LInst instsh) :
        {Inst inst; LInst insts;} 
        {
-         ";" inst = instruccion() insts = rlista_inst(sem.muchas_inst(instsh,inst))  
+         <puntoYComa> inst = instruccion() insts = rlista_inst(sem.muchas_inst(instsh,inst))  
            {return insts;}
          | 
            {return instsh;}
@@ -245,17 +245,17 @@ PARSER_END(ConstructorASTsTiny)
   PFmls par_formales() :
        {PFmls pfmls;} 
        {
-         "(" pfmls = rpar_formales()  
+         <parentesisAp> pfmls = rpar_formales()  
            {return pfmls;}
        } 
   
   PFmls rpar_formales() :
        {LPFml pfmls;} 
        {
-         pfmls = lista_par_formal() ")"
+         pfmls = lista_par_formal() <parentesisCi>
            {return (PFmls)sem.si_pformal(pfmls);}
            |
-         ")"
+         <parentesisCi>
            {return (PFmls)sem.no_pformal();}
        }   
   
@@ -269,7 +269,7 @@ PARSER_END(ConstructorASTsTiny)
   LPFml rlista_par_formal(LPFml pfmlsh) :
        {PFml pfml; LPFml pfmls;} 
        {
-         "," pfml = par_formal() pfmls = rlista_par_formal(sem.muchos_pformal(pfml, pfmlsh))
+         <coma> pfml = par_formal() pfmls = rlista_par_formal(sem.muchos_pformal(pfml, pfmlsh))
            {return pfmls;}
          | 
            {return pfmlsh;}
@@ -285,7 +285,7 @@ PARSER_END(ConstructorASTsTiny)
   PFml rpar_formal(Tipo t) :
   	   {Token id;}
   	   {
-  	     "&" id = <iden> 
+  	     <porReferencia> id = <iden> 
   	     {return (PFml)sem.pformal_ref(t, id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}	  
   	     | 	 
   	   	 id = <iden>
@@ -295,17 +295,17 @@ PARSER_END(ConstructorASTsTiny)
   PReales par_reales() :
   	   {PReales lpreal;}
   	   {
-  	     "(" lpreal = rpar_reales()
+  	     <parentesisAp> lpreal = rpar_reales()
   	     {return lpreal;}
   	   }
   
   PReales rpar_reales() :
        {LPReal lpreal;}
        {
-         lpreal = lista_par_real() ")"
+         lpreal = lista_par_real() <parentesisCi>
          {return (PReales)sem.si_preales(lpreal);}
          |
-       	 ")"
+       	 <parentesisCi>
        	  {return (PReales)sem.no_preales();}
        }
   LPReal lista_par_real() :
@@ -318,7 +318,7 @@ PARSER_END(ConstructorASTsTiny)
    LPReal rlista_par_real(Exp e0) :
        {LPReal lpreal;}
        {
-         "," lpreal = lista_par_real()
+         <coma> lpreal = lista_par_real()
          {return sem.muchas_exp(e0, lpreal);}
   		 |
   		 {return sem.una_exp(e0);}
@@ -327,7 +327,7 @@ PARSER_END(ConstructorASTsTiny)
    Inst instruccion() : 
        {Exp e0; Blo bloq; Inst rif; Token tok; PReales preales;}
        {
-         "@" e0= e0()
+         <arroba> e0= e0()
          {return sem.inst_eval(e0);}
          |
          <IF> e0=e0() bloq=bloq() rif=rif(e0, bloq)
@@ -376,7 +376,7 @@ PARSER_END(ConstructorASTsTiny)
   Exp re0(Exp e) : 
         {Exp e1;} 
         {
-          "=" e1 = e0()
+          <operadorAsig> e1 = e0()
              {return (Exp)sem.exp_asig(e,e1);} 
         | 
              {return e;}
@@ -407,7 +407,7 @@ PARSER_END(ConstructorASTsTiny)
   Exp re2p(Exp eh) :
         {Exp e3;} 
         {
-          "-"  e3 = e3()
+          <operadorResta>  e3 = e3()
              {return (Exp)sem.exp_resta(eh,e3);} 
         | 
              {return eh;}
@@ -416,7 +416,7 @@ PARSER_END(ConstructorASTsTiny)
   Exp re2(Exp eh) : 
         {Exp e1,e2;} 
         {
-          "+"  e1 = e3() e2 = re2(sem.exp_suma(eh,e1))
+          <operadorSuma>  e1 = e3() e2 = re2(sem.exp_suma(eh,e1))
              {return e2;} 
         | 
              {return eh;}
@@ -471,13 +471,13 @@ PARSER_END(ConstructorASTsTiny)
   Exp re6(Exp eh) : 
         {Token t; Exp e6, e7;} 
         {
-           "[" e6 = e0() "]" e7 = re6(sem.exp_index(eh,e6))
+           <corcheteAp> e6 = e0() <corcheteCi> e7 = re6(sem.exp_index(eh,e6))
               {return e7;} 
         | 
-           "." t = <iden> e7 = re6(sem.exp_reg(eh,t.image))
+           <punto> t = <iden> e7 = re6(sem.exp_reg(eh,t.image))
               {return e7;} 
         | 
-           "^" e7 = re6(sem.exp_indir(eh))
+           <indireccion> e7 = re6(sem.exp_indir(eh))
               {return e7;} 
         | 
               {return eh;}
@@ -506,38 +506,38 @@ PARSER_END(ConstructorASTsTiny)
         t = <NULL> 
           {return (Exp)sem.exp_null().ponFila(t.beginLine).ponCol(t.beginColumn);} 
         | 
-        "(" e =e0() ")" 
+        <parentesisAp> e =e0() <parentesisCi> 
           {return e;}
        }
   String op1()  : 
        {} 
-       {"<" 
+       {<operadorMenor> 
          {return "<";} 
         |
-        "<=" 
+        <operadorMenIgual> 
          {return "<=";}
         |
-        ">" 
+        <operadorMayor> 
          {return ">";}
         |
-        ">=" 
+        <operadorMayIgual> 
          {return ">=";}
         |
-        "==" 
+        <operadorIgual> 
          {return "==";}
         |
-        "!=" 
+        <operadorDistinto> 
          {return "!=";}
        }
   String op4()  :       
        {} 
-       {"*" 
+       {<operadorMul> 
           {return "*";} 
         |
-        "/" 
+        <operadorDiv> 
           {return "/";}
         |
-        "%" 
+        <operadorMod> 
           {return "%";}
        }
   String op5()  :       
@@ -545,6 +545,6 @@ PARSER_END(ConstructorASTsTiny)
        {<not> 
           {return "not";} 
         |
-        "-" 
+        <operadorResta> 
           {return "-";}
        }

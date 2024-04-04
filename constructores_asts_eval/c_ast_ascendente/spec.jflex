@@ -34,7 +34,7 @@ digitoPositivo = [1-9]
 digito = ({digitoPositivo}|0)
 parteEntera = ({digitoPositivo}{digito}*)|0
 parteDecimal = ({digito}* {digitoPositivo})|0
-parteExponencial = (e|E)[\+,\-]?{parteEntera}
+parteExponencial = (e|E)[\+\-]?{parteEntera}
 
 separador = [ \t\r\b\n]
 comentario = ##[^\n]* 
@@ -63,7 +63,7 @@ type = (t|T)(y|Y)(p|P)(e|E)
 call = (c|C)(a|A)(l|L)(l|L)
 
 literalReal = {literalEntero}({punto}{parteDecimal}|{parteExponencial}|{punto}{parteDecimal}{parteExponencial})
-literalEntero = [\+,\-]?{parteEntera}
+literalEntero = [\+\-]?{parteEntera}
 literalCadena = \"[^\"]*\"
 identificador = (\_|{letra})({letra}|{digito}|\_)*
 operadorSuma = \+

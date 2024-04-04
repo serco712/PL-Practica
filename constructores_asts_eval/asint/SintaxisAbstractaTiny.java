@@ -171,17 +171,6 @@ public class SintaxisAbstractaTiny {
     }
    
    // ----------------------------------------------------
-
-    private static abstract class ExpBin extends Exp {
-        protected Exp opnd0;
-        protected Exp opnd1;
-        public ExpBin(Exp opnd0, Exp opnd1) {
-            super();
-            this.opnd0 = opnd0;
-            this.opnd1 = opnd1;
-        }
-
-    }
     
     
     public static class Bloq extends Blo {
