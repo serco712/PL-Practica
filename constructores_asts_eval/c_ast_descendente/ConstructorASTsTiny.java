@@ -812,12 +812,12 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
       case and:
         t = jj_consume_token(and);
         e1 = e3();
-             {if (true) return (Exp)sem.exp_and(e1,e).ponFila(t.beginLine).ponCol(t.beginColumn);}
+             {if (true) return (Exp)sem.exp_and(e,e1).ponFila(t.beginLine).ponCol(t.beginColumn);}
         break;
       case or:
         t = jj_consume_token(or);
         e1 = e4();
-              {if (true) return (Exp)sem.exp_or(e1,e).ponFila(t.beginLine).ponCol(t.beginColumn);}
+              {if (true) return (Exp)sem.exp_or(e,e1).ponFila(t.beginLine).ponCol(t.beginColumn);}
         break;
       default:
         jj_la1[20] = jj_gen;

@@ -435,10 +435,10 @@ PARSER_END(ConstructorASTsTiny)
         {
           
          t = <and> e1 = e3() 
-            {return (Exp)sem.exp_and(e1,e).ponFila(t.beginLine).ponCol(t.beginColumn);} 
+            {return (Exp)sem.exp_and(e,e1).ponFila(t.beginLine).ponCol(t.beginColumn);} 
         | 
          t = <or> e1 = e4()
-             {return (Exp)sem.exp_or(e1,e).ponFila(t.beginLine).ponCol(t.beginColumn);} 
+             {return (Exp)sem.exp_or(e,e1).ponFila(t.beginLine).ponCol(t.beginColumn);} 
         | 
              {return e;}
         }     
