@@ -12,9 +12,9 @@
     declaraciones \longrightarrow \epsilon\\
     | \hspace{1cm}declaraciones.\textbf{a} \;= \textbf{no$\_$decs}()\\
      lista$-$declaraciones \longrightarrow lista$-$declaraciones\;;\;declaracion\\
-    | \hspace{1cm}lista$-$declaraciones_0.\textbf{a} \;= \textbf{muchas$\_$decs}(lista$-$declaraciones_1.\textbf{a},declaraciones.\textbf{a})\\
+    | \hspace{1cm}lista$-$declaraciones_0.\textbf{a} \;= \textbf{muchas$\_$decs}(lista$-$declaraciones_1.\textbf{a},declaracion.\textbf{a})\\
     lista$-$declaraciones \longrightarrow declaracion\\ 
-    | \hspace{1cm}lista$-$declaraciones.\textbf{a} \;= \textbf{una$\_$dec}(declaraciones.\textbf{a})\\  
+    | \hspace{1cm}lista$-$declaraciones.\textbf{a} \;= \textbf{una$\_$dec}(declaracion.\textbf{a})\\  
     lista$-$variables \longrightarrow lista$-$variables\;,\;variable\\
     | \hspace{1cm}lista$-$variables_0.\textbf{a} \;= \textbf{muchas$\_$var}(lista$-$variables_1.\textbf{a},variable.\textbf{a})\\
     lista$-$variables \longrightarrow variable\\
