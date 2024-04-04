@@ -6,7 +6,7 @@ import java.io.FileReader;
 public class Main{
    public static void main(String[] args) throws Exception {
       try {
-         ConstructorASTsTiny asint = new ConstructorASTsTiny(new FileReader("/home/sergio/Desktop/Estudios/UCM/4º/PL/PL-Practica/constructores_asts_eval/prueba.in"));
+         ConstructorASTsTiny asint = new ConstructorASTsTiny(new FileReader("C:/hlocal/PL-Practica/constructores_asts_eval/prueba.in"));
          asint.disable_tracing();
          Prog p = asint.analiza();
          p.imprime();

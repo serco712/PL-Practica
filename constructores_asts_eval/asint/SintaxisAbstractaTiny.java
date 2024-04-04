@@ -95,7 +95,7 @@ public class SintaxisAbstractaTiny {
         }
         public void imprime() {
             tipo.imprime();
-            System.out.println(str);
+            System.out.format("%s$f:%d,c:%d$%n", str, leeFila(), leeCol());
         }
         public String toString() {
             return "var("+tipo+","+str+")";
@@ -411,7 +411,7 @@ public class SintaxisAbstractaTiny {
           this.ident = ident;
       }
       public void imprime() {
-          System.out.println(ident);
+    	  System.out.format("%s$f:%d,c:%d$%n", ident, leeFila(), leeCol());
         }
       public String toString() {
             return "tipo_ident("+ident+")";
@@ -1082,7 +1082,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 5; }
         public void imprime() { 
-            System.out.println("not");
+        	System.out.format("<not>$f:%d,c:%d$%n", leeFila(), leeCol());
             imprimeOpnd(exp, 5);
         }
         public String toString() {
