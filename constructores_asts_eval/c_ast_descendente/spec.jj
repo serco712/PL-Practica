@@ -393,7 +393,7 @@ PARSER_END(ConstructorASTsTiny)
   Exp re1(Exp eh) : 
         {Token op; Exp e1,e2;} 
         {
-          op = op1() e1 = e2() e2 = re1(sem.mkopBin(op.image,eh,e1).ponFila(op.beginLine).ponCol(op.beginColumn))
+          op = op1() e1 = e2() e2 = re1((Exp)sem.mkopBin(op.image,eh,e1).ponFila(op.beginLine).ponCol(op.beginColumn))
              {return e2;} 
         | 
              {return eh;}
@@ -419,7 +419,7 @@ PARSER_END(ConstructorASTsTiny)
   Exp re2(Exp eh) : 
         {Token t; Exp e1,e2;} 
         {
-          t = <operadorSuma>  e1 = e3() e2 = re2(sem.exp_suma(eh,e1).ponFila(t.beginLine).ponCol(t.beginColumn))
+          t = <operadorSuma>  e1 = e3() e2 = re2((Exp)sem.exp_suma(eh,e1).ponFila(t.beginLine).ponCol(t.beginColumn))
              {return e2;} 
         | 
              {return eh;}
@@ -451,7 +451,7 @@ PARSER_END(ConstructorASTsTiny)
   Exp re4(Exp eh) : 
         {Token t; Exp e1,e2;} 
         {
-          t = op4() e1 = e5() e2 = re4(sem.mkopBin(t.image,eh,e1).ponFila(t.beginLine).ponCol(t.beginColumn))
+          t = op4() e1 = e5() e2 = re4((Exp)sem.mkopBin(t.image,eh,e1).ponFila(t.beginLine).ponCol(t.beginColumn))
              {return e2;} 
         | 
              {return eh;}

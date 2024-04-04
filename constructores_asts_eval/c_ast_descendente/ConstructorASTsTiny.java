@@ -723,7 +723,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
       case operadorMayIgual:
         op = op1();
         e1 = e2();
-        e2 = re1(sem.mkopBin(op.image,eh,e1).ponFila(op.beginLine).ponCol(op.beginColumn));
+        e2 = re1((Exp)sem.mkopBin(op.image,eh,e1).ponFila(op.beginLine).ponCol(op.beginColumn));
               {if (true) return e2;}
         break;
       default:
@@ -778,7 +778,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
       case operadorSuma:
         t = jj_consume_token(operadorSuma);
         e1 = e3();
-        e2 = re2(sem.exp_suma(eh,e1).ponFila(t.beginLine).ponCol(t.beginColumn));
+        e2 = re2((Exp)sem.exp_suma(eh,e1).ponFila(t.beginLine).ponCol(t.beginColumn));
               {if (true) return e2;}
         break;
       default:
@@ -852,7 +852,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
       case operadorMod:
         t = op4();
         e1 = e5();
-        e2 = re4(sem.mkopBin(t.image,eh,e1).ponFila(t.beginLine).ponCol(t.beginColumn));
+        e2 = re4((Exp)sem.mkopBin(t.image,eh,e1).ponFila(t.beginLine).ponCol(t.beginColumn));
               {if (true) return e2;}
         break;
       default:

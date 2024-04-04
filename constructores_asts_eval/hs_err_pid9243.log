@@ -1,0 +1,2398 @@
+#
+# A fatal error has been detected by the Java Runtime Environment:
+#
+#  SIGSEGV (0xb) at pc=0x000078c21e38dfc3, pid=9243, tid=9317
+#
+# JRE version: OpenJDK Runtime Environment Temurin-17.0.10+7 (17.0.10+7) (build 17.0.10+7)
+# Java VM: OpenJDK 64-Bit Server VM Temurin-17.0.10+7 (17.0.10+7, mixed mode, tiered, compressed oops, compressed class ptrs, parallel gc, linux-amd64)
+# Problematic frame:
+# J 13947% c2 org.eclipse.jdt.internal.compiler.util.HashtableOfObject.rehash()V (84 bytes) @ 0x000078c21e38dfc3 [0x000078c21e38dd60+0x0000000000000263]
+#
+# Core dump will be written. Default location: Core dumps may be processed with "/usr/share/apport/apport -p%p -s%s -c%c -d%d -P%P -u%u -g%g -- %E" (or dumping to /home/sergio/Desktop/Estudios/UCM/4º/PL/PL-Practica/constructores_asts_eval/core.9243)
+#
+# If you would like to submit a bug report, please visit:
+#   https://github.com/adoptium/adoptium-support/issues
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: --add-modules=ALL-SYSTEM --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/sun.nio.fs=ALL-UNNAMED -Declipse.application=org.eclipse.jdt.ls.core.id1 -Dosgi.bundles.defaultStartLevel=4 -Declipse.product=org.eclipse.jdt.ls.core.product -Djava.import.generatesMetadataFilesAtProjectRoot=false -DDetectVMInstallationsJob.disabled=true -Dfile.encoding=utf8 -XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -Xlog:disable -javaagent:/home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/lombok/lombok-1.18.32.jar -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/sergio/.config/Code/User/workspaceStorage/1da632c8682adcdea3091ae82072a102/redhat.java -Daether.dependencyCollector.impl=bf /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/server/plugins/org.eclipse.equinox.launcher_1.6.800.v20240304-1850.jar -configuration /home/sergio/.config/Code/User/globalStorage/redhat.java/1.29.0/config_linux -data /home/sergio/.config/Code/User/workspaceStorage/1da632c8682adcdea3091ae82072a102/redhat.java/jdt_ws --stdio
+
+Host: AMD Ryzen 5 3500U with Radeon Vega Mobile Gfx, 8 cores, 6G, Ubuntu 22.04.4 LTS
+Time: Thu Apr  4 17:56:44 2024 CEST elapsed time: 4290.361820 seconds (0d 1h 11m 30s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000078c1b0998c30):  JavaThread "Java indexing" daemon [_thread_in_Java, id=9317, stack(0x000078c1f2400000,0x000078c1f2500000)]
+
+Stack: [0x000078c1f2400000,0x000078c1f2500000],  sp=0x000078c1f24fe2e0,  free space=1016k
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+J 13947% c2 org.eclipse.jdt.internal.compiler.util.HashtableOfObject.rehash()V (84 bytes) @ 0x000078c21e38dfc3 [0x000078c21e38dd60+0x0000000000000263]
+J 13951% c2 org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategory([CLorg/eclipse/jdt/internal/core/index/DiskIndex;[ILjava/io/FileOutputStream;)V (301 bytes) @ 0x000078c21e38f7c8 [0x000078c21e38e980+0x0000000000000e48]
+j  org.eclipse.jdt.internal.core.index.DiskIndex.mergeCategories(Lorg/eclipse/jdt/internal/core/index/DiskIndex;[ILjava/io/FileOutputStream;)V+109
+j  org.eclipse.jdt.internal.core.index.DiskIndex.mergeWith(Lorg/eclipse/jdt/internal/core/index/MemoryIndex;)Lorg/eclipse/jdt/internal/core/index/DiskIndex;+328
+j  org.eclipse.jdt.internal.core.index.Index.save()Z+40
+j  org.eclipse.jdt.internal.core.index.MetaIndex.save()V+4
+j  org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveMetaIndex()Z+77
+j  org.eclipse.jdt.internal.core.search.indexing.IndexManager.saveIndexes()V+271
+j  org.eclipse.jdt.internal.core.search.indexing.IndexManager.notifyIdle(J)V+16
+j  org.eclipse.jdt.internal.core.search.processing.JobManager.indexerLoop()V+110
+j  org.eclipse.jdt.internal.core.search.processing.JobManager$$Lambda$214+0x00000001003768e8.run()V+4
+j  java.lang.Thread.run()V+11 java.base@17.0.10
+v  ~StubRoutines::call_stub
+V  [libjvm.so+0x829895]  JavaCalls::call_helper(JavaValue*, methodHandle const&, JavaCallArguments*, JavaThread*)+0x315
+V  [libjvm.so+0x82b08b]  JavaCalls::call_virtual(JavaValue*, Handle, Klass*, Symbol*, Symbol*, JavaThread*)+0x1cb
+V  [libjvm.so+0x8f78e3]  thread_entry(JavaThread*, JavaThread*)+0xa3
+V  [libjvm.so+0xe5fa16]  JavaThread::thread_main_inner()+0x196
+V  [libjvm.so+0xe633b8]  Thread::call_run()+0xa8
+V  [libjvm.so+0xc24791]  thread_native_entry(Thread*)+0xe1
+
+
+siginfo: si_signo: 11 (SIGSEGV), si_code: 1 (SEGV_MAPERR), si_addr: 0x000000000800000c
+
+Registers:
+RAX=0x000078c2302ee000, RBX=0x00000000000058da, RCX=0x00000000eaf80000, RDX=0x00000000000014fd
+RSP=0x000078c1f24fe2e0, RBP=0x00000000eafbf800, RSI=0x00000000c8a43120, RDI=0x0000000000000000
+R8 =0x000000000000fbfc, R9 =0x0000000000007dfc, R10=0x00000000c8227430, R11=0x00000000eab00000
+R12=0x0000000000000000, R13=0x00000000c8227430, R14=0x0000000008000000, R15=0x000078c1b0998c30
+RIP=0x000078c21e38dfc3, EFLAGS=0x0000000000010297, CSGSFS=0x002b000000000033, ERR=0x0000000000000004
+  TRAPNO=0x000000000000000e
+
+
+Register to memory mapping:
+
+RAX=0x000078c2302ee000 points into unknown readable memory: 0x0000000000000000 | 00 00 00 00 00 00 00 00
+RBX=0x00000000000058da is an unknown value
+RCX=0x00000000eaf80000 is an oop: org.eclipse.jdt.internal.compiler.util.HashtableOfObject 
+{0x00000000eaf80000} - klass: 'org/eclipse/jdt/internal/compiler/util/HashtableOfObject'
+ - ---- fields (total size 4 words):
+ - public 'elementSize' 'I' @12  5373 (14fd)
+ - private 'threshold' 'I' @16  36862 (8ffe)
+ - public 'keyTable' '[[C' @20  a {type array char}[64508] {0x00000000eab00000} (eab00000)
+ - public 'valueTable' '[Ljava/lang/Object;' @24  a 'java/lang/Object'[64508] {0x00000000eab42c60} (eab42c60)
+RDX=0x00000000000014fd is an unknown value
+RSP=0x000078c1f24fe2e0 is pointing into the stack for thread: 0x000078c1b0998c30
+RBP=0x00000000eafbf800 is an oop: [Ljava.lang.Object; 
+{0x00000000eafbf800} - klass: 'java/lang/Object'[]
+ - length: 32252
+RSI=0x00000000c8a43120 is an oop: [C 
+{0x00000000c8a43120} - klass: {type array char}
+ - length: 58
+RDI=0x0 is NULL
+R8 =0x000000000000fbfc is an unknown value
+R9 =0x0000000000007dfc is an unknown value
+R10=0x00000000c8227430 is an oop: org.eclipse.jdt.internal.compiler.util.HashtableOfObject 
+{0x00000000c8227430} - klass: 'org/eclipse/jdt/internal/compiler/util/HashtableOfObject'
+ - ---- fields (total size 4 words):
+ - public 'elementSize' 'I' @12  18431 (47ff)
+ - private 'threshold' 'I' @16  18430 (47fe)
+ - public 'keyTable' '[[C' @20  a {type array char}[32252] {0x00000000eaf90000} (eaf90000)
+ - public 'valueTable' '[Ljava/lang/Object;' @24  a 'java/lang/Object'[32252] {0x00000000eafbf800} (eafbf800)
+R11=0x00000000eab00000 is an oop: [[C 
+{0x00000000eab00000} - klass: {type array char}[]
+ - length: 64508
+R12=0x0 is NULL
+R13=0x00000000c8227430 is an oop: org.eclipse.jdt.internal.compiler.util.HashtableOfObject 
+{0x00000000c8227430} - klass: 'org/eclipse/jdt/internal/compiler/util/HashtableOfObject'
+ - ---- fields (total size 4 words):
+ - public 'elementSize' 'I' @12  18431 (47ff)
+ - private 'threshold' 'I' @16  18430 (47fe)
+ - public 'keyTable' '[[C' @20  a {type array char}[32252] {0x00000000eaf90000} (eaf90000)
+ - public 'valueTable' '[Ljava/lang/Object;' @24  a 'java/lang/Object'[32252] {0x00000000eafbf800} (eafbf800)
+R14=0x0000000008000000 is an unknown value
+R15=0x000078c1b0998c30 is a thread
+
+
+Top of Stack: (sp=0x000078c1f24fe2e0)
+0x000078c1f24fe2e0:   000078c20f581b48 0000000000000000
+0x000078c1f24fe2f0:   000078c1f24fe330 00000000c89ef370
+0x000078c1f24fe300:   000078c21e38f7c8 deaddeaf00005dfd
+0x000078c1f24fe310:   00000000c8ad8570 00000000eaf80000
+0x000078c1f24fe320:   00000000c89ef370 000078c21e38f7c8
+0x000078c1f24fe330:   00000000c8162b88 0000001f00000021
+0x000078c1f24fe340:   00000000c89ef370 000047ff000047fe
+0x000078c1f24fe350:   00000000eabc8198 000078c200007dfc
+0x000078c1f24fe360:   00000000c4823500 00000000c6d88718
+0x000078c1f24fe370:   0000a53200007d6d 00000000c8162be0
+0x000078c1f24fe380:   00000000c8227430 00000000c85b90e8
+0x000078c1f24fe390:   00000000c8162c00 00000000c85e65c0
+0x000078c1f24fe3a0:   00000001c89ef370 00000000eac6dcf8
+0x000078c1f24fe3b0:   00007dfceabc8198 eabe799800000022
+0x000078c1f24fe3c0:   00000000c8227518 00000000eac5e988
+0x000078c1f24fe3d0:   00000000c85b90e8 00000000c85e65c0
+0x000078c1f24fe3e0:   000078c1f24fe470 000078c21d74022c
+0x000078c1f24fe3f0:   00000000c8162be0 00000000c8162c00
+0x000078c1f24fe400:   00000000c6d88718 00000000c4823500
+0x000078c1f24fe410:   00000000c8162b88 00000000c4823500
+0x000078c1f24fe420:   00000000c8162b88 000078c1f24fe428
+0x000078c1f24fe430:   000078c20f82958d 000078c1f24fe4c8
+0x000078c1f24fe440:   000078c20f82d5e0 0000000000000000
+0x000078c1f24fe450:   00000000c481f9e0 000078c20f829620
+0x000078c1f24fe460:   000078c1f24fe400 000078c1f24fe4b0
+0x000078c1f24fe470:   000078c1f24fe518 000078c21d74022c
+0x000078c1f24fe480:   00000000c8162c38 0000000000000007
+0x000078c1f24fe490:   0000000000000004 00000000c4823500
+0x000078c1f24fe4a0:   00000000c8162c38 00000000c6d88c68
+0x000078c1f24fe4b0:   00000000c8162be0 00000000c8162c00
+0x000078c1f24fe4c0:   00000000c6d88718 00000000c8162b88
+0x000078c1f24fe4d0:   000078c1f24fe4d0 000078c20f829be8 
+
+Instructions: (pc=0x000078c21e38dfc3)
+0x000078c21e38dec3:   87 50 03 00 00 85 00 85 d2 74 39 41 ff c1 45 3b
+0x000078c21e38ded3:   c8 74 2d 66 66 0f 1f 84 00 00 00 00 00 45 3b c8
+0x000078c21e38dee3:   0f 83 c4 02 00 00 43 8b 44 8b 10 49 8b 97 50 03
+0x000078c21e38def3:   00 00 85 02 85 c0 74 0c 41 ff c1 45 3b c8 75 dd
+0x000078c21e38df03:   33 d2 eb a9 45 3b c8 0f 83 f0 01 00 00 8b 69 18
+0x000078c21e38df13:   4d 8b c3 4f 8d 5c 8b 10 45 89 33 49 c1 eb 09 49
+0x000078c21e38df23:   b8 00 20 04 2e c2 78 00 00 47 88 24 18 44 8b 5d
+0x000078c21e38df33:   0c 45 3b cb 0f 83 eb 01 00 00 44 8b 5d 08 41 81
+0x000078c21e38df43:   fb 62 af 00 20 0f 85 0a 02 00 00 44 8b 59 10 8b
+0x000078c21e38df53:   51 0c 4c 8b c5 4e 8d 44 8d 10 41 89 38 ff c2 89
+0x000078c21e38df63:   51 0c 49 c1 e8 09 49 b9 00 20 04 2e c2 78 00 00
+0x000078c21e38df73:   47 88 24 01 41 3b d3 0f 8f e6 00 00 00 ff cb 83
+0x000078c21e38df83:   fb ff 0f 8e 9e 00 00 00 45 8b 5a 14 45 8b 4b 0c
+0x000078c21e38df93:   41 3b d9 0f 83 ff 00 00 00 45 8b 74 9b 10 45 85
+0x000078c21e38dfa3:   f6 74 da 41 8b 6a 18 44 8b 5d 0c 41 3b db 0f 83
+0x000078c21e38dfb3:   2d 01 00 00 8b 7c 9d 10 44 8b 59 14 45 8b 43 0c
+0x000078c21e38dfc3:   41 8b 6e 0c 85 ed 76 53 8b d5 ff ca 3b d5 0f 83
+0x000078c21e38dfd3:   a1 01 00 00 41 0f b7 56 10 44 8b cd 41 83 c1 fd
+0x000078c21e38dfe3:   41 83 f9 01 0f 8e b3 01 00 00 8b f2 c1 e6 05 2b
+0x000078c21e38dff3:   f2 81 c6 c1 03 00 00 b8 01 00 00 00 4d 8b ea c4
+0x000078c21e38e003:   e1 f9 6e c1 c4 c1 79 6e d3 c4 c1 79 6e c8 e9 f1
+0x000078c21e38e013:   fd ff ff 44 8b ca e9 69 fe ff ff 41 b9 01 00 00
+0x000078c21e38e023:   00 e9 65 fe ff ff 44 8b 59 14 45 89 5a 14 44 8b
+0x000078c21e38e033:   41 18 45 89 42 18 44 8b 59 10 45 89 5a 10 49 c1
+0x000078c21e38e043:   ea 09 49 bb 00 20 04 2e c2 78 00 00 47 88 24 13
+0x000078c21e38e053:   48 83 c4 40 5d 49 3b a7 48 03 00 00 0f 87 ff 01
+0x000078c21e38e063:   00 00 c3 48 89 4c 24 08 4c 89 14 24 8b eb 48 8b
+0x000078c21e38e073:   f1 66 66 90 e8 04 9d 3f ff 8b dd 4c 8b 14 24 48
+0x000078c21e38e083:   8b 4c 24 08 e9 f4 fe ff ff 45 33 d2 e9 1f fd ff
+0x000078c21e38e093:   ff 33 c9 e9 35 fd ff ff be e4 ff ff ff 49 8b ea
+0x000078c21e38e0a3:   44 89 5c 24 04 89 5c 24 08 48 89 4c 24 10 66 90
+0x000078c21e38e0b3:   e8 48 f2 3f ff be e4 ff ff ff 49 8b ea 89 1c 24 
+
+
+Stack slot to memory mapping:
+stack at sp + 0 slots: {method} {0x000078c20f581b48} 'rehash' '()V' in 'org/eclipse/jdt/internal/compiler/util/HashtableOfObject'
+stack at sp + 1 slots: 0x0 is NULL
+stack at sp + 2 slots: 0x000078c1f24fe330 is pointing into the stack for thread: 0x000078c1b0998c30
+stack at sp + 3 slots: 0x00000000c89ef370 is an oop: [C 
+{0x00000000c89ef370} - klass: {type array char}
+ - length: 34
+stack at sp + 4 slots: 0x000078c21e38f7c8 is at entry_point+3656 in (nmethod*)0x000078c21e38e710
+Compiled method (c2) 4290380 13951 %     4       org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory @ 66 (301 bytes)
+ total in heap  [0x000078c21e38e710,0x000078c21e391c80] = 13680
+ relocation     [0x000078c21e38e870,0x000078c21e38e970] = 256
+ main code      [0x000078c21e38e980,0x000078c21e390ba0] = 8736
+ stub code      [0x000078c21e390ba0,0x000078c21e390bf0] = 80
+ oops           [0x000078c21e390bf0,0x000078c21e390c00] = 16
+ metadata       [0x000078c21e390c00,0x000078c21e390c90] = 144
+ scopes data    [0x000078c21e390c90,0x000078c21e391798] = 2824
+ scopes pcs     [0x000078c21e391798,0x000078c21e391b48] = 944
+ dependencies   [0x000078c21e391b48,0x000078c21e391b68] = 32
+ handler table  [0x000078c21e391b68,0x000078c21e391c28] = 192
+ nul chk table  [0x000078c21e391c28,0x000078c21e391c80] = 88
+stack at sp + 5 slots: 0xdeaddeaf00005dfd is an unknown value
+stack at sp + 6 slots: 0x00000000c8ad8570 is an oop: [C 
+{0x00000000c8ad8570} - klass: {type array char}
+ - length: 43
+stack at sp + 7 slots: 0x00000000eaf80000 is an oop: org.eclipse.jdt.internal.compiler.util.HashtableOfObject 
+{0x00000000eaf80000} - klass: 'org/eclipse/jdt/internal/compiler/util/HashtableOfObject'
+ - ---- fields (total size 4 words):
+ - public 'elementSize' 'I' @12  5373 (14fd)
+ - private 'threshold' 'I' @16  36862 (8ffe)
+ - public 'keyTable' '[[C' @20  a {type array char}[64508] {0x00000000eab00000} (eab00000)
+ - public 'valueTable' '[Ljava/lang/Object;' @24  a 'java/lang/Object'[64508] {0x00000000eab42c60} (eab42c60)
+
+
+Compiled method (c2) 4290382 13947 %     4       org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash @ 27 (84 bytes)
+ total in heap  [0x000078c21e38db90,0x000078c21e38e688] = 2808
+ relocation     [0x000078c21e38dcf0,0x000078c21e38dd48] = 88
+ main code      [0x000078c21e38dd60,0x000078c21e38e280] = 1312
+ stub code      [0x000078c21e38e280,0x000078c21e38e2a8] = 40
+ oops           [0x000078c21e38e2a8,0x000078c21e38e2b0] = 8
+ metadata       [0x000078c21e38e2b0,0x000078c21e38e2e0] = 48
+ scopes data    [0x000078c21e38e2e0,0x000078c21e38e4b8] = 472
+ scopes pcs     [0x000078c21e38e4b8,0x000078c21e38e628] = 368
+ dependencies   [0x000078c21e38e628,0x000078c21e38e638] = 16
+ handler table  [0x000078c21e38e638,0x000078c21e38e650] = 24
+ nul chk table  [0x000078c21e38e650,0x000078c21e38e688] = 56
+
+[Constant Pool (empty)]
+
+[MachCode]
+[Verified Entry Point]
+  # {method} {0x000078c20f581b48} 'rehash' '()V' in 'org/eclipse/jdt/internal/compiler/util/HashtableOfObject'
+  0x000078c21e38dd60: ;   {runtime_call os::breakpoint()}
+  0x000078c21e38dd60: e8bb 1349 | 1166 6666 | 0f1f 8400 | 0000 0000 | 8984 2400 | c0fe ff55 | 4883 ec40 | 488b 6e20 
+  0x000078c21e38dd80: 4c8b 6e10 | 8b1e 488b | fe49 ba40 | d38d 2fc2 | 7800 0041 | ffd2 4885 | ed0f 84ed | 0200 0044 
+  0x000078c21e38dda0: ;   {metadata('org/eclipse/jdt/internal/compiler/util/HashtableOfObject')}
+  0x000078c21e38dda0: 8b55 0841 | 81fa 779e | 0d20 0f85 | 4404 0000 | 4c8b d54d | 85ed 0f84 | d802 0000 | 458b 4508 
+  0x000078c21e38ddc0: ;   {metadata('org/eclipse/jdt/internal/compiler/util/HashtableOfObject')}
+  0x000078c21e38ddc0: 4181 f877 | 9e0d 200f | 8527 0400 | 0049 8bcd | 4d85 d20f | 8403 0400 | 0085 db0f | 8faa 0100 
+  0x000078c21e38dde0: 00be 6eff | ffff 498b | ea89 1c24 | 4889 4c24 
+
+  0x000078c21e38ddf0: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38ddf0: 0866 90e8 
+
+  0x000078c21e38ddf4: ; ImmutableOopMap {rbp=Oop [8]=Oop }
+                      ;*aload_0 {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@27 (line 151)
+  0x000078c21e38ddf4: 08f5 3fff | 0f1f 8400 | 0000 0000 | 8bf2 c1e6 | 052b f241 | 0fb7 4c46 | 1641 0fb7 | 5446 1445 
+  0x000078c21e38de14: 0fb7 5c46 | 1045 0fb7 | 4446 1241 | 03f3 448b | de41 c1e3 | 0544 2bde | 4503 d845 | 8bd3 41c1 
+  0x000078c21e38de34: e205 452b | d344 03d2 | 418b d2c1 | e205 412b | d203 d183 | c004 413b | c17c b14d | 8bd5 c4e1 
+  0x000078c21e38de54: f97e c1c4 | c179 7ed3 | c4c1 797e | c83b c50f | 8dad 0100 | 0041 0fb7 | 7446 1044 | 8bca 41c1 
+  0x000078c21e38de74: e105 442b | ca44 03ce | ffc0 3bc5 | 7d05 418b | d1eb e241 | 81e1 ffff | ff7f 4585 | c00f 86b1 
+  0x000078c21e38de94: 0200 0041 | 8bc1 3d00 | 0000 8075 | 0833 d241 | 83f8 ff74 | 0499 41f7 | f849 8bf6 | 448b ca41 
+  0x000078c21e38deb4: 3bd0 0f83 | fc01 0000 | 418b 5493 | 1049 8b87 
+
+  0x000078c21e38dec4: ; ImmutableOopMap {r10=Oop r11=NarrowOop rcx=Oop rdi=NarrowOop rdx=NarrowOop rsi=Oop r14=NarrowOop }
+                      ;*ifnonnull {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@36 (line 132)
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@48 (line 152)
+  0x000078c21e38dec4: 5003 0000 
+
+  0x000078c21e38dec8: ;   {poll}
+  0x000078c21e38dec8: 8500 85d2 | 7439 41ff | c145 3bc8 | 742d 6666 | 0f1f 8400 | 0000 0000 | 453b c80f | 83c4 0200 
+  0x000078c21e38dee8: 0043 8b44 | 8b10 498b | 9750 0300 
+
+  0x000078c21e38def4: ; ImmutableOopMap {r10=Oop r11=NarrowOop rcx=Oop rdi=NarrowOop rsi=Oop rax=NarrowOop r14=NarrowOop }
+                      ;*ifnonnull {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@36 (line 132)
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@48 (line 152)
+                      ;   {poll}
+  0x000078c21e38def4: 0085 0285 | c074 0c41 | ffc1 453b | c875 dd33 | d2eb a945 | 3bc8 0f83 | f001 0000 | 8b69 184d 
+  0x000078c21e38df14: 8bc3 4f8d | 5c8b 1045 | 8933 49c1 | eb09 49b8 | 0020 042e | c278 0000 | 4788 2418 
+
+  0x000078c21e38df30: ; implicit exception: dispatches to 0x000078c21e38e23c
+  0x000078c21e38df30: 448b 5d0c | 453b cb0f | 83eb 0100 | 0044 8b5d 
+
+  0x000078c21e38df40: ;   {metadata('java/lang/Object'[])}
+  0x000078c21e38df40: 0841 81fb | 62af 0020 | 0f85 0a02 | 0000 448b | 5910 8b51 | 0c4c 8bc5 | 4e8d 448d | 1041 8938 
+  0x000078c21e38df60: ffc2 8951 | 0c49 c1e8 | 0949 b900 | 2004 2ec2 | 7800 0047 | 8824 0141 | 3bd3 0f8f | e600 0000 
+  0x000078c21e38df80: ffcb 83fb | ff0f 8e9e | 0000 0045 | 8b5a 1445 | 8b4b 0c41 | 3bd9 0f83 | ff00 0000 | 458b 749b 
+  0x000078c21e38dfa0: 1045 85f6 | 74da 418b | 6a18 448b | 5d0c 413b | db0f 832d | 0100 008b | 7c9d 1044 | 8b59 1445 
+  0x000078c21e38dfc0: 8b43 0c41 | 8b6e 0c85 | ed76 538b | d5ff ca3b | d50f 83a1 | 0100 0041 | 0fb7 5610 | 448b cd41 
+  0x000078c21e38dfe0: 83c1 fd41 | 83f9 010f | 8eb3 0100 | 008b f2c1 | e605 2bf2 | 81c6 c103 | 0000 b801 | 0000 004d 
+  0x000078c21e38e000: 8bea c4e1 | f96e c1c4 | c179 6ed3 | c4c1 796e | c8e9 f1fd | ffff 448b | cae9 69fe | ffff 41b9 
+  0x000078c21e38e020: 0100 0000 | e965 feff | ff44 8b59 | 1445 895a | 1444 8b41 | 1845 8942 | 1844 8b59 | 1045 895a 
+  0x000078c21e38e040: 1049 c1ea | 0949 bb00 | 2004 2ec2 | 7800 0047 | 8824 1348 | 83c4 405d 
+
+  0x000078c21e38e058: ;   {poll_return}
+  0x000078c21e38e058: 493b a748 | 0300 000f | 87ff 0100 | 00c3 4889 | 4c24 084c | 8914 248b | eb48 8bf1 
+
+  0x000078c21e38e074: ;   {optimized virtual_call}
+  0x000078c21e38e074: 6666 90e8 
+
+  0x000078c21e38e078: ; ImmutableOopMap {[0]=Oop [8]=Oop }
+                      ;*invokevirtual rehash {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@74 (line 142)
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@48 (line 152)
+  0x000078c21e38e078: 049d 3fff | 8bdd 4c8b | 1424 488b | 4c24 08e9 | f4fe ffff | 4533 d2e9 | 1ffd ffff | 33c9 e935 
+  0x000078c21e38e098: fdff ffbe | e4ff ffff | 498b ea44 | 895c 2404 | 895c 2408 | 4889 4c24 
+
+  0x000078c21e38e0b0: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38e0b0: 1066 90e8 
+
+  0x000078c21e38e0b4: ; ImmutableOopMap {rbp=Oop [4]=NarrowOop [16]=Oop }
+                      ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@33 (line 151)
+  0x000078c21e38e0b4: 48f2 3fff | bee4 ffff | ff49 8bea | 891c 2444 | 8974 2404 | 4889 4c24 | 1089 7c24 | 1844 8944 
+  0x000078c21e38e0d4: 241c 4489 | 5c24 2489 
+
+  0x000078c21e38e0dc: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38e0dc: 5424 28e8 
+
+  0x000078c21e38e0e0: ; ImmutableOopMap {rbp=Oop [4]=NarrowOop [16]=Oop [24]=NarrowOop [36]=NarrowOop }
+                      ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@35 (line 132)
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@48 (line 152)
+  0x000078c21e38e0e0: 1cf2 3fff | bee4 ffff | ff4c 8914 | 2444 8974 | 240c 895c | 2410 4889 
+
+  0x000078c21e38e0f8: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38e0f8: 4c24 20e8 
+
+  0x000078c21e38e0fc: ; ImmutableOopMap {rbp=NarrowOop [0]=Oop [12]=NarrowOop [32]=Oop }
+                      ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@47 (line 152)
+  0x000078c21e38e0fc: 00f2 3fff | bee4 ffff | ff49 8bea | 891c 2444 | 8974 2404 | 4889 4c24 | 1089 7c24 | 1844 895c 
+  0x000078c21e38e11c: 2420 4489 
+
+  0x000078c21e38e120: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38e120: 4c24 24e8 
+
+  0x000078c21e38e124: ; ImmutableOopMap {rbp=Oop [4]=NarrowOop [16]=Oop [24]=NarrowOop [32]=NarrowOop }
+                      ;*aastore {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@46 (line 137)
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@48 (line 152)
+  0x000078c21e38e124: d8f1 3fff | bee4 ffff | ff4c 8914 | 2489 5c24 | 0848 894c | 2418 4489 | 4c24 0c89 
+
+  0x000078c21e38e140: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38e140: 7c24 20e8 
+
+  0x000078c21e38e144: ; ImmutableOopMap {rbp=NarrowOop [0]=Oop [24]=Oop [32]=NarrowOop }
+                      ;*aastore {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@54 (line 138)
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@48 (line 152)
+  0x000078c21e38e144: b8f1 3fff | be86 ffff | ff41 8be9 
+
+  0x000078c21e38e150: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38e150: 6666 90e8 
+
+  0x000078c21e38e154: ; ImmutableOopMap {}
+                      ;*irem {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@11 (line 131)
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@48 (line 152)
+  0x000078c21e38e154: a8f1 3fff | bed6 ffff | ff4c 8914 | 2489 5c24 | 0848 894c | 2418 4489 | 4c24 0c89 
+
+  0x000078c21e38e170: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38e170: 7c24 20e8 
+
+  0x000078c21e38e174: ; ImmutableOopMap {rbp=NarrowOop [0]=Oop [24]=Oop [32]=NarrowOop }
+                      ;*aastore {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@54 (line 138)
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@48 (line 152)
+  0x000078c21e38e174: 88f1 3fff | be76 ffff | ff4c 8914 | 2489 5c24 | 0844 8974 | 2410 4889 | 4c24 2089 | 7c24 1444 
+  0x000078c21e38e194: 8944 2428 
+
+  0x000078c21e38e198: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38e198: 6666 90e8 
+
+  0x000078c21e38e19c: ; ImmutableOopMap {[0]=Oop [16]=NarrowOop [20]=NarrowOop [32]=Oop }
+                      ;*if_icmpge {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) java.util.Arrays::hashCode@19
+                      ; - org.eclipse.jdt.core.compiler.CharOperation::hashCode@1 (line 2490)
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@7 (line 131)
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@48 (line 152)
+  0x000078c21e38e19c: 60f1 3fff | 83c2 1fb8 | 0100 0000 | e9b4 fcff | ffbe e4ff | ffff 498b | ea89 1c24 | 4489 7424 
+  0x000078c21e38e1bc: 0448 894c | 2410 897c | 2418 4489 | 4424 1c44 | 895c 2424 | 4489 4c24 
+
+  0x000078c21e38e1d4: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38e1d4: 2866 90e8 
+
+  0x000078c21e38e1d8: ; ImmutableOopMap {rbp=Oop [4]=NarrowOop [16]=Oop [24]=NarrowOop [36]=NarrowOop }
+                      ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@35 (line 132)
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@48 (line 152)
+  0x000078c21e38e1d8: 24f1 3fff | be76 ffff | ff49 8bea | 891c 2448 | 894c 2408 
+
+  0x000078c21e38e1ec: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38e1ec: 6666 90e8 
+
+  0x000078c21e38e1f0: ; ImmutableOopMap {rbp=Oop [8]=Oop }
+                      ;*aload_0 {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@27 (line 151)
+  0x000078c21e38e1f0: 0cf1 3fff | be8d ffff | ff89 1c24 | 4c89 6c24 
+
+  0x000078c21e38e200: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38e200: 0866 90e8 
+
+  0x000078c21e38e204: ; ImmutableOopMap {rbp=Oop [8]=Oop }
+                      ;*aload_0 {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@27 (line 151)
+  0x000078c21e38e204: f8f0 3fff | bef6 ffff 
+
+  0x000078c21e38e20c: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38e20c: ff8b ebe8 
+
+  0x000078c21e38e210: ; ImmutableOopMap {}
+                      ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@33 (line 151)
+  0x000078c21e38e210: ecf0 3fff | bef6 ffff 
+
+  0x000078c21e38e218: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38e218: ff8b ebe8 
+
+  0x000078c21e38e21c: ; ImmutableOopMap {}
+                      ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@47 (line 152)
+  0x000078c21e38e21c: e0f0 3fff | bef6 ffff | ff41 8bee 
+
+  0x000078c21e38e228: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38e228: 893c 24e8 
+
+  0x000078c21e38e22c: ; ImmutableOopMap {rbp=NarrowOop [0]=NarrowOop }
+                      ;*invokevirtual putUnsafely {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@48 (line 152)
+  0x000078c21e38e22c: d0f0 3fff | bef6 ffff 
+
+  0x000078c21e38e234: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38e234: ff66 90e8 
+
+  0x000078c21e38e238: ; ImmutableOopMap {}
+                      ;*arraylength {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@4 (line 130)
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@48 (line 152)
+  0x000078c21e38e238: c4f0 3fff | bef6 ffff | ff41 8be9 
+
+  0x000078c21e38e244: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38e244: 893c 24e8 
+
+  0x000078c21e38e248: ; ImmutableOopMap {[0]=NarrowOop }
+                      ;*aastore {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@54 (line 138)
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@48 (line 152)
+  0x000078c21e38e248: b4f0 3fff | 488b f048 | 83c4 405d 
+
+  0x000078c21e38e254: ;   {runtime_call _rethrow_Java}
+  0x000078c21e38e254: e9a7 344a | ffbe f6ff 
+
+  0x000078c21e38e25c: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38e25c: ffff 90e8 
+
+  0x000078c21e38e260: ; ImmutableOopMap {}
+                      ;*getfield keyTable {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash@61 (line 156)
+  0x000078c21e38e260: 9cf0 3fff 
+
+  0x000078c21e38e264: ;   {internal_word}
+  0x000078c21e38e264: 49ba 58e0 | 381e c278 | 0000 4d89 | 9760 0300 
+
+  0x000078c21e38e274: ;   {runtime_call SafepointBlob}
+  0x000078c21e38e274: 00e9 8601 | 40ff f4f4 | f4f4 f4f4 
+[Stub Code]
+  0x000078c21e38e280: ;   {no_reloc}
+  0x000078c21e38e280: 48bb 0000 | 0000 0000 
+
+  0x000078c21e38e288: ;   {runtime_call}
+  0x000078c21e38e288: 0000 e9fb 
+
+  0x000078c21e38e28c: ;   {runtime_call ExceptionBlob}
+  0x000078c21e38e28c: ffff ffe9 | eca6 49ff 
+[Deopt Handler Code]
+  0x000078c21e38e294: e800 0000 | 0048 832c 
+
+  0x000078c21e38e29c: ;   {runtime_call DeoptimizationBlob}
+  0x000078c21e38e29c: 2405 e9fd | f33f fff4 | f4f4 f4f4 
+[/MachCode]
+
+
+Compiled method (c2) 4290402 13951 %     4       org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory @ 66 (301 bytes)
+ total in heap  [0x000078c21e38e710,0x000078c21e391c80] = 13680
+ relocation     [0x000078c21e38e870,0x000078c21e38e970] = 256
+ main code      [0x000078c21e38e980,0x000078c21e390ba0] = 8736
+ stub code      [0x000078c21e390ba0,0x000078c21e390bf0] = 80
+ oops           [0x000078c21e390bf0,0x000078c21e390c00] = 16
+ metadata       [0x000078c21e390c00,0x000078c21e390c90] = 144
+ scopes data    [0x000078c21e390c90,0x000078c21e391798] = 2824
+ scopes pcs     [0x000078c21e391798,0x000078c21e391b48] = 944
+ dependencies   [0x000078c21e391b48,0x000078c21e391b68] = 32
+ handler table  [0x000078c21e391b68,0x000078c21e391c28] = 192
+ nul chk table  [0x000078c21e391c28,0x000078c21e391c80] = 88
+
+[Constant Pool (empty)]
+
+[MachCode]
+[Verified Entry Point]
+  # {method} {0x000078c20f829958} 'mergeCategory' '([CLorg/eclipse/jdt/internal/core/index/DiskIndex;[ILjava/io/FileOutputStream;)V' in 'org/eclipse/jdt/internal/core/index/DiskIndex'
+  0x000078c21e38e980: ;   {runtime_call os::breakpoint()}
+  0x000078c21e38e980: e89b 0749 | 1166 6666 | 0f1f 8400 | 0000 0000 | 8984 2400 | c0fe ff55 | 4881 ecb0 | 0000 0048 
+  0x000078c21e38e9a0: 8bae 9000 | 0000 4c8b | ae88 0000 | 0044 8b56 | 4044 8954 | 2444 4c8b | b680 0000 | 004c 8b56 
+  0x000078c21e38e9c0: 784c 8914 | 244c 8b56 | 704c 8954 | 2408 4c8b | 5668 4c89 | 5424 104c | 8b56 584c | 8954 2418 
+  0x000078c21e38e9e0: 4c8b 5650 | 4c89 5424 | 208b 5e48 | 895c 2428 | 488b fec5 | f877 49ba | 40d3 8d2f | c278 0000 
+  0x000078c21e38ea00: 41ff d248 | 85ed 0f84 | 8c18 0000 | 4c8b cd44 
+
+  0x000078c21e38ea10: ;   {metadata('org/eclipse/jdt/internal/core/index/DiskIndex')}
+  0x000078c21e38ea10: 8b55 0841 | 81fa 0323 | 0e20 0f85 | 5c1b 0000 | 488b fd49 | 8bcd 4d85 | ed0f 8473 | 1800 0045 
+  0x000078c21e38ea30: ;   {metadata({type array char})}
+  0x000078c21e38ea30: 8b5d 0841 | 81fb 3f80 | 0020 0f85 | 741b 0000 | 498b d54d | 85f6 0f84 | 5d18 0000 | 458b 5608 
+  0x000078c21e38ea50: ;   {metadata('org/eclipse/jdt/internal/core/index/DiskIndex')}
+  0x000078c21e38ea50: 4181 fa03 | 230e 200f | 855d 1b00 | 0049 8bf6 | 4c8b 2c24 | 4d85 ed0f | 8443 1800 | 0045 8b5d 
+  0x000078c21e38ea70: ;   {metadata({type array int})}
+  0x000078c21e38ea70: 0841 81fb | 7a81 0020 | 0f85 051b | 0000 4d8b | c548 8b5c | 2408 4885 | db0f 8429 | 1800 004c 
+  0x000078c21e38ea90: 8bd3 458b 
+
+  0x000078c21e38ea94: ;   {metadata('java/io/FileOutputStream')}
+  0x000078c21e38ea94: 5208 4181 | fa6c d300 | 200f 85e0 | 1a00 004c | 8bd3 488b | 6c24 1048 | 85ed 0f84 | 0c18 0000 
+  0x000078c21e38eab4: 498b c24c | 8bd5 458b 
+
+  0x000078c21e38eabc: ;   {metadata('org/eclipse/jdt/internal/compiler/util/HashtableOfObject')}
+  0x000078c21e38eabc: 5a08 4181 | fb77 9e0d | 200f 85b8 | 1a00 004d | 8bda 4c8b | d048 8b44 | 2418 4885 | c00f 84e9 
+  0x000078c21e38eadc: 1700 004c | 895c 2450 | 4c89 5424 | 484c 8944 | 2460 4889 | 7424 3848 | 8954 2430 | 4889 3c24 
+  0x000078c21e38eafc: 4c8b d045 
+
+  0x000078c21e38eb00: ;   {metadata({type array char}[])}
+  0x000078c21e38eb00: 8b52 0841 | 81fa 5fe1 | 0320 0f85 | 731a 0000 | 4c8b c04c | 8b54 2420 | 4d85 d20f | 84cf 1700 
+  0x000078c21e38eb20: 0045 8b5a 
+
+  0x000078c21e38eb24: ;   {metadata('java/lang/Object'[])}
+  0x000078c21e38eb24: 0849 ba10 | 7b05 0001 | 0000 0048 | 33db 4a8d | 1cdb 4c8b | 5b38 4d3b | da0f 8540 | 1a00 004c 
+  0x000078c21e38eb44: 8b6c 2420 | 4d8b c845 | 8b58 0c8b | 5c24 2841 | 3bdb 0f83 | ec19 0000 | 4d63 d34c | 635c 2444 
+  0x000078c21e38eb64: 49ff cb4d | 3bda 0f83 | d819 0000 | 3b5c 2444 | 0f8c cb01 | 0000 be6e | ffff ff48 | 8b2c 244c 
+  0x000078c21e38eb84: 8b54 2430 | 4c89 1424 | 4c8b 5424 | 384c 8954 | 2408 4c89 | 4424 284c | 896c 2430 | 895c 2438 
+  0x000078c21e38eba4: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38eba4: c5f8 77e8 
+
+  0x000078c21e38eba8: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [40]=Oop [48]=Oop [72]=Oop [80]=Oop [96]=Oop }
+                      ;*aload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@66 (line 485)
+  0x000078c21e38eba8: 54e7 3fff | 0f1f 4000 | 448b cbe9 | f402 0000 | 8b6c 2470 | 460f b754 | 5d10 4103 | c241 ffc3 
+  0x000078c21e38ebc8: 443b 9c24 | 8800 0000 | 7d0f 448b | c041 c1e0 | 0544 2bc0 | 418b c0eb | d781 e0ff | ffff 7f44 
+  0x000078c21e38ebe8: 8b9c 2484 | 0000 003d | 0000 0080 | 7508 33d2 | 4183 fbff | 7404 9941 | f7fb 3b94 | 2484 0000 
+  0x000078c21e38ec08: 000f 83d5 | 1200 0044 | 8b9c 2480 | 0000 0045 | 8b54 9310 | 4d8b 9f50 
+
+  0x000078c21e38ec20: ; ImmutableOopMap {r10=NarrowOop [0]=Oop [16]=Oop [32]=Oop [48]=Oop [56]=Oop [72]=Oop [80]=Oop [88]=Oop [96]=Oop [104]=Oop [112]=NarrowOop [120]=Oop [128]=NarrowOop [140]=NarrowOop }
+                      ;*ifnonnull {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@36 (line 132)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@194 (line 503)
+                      ;   {poll}
+  0x000078c21e38ec20: 0300 0041 | 8503 4585 | d274 4dff | c23b 9424 | 8400 0000 | 743e 6666 | 0f1f 8400 | 0000 0000 
+  0x000078c21e38ec40: 3b94 2484 | 0000 000f | 8302 1500 | 0044 8b94 | 2480 0000 | 0045 8b5c | 9210 4d8b | 9750 0300 
+  0x000078c21e38ec60: ; ImmutableOopMap {r11=NarrowOop [0]=Oop [16]=Oop [32]=Oop [48]=Oop [56]=Oop [72]=Oop [80]=Oop [88]=Oop [96]=Oop [104]=Oop [112]=NarrowOop [120]=Oop [128]=NarrowOop [140]=NarrowOop }
+                      ;*ifnonnull {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@36 (line 132)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@194 (line 503)
+                      ;   {poll}
+  0x000078c21e38ec60: 0041 8502 | 4585 db74 | 0fff c23b | 9424 8400 | 0000 75cc | 33d2 eb8a | 3b94 2484 | 0000 000f 
+  0x000078c21e38ec80: 83c3 1200 | 004c 63c2 | 49c1 e002 | 448b 9c24 | 8000 0000 | 4f8d 5403 | 1044 8b5c | 2470 4589 
+  0x000078c21e38eca0: 1a49 c1ea | 0949 bb00 | 2004 2ec2 | 7800 0047 | 8824 1344 | 8b9c 248c | 0000 0045 | 8b5b 0c41 
+  0x000078c21e38ecc0: 3bd3 0f83 | dc12 0000 | 448b 9424 | 8c00 0000 | 458b 5a08 
+
+  0x000078c21e38ecd4: ;   {metadata('java/lang/Object'[])}
+  0x000078c21e38ecd4: 4181 fb62 | af00 200f | 8523 1300 | 004c 8b54 | 2450 448b | 4c24 1c45 | 894a 0c4c | 8b54 2478 
+  0x000078c21e38ecf4: 4d8b da44 | 8b94 248c | 0000 008b | 8c24 8c00 | 0000 4e8d | 5401 1045 | 891a 49c1 | ea09 49bb 
+  0x000078c21e38ed14: 0020 042e | c278 0000 | 4788 2413 | 443b 4c24 | 180f 8f8d | 0a00 004c | 8b6c 2458 | 8b5c 2440 
+  0x000078c21e38ed34: 4c8b 4c24 | 68ff c33b | 5c24 440f | 8d88 0a00 | 0045 8b44 | 9910 4585 | c074 ea45 | 8b55 0c41 
+  0x000078c21e38ed54: 3bda 0f83 | cc10 0000 | 458b 5c9d | 1045 8b53 
+
+  0x000078c21e38ed64: ;   {metadata({type array int})}
+  0x000078c21e38ed64: 0841 81fa | 7a81 0020 | 0f85 9e1c | 0000 498b | eb44 8b55 | 0c4d 8bd8 | 4181 fa00 | 0004 000f 
+  0x000078c21e38ed84: 8719 0d00 | 004c 895c | 2410 4489 | 4424 704c | 894c 2468 | 895c 2440 | 4c89 6c24 | 584d 8b8f 
+  0x000078c21e38eda4: 0801 0000 | 4489 5424 | 0849 63ca | 48c1 e102 | 4883 c117 | 4c8b d949 | 83e3 f84d | 8bd1 4d03 
+  0x000078c21e38edc4: d34d 3b97 | 1801 0000 | 0f83 ed0c | 0000 4d89 | 9708 0100 | 0041 0f18 | 8200 0100 | 0049 c701 
+  0x000078c21e38ede4: 0100 0000 | 410f 1882 | 4001 0000 
+
+  0x000078c21e38edf0: ;   {metadata({type array int})}
+  0x000078c21e38edf0: 41c7 4108 | 7a81 0020 | 448b 5c24 | 0845 8959 | 0c41 0f18 | 8280 0100 | 0049 8bf9 | 4883 c710 
+  0x000078c21e38ee10: 48c1 e903 | 4883 c1fe | 4833 c048 | 83f9 087f | 1048 ffc9 | 784f 4889 | 04cf 48ff | c97d f7eb 
+  0x000078c21e38ee30: 44c5 fdef | c0e9 0d00 | 0000 c5fe | 7f07 c5fe | 7f47 2048 | 83c7 4048 | 83e9 087d | ed48 83c1 
+  0x000078c21e38ee50: 047c 0cc5 | fe7f 0748 | 83c7 2048 | 83e9 0448 | 83c1 047e | 1048 ffc9 | c5f9 d607 | 4883 c708 
+  0x000078c21e38ee70: 48ff c97d | f345 85db | 7705 4533 | c0eb 7745 | 85db 0f86 | 6c13 0000 | 458b d341 | ffca 453b 
+  0x000078c21e38ee90: d30f 8356 | 1300 004c | 8b54 2460 
+
+  0x000078c21e38ee9c: ; implicit exception: dispatches to 0x000078c21e3901f9
+  0x000078c21e38ee9c: 418b 4a0c | 498b d141 | 8bfb 4533 | c945 33db | 468b 549d | 1044 3bd1 | 0f83 0a0f | 0000 4c8b 
+  0x000078c21e38eebc: 4424 6047 | 8b54 9010 | 4183 faff | 0f8e 3405 | 0000 418b | d9ff c344 | 3bcf 0f83 | 980f 0000 
+  0x000078c21e38eedc: 4689 548a | 1041 ffc3 | 443b df0f | 8cc3 fcff | ff44 8bdf | 4c8b ca44 | 8bc3 453b | c30f 8c0b 
+  0x000078c21e38eefc: 0500 0048 | 8b4c 2450 
+
+  0x000078c21e38ef04: ; implicit exception: dispatches to 0x000078c21e390af0
+  0x000078c21e38ef04: 448b 5914 
+
+  0x000078c21e38ef08: ; implicit exception: dispatches to 0x000078c21e390b00
+  0x000078c21e38ef08: 458b 530c | 4489 9424 | 8400 0000 | 4489 9c24 | 8000 0000 | 4c89 4c24 | 7844 8b5c | 2470 418b 
+  0x000078c21e38ef28: 6b0c 89ac | 2488 0000 | 0044 8944 | 2474 448b | d541 83c2 | fd45 8bea | ffcd 896c | 2408 8bac 
+  0x000078c21e38ef48: 2488 0000 | 0085 ed0f | 8699 0400 | 008b 6c24 | 083b ac24 | 8800 0000 | 0f83 ee10 | 0000 410f 
+  0x000078c21e38ef68: b74b 1045 | 8bd5 4183 | fa01 0f8e | 4c11 0000 | 448b d141 | c1e2 0544 | 2bd1 4181 | c2c1 0300 
+  0x000078c21e38ef88: 0041 b801 | 0000 00eb | 190f 1f84 | 0000 0000 | 000f 1f80 | 0000 0000 | 448b d141 | c1e2 0544 
+  0x000078c21e38efa8: 2bd1 448b | 4c24 7043 | 0fb7 5c41 | 1647 0fb7 | 4c41 148b | 6c24 7046 | 0fb7 5c45 | 1042 0fb7 
+  0x000078c21e38efc8: 7c45 1245 | 03d3 458b | da41 c1e3 | 0545 2bda | 4403 df45 | 8bd3 41c1 | e205 452b | d345 03d1 
+  0x000078c21e38efe8: 418b cac1 | e105 412b | ca03 cb41 | 83c0 0445 | 3bc5 7ca4 | 443b 8424 | 8800 0000 | 0f8d dd03 
+  0x000078c21e38f008: 0000 448b | 5424 7047 | 0fb7 5c42 | 108b c1c1 | e005 2bc1 | 4103 c341 | ffc0 443b | 8424 8800 
+  0x000078c21e38f028: 0000 7d04 | 8bc8 ebda | 81e0 ffff | ff7f 8bac | 2484 0000 | 0085 ed0f | 86af 0f00 | 003d 0000 
+  0x000078c21e38f048: 0080 7507 | 33d2 83fd | ff74 0399 | f7fd 8b6c | 2408 413b | ed45 8bd5 | 41bb 0000 | 0080 450f 
+  0x000078c21e38f068: 4cd3 4489 | 5424 0c4c | 8b54 2450 | 418b 6a10 | 896c 2418 | 418b 6a18 | 89ac 248c | 0000 0041 
+  0x000078c21e38f088: 8b6a 0c44 | 8b9c 2480 | 0000 004d | 8bd3 4c89 | 5424 20ff | c589 6c24 | 1c3b 9424 | 8400 0000 
+  0x000078c21e38f0a8: 0f83 b10c | 0000 448b | 9c24 8000 | 0000 458b | 5c93 104d | 8b97 5003 
+
+  0x000078c21e38f0c0: ; ImmutableOopMap {r11=NarrowOop [0]=Oop [16]=Oop [32]=Oop [48]=Oop [56]=Oop [72]=Oop [80]=Oop [88]=Oop [96]=Oop [104]=Oop [112]=NarrowOop [120]=Oop [128]=NarrowOop [140]=NarrowOop }
+                      ;*ifnonnull {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::get@51 (line 87)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@178 (line 501)
+                      ;   {poll}
+  0x000078c21e38f0c0: 0000 4185 | 0245 85db | 0f84 4f02 | 0000 498b | fb48 8b74 | 2410 483b | fe0f 84bb | 0000 0048 
+  0x000078c21e38f0e0: 85ff 0f84 | b900 0000 | 4885 f60f | 84b0 0000 | 008b 4f0c | 3b4e 0c0f | 85a4 0000 | 0085 c90f 
+  0x000078c21e38f100: 8495 0000 | 0048 8d7f | 1048 8d76 | 10d1 e18b | c183 e01f | 83e1 e00f | 844b 0000 | 0048 8d3c 
+  0x000078c21e38f120: 0f48 8d34 | 0e48 f7d9 | c5fe 6f0c | 0fc5 fe6f | 040e c5f5 | efc8 c4e2 | 7d17 c90f | 8560 0000 
+  0x000078c21e38f140: 0048 83c1 | 2075 e185 | c00f 844b | 0000 00c5 | fe6f 4c07 | e0c5 fe6f | 4406 e0c5 | f5ef c8c4 
+  0x000078c21e38f160: e27d 17c9 | 753b eb32 | 8bc8 83e1 | fc74 1948 | 8d3c 0f48 | 8d34 0e48 | f7d9 8b1c | 0f3b 1c0e 
+  0x000078c21e38f180: 751f 4883 | c104 75f2 | f7c0 0200 | 0000 740a | 0fb7 1f0f | b70e 3bd9 | 7507 b801 | 0000 00eb 
+  0x000078c21e38f1a0: 0233 c0c5 | f5ef c9c5 | fdef c085 | c00f 8541 | 0100 00ff | c23b 9424 | 8400 0000 | 0f84 2b01 
+  0x000078c21e38f1c0: 0000 0f1f | 8000 0000 | 000f 1f80 | 0000 0000 | 3b94 2484 | 0000 000f | 831b 1100 | 0044 8b94 
+  0x000078c21e38f1e0: 2480 0000 | 0045 8b54 | 9210 4d8b | 9f50 0300 
+
+  0x000078c21e38f1f0: ; ImmutableOopMap {r10=NarrowOop [0]=Oop [16]=Oop [32]=Oop [48]=Oop [56]=Oop [72]=Oop [80]=Oop [88]=Oop [96]=Oop [104]=Oop [112]=NarrowOop [120]=Oop [128]=NarrowOop [140]=NarrowOop }
+                      ;*ifnonnull {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::get@51 (line 87)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@178 (line 501)
+                      ;   {poll}
+  0x000078c21e38f1f0: 0041 8503 | 4585 d20f | 8420 0100 | 0049 8bfa | 488b 7424 | 1048 3bfe | 0f84 bb00 | 0000 4885 
+  0x000078c21e38f210: ff0f 84b9 | 0000 0048 | 85f6 0f84 | b000 0000 | 8b4f 0c3b | 4e0c 0f85 | a400 0000 | 85c9 0f84 
+  0x000078c21e38f230: 9500 0000 | 488d 7f10 | 488d 7610 | d1e1 8bc1 | 83e0 1f83 | e1e0 0f84 | 4b00 0000 | 488d 3c0f 
+  0x000078c21e38f250: 488d 340e | 48f7 d9c5 | fe6f 040f | c5fe 6f0c | 0ec5 fdef | c1c4 e27d | 17c0 0f85 | 6000 0000 
+  0x000078c21e38f270: 4883 c120 | 75e1 85c0 | 0f84 4b00 | 0000 c5fe | 6f44 07e0 | c5fe 6f4c | 06e0 c5fd | efc1 c4e2 
+  0x000078c21e38f290: 7d17 c075 | 3beb 328b | c883 e1fc | 7419 488d | 3c0f 488d | 340e 48f7 | d98b 1c0f | 3b1c 0e75 
+  0x000078c21e38f2b0: 1f48 83c1 | 0475 f2f7 | c002 0000 | 0074 0a0f | b71f 0fb7 | 0e3b d975 | 07b8 0100 | 0000 eb02 
+  0x000078c21e38f2d0: 33c0 c5fd | efc0 c5f5 | efc9 85c0 | 7516 ffc2 | 3b94 2484 | 0000 000f | 85e3 feff | ff33 d2e9 
+  0x000078c21e38f2f0: adfd ffff | 8bac 248c | 0000 008b | 6d0c 896c | 2428 3bd5 | 0f83 3e0f | 0000 8bac | 248c 0000 
+  0x000078c21e38f310: 008b 6c95 | 1085 ed0f | 852d 0200 | 008b ac24 | 8800 0000 | 85ed 0f86 | cc00 0000 | 8b6c 2408 
+  0x000078c21e38f330: 3bac 2488 | 0000 000f | 8395 0d00 | 0044 8b54 | 2470 450f | b752 1041 | 8bc2 c1e0 | 0541 2bc2 
+  0x000078c21e38f350: 81c0 c103 | 0000 448b | 5c24 0c41 | 83fb 010f | 8edb 0d00 | 0041 bb01 | 0000 000f | 1f44 0000 
+  0x000078c21e38f370: 448b 4424 | 7047 0fb7 | 4458 1644 | 8b54 2470 | 430f b74c | 5a14 470f | b754 5a10 | 8b5c 2470 
+  0x000078c21e38f390: 460f b74c | 5b12 4103 | c28b d8c1 | e305 2bd8 | 4103 d944 | 8bcb 41c1 | e105 442b | cb44 03c9 
+  0x000078c21e38f3b0: 458b d141 | c1e2 0545 | 2bd1 4503 | d041 8bc2 | c1e0 0541 | 2bc2 4183 | c304 443b | 5c24 0c7c 
+  0x000078c21e38f3d0: 9f44 3b9c | 2488 0000 | 000f 8cd9 | f7ff ff41 | 8bc2 e9fa | f7ff ff8b | c1e9 42fc | ffff b801 
+  0x000078c21e38f3f0: 0000 00e9 | 3efc ffff | b801 0000 | 00e9 e5f7 | ffff 418b | d9e9 d7fa | ffff 4585 | c075 134c 
+  0x000078c21e38f410: 8b6c 2458 | 8b5c 2440 | 4c8b 4c24 | 68e9 17f9 | ffff 4181 | f800 0004 | 000f 87a1 | 0f00 0049 
+  0x000078c21e38f430: 63d0 453b | d80f 829d | 0f00 0048 | c1e2 0248 | 83c2 1748 | 83e2 f841 | 81f8 0000 | 0400 0f87 
+  0x000078c21e38f450: 600d 0000 | 498b af08 | 0100 004c | 8bd5 4c03 | d24d 3b97 | 1801 0000 | 0f83 460d | 0000 4d89 
+  0x000078c21e38f470: 9708 0100 | 0041 0f18 | 8200 0100 | 0048 c745 | 0001 0000 | 0041 0f18 | 8240 0100 
+
+  0x000078c21e38f48c: ;   {metadata({type array int})}
+  0x000078c21e38f48c: 00c7 4508 | 7a81 0020 | 4489 450c | 410f 1882 | 8001 0000 | 458b d045 | 85d2 742c | 418b d849 
+  0x000078c21e38f4ac: 83c1 1048 | 83c2 f048 | c1ea 0348 | 8bf5 4883 | c610 498b | f9c5 f877 | 49ba c0f0 | 761d c278 
+  0x000078c21e38f4cc: 0000 41ff | d244 8bc3 | 4c8b cde9 | 23fa ffff | 0f1f 4000 | 448b dd41 | ffc3 4589 | 590c 448b 
+  0x000078c21e38f4ec: 9424 8800 | 0000 458b | 520c 413b | ea0f 8331 | 0f00 0044 | 8b9c 2488 | 0000 0044 | 8b94 248c 
+  0x000078c21e38f50c: 0000 0045 | 8954 ab10 | 448b 5424 | 7c41 ffc2 | 443b 5424 | 787c 134c | 8b6c 2458 | 8b5c 2440 
+  0x000078c21e38f52c: 4c8b 4c24 | 68e9 03f8 | ffff 488b | 4c24 7044 | 8b44 2478 | 4c8b 8c24 | 8000 0000 | eb63 448b 
+  0x000078c21e38f54c: 5d08 4c8b | d54c 8994 | 2490 0000 
+
+  0x000078c21e38f558: ;   {metadata('org/eclipse/jdt/internal/core/index/DiskIndex$IntList')}
+  0x000078c21e38f558: 0041 81fb | f5a9 0e20 | 0f85 cb02 | 0000 4d8b | ca44 8b44 | 2474 4585 | c07f 134c | 8b6c 2458 
+  0x000078c21e38f578: 8b5c 2440 | 4c8b 4c24 | 68e9 b3f7 | ffff 488b | 4c24 7844 | 8b51 0c45 | 85d2 0f86 | 540f 0000 
+  0x000078c21e38f598: 4d63 d84d | 63d2 49ff | cb4d 3bda | 0f83 420f | 0000 4533 | d241 8b59 | 1044 8b5b | 0c44 895c 
+  0x000078c21e38f5b8: 2408 899c | 2488 0000 | 0044 8954 | 247c 4c89 | 8c24 8000 | 0000 4489 | 4424 7848 | 894c 2470 
+  0x000078c21e38f5d8: 448b 4424 | 7c46 8b5c | 8110 4489 | 9c24 8c00 | 0000 418b | 690c 3b6c | 2408 0f85 | e8fe ffff 
+  0x000078c21e38f5f8: 448b cd41 | d1e1 4403 | cd41 83f9 | 077d 0641 | b907 0000 | 0041 81f9 | 0000 0400 | 0f87 620e 
+  0x000078c21e38f618: 0000 4963 | c941 81f9 | 0000 0400 | 0f87 320d | 0000 4d8b | 8708 0100 | 0048 c1e1 | 0248 83c1 
+  0x000078c21e38f638: 174c 8bd1 | 4983 e2f8 | 4d8b d84d | 03da 4d3b | 9f18 0100 | 000f 8309 | 0d00 004d | 899f 0801 
+  0x000078c21e38f658: 0000 410f | 1883 0001 | 0000 49c7 | 0001 0000 | 0041 0f18 | 8340 0100 
+
+  0x000078c21e38f670: ;   {metadata({type array int})}
+  0x000078c21e38f670: 0041 c740 | 087a 8100 | 2045 8948 | 0c41 0f18 | 8380 0100 | 0049 8bf8 | 4883 c710 | 48c1 e903 
+  0x000078c21e38f690: 4883 c1fe | 4833 c048 | 83f9 087f | 1048 ffc9 | 784f 4889 | 04cf 48ff | c97d f7eb | 44c5 fdef 
+  0x000078c21e38f6b0: c0e9 0d00 | 0000 c5fe | 7f07 c5fe | 7f47 2048 | 83c7 4048 | 83e9 087d | ed48 83c1 | 047c 0cc5 
+  0x000078c21e38f6d0: fe7f 0748 | 83c7 2048 | 83e9 0448 | 83c1 047e | 1048 ffc9 | c5f9 d607 | 4883 c708 | 48ff c97d 
+  0x000078c21e38f6f0: f344 894c | 240c 4c8b | 9424 8000 | 0000 4d8b | d84c 8b8c | 2480 0000 | 0045 8959 | 1049 c1ea 
+  0x000078c21e38f710: 0949 bb00 | 2004 2ec2 | 7800 0047 | 8824 1344 | 8b5c 2408 | 443b dd0f | 8257 0d00 | 0044 8b54 
+  0x000078c21e38f730: 240c 443b | d50f 8249 | 0d00 0085 | ed0f 8c41 | 0d00 0085 | ed74 2949 | 83c0 1048 | 63d5 448b 
+  0x000078c21e38f750: 9c24 8800 | 0000 4d8b | d349 8d7b | 1049 8bf0 | c5f8 7749 | ba80 ef76 | 1dc2 7800 | 0041 ffd2 
+  0x000078c21e38f770: 4c8b 9424 | 8000 0000 | 458b 5210 | 4489 9424 | 8800 0000 | 4c8b 9424 | 8000 0000 | 418b 6a0c 
+  0x000078c21e38f790: 448b dd41 | ffc3 4589 | 5a0c 448b | 9c24 8800 | 0000 4585 | db0f 853f | fdff ffbe | f6ff ffff 
+  0x000078c21e38f7b0: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38f7b0: c5f8 77e8 
+
+  0x000078c21e38f7b4: ; ImmutableOopMap {}
+                      ;*iastore {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex$IntList::add@65 (line 85)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@258 (line 513)
+  0x000078c21e38f7b4: 48db 3fff | 488b 7424 | 5066 6690 
+
+  0x000078c21e38f7c0: ;   {optimized virtual_call}
+  0x000078c21e38f7c0: c5f8 77e8 
+
+  0x000078c21e38f7c4: ; ImmutableOopMap {[0]=Oop [48]=Oop [56]=Oop [72]=Oop [80]=Oop [88]=Oop [96]=Oop [104]=Oop }
+                      ;*invokevirtual rehash {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@74 (line 142)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@194 (line 503)
+  0x000078c21e38f7c4: d883 68f8 | e95e f5ff | ff4c 8b54 | 2438 458b | 5a48 4585 | db0f 84e1 | 0d00 0049 | 8bf3 488b 
+  0x000078c21e38f7e4: 5424 3033 | c966 6690 
+
+  0x000078c21e38f7ec: ;   {optimized virtual_call}
+  0x000078c21e38f7ec: c5f8 77e8 
+
+  0x000078c21e38f7f0: ; ImmutableOopMap {[0]=Oop [48]=Oop [72]=Oop [80]=Oop }
+                      ;*invokevirtual put {reexecute=0 rethrow=0 return_oop=1}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@287 (line 517)
+  0x000078c21e38f7f0: 8c85 3fff | 488b 3424 | 4885 f60f | 84cf 0d00 | 0048 8b54 | 2430 488b | 4c24 504c | 8b44 2448 
+  0x000078c21e38f810: ;   {optimized virtual_call}
+  0x000078c21e38f810: c5f8 77e8 
+
+  0x000078c21e38f814: ; ImmutableOopMap {}
+                      ;*invokevirtual writeCategoryTable {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@297 (line 519)
+  0x000078c21e38f814: 6885 3fff | c5f8 7748 | 81c4 b000 
+
+  0x000078c21e38f820: ;   {poll_return}
+  0x000078c21e38f820: 0000 5d49 | 3ba7 4803 | 0000 0f87 | 5613 0000 | c34d 8b87 | 0801 0000 | 4d8b d049 | 83c2 184d 
+  0x000078c21e38f840: 3b97 1801 | 0000 0f83 | 590b 0000 | 4d89 9708 | 0100 0041 | 0f18 8200 | 0100 0049 | c700 0100 
+  0x000078c21e38f860: ;   {metadata('org/eclipse/jdt/internal/core/index/DiskIndex$IntList')}
+  0x000078c21e38f860: 0000 41c7 | 4008 f5a9 | 0e20 4589 | 600c 4d89 | 6010 4c89 | 8424 9800 
+
+  0x000078c21e38f878: ;   {metadata({type array int})}
+  0x000078c21e38f878: 0000 4181 | fb7a 8100 | 200f 85d1 | 1100 004c | 8b94 2490 | 0000 0045 | 8b5a 0c45 | 8958 0c4d 
+  0x000078c21e38f898: 8bd8 4589 | 5010 49c1 | eb09 49ba | 0020 042e | c278 0000 | 4788 241a | 8bac 2488 | 0000 0085 
+  0x000078c21e38f8b8: ed0f 8696 | 0400 008b | 6c24 083b | ac24 8800 | 0000 0f83 | 980e 0000 | 448b 5c24 | 7045 0fb7 
+  0x000078c21e38f8d8: 5310 418b | c2c1 e005 | 412b c281 | c0c1 0300 | 008b 6c24 | 0c83 fd01 | 0f8e fa0e | 0000 41b8 
+  0x000078c21e38f8f8: 0100 0000 | 0f1f 4000 | 448b 5c24 | 7047 0fb7 | 4c43 1643 | 0fb7 5c43 | 1447 0fb7 | 5c43 1044 
+  0x000078c21e38f918: 8b54 2470 | 430f b74c | 4212 4103 | c344 8bd0 | 41c1 e205 | 442b d044 | 03d1 418b | cac1 e105 
+  0x000078c21e38f938: 412b ca03 | cb44 8bd1 | 41c1 e205 | 442b d145 | 03d1 418b | c2c1 e005 | 412b c241 | 83c0 0444 
+  0x000078c21e38f958: 3b44 240c | 7ca2 443b | 8424 8800 | 0000 0f8d | 2e01 0000 | 448b 5424 | 7047 0fb7 | 5c42 1041 
+  0x000078c21e38f978: 03c3 41ff | c044 3b84 | 2488 0000 | 007d 0f44 | 8bd0 41c1 | e205 442b | d041 8bc2 | ebd6 81e0 
+  0x000078c21e38f998: ffff ff7f | 8bac 2484 | 0000 003d | 0000 0080 | 7507 33d2 | 83fd ff74 | 0399 f7fd | 448b f28b 
+  0x000078c21e38f9b8: ac24 8c00 | 0000 448b | 5508 488b | d548 8bac | 2498 0000 | 004c 8bc5 | 443b b424 | 8400 0000 
+  0x000078c21e38f9d8: 0f83 020c | 0000 8bac | 2480 0000 | 0046 8b4c | b510 4d8b | 9f50 0300 
+
+  0x000078c21e38f9f0: ; ImmutableOopMap {r8=NarrowOop r9=NarrowOop rdx=Oop [0]=Oop [16]=Oop [32]=Oop [48]=Oop [56]=Oop [72]=Oop [80]=Oop [88]=Oop [96]=Oop [104]=Oop [112]=NarrowOop [120]=Oop [128]=NarrowOop [140]=NarrowOop [152]=Oop }
+                      ;*ifnonnull {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::put@58 (line 102)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@241 (line 510)
+                      ;   {poll}
+  0x000078c21e38f9f0: 0041 8503 | 4585 c90f | 85e8 0000 | 0044 3bb4 | 2484 0000 | 000f 835d | 0c00 004d | 63ce 49c1 
+  0x000078c21e38fa10: e102 8bac | 2480 0000 | 004e 8d5c | 0d10 8b6c | 2470 4189 | 2b49 c1eb | 0948 b900 | 2004 2ec2 
+  0x000078c21e38fa30: 7800 0046 | 8824 1944 | 3b74 2428 | 0f83 a20c 
+
+  0x000078c21e38fa40: ;   {metadata('java/lang/Object'[])}
+  0x000078c21e38fa40: 0000 4181 | fa62 af00 | 200f 85b0 | 0d00 004c | 8b54 2450 | 8b6c 241c | 4189 6a0c | 8bac 248c 
+  0x000078c21e38fa60: 0000 004e | 8d54 0d10 | 4589 0249 | c1ea 0949 | bb00 2004 | 2ec2 7800 | 0047 8824 | 1344 8b54 
+  0x000078c21e38fa80: 241c 443b | 5424 180f | 8ff3 0800 | 004c 8b8c | 2498 0000 | 00e9 cffa | ffff 418b | c2e9 f4fe 
+  0x000078c21e38faa0: ffff 4c89 | 6c24 5889 | 5c24 404c | 894c 2468 | 4489 4424 | 7044 8954 | 2408 4c89 
+
+  0x000078c21e38fabc: ;   {metadata({type array int})}
+  0x000078c21e38fabc: 5c24 1048 | bed0 0b04 | 0001 0000 | 008b 5424 | 0866 6690 
+
+  0x000078c21e38fad0: ;   {runtime_call _new_array_Java}
+  0x000078c21e38fad0: c5f8 77e8 
+
+  0x000078c21e38fad4: ; ImmutableOopMap {rbp=Oop [0]=Oop [16]=Oop [48]=Oop [56]=Oop [72]=Oop [80]=Oop [88]=Oop [96]=Oop [104]=Oop [112]=NarrowOop }
+                      ;*newarray {reexecute=0 rethrow=0 return_oop=1}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@95 (line 489)
+  0x000078c21e38fad4: 282b 4aff | 448b 5c24 | 084c 8bc8 | e990 f3ff | ff49 8bf9 | 488b 7424 | 1048 3bfe | 0f84 bb00 
+  0x000078c21e38faf4: 0000 4885 | ff0f 84b9 | 0000 0048 | 85f6 0f84 | b000 0000 | 8b4f 0c3b | 4e0c 0f85 | a400 0000 
+  0x000078c21e38fb14: 85c9 0f84 | 9500 0000 | 488d 7f10 | 488d 7610 | d1e1 8bc1 | 83e0 1f83 | e1e0 0f84 | 4b00 0000 
+  0x000078c21e38fb34: 488d 3c0f | 488d 340e | 48f7 d9c5 | fe6f 040f | c5fe 6f0c | 0ec5 fdef | c1c4 e27d | 17c0 0f85 
+  0x000078c21e38fb54: 6000 0000 | 4883 c120 | 75e1 85c0 | 0f84 4b00 | 0000 c5fe | 6f44 07e0 | c5fe 6f4c | 06e0 c5fd 
+  0x000078c21e38fb74: efc1 c4e2 | 7d17 c075 | 3beb 328b | c883 e1fc | 7419 488d | 3c0f 488d | 340e 48f7 | d98b 1c0f 
+  0x000078c21e38fb94: 3b1c 0e75 | 1f48 83c1 | 0475 f2f7 | c002 0000 | 0074 0a0f | b71f 0fb7 | 0e3b d975 | 07b8 0100 
+  0x000078c21e38fbb4: 0000 eb02 | 33c0 c5fd | efc0 c5f5 | efc9 85c0 | 743f 443b | 7424 280f | 8337 0d00 
+
+  0x000078c21e38fbd0: ;   {metadata('java/lang/Object'[])}
+  0x000078c21e38fbd0: 0041 81fa | 62af 0020 | 0f85 ae0d | 0000 448b | 9c24 8c00 | 0000 4f8d | 54b3 1045 | 8902 49c1 
+  0x000078c21e38fbf0: ea09 49bb | 0020 042e | c278 0000 | 4788 2413 | e988 feff | ff45 8bde | 41ff c345 | 8bf3 443b 
+  0x000078c21e38fc10: 9c24 8400 | 0000 0f84 | 2e01 0000 | 0f1f 4000 | 443b b424 | 8400 0000 | 0f83 520c | 0000 448b 
+  0x000078c21e38fc30: 8c24 8000 | 0000 478b | 5cb1 104d | 8b8f 5003 
+
+  0x000078c21e38fc40: ; ImmutableOopMap {r11=NarrowOop r8=NarrowOop rdx=Oop [0]=Oop [16]=Oop [32]=Oop [48]=Oop [56]=Oop [72]=Oop [80]=Oop [88]=Oop [96]=Oop [104]=Oop [112]=NarrowOop [120]=Oop [128]=NarrowOop [140]=NarrowOop [152]=Oop }
+                      ;*ifnonnull {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::put@58 (line 102)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@241 (line 510)
+                      ;   {poll}
+  0x000078c21e38fc40: 0000 4185 | 0145 85db | 0f84 affd | ffff 498b | fb48 8b74 | 2410 483b | fe0f 84bb | 0000 0048 
+  0x000078c21e38fc60: 85ff 0f84 | b900 0000 | 4885 f60f | 84b0 0000 | 008b 4f0c | 3b4e 0c0f | 85a4 0000 | 0085 c90f 
+  0x000078c21e38fc80: 8495 0000 | 0048 8d7f | 1048 8d76 | 10d1 e18b | c183 e01f | 83e1 e00f | 844b 0000 | 0048 8d3c 
+  0x000078c21e38fca0: 0f48 8d34 | 0e48 f7d9 | c5fe 6f04 | 0fc5 fe6f | 0c0e c5fd | efc1 c4e2 | 7d17 c00f | 8560 0000 
+  0x000078c21e38fcc0: 0048 83c1 | 2075 e185 | c00f 844b | 0000 00c5 | fe6f 4407 | e0c5 fe6f | 4c06 e0c5 | fdef c1c4 
+  0x000078c21e38fce0: e27d 17c0 | 753b eb32 | 8bc8 83e1 | fc74 1948 | 8d3c 0f48 | 8d34 0e48 | f7d9 8b1c | 0f3b 1c0e 
+  0x000078c21e38fd00: 751f 4883 | c104 75f2 | f7c0 0200 | 0000 740a | 0fb7 1f0f | b70e 3bd9 | 7507 b801 | 0000 00eb 
+  0x000078c21e38fd20: 0233 c0c5 | fdef c0c5 | f5ef c985 | c00f 8593 | feff ff45 | 8bde 41ff | c345 8bf3 | 443b 9c24 
+  0x000078c21e38fd40: 8400 0000 | 0f85 d6fe | ffff 4533 | db45 8bf3 | e97b fcff | ffb8 0100 | 0000 e93d | fcff ffbe 
+  0x000078c21e38fd60: e4ff ffff | 488b 2c24 | 4c8b 5424 | 304c 8914 | 244c 8b54 | 2438 4c89 | 5424 084c | 8b54 2460 
+  0x000078c21e38fd80: 4c89 5424 | 104c 8b54 | 2448 4c89 | 5424 184c | 8b54 2468 | 4c89 5424 | 284c 8b54 | 2458 4c89 
+  0x000078c21e38fda0: 5424 3044 | 8b5c 2440 | 4489 5c24 | 3844 8b54 | 2444 4489 | 5424 3c89 | 5424 6890 
+
+  0x000078c21e38fdbc: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38fdbc: c5f8 77e8 
+
+  0x000078c21e38fdc0: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [40]=Oop [48]=Oop [80]=Oop [112]=NarrowOop [120]=Oop [128]=NarrowOop }
+                      ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::get@47 (line 87)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@178 (line 501)
+  0x000078c21e38fdc0: 3cd5 3fff | bee4 ffff | ff4c 8b44 | 2430 4c89 | 4424 084c | 8b44 2438 | 4c89 4424 | 104c 8b44 
+  0x000078c21e38fde0: 2448 4c89 | 4424 204c | 8b44 2450 | 4c89 4424 | 284c 8b44 | 2468 4c89 | 4424 304c | 8b44 2458 
+  0x000078c21e38fe00: 4c89 4424 | 3889 7c24 | 4c48 8954 | 2450 4489 | 4c24 5844 | 895c 245c | 4489 5424 | 6866 6690 
+  0x000078c21e38fe20: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38fe20: c5f8 77e8 
+
+  0x000078c21e38fe24: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [32]=Oop [40]=Oop [48]=Oop [56]=Oop [80]=Oop [96]=Oop [112]=NarrowOop }
+                      ;*iaload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@114 (line 492)
+  0x000078c21e38fe24: d8d4 3fff | bee4 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e38fe44: 4c8b 5424 | 484c 8954 | 2418 4c89 | 4c24 2844 | 8b5c 2444 | 4489 5c24 | 3c44 8944 | 2440 4c89 
+  0x000078c21e38fe64: 6c24 4889 | 5c24 4490 
+
+  0x000078c21e38fe6c: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38fe6c: c5f8 77e8 
+
+  0x000078c21e38fe70: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [24]=Oop [40]=Oop [64]=NarrowOop [72]=Oop [80]=Oop [96]=Oop }
+                      ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@82 (line 487)
+  0x000078c21e38fe70: 8cd4 3fff | bee4 ffff | ff4c 8b44 | 2430 4c89 | 4424 084c | 8b44 2438 | 4c89 4424 | 104c 8b44 
+  0x000078c21e38fe90: 2460 4c89 | 4424 184c | 8b44 2448 | 4c89 4424 | 204c 8b44 | 2450 4c89 | 4424 284c | 8b44 2468 
+  0x000078c21e38feb0: 4c89 4424 | 304c 8b44 | 2458 4c89 | 4424 3889 | 7c24 4c89 | 5c24 5844 | 895c 245c | 4889 5424 
+  0x000078c21e38fed0: 6044 894c | 2468 4489 | 5424 6c90 
+
+  0x000078c21e38fedc: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38fedc: c5f8 77e8 
+
+  0x000078c21e38fee0: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [32]=Oop [40]=Oop [48]=Oop [56]=Oop [96]=Oop [112]=NarrowOop }
+                      ;*iastore {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@132 (line 494)
+  0x000078c21e38fee0: 1cd4 3fff | bee4 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e38ff00: 4c8b 5424 | 604c 8954 | 2410 4c8b | 5424 484c | 8954 2418 | 4c8b 5424 | 584c 8954 | 2430 448b 
+  0x000078c21e38ff20: 5424 4044 | 8954 2438 | 448b 5c24 | 4444 895c | 243c 4c8b | 5424 504c | 8954 2440 | 8954 2460 
+  0x000078c21e38ff40: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38ff40: c5f8 77e8 
+
+  0x000078c21e38ff44: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [48]=Oop [64]=Oop [104]=Oop [112]=NarrowOop [120]=Oop [128]=NarrowOop }
+                      ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@35 (line 132)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@194 (line 503)
+  0x000078c21e38ff44: b8d3 3fff | bee4 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e38ff64: 4c8b 5424 | 484c 8954 | 2418 4c8b | 5424 584c | 8954 2430 | 448b 5c24 | 4044 895c | 2438 448b 
+  0x000078c21e38ff84: 5424 4444 | 8954 243c | 4c8b 5424 | 504c 8954 | 2440 8954 | 2458 6690 
+
+  0x000078c21e38ff9c: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38ff9c: c5f8 77e8 
+
+  0x000078c21e38ffa0: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [24]=Oop [48]=Oop [64]=Oop [96]=Oop [104]=Oop [112]=NarrowOop [120]=Oop [128]=NarrowOop }
+                      ;*aastore {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@46 (line 137)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@194 (line 503)
+  0x000078c21e38ffa0: 5cd3 3fff | bee4 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e38ffc0: 4c8b 5424 | 484c 8954 | 2418 448b | 5c24 4044 | 895c 2438 | 448b 5424 | 4444 8954 | 243c 4c8b 
+  0x000078c21e38ffe0: 5424 504c | 8954 2440 | 8954 244c 
+
+  0x000078c21e38ffec: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38ffec: c5f8 77e8 
+
+  0x000078c21e38fff0: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [24]=Oop [64]=Oop [88]=Oop [96]=Oop [104]=Oop [120]=Oop [140]=NarrowOop }
+                      ;*aastore {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@54 (line 138)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@194 (line 503)
+  0x000078c21e38fff0: 0cd3 3fff | be86 ffff | ff8b e890 
+
+  0x000078c21e38fffc: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e38fffc: c5f8 77e8 
+
+  0x000078c21e390000: ; ImmutableOopMap {}
+                      ;*irem {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::get@11 (line 85)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@178 (line 501)
+  0x000078c21e390000: fcd2 3fff | bed6 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e390020: 4c8b 5424 | 484c 8954 | 2418 448b | 5c24 4044 | 895c 2438 | 448b 5424 | 4444 8954 | 243c 4c8b 
+  0x000078c21e390040: 5424 504c | 8954 2440 | 8954 244c 
+
+  0x000078c21e39004c: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e39004c: c5f8 77e8 
+
+  0x000078c21e390050: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [24]=Oop [64]=Oop [88]=Oop [96]=Oop [104]=Oop [120]=Oop [140]=NarrowOop }
+                      ;*aastore {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@54 (line 138)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@194 (line 503)
+  0x000078c21e390050: acd2 3fff | be76 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e390070: 4c8b 5424 | 604c 8954 | 2410 4c8b | 5424 484c | 8954 2418 | 4c8b 5424 | 684c 8954 | 2428 4c8b 
+  0x000078c21e390090: 5424 584c | 8954 2430 | 448b 5c24 | 4044 895c | 2438 448b | 5424 4444 | 8954 243c | 448b 9424 
+  0x000078c21e3900b0: 8800 0000 | 4489 5424 | 6866 6690 
+
+  0x000078c21e3900bc: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e3900bc: c5f8 77e8 
+
+  0x000078c21e3900c0: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [40]=Oop [48]=Oop [80]=Oop [112]=NarrowOop [120]=Oop }
+                      ;*if_icmpge {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) java.util.Arrays::hashCode@19
+                      ; - org.eclipse.jdt.core.compiler.CharOperation::hashCode@1 (line 2490)
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::get@7 (line 85)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@178 (line 501)
+  0x000078c21e3900c0: 3cd2 3fff | 83c1 1f41 | b801 0000 | 00e9 2aef | ffff be76 | ffff ff48 | 8b2c 244c | 8b54 2430 
+  0x000078c21e3900e0: 4c89 1424 | 4c8b 5424 | 384c 8954 | 2408 4c8b | 5424 604c | 8954 2410 | 4c8b 5424 | 484c 8954 
+  0x000078c21e390100: 2418 4c8b | 5424 584c | 8954 2430 | 448b 5c24 | 4044 895c | 2438 448b | 5424 4444 | 8954 243c 
+  0x000078c21e390120: 4c8b 5424 | 504c 8954 | 2440 448b | 9424 8800 | 0000 4489 | 5424 6090 
+
+  0x000078c21e390138: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390138: c5f8 77e8 
+
+  0x000078c21e39013c: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [48]=Oop [64]=Oop [104]=Oop [112]=NarrowOop [120]=Oop }
+                      ;*if_icmpge {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) java.util.Arrays::hashCode@19
+                      ; - org.eclipse.jdt.core.compiler.CharOperation::hashCode@1 (line 2490)
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@7 (line 131)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@194 (line 503)
+  0x000078c21e39013c: c0d1 3fff | 4183 c21f | 41bb 0100 | 0000 e982 | f2ff ffbe | e4ff ffff | 488b 2c24 | 4c8b 5424 
+  0x000078c21e39015c: 304c 8914 | 244c 8b54 | 2438 4c89 | 5424 084c | 8b54 2460 | 4c89 5424 | 104c 8b54 | 2448 4c89 
+  0x000078c21e39017c: 5424 184c | 8b54 2458 | 4c89 5424 | 3044 8b5c | 2440 4489 | 5c24 3844 | 8b54 2444 | 4489 5424 
+  0x000078c21e39019c: 3c4c 8b54 | 2450 4c89 | 5424 4089 | 5424 6090 
+
+  0x000078c21e3901ac: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e3901ac: c5f8 77e8 
+
+  0x000078c21e3901b0: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [48]=Oop [64]=Oop [104]=Oop [112]=NarrowOop [120]=Oop [128]=NarrowOop }
+                      ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@35 (line 132)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@194 (line 503)
+  0x000078c21e3901b0: 4cd1 3fff | 4889 5424 | 1844 8944 | 2408 498b 
+
+  0x000078c21e3901c0: ;   {metadata({type array int})}
+  0x000078c21e3901c0: e948 bed0 | 0b04 0001 | 0000 0041 | 8bd0 6690 
+
+  0x000078c21e3901d0: ;   {runtime_call _new_array_nozero_Java}
+  0x000078c21e3901d0: c5f8 77e8 
+
+  0x000078c21e3901d4: ; ImmutableOopMap {rbp=Oop [0]=Oop [16]=Oop [48]=Oop [56]=Oop [72]=Oop [80]=Oop [88]=Oop [96]=Oop [104]=Oop [112]=NarrowOop }
+                      ;*newarray {reexecute=0 rethrow=0 return_oop=1}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@163 (line 498)
+  0x000078c21e3901d4: 2827 4aff | 4c8b cd44 | 8b44 2408 | 488b 5424 | 1848 8be8 | e9b3 f2ff | ff4c 8b54 | 2460 eb05 
+  0x000078c21e3901f4: 4c8b 5424 | 60be 76ff | ffff 4c8b | 4424 304c | 8944 2408 | 4c8b 4424 | 384c 8944 | 2410 4c89 
+  0x000078c21e390214: 5424 184c | 8b54 2448 | 4c89 5424 | 204c 8b54 | 2450 4c89 | 5424 284c | 8b54 2458 | 4c89 5424 
+  0x000078c21e390234: 384c 894c | 2450 4489 | 5c24 5890 
+
+  0x000078c21e390240: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390240: c5f8 77e8 
+
+  0x000078c21e390244: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [32]=Oop [40]=Oop [56]=Oop [80]=Oop [104]=Oop [112]=NarrowOop }
+                      ;*if_icmplt {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@140 (line 491)
+  0x000078c21e390244: b8d0 3fff | bee4 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e390264: 4c8b 5424 | 484c 8954 | 2418 4c8b | 5424 504c | 8954 2420 | 448b 5c24 | 4044 895c | 2438 448b 
+  0x000078c21e390284: 5424 4444 | 8954 243c | 8954 2454 
+
+  0x000078c21e390290: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390290: c5f8 77e8 
+
+  0x000078c21e390294: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [24]=Oop [32]=Oop [88]=Oop [96]=Oop [104]=Oop [112]=NarrowOop [120]=Oop [140]=NarrowOop }
+                      ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::get@30 (line 89)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@178 (line 501)
+  0x000078c21e390294: 68d0 3fff | 33ff 4c8b | cde9 81e7 | ffff 33d2 | e99a e7ff | ff33 f6e9 | b0e7 ffff | 4533 c0e9 
+  0x000078c21e3902b4: c9e7 ffff | 4533 d2e9 | e6e7 ffff | 4533 dbe9 | 09e8 ffff | 4c89 5c24 | 504c 8954 | 2448 4c89 
+  0x000078c21e3902d4: 4424 6048 | 8974 2438 | 4889 5424 | 3048 893c | 2445 33d2 | 4d8b c2e9 | 23e8 ffff | 4533 ede9 
+  0x000078c21e3902f4: 50e8 ffff | bee4 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e390314: 4c8b 5424 | 604c 8954 | 2410 4c8b | 5424 484c | 8954 2418 | 4c8b 5424 | 684c 8954 | 2428 4c8b 
+  0x000078c21e390334: 5424 584c | 8954 2430 | 448b 5424 | 4044 8954 | 2438 448b | 5c24 4444 | 895c 243c | 8954 2468 
+  0x000078c21e390354: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390354: c5f8 77e8 
+
+  0x000078c21e390358: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [40]=Oop [48]=Oop [80]=Oop [112]=NarrowOop [120]=Oop [128]=NarrowOop }
+                      ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::get@47 (line 87)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@178 (line 501)
+  0x000078c21e390358: a4cf 3fff | 4489 4c24 
+
+  0x000078c21e390360: ;   {metadata({type array int})}
+  0x000078c21e390360: 0c48 bed0 | 0b04 0001 | 0000 0041 | 8bd1 6690 
+
+  0x000078c21e390370: ;   {runtime_call _new_array_Java}
+  0x000078c21e390370: c5f8 77e8 
+
+  0x000078c21e390374: ; ImmutableOopMap {[0]=Oop [48]=Oop [56]=Oop [72]=Oop [80]=Oop [88]=Oop [96]=Oop [104]=Oop [112]=Oop [128]=Oop [136]=NarrowOop }
+                      ;*newarray {reexecute=0 rethrow=0 return_oop=1}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex$IntList::add@35 (line 83)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@258 (line 513)
+  0x000078c21e390374: 8822 4aff | 4c8b c0e9 | 76f3 ffff | 488b 7424 | 504c 8b94 | 2498 0000 | 004c 8994 | 2488 0000 
+  0x000078c21e390394: 0066 6690 
+
+  0x000078c21e390398: ;   {optimized virtual_call}
+  0x000078c21e390398: c5f8 77e8 
+
+  0x000078c21e39039c: ; ImmutableOopMap {[0]=Oop [48]=Oop [56]=Oop [72]=Oop [80]=Oop [88]=Oop [96]=Oop [104]=Oop [120]=Oop [136]=Oop [152]=Oop }
+                      ;*invokevirtual rehash {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::put@96 (line 115)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@241 (line 510)
+  0x000078c21e39039c: e079 3fff | e9e8 f6ff | ff44 899c | 2498 0000 
+
+  0x000078c21e3903ac: ;   {metadata('org/eclipse/jdt/internal/core/index/DiskIndex$IntList')}
+  0x000078c21e3903ac: 0048 bea8 | 4f75 0001 | 0000 0090 
+
+  0x000078c21e3903b8: ;   {runtime_call _new_instance_Java}
+  0x000078c21e3903b8: c5f8 77e8 
+
+  0x000078c21e3903bc: ; ImmutableOopMap {rbp=NarrowOop [0]=Oop [16]=Oop [32]=Oop [48]=Oop [56]=Oop [72]=Oop [80]=Oop [88]=Oop [96]=Oop [104]=Oop [112]=NarrowOop [120]=Oop [128]=NarrowOop [140]=NarrowOop [144]=Oop }
+                      ;*new {reexecute=0 rethrow=0 return_oop=1}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@221 (line 509)
+  0x000078c21e3903bc: 401f 4aff | 4c8b c044 | 8b9c 2498 | 0000 00e9 | a2f4 ffff | 4963 d0e9 | 5af0 ffff | becc ffff 
+  0x000078c21e3903dc: ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 | 4c8b 5424 | 484c 8954 
+  0x000078c21e3903fc: 2418 4c8b | 5424 504c | 8954 2420 | 448b 5c24 | 4044 895c | 2438 448b | 5424 4444 | 8954 243c 
+  0x000078c21e39041c: 4c89 4c24 | 4844 8944 | 2450 6690 
+
+  0x000078c21e390428: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390428: c5f8 77e8 
+
+  0x000078c21e39042c: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [24]=Oop [32]=Oop [72]=Oop [88]=Oop [96]=Oop [104]=Oop [112]=NarrowOop }
+                      ;*newarray {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@163 (line 498)
+  0x000078c21e39042c: d0ce 3fff | bee4 ffff | ff4c 8b54 | 2430 4c89 | 5424 084c | 8b54 2438 | 4c89 5424 | 104c 8b54 
+  0x000078c21e39044c: 2460 4c89 | 5424 184c | 8b54 2448 | 4c89 5424 | 204c 8b54 | 2450 4c89 | 5424 284c | 8b54 2458 
+  0x000078c21e39046c: 4c89 5424 | 3866 6690 
+
+  0x000078c21e390474: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390474: c5f8 77e8 
+
+  0x000078c21e390478: ; ImmutableOopMap {[0]=Oop [8]=Oop [16]=Oop [24]=Oop [32]=Oop [40]=Oop [56]=Oop [104]=Oop [112]=Oop [128]=Oop [136]=NarrowOop }
+                      ;*iastore {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex$IntList::add@65 (line 85)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@258 (line 513)
+  0x000078c21e390478: 84ce 3fff | 4963 c9e9 | 99f1 ffff | becc ffff | ff4c 8b54 | 2430 4c89 | 5424 084c | 8b54 2438 
+  0x000078c21e390498: 4c89 5424 | 104c 8b54 | 2460 4c89 | 5424 184c | 8b54 2448 | 4c89 5424 | 204c 8b54 | 2450 4c89 
+  0x000078c21e3904b8: 5424 284c | 8b54 2468 | 4c89 5424 | 304c 8b54 | 2458 4c89 | 5424 384c | 8b54 2470 | 4c89 5424 
+  0x000078c21e3904d8: 484c 894c | 2460 4c89 | 4424 7090 
+
+  0x000078c21e3904e4: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e3904e4: c5f8 77e8 
+
+  0x000078c21e3904e8: ; ImmutableOopMap {[0]=Oop [8]=Oop [16]=Oop [24]=Oop [32]=Oop [40]=Oop [48]=Oop [56]=Oop [72]=Oop [96]=Oop [112]=Oop [128]=Oop [136]=NarrowOop }
+                      ;*invokestatic arraycopy {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex$IntList::add@46 (line 83)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@258 (line 513)
+  0x000078c21e3904e8: 14ce 3fff | be76 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e390508: 4c8b 5424 | 484c 8954 | 2418 4c8b | 5424 504c | 8954 2420 | 448b 5424 | 4044 8954 | 2438 448b 
+  0x000078c21e390528: 5c24 4444 | 895c 243c | 4489 4424 | 4c4c 894c | 2450 6690 
+
+  0x000078c21e39053c: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e39053c: c5f8 77e8 
+
+  0x000078c21e390540: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [24]=Oop [32]=Oop [80]=Oop [88]=Oop [96]=Oop [104]=Oop [120]=Oop }
+                      ;*if_icmplt {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@268 (line 512)
+  0x000078c21e390540: bccd 3fff | 8b5c 2428 | be76 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c 
+  0x000078c21e390560: 8954 2408 | 4c89 4424 | 284c 896c | 2430 895c | 2438 6690 
+
+  0x000078c21e390574: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390574: c5f8 77e8 
+
+  0x000078c21e390578: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [40]=Oop [48]=Oop [72]=Oop [80]=Oop [96]=Oop }
+                      ;*aload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@66 (line 485)
+  0x000078c21e390578: 84cd 3fff | 498b cd4c | 8b2c 24be | 8dff ffff | 488b 6c24 | 2044 8b5c | 2428 4489 | 1c24 4c89 
+  0x000078c21e390598: 4c24 2048 | 894c 2428 | 4c89 7424 | 304c 896c | 2438 6690 
+
+  0x000078c21e3905ac: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e3905ac: c5f8 77e8 
+
+  0x000078c21e3905b0: ; ImmutableOopMap {rbp=Oop [8]=Oop [16]=Oop [24]=Oop [32]=Oop [40]=Oop [48]=Oop [56]=Oop }
+                      ;*aload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@66 (line 485)
+  0x000078c21e3905b0: 4ccd 3fff | 4c8b 2c24 | ebc9 4c8b | 2c24 ebc3 | bef6 ffff | ff66 6690 
+
+  0x000078c21e3905c8: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e3905c8: c5f8 77e8 
+
+  0x000078c21e3905cc: ; ImmutableOopMap {[48]=Oop }
+                      ;*invokevirtual put {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@287 (line 517)
+  0x000078c21e3905cc: 30cd 3fff | bef6 ffff | ff66 6690 
+
+  0x000078c21e3905d8: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e3905d8: c5f8 77e8 
+
+  0x000078c21e3905dc: ; ImmutableOopMap {[48]=Oop [72]=Oop [80]=Oop }
+                      ;*invokevirtual writeCategoryTable {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@297 (line 519)
+  0x000078c21e3905dc: 20cd 3fff | bee4 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e3905fc: 4c8b 5424 | 604c 8954 | 2410 4c8b | 5424 484c | 8954 2418 | 4c8b 5424 | 684c 8954 | 2428 4c8b 
+  0x000078c21e39061c: 5424 584c | 8954 2430 | 448b 5424 | 4044 8954 | 2438 448b | 5c24 4444 | 895c 243c | 448b 5424 
+  0x000078c21e39063c: 7444 8954 | 2448 448b | 5c24 7044 | 895c 244c | 4c8b 9424 | 9800 0000 | 4c89 5424 | 6844 8974 
+  0x000078c21e39065c: 2474 6690 
+
+  0x000078c21e390660: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390660: c5f8 77e8 
+
+  0x000078c21e390664: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [40]=Oop [48]=Oop [76]=NarrowOop [80]=Oop [104]=Oop [120]=Oop [128]=NarrowOop [152]=Oop }
+                      ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::put@54 (line 102)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@241 (line 510)
+  0x000078c21e390664: 98cc 3fff | bee4 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e390684: 4c8b 5424 | 604c 8954 | 2410 4c8b | 5424 484c | 8954 2418 | 4c8b 5424 | 684c 8954 | 2428 4c8b 
+  0x000078c21e3906a4: 5424 584c | 8954 2430 | 448b 5c24 | 4044 895c | 2438 448b | 5424 4444 | 8954 243c | 448b 5c24 
+  0x000078c21e3906c4: 7044 895c | 2458 4c8b | 9424 9800 | 0000 4c89 | 5424 6844 | 8974 2470 
+
+  0x000078c21e3906dc: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e3906dc: c5f8 77e8 
+
+  0x000078c21e3906e0: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [40]=Oop [48]=Oop [80]=Oop [88]=NarrowOop [104]=Oop [120]=Oop [128]=NarrowOop [152]=Oop }
+                      ;*aastore {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::put@68 (line 110)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@241 (line 510)
+  0x000078c21e3906e0: 1ccc 3fff | bee4 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e390700: 4c8b 5424 | 604c 8954 | 2410 4c8b | 5424 484c | 8954 2418 | 4c8b 5424 | 684c 8954 | 2428 4c8b 
+  0x000078c21e390720: 5424 584c | 8954 2430 | 448b 5424 | 4044 8954 | 2438 448b | 5c24 4444 | 895c 243c | 448b 5424 
+  0x000078c21e390740: 7444 8954 | 2448 4c8b | 9424 9800 | 0000 4c89 | 5424 6044 | 8974 2468 | 4c89 5424 | 7066 6690 
+  0x000078c21e390760: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390760: c5f8 77e8 
+
+  0x000078c21e390764: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [40]=Oop [48]=Oop [80]=Oop [96]=Oop [112]=Oop [120]=Oop [140]=NarrowOop }
+                      ;*aastore {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::put@76 (line 111)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@241 (line 510)
+  0x000078c21e390764: 98cb 3fff | be76 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e390784: 4c8b 5424 | 604c 8954 | 2410 4c8b | 5424 484c | 8954 2418 | 4c8b 5424 | 684c 8954 | 2428 4c8b 
+  0x000078c21e3907a4: 5424 584c | 8954 2430 | 448b 5c24 | 4044 895c | 2438 448b | 5424 4444 | 8954 243c | 448b 5c24 
+  0x000078c21e3907c4: 7444 895c | 2448 448b | 5424 7044 | 8954 245c | 448b 9c24 | 8800 0000 | 4489 5c24 | 644c 8944 
+  0x000078c21e3907e4: 2470 6690 
+
+  0x000078c21e3907e8: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e3907e8: c5f8 77e8 
+
+  0x000078c21e3907ec: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [40]=Oop [48]=Oop [80]=Oop [92]=NarrowOop [112]=Oop [120]=Oop [152]=Oop }
+                      ;*if_icmpge {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) java.util.Arrays::hashCode@19
+                      ; - org.eclipse.jdt.core.compiler.CharOperation::hashCode@1 (line 2490)
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::put@7 (line 100)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@241 (line 510)
+  0x000078c21e3907ec: 10cb 3fff | 4183 c21f | 41b8 0100 | 0000 e95f | f1ff ffbe | d6ff ffff | 488b 2c24 | 4c8b 5424 
+  0x000078c21e39080c: 304c 8914 | 244c 8b54 | 2438 4c89 | 5424 084c | 8b54 2460 | 4c89 5424 | 104c 8b54 | 2448 4c89 
+  0x000078c21e39082c: 5424 184c | 8b54 2468 | 4c89 5424 | 284c 8b54 | 2458 4c89 | 5424 3044 | 8b5c 2440 | 4489 5c24 
+  0x000078c21e39084c: 3844 8b54 | 2444 4489 | 5424 3c44 | 8b5c 2474 | 4489 5c24 | 484c 8b94 | 2498 0000 | 004c 8954 
+  0x000078c21e39086c: 2460 4489 | 7424 684c | 8954 2470 
+
+  0x000078c21e390878: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390878: c5f8 77e8 
+
+  0x000078c21e39087c: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [40]=Oop [48]=Oop [80]=Oop [96]=Oop [112]=Oop [120]=Oop [140]=NarrowOop }
+                      ;*aastore {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::put@76 (line 111)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@241 (line 510)
+  0x000078c21e39087c: 80ca 3fff | bee4 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e39089c: 4c8b 5424 | 604c 8954 | 2410 4c8b | 5424 484c | 8954 2418 | 4c8b 5424 | 684c 8954 | 2428 4c8b 
+  0x000078c21e3908bc: 5424 584c | 8954 2430 | 448b 5c24 | 4044 895c | 2438 448b | 5424 4444 | 8954 243c | 448b 5c24 
+  0x000078c21e3908dc: 7444 895c | 2448 448b | 5424 7044 | 8954 244c | 4c8b 9424 | 9800 0000 | 4c89 5424 | 6844 8974 
+  0x000078c21e3908fc: 2474 6690 
+
+  0x000078c21e390900: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390900: c5f8 77e8 
+
+  0x000078c21e390904: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [40]=Oop [48]=Oop [76]=NarrowOop [80]=Oop [104]=Oop [120]=Oop [128]=NarrowOop [152]=Oop }
+                      ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::put@54 (line 102)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@241 (line 510)
+  0x000078c21e390904: f8c9 3fff | bee4 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e390924: 4c8b 5424 | 604c 8954 | 2410 4c8b | 5424 484c | 8954 2418 | 4c8b 5424 | 504c 8954 | 2420 4c8b 
+  0x000078c21e390944: 5424 684c | 8954 2428 | 4c8b 5424 | 584c 8954 | 2430 448b | 5c24 4044 | 895c 2438 | 448b 5424 
+  0x000078c21e390964: 4444 8954 | 243c 4c8b | 9424 9800 | 0000 4c89 | 5424 5844 | 8974 2460 | 4c89 5424 | 6866 6690 
+  0x000078c21e390984: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390984: c5f8 77e8 
+
+  0x000078c21e390988: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [32]=Oop [40]=Oop [48]=Oop [88]=Oop [104]=Oop [120]=Oop [140]=NarrowOop }
+                      ;*aastore {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::put@34 (line 104)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@241 (line 510)
+  0x000078c21e390988: 74c9 3fff | bed6 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e3909a8: 4c8b 5424 | 604c 8954 | 2410 4c8b | 5424 484c | 8954 2418 | 4c8b 5424 | 504c 8954 | 2420 4c8b 
+  0x000078c21e3909c8: 5424 684c | 8954 2428 | 4c8b 5424 | 584c 8954 | 2430 448b | 5424 4044 | 8954 2438 | 448b 5c24 
+  0x000078c21e3909e8: 4444 895c | 243c 4c8b | 9424 9800 | 0000 4c89 | 5424 5844 | 8974 2460 | 4c89 5424 | 6866 6690 
+  0x000078c21e390a08: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390a08: c5f8 77e8 
+
+  0x000078c21e390a0c: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [32]=Oop [40]=Oop [48]=Oop [88]=Oop [104]=Oop [120]=Oop [140]=NarrowOop }
+                      ;*aastore {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::put@34 (line 104)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@241 (line 510)
+  0x000078c21e390a0c: f0c8 3fff | bede ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e390a2c: 4c89 4c24 | 284c 896c | 2430 895c | 2438 448b | 5424 4444 | 8954 243c | 4489 4424 | 4044 895c 
+  0x000078c21e390a4c: 2444 6690 
+
+  0x000078c21e390a50: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390a50: c5f8 77e8 
+
+  0x000078c21e390a54: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [40]=Oop [48]=Oop [64]=NarrowOop [68]=NarrowOop [72]=Oop [80]=Oop [96]=Oop }
+                      ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@83 (line 487)
+  0x000078c21e390a54: a8c8 3fff | bede ffff | ff4c 8b54 | 2430 4c89 | 5424 084c | 8b54 2438 | 4c89 5424 | 104c 8b54 
+  0x000078c21e390a74: 2460 4c89 | 5424 184c | 8b54 2448 | 4c89 5424 | 204c 8b54 | 2450 4c89 | 5424 284c | 8b54 2458 
+  0x000078c21e390a94: 4c89 5424 | 384c 8944 | 2460 6690 
+
+  0x000078c21e390aa0: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390aa0: c5f8 77e8 
+
+  0x000078c21e390aa4: ; ImmutableOopMap {rbp=NarrowOop [0]=Oop [8]=Oop [16]=Oop [24]=Oop [32]=Oop [40]=Oop [56]=Oop [96]=Oop [104]=Oop [112]=NarrowOop [120]=Oop [152]=Oop }
+                      ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@227 (line 509)
+  0x000078c21e390aa4: 58c8 3fff | bef6 ffff | ff8b eb90 
+
+  0x000078c21e390ab0: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390ab0: c5f8 77e8 
+
+  0x000078c21e390ab4: ; ImmutableOopMap {}
+                      ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@82 (line 487)
+  0x000078c21e390ab4: 48c8 3fff | bef4 ffff | ff48 8b2c | 244c 8b54 | 2430 4c89 | 1424 4c8b | 5424 384c | 8954 2408 
+  0x000078c21e390ad4: 4c89 4c24 | 284c 896c | 2430 895c | 2438 4489 | 4424 4090 
+
+  0x000078c21e390ae8: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390ae8: c5f8 77e8 
+
+  0x000078c21e390aec: ; ImmutableOopMap {rbp=Oop [0]=Oop [8]=Oop [40]=Oop [48]=Oop [64]=NarrowOop [72]=Oop [80]=Oop [96]=Oop }
+                      ;*checkcast {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@83 (line 487)
+  0x000078c21e390aec: 10c8 3fff | bef6 ffff | ff66 6690 
+
+  0x000078c21e390af8: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390af8: c5f8 77e8 
+
+  0x000078c21e390afc: ; ImmutableOopMap {[112]=NarrowOop }
+                      ;*invokevirtual get {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@178 (line 501)
+  0x000078c21e390afc: 00c8 3fff | bef6 ffff | ff66 6690 
+
+  0x000078c21e390b08: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390b08: c5f8 77e8 
+
+  0x000078c21e390b0c: ; ImmutableOopMap {}
+                      ;*arraylength {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::get@4 (line 84)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@178 (line 501)
+  0x000078c21e390b0c: f0c7 3fff | bef6 ffff | ff8b ea90 
+
+  0x000078c21e390b18: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390b18: c5f8 77e8 
+
+  0x000078c21e390b1c: ; ImmutableOopMap {[120]=Oop }
+                      ;*aastore {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.compiler.util.HashtableOfObject::putUnsafely@54 (line 138)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@194 (line 503)
+  0x000078c21e390b1c: e0c7 3fff | bef6 ffff | ff8b ea90 
+
+  0x000078c21e390b28: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390b28: c5f8 77e8 
+
+  0x000078c21e390b2c: ; ImmutableOopMap {}
+                      ;*aaload {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.compiler.util.HashtableOfObject::get@30 (line 89)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@178 (line 501)
+  0x000078c21e390b2c: d0c7 3fff | bef6 ffff | ff66 6690 
+
+  0x000078c21e390b38: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390b38: c5f8 77e8 
+
+  0x000078c21e390b3c: ; ImmutableOopMap {}
+                      ;*arraylength {reexecute=0 rethrow=0 return_oop=0}
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex$IntList::add@8 (line 80)
+                      ; - org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@258 (line 513)
+  0x000078c21e390b3c: c0c7 3fff | bef6 ffff | ff66 6690 
+
+  0x000078c21e390b48: ;   {runtime_call UncommonTrapBlob}
+  0x000078c21e390b48: c5f8 77e8 
+
+  0x000078c21e390b4c: ; ImmutableOopMap {}
+                      ;*getfield categoryTables {reexecute=1 rethrow=0 return_oop=0}
+                      ; - (reexecute) org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory@282 (line 517)
+  0x000078c21e390b4c: b0c7 3fff | 488b f0eb | 2148 8bf0 | eb1c 488b | f0eb 1748 | 8bf0 eb12 | 488b f0eb | 0d48 8bf0 
+  0x000078c21e390b6c: eb08 488b | f0eb 0348 | 8bf0 c5f8 | 7748 81c4 | b000 0000 
+
+  0x000078c21e390b80: ;   {runtime_call _rethrow_Java}
+  0x000078c21e390b80: 5de9 7a0b 
+
+  0x000078c21e390b84: ;   {internal_word}
+  0x000078c21e390b84: 4aff 49ba | 23f8 381e | c278 0000 | 4d89 9760 
+
+  0x000078c21e390b94: ;   {runtime_call SafepointBlob}
+  0x000078c21e390b94: 0300 00e9 | 64d8 3fff | f4f4 f4f4 
+[Stub Code]
+  0x000078c21e390ba0: ;   {no_reloc}
+  0x000078c21e390ba0: 48bb 0000 | 0000 0000 
+
+  0x000078c21e390ba8: ;   {runtime_call}
+  0x000078c21e390ba8: 0000 e9fb 
+
+  0x000078c21e390bac: ;   {static_stub}
+  0x000078c21e390bac: ffff ff48 | bb00 0000 | 0000 0000 
+
+  0x000078c21e390bb8: ;   {runtime_call}
+  0x000078c21e390bb8: 00e9 fbff 
+
+  0x000078c21e390bbc: ;   {static_stub}
+  0x000078c21e390bbc: ffff 48bb | 0000 0000 | 0000 0000 
+
+  0x000078c21e390bc8: ;   {runtime_call}
+  0x000078c21e390bc8: e9fb ffff 
+
+  0x000078c21e390bcc: ;   {static_stub}
+  0x000078c21e390bcc: ff48 bb00 | 0000 0000 
+
+  0x000078c21e390bd4: ;   {runtime_call}
+  0x000078c21e390bd4: 0000 00e9 | fbff ffff 
+[Exception Handler]
+  0x000078c21e390bdc: ;   {runtime_call ExceptionBlob}
+  0x000078c21e390bdc: e99f 7d49 | ffe8 0000 | 0000 4883 
+
+  0x000078c21e390be8: ;   {runtime_call DeoptimizationBlob}
+  0x000078c21e390be8: 2c24 05e9 | b0ca 3fff 
+[/MachCode]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x000078c180089bf0, length=25, elements={
+0x000078c228028160, 0x000078c2281e7370, 0x000078c2281e88f0, 0x000078c228219f30,
+0x000078c22821d820, 0x000078c22821e7c0, 0x000078c22821fe20, 0x000078c2282212e0,
+0x000078c22822a720, 0x000078c2282b0640, 0x000078c2283d7ef0, 0x000078c2285d2190,
+0x000078c228636a10, 0x000078c2286396a0, 0x000078c1b038db10, 0x000078c1b0431370,
+0x000078c1b03640f0, 0x000078c1b03c7fe0, 0x000078c1b0998c30, 0x000078c2286d1e50,
+0x000078c228788a50, 0x000078c22878c8b0, 0x000078c2000048d0, 0x000078c184001310,
+0x000078c1800b56a0
+}
+
+Java Threads: ( => current thread )
+  0x000078c228028160 JavaThread "main" [_thread_blocked, id=9244, stack(0x000078c22ea19000,0x000078c22eb19000)]
+  0x000078c2281e7370 JavaThread "Reference Handler" daemon [_thread_blocked, id=9248, stack(0x000078c2146e6000,0x000078c2147e6000)]
+  0x000078c2281e88f0 JavaThread "Finalizer" daemon [_thread_blocked, id=9249, stack(0x000078c2145e6000,0x000078c2146e6000)]
+  0x000078c228219f30 JavaThread "Signal Dispatcher" daemon [_thread_blocked, id=9250, stack(0x000078c21426e000,0x000078c21436e000)]
+  0x000078c22821d820 JavaThread "Service Thread" daemon [_thread_blocked, id=9251, stack(0x000078c21416e000,0x000078c21426e000)]
+  0x000078c22821e7c0 JavaThread "Monitor Deflation Thread" daemon [_thread_blocked, id=9252, stack(0x000078c21406e000,0x000078c21416e000)]
+  0x000078c22821fe20 JavaThread "C2 CompilerThread0" daemon [_thread_blocked, id=9253, stack(0x000078c1f3f00000,0x000078c1f4000000)]
+  0x000078c2282212e0 JavaThread "C1 CompilerThread0" daemon [_thread_blocked, id=9254, stack(0x000078c1f3e00000,0x000078c1f3f00000)]
+  0x000078c22822a720 JavaThread "Sweeper thread" daemon [_thread_blocked, id=9255, stack(0x000078c1f3d00000,0x000078c1f3e00000)]
+  0x000078c2282b0640 JavaThread "Common-Cleaner" daemon [_thread_blocked, id=9258, stack(0x000078c1f3c00000,0x000078c1f3d00000)]
+  0x000078c2283d7ef0 JavaThread "Notification Thread" daemon [_thread_blocked, id=9261, stack(0x000078c1f3a00000,0x000078c1f3b00000)]
+  0x000078c2285d2190 JavaThread "Active Thread: Equinox Container: abba04a2-da59-44be-a1fd-bfd35f12eff7" [_thread_blocked, id=9282, stack(0x000078c1f31f9000,0x000078c1f32f9000)]
+  0x000078c228636a10 JavaThread "Framework Event Dispatcher: Equinox Container: abba04a2-da59-44be-a1fd-bfd35f12eff7" daemon [_thread_blocked, id=9286, stack(0x000078c1f30f9000,0x000078c1f31f9000)]
+  0x000078c2286396a0 JavaThread "Start Level: Equinox Container: abba04a2-da59-44be-a1fd-bfd35f12eff7" daemon [_thread_blocked, id=9287, stack(0x000078c1f2ff9000,0x000078c1f30f9000)]
+  0x000078c1b038db10 JavaThread "Bundle File Closer" daemon [_thread_blocked, id=9291, stack(0x000078c1f2b00000,0x000078c1f2c00000)]
+  0x000078c1b0431370 JavaThread "SCR Component Actor" daemon [_thread_blocked, id=9293, stack(0x000078c1f2a00000,0x000078c1f2b00000)]
+  0x000078c1b03640f0 JavaThread "Worker-JM" [_thread_blocked, id=9306, stack(0x000078c1f2800000,0x000078c1f2900000)]
+  0x000078c1b03c7fe0 JavaThread "Worker-0" [_thread_blocked, id=9308, stack(0x000078c1f2700000,0x000078c1f2800000)]
+=>0x000078c1b0998c30 JavaThread "Java indexing" daemon [_thread_in_Java, id=9317, stack(0x000078c1f2400000,0x000078c1f2500000)]
+  0x000078c2286d1e50 JavaThread "pool-2-thread-1" [_thread_blocked, id=9318, stack(0x000078c1f2300000,0x000078c1f2400000)]
+  0x000078c228788a50 JavaThread "WorkspaceEventsHandler" [_thread_blocked, id=9319, stack(0x000078c1f2200000,0x000078c1f2300000)]
+  0x000078c22878c8b0 JavaThread "pool-1-thread-1" [_thread_in_native, id=9320, stack(0x000078c1f2100000,0x000078c1f2200000)]
+  0x000078c2000048d0 JavaThread "Attach Listener" daemon [_thread_blocked, id=9401, stack(0x000078c1f3b00000,0x000078c1f3c00000)]
+  0x000078c184001310 JavaThread "Worker-4" [_thread_blocked, id=24472, stack(0x000078c1f1d00000,0x000078c1f1e00000)]
+  0x000078c1800b56a0 JavaThread "ForkJoinPool.commonPool-worker-7" daemon [_thread_blocked, id=26866, stack(0x000078c1f1f00000,0x000078c1f2000000)]
+
+Other Threads:
+  0x000078c228069210 VMThread "VM Thread" [stack: 0x000078c2147e7000,0x000078c2148e7000] [id=9246] _threads_hazard_ptr=0x000078c180089bf0
+  0x000078c228346dc0 WatcherThread [stack: 0x000078c1f3900000,0x000078c1f3a00000] [id=9263]
+  0x000078c22803f9f0 GCTaskThread "GC Thread#0" [stack: 0x000078c22e542000,0x000078c22e642000] [id=9245]
+  0x000078c204001230 GCTaskThread "GC Thread#1" [stack: 0x000078c1f37ff000,0x000078c1f38ff000] [id=9272]
+  0x000078c204003130 GCTaskThread "GC Thread#2" [stack: 0x000078c1f36fe000,0x000078c1f37fe000] [id=9273]
+  0x000078c204003af0 GCTaskThread "GC Thread#3" [stack: 0x000078c1f35fd000,0x000078c1f36fd000] [id=9274]
+  0x000078c2040044b0 GCTaskThread "GC Thread#4" [stack: 0x000078c1f34fc000,0x000078c1f35fc000] [id=9275]
+  0x000078c204005260 GCTaskThread "GC Thread#5" [stack: 0x000078c1f33fb000,0x000078c1f34fb000] [id=9276]
+  0x000078c204006010 GCTaskThread "GC Thread#6" [stack: 0x000078c1f32fa000,0x000078c1f33fa000] [id=9277]
+  0x000078c2040078a0 GCTaskThread "GC Thread#7" [stack: 0x000078c1f2ef9000,0x000078c1f2ff9000] [id=9288]
+
+Threads with active compile tasks:
+C2 CompilerThread0  4290515 13967       4       org.eclipse.jdt.internal.compiler.lookup.MethodBinding::setAnnotations (17 bytes)
+C1 CompilerThread0  4290515 13988   !   2       org.eclipse.jdt.internal.compiler.parser.AbstractCommentParser::commentParse (1859 bytes)
+
+VM state: synchronizing (normal execution)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x000078c228024ed0] Threads_lock - owner thread: 0x000078c228069210
+[0x000078c228025680] Heap_lock - owner thread: 0x000078c1800b56a0
+
+Heap address: 0x00000000c0000000, size: 1024 MB, Compressed Oops mode: 32-bit
+
+CDS archive(s) not mapped
+Compressed class space mapped at: 0x0000000100000000-0x0000000140000000, reserved size: 1073741824
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 3, Narrow klass range: 0x140000000
+
+GC Precious Log:
+ CPUs: 8 total, 8 available
+ Memory: 6857M
+ Large Page Support: Disabled
+ NUMA Support: Disabled
+ Compressed Oops: Enabled (32-bit)
+ Alignments: Space 512K, Generation 512K, Heap 2M
+ Heap Min Capacity: 100M
+ Heap Initial Capacity: 100M
+ Heap Max Capacity: 1G
+ Pre-touch: Disabled
+ Parallel Workers: 8
+
+Heap:
+ PSYoungGen      total 3072K, used 3068K [0x00000000eab00000, 0x00000000eb080000, 0x0000000100000000)
+  eden space 2048K, 100% used [0x00000000eab00000,0x00000000ead00000,0x00000000ead00000)
+  from space 1024K, 99% used [0x00000000eaf80000,0x00000000eb07f000,0x00000000eb080000)
+  to   space 1536K, 0% used [0x00000000ead80000,0x00000000ead80000,0x00000000eaf00000)
+ ParOldGen       total 161792K, used 142752K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 88% used [0x00000000c0000000,0x00000000c8b68180,0x00000000c9e00000)
+ Metaspace       used 70318K, committed 71488K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+
+Card table byte_map: [0x000078c22e642000,0x000078c22e843000] _byte_map_base: 0x000078c22e042000
+
+Marking Bits: (ParMarkBitMap*) 0x000078c22ff1f380
+ Begin Bits: [0x000078c22c3eb000, 0x000078c22d3eb000)
+ End Bits:   [0x000078c22d3eb000, 0x000078c22e3eb000)
+
+Polling page: 0x000078c2302ed000
+
+Metaspace:
+
+Usage:
+  Non-class:     61,76 MB used.
+      Class:      6,91 MB used.
+       Both:     68,67 MB used.
+
+Virtual space:
+  Non-class space:       64,00 MB reserved,      62,44 MB ( 98%) committed,  1 nodes.
+      Class space:        1,00 GB reserved,       7,38 MB ( <1%) committed,  1 nodes.
+             Both:        1,06 GB reserved,      69,81 MB (  6%) committed. 
+
+Chunk freelists:
+   Non-Class:  1,23 MB
+       Class:  8,67 MB
+        Both:  9,90 MB
+
+MaxMetaspaceSize: unlimited
+CompressedClassSpaceSize: 1,00 GB
+Initial GC threshold: 21,00 MB
+Current GC threshold: 114,81 MB
+CDS: off
+MetaspaceReclaimPolicy: balanced
+ - commit_granule_bytes: 65536.
+ - commit_granule_words: 8192.
+ - virtual_space_node_default_size: 8388608.
+ - enlarge_chunks_in_place: 1.
+ - new_chunks_are_fully_committed: 0.
+ - uncommit_free_chunks: 1.
+ - use_allocation_guard: 0.
+ - handle_deallocations: 1.
+
+
+Internal statistics:
+
+num_allocs_failed_limit: 9.
+num_arena_births: 716.
+num_arena_deaths: 180.
+num_vsnodes_births: 2.
+num_vsnodes_deaths: 0.
+num_space_committed: 1117.
+num_space_uncommitted: 0.
+num_chunks_returned_to_freelist: 206.
+num_chunks_taken_from_freelist: 3513.
+num_chunk_merges: 68.
+num_chunk_splits: 2227.
+num_chunks_enlarged: 1430.
+num_inconsistent_stats: 0.
+
+CodeHeap 'non-profiled nmethods': size=120028Kb used=6951Kb max_used=6951Kb free=113076Kb
+ bounds [0x000078c21dcc9000, 0x000078c21e399000, 0x000078c225200000]
+CodeHeap 'profiled nmethods': size=120028Kb used=23600Kb max_used=24960Kb free=96427Kb
+ bounds [0x000078c216200000, 0x000078c217ae0000, 0x000078c21d737000]
+CodeHeap 'non-nmethods': size=5704Kb used=1355Kb max_used=1431Kb free=4349Kb
+ bounds [0x000078c21d737000, 0x000078c21d9a7000, 0x000078c21dcc9000]
+ total_blobs=10975 nmethods=10275 adapters=612
+ compilation: enabled
+              stopped_count=0, restarted_count=0
+ full_count=0
+
+Compilation events (20 events):
+Event: 4290,256 Thread 0x000078c2282212e0 13946       3       org.eclipse.core.internal.resources.WorkManager::decrementPreparedOperations (11 bytes)
+Event: 4290,256 Thread 0x000078c2282212e0 nmethod 13946 0x000078c216dd7010 code [0x000078c216dd71a0, 0x000078c216dd72b0]
+Event: 4290,257 Thread 0x000078c2282212e0 13956  s!   3       org.eclipse.jdt.internal.core.index.DiskIndex::readCategoryTable (743 bytes)
+Event: 4290,274 Thread 0x000078c2282212e0 nmethod 13956 0x000078c2178a0890 code [0x000078c2178a0ea0, 0x000078c2178a4ba0]
+Event: 4290,274 Thread 0x000078c2282212e0 13957       3       org.eclipse.core.internal.resources.Project::getParent (8 bytes)
+Event: 4290,274 Thread 0x000078c2282212e0 nmethod 13957 0x000078c216df3b10 code [0x000078c216df3ca0, 0x000078c216df3dd0]
+Event: 4290,274 Thread 0x000078c2282212e0 13959       2       org.eclipse.core.runtime.jobs.Job::getPriority (5 bytes)
+Event: 4290,274 Thread 0x000078c2282212e0 nmethod 13959 0x000078c216e33610 code [0x000078c216e337a0, 0x000078c216e338b0]
+Event: 4290,285 Thread 0x000078c22821fe20 nmethod 13931 0x000078c21e38c410 code [0x000078c21e38c5e0, 0x000078c21e38d4a8]
+Event: 4290,285 Thread 0x000078c22821fe20 13947 %     4       org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash @ 27 (84 bytes)
+Event: 4290,297 Thread 0x000078c22821fe20 nmethod 13947% 0x000078c21e38db90 code [0x000078c21e38dd60, 0x000078c21e38e2a8]
+Event: 4290,297 Thread 0x000078c22821fe20 13951 %     4       org.eclipse.jdt.internal.core.index.DiskIndex::mergeCategory @ 66 (301 bytes)
+Event: 4290,343 Thread 0x000078c22821fe20 nmethod 13951% 0x000078c21e38e710 code [0x000078c21e38e980, 0x000078c21e390bf0]
+Event: 4290,344 Thread 0x000078c22821fe20 13960       4       org.eclipse.jdt.internal.compiler.util.HashtableOfObject::rehash (84 bytes)
+Event: 4290,356 Thread 0x000078c2282212e0 13970       2       org.eclipse.jdt.internal.compiler.codegen.CodeStream::iload_3 (99 bytes)
+Event: 4290,359 Thread 0x000078c2282212e0 nmethod 13970 0x000078c216b25810 code [0x000078c216b259e0, 0x000078c216b25dd0]
+Event: 4290,359 Thread 0x000078c22821fe20 nmethod 13960 0x000078c21e391c90 code [0x000078c21e391e80, 0x000078c21e392708]
+Event: 4290,359 Thread 0x000078c22821fe20 13968       4       org.eclipse.jdt.internal.compiler.classfmt.MethodInfo::isConstructor (8 bytes)
+Event: 4290,360 Thread 0x000078c22821fe20 nmethod 13968 0x000078c21e392c10 code [0x000078c21e392da0, 0x000078c21e392e88]
+Event: 4290,360 Thread 0x000078c22821fe20 13967       4       org.eclipse.jdt.internal.compiler.lookup.MethodBinding::setAnnotations (17 bytes)
+
+GC Heap History (20 events):
+Event: 4290,264 GC heap before
+{Heap before GC invocations=702 (full 18):
+ PSYoungGen      total 5632K, used 5629K [0x00000000eab00000, 0x00000000ec080000, 0x0000000100000000)
+  eden space 512K, 100% used [0x00000000eab00000,0x00000000eab80000,0x00000000eab80000)
+  from space 5120K, 99% used [0x00000000eb400000,0x00000000eb8ff6b0,0x00000000eb900000)
+  to   space 8704K, 0% used [0x00000000eab80000,0x00000000eab80000,0x00000000eb400000)
+ ParOldGen       total 161792K, used 129489K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 80% used [0x00000000c0000000,0x00000000c7e747f0,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,267 GC heap after
+{Heap after GC invocations=702 (full 18):
+ PSYoungGen      total 6656K, used 5662K [0x00000000eab00000, 0x00000000eb900000, 0x0000000100000000)
+  eden space 512K, 0% used [0x00000000eab00000,0x00000000eab00000,0x00000000eab80000)
+  from space 6144K, 92% used [0x00000000eab80000,0x00000000eb107b00,0x00000000eb180000)
+  to   space 6656K, 0% used [0x00000000eb280000,0x00000000eb280000,0x00000000eb900000)
+ ParOldGen       total 161792K, used 129537K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 80% used [0x00000000c0000000,0x00000000c7e807f0,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,269 GC heap before
+{Heap before GC invocations=703 (full 18):
+ PSYoungGen      total 6656K, used 6174K [0x00000000eab00000, 0x00000000eb900000, 0x0000000100000000)
+  eden space 512K, 100% used [0x00000000eab00000,0x00000000eab80000,0x00000000eab80000)
+  from space 6144K, 92% used [0x00000000eab80000,0x00000000eb107b00,0x00000000eb180000)
+  to   space 6656K, 0% used [0x00000000eb280000,0x00000000eb280000,0x00000000eb900000)
+ ParOldGen       total 161792K, used 129537K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 80% used [0x00000000c0000000,0x00000000c7e807f0,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,273 GC heap after
+{Heap after GC invocations=703 (full 18):
+ PSYoungGen      total 6144K, used 5093K [0x00000000eab00000, 0x00000000eb780000, 0x0000000100000000)
+  eden space 1024K, 0% used [0x00000000eab00000,0x00000000eab00000,0x00000000eac00000)
+  from space 5120K, 99% used [0x00000000eb280000,0x00000000eb779578,0x00000000eb780000)
+  to   space 5632K, 0% used [0x00000000eac80000,0x00000000eac80000,0x00000000eb200000)
+ ParOldGen       total 161792K, used 130568K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 80% used [0x00000000c0000000,0x00000000c7f82330,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,276 GC heap before
+{Heap before GC invocations=704 (full 18):
+ PSYoungGen      total 6144K, used 6117K [0x00000000eab00000, 0x00000000eb780000, 0x0000000100000000)
+  eden space 1024K, 100% used [0x00000000eab00000,0x00000000eac00000,0x00000000eac00000)
+  from space 5120K, 99% used [0x00000000eb280000,0x00000000eb779578,0x00000000eb780000)
+  to   space 5632K, 0% used [0x00000000eac80000,0x00000000eac80000,0x00000000eb200000)
+ ParOldGen       total 161792K, used 130568K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 80% used [0x00000000c0000000,0x00000000c7f82330,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,280 GC heap after
+{Heap after GC invocations=704 (full 18):
+ PSYoungGen      total 7168K, used 5124K [0x00000000eab00000, 0x00000000eb780000, 0x0000000100000000)
+  eden space 1536K, 0% used [0x00000000eab00000,0x00000000eab00000,0x00000000eac80000)
+  from space 5632K, 90% used [0x00000000eac80000,0x00000000eb181230,0x00000000eb200000)
+  to   space 5632K, 0% used [0x00000000eb200000,0x00000000eb200000,0x00000000eb780000)
+ ParOldGen       total 161792K, used 131524K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 81% used [0x00000000c0000000,0x00000000c80712b8,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,288 GC heap before
+{Heap before GC invocations=705 (full 18):
+ PSYoungGen      total 7168K, used 6660K [0x00000000eab00000, 0x00000000eb780000, 0x0000000100000000)
+  eden space 1536K, 100% used [0x00000000eab00000,0x00000000eac80000,0x00000000eac80000)
+  from space 5632K, 90% used [0x00000000eac80000,0x00000000eb181230,0x00000000eb200000)
+  to   space 5632K, 0% used [0x00000000eb200000,0x00000000eb200000,0x00000000eb780000)
+ ParOldGen       total 161792K, used 131524K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 81% used [0x00000000c0000000,0x00000000c80712b8,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,292 GC heap after
+{Heap after GC invocations=705 (full 18):
+ PSYoungGen      total 7168K, used 4841K [0x00000000eab00000, 0x00000000eb700000, 0x0000000100000000)
+  eden space 2048K, 0% used [0x00000000eab00000,0x00000000eab00000,0x00000000ead00000)
+  from space 5120K, 94% used [0x00000000eb200000,0x00000000eb6ba640,0x00000000eb700000)
+  to   space 5120K, 0% used [0x00000000ead00000,0x00000000ead00000,0x00000000eb200000)
+ ParOldGen       total 161792K, used 133437K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 82% used [0x00000000c0000000,0x00000000c824f6c8,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,326 GC heap before
+{Heap before GC invocations=706 (full 18):
+ PSYoungGen      total 7168K, used 6889K [0x00000000eab00000, 0x00000000eb700000, 0x0000000100000000)
+  eden space 2048K, 100% used [0x00000000eab00000,0x00000000ead00000,0x00000000ead00000)
+  from space 5120K, 94% used [0x00000000eb200000,0x00000000eb6ba640,0x00000000eb700000)
+  to   space 5120K, 0% used [0x00000000ead00000,0x00000000ead00000,0x00000000eb200000)
+ ParOldGen       total 161792K, used 133437K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 82% used [0x00000000c0000000,0x00000000c824f6c8,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,331 GC heap after
+{Heap after GC invocations=706 (full 18):
+ PSYoungGen      total 7168K, used 4227K [0x00000000eab00000, 0x00000000eb680000, 0x0000000100000000)
+  eden space 2048K, 0% used [0x00000000eab00000,0x00000000eab00000,0x00000000ead00000)
+  from space 5120K, 82% used [0x00000000ead00000,0x00000000eb120db0,0x00000000eb200000)
+  to   space 4608K, 0% used [0x00000000eb200000,0x00000000eb200000,0x00000000eb680000)
+ ParOldGen       total 161792K, used 135412K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 83% used [0x00000000c0000000,0x00000000c843d0e8,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,334 GC heap before
+{Heap before GC invocations=707 (full 18):
+ PSYoungGen      total 7168K, used 6275K [0x00000000eab00000, 0x00000000eb680000, 0x0000000100000000)
+  eden space 2048K, 100% used [0x00000000eab00000,0x00000000ead00000,0x00000000ead00000)
+  from space 5120K, 82% used [0x00000000ead00000,0x00000000eb120db0,0x00000000eb200000)
+  to   space 4608K, 0% used [0x00000000eb200000,0x00000000eb200000,0x00000000eb680000)
+ ParOldGen       total 161792K, used 135412K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 83% used [0x00000000c0000000,0x00000000c843d0e8,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,338 GC heap after
+{Heap after GC invocations=707 (full 18):
+ PSYoungGen      total 5120K, used 4579K [0x00000000eab00000, 0x00000000eba80000, 0x0000000100000000)
+  eden space 512K, 0% used [0x00000000eab00000,0x00000000eab00000,0x00000000eab80000)
+  from space 4608K, 99% used [0x00000000eb200000,0x00000000eb678dd0,0x00000000eb680000)
+  to   space 6656K, 0% used [0x00000000eab80000,0x00000000eab80000,0x00000000eb200000)
+ ParOldGen       total 161792K, used 136892K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 84% used [0x00000000c0000000,0x00000000c85af0e8,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,339 GC heap before
+{Heap before GC invocations=708 (full 18):
+ PSYoungGen      total 5120K, used 5091K [0x00000000eab00000, 0x00000000eba80000, 0x0000000100000000)
+  eden space 512K, 100% used [0x00000000eab00000,0x00000000eab80000,0x00000000eab80000)
+  from space 4608K, 99% used [0x00000000eb200000,0x00000000eb678dd0,0x00000000eb680000)
+  to   space 6656K, 0% used [0x00000000eab80000,0x00000000eab80000,0x00000000eb200000)
+ ParOldGen       total 161792K, used 136892K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 84% used [0x00000000c0000000,0x00000000c85af0e8,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,343 GC heap after
+{Heap after GC invocations=708 (full 18):
+ PSYoungGen      total 3072K, used 2432K [0x00000000eab00000, 0x00000000eb400000, 0x0000000100000000)
+  eden space 512K, 0% used [0x00000000eab00000,0x00000000eab00000,0x00000000eab80000)
+  from space 2560K, 95% used [0x00000000eab80000,0x00000000eade0020,0x00000000eae00000)
+  to   space 4096K, 0% used [0x00000000eb000000,0x00000000eb000000,0x00000000eb400000)
+ ParOldGen       total 161792K, used 139575K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 86% used [0x00000000c0000000,0x00000000c884de98,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,344 GC heap before
+{Heap before GC invocations=709 (full 18):
+ PSYoungGen      total 3072K, used 2944K [0x00000000eab00000, 0x00000000eb400000, 0x0000000100000000)
+  eden space 512K, 100% used [0x00000000eab00000,0x00000000eab80000,0x00000000eab80000)
+  from space 2560K, 95% used [0x00000000eab80000,0x00000000eade0020,0x00000000eae00000)
+  to   space 4096K, 0% used [0x00000000eb000000,0x00000000eb000000,0x00000000eb400000)
+ ParOldGen       total 161792K, used 139575K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 86% used [0x00000000c0000000,0x00000000c884de98,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,347 GC heap after
+{Heap after GC invocations=709 (full 18):
+ PSYoungGen      total 1536K, used 480K [0x00000000eab00000, 0x00000000eb080000, 0x0000000100000000)
+  eden space 1024K, 0% used [0x00000000eab00000,0x00000000eab00000,0x00000000eac00000)
+  from space 512K, 93% used [0x00000000eb000000,0x00000000eb078000,0x00000000eb080000)
+  to   space 1536K, 0% used [0x00000000ead80000,0x00000000ead80000,0x00000000eaf00000)
+ ParOldGen       total 161792K, used 141848K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 87% used [0x00000000c0000000,0x00000000c8a86160,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,349 GC heap before
+{Heap before GC invocations=710 (full 18):
+ PSYoungGen      total 1536K, used 1503K [0x00000000eab00000, 0x00000000eb080000, 0x0000000100000000)
+  eden space 1024K, 99% used [0x00000000eab00000,0x00000000eabfffe8,0x00000000eac00000)
+  from space 512K, 93% used [0x00000000eb000000,0x00000000eb078000,0x00000000eb080000)
+  to   space 1536K, 0% used [0x00000000ead80000,0x00000000ead80000,0x00000000eaf00000)
+ ParOldGen       total 161792K, used 141848K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 87% used [0x00000000c0000000,0x00000000c8a86160,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,351 GC heap after
+{Heap after GC invocations=710 (full 18):
+ PSYoungGen      total 3072K, used 719K [0x00000000eab00000, 0x00000000eb080000, 0x0000000100000000)
+  eden space 1536K, 0% used [0x00000000eab00000,0x00000000eab00000,0x00000000eac80000)
+  from space 1536K, 46% used [0x00000000ead80000,0x00000000eae33e10,0x00000000eaf00000)
+  to   space 1024K, 0% used [0x00000000eaf80000,0x00000000eaf80000,0x00000000eb080000)
+ ParOldGen       total 161792K, used 142216K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 87% used [0x00000000c0000000,0x00000000c8ae2160,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,357 GC heap before
+{Heap before GC invocations=711 (full 18):
+ PSYoungGen      total 3072K, used 2224K [0x00000000eab00000, 0x00000000eb080000, 0x0000000100000000)
+  eden space 1536K, 98% used [0x00000000eab00000,0x00000000eac785b0,0x00000000eac80000)
+  from space 1536K, 46% used [0x00000000ead80000,0x00000000eae33e10,0x00000000eaf00000)
+  to   space 1024K, 0% used [0x00000000eaf80000,0x00000000eaf80000,0x00000000eb080000)
+ ParOldGen       total 161792K, used 142216K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 87% used [0x00000000c0000000,0x00000000c8ae2160,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+Event: 4290,358 GC heap after
+{Heap after GC invocations=711 (full 18):
+ PSYoungGen      total 3072K, used 1020K [0x00000000eab00000, 0x00000000eb080000, 0x0000000100000000)
+  eden space 2048K, 0% used [0x00000000eab00000,0x00000000eab00000,0x00000000ead00000)
+  from space 1024K, 99% used [0x00000000eaf80000,0x00000000eb07f000,0x00000000eb080000)
+  to   space 1536K, 0% used [0x00000000ead80000,0x00000000ead80000,0x00000000eaf00000)
+ ParOldGen       total 161792K, used 142752K [0x00000000c0000000, 0x00000000c9e00000, 0x00000000eab00000)
+  object space 161792K, 88% used [0x00000000c0000000,0x00000000c8b68180,0x00000000c9e00000)
+ Metaspace       used 70293K, committed 71424K, reserved 1114112K
+  class space    used 7073K, committed 7552K, reserved 1048576K
+}
+
+Dll operation events (9 events):
+Event: 0,003 Loaded shared library /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjava.so
+Event: 0,191 Loaded shared library /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libzip.so
+Event: 0,194 Loaded shared library /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libinstrument.so
+Event: 0,207 Loaded shared library /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libnio.so
+Event: 0,220 Loaded shared library /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libzip.so
+Event: 0,237 Loaded shared library /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjimage.so
+Event: 0,299 Loaded shared library /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libverify.so
+Event: 1,098 Loaded shared library /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libnet.so
+Event: 1,579 Loaded shared library /home/sergio/.config/Code/User/globalStorage/redhat.java/1.29.0/config_linux/org.eclipse.equinox.launcher/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.900.v20240129-1338/eclipse_11900.so
+
+Deoptimization events (20 events):
+Event: 4290,243 Thread 0x000078c1b0998c30 DEOPT PACKING pc=0x000078c217273464 sp=0x000078c1f24fe2b0
+Event: 4290,243 Thread 0x000078c1b0998c30 DEOPT UNPACKING pc=0x000078c21d78db2f sp=0x000078c1f24fd7b0 mode 0
+Event: 4290,298 Thread 0x000078c1b0998c30 DEOPT PACKING pc=0x000078c216a17e93 sp=0x000078c1f24fe250
+Event: 4290,298 Thread 0x000078c1b0998c30 DEOPT UNPACKING pc=0x000078c21d78db2f sp=0x000078c1f24fd708 mode 0
+Event: 4290,308 Thread 0x000078c1b0998c30 DEOPT PACKING pc=0x000078c217273464 sp=0x000078c1f24fe220
+Event: 4290,308 Thread 0x000078c1b0998c30 DEOPT UNPACKING pc=0x000078c21d78db2f sp=0x000078c1f24fd720 mode 0
+Event: 4290,349 Thread 0x000078c1b0998c30 DEOPT PACKING pc=0x000078c216a17e93 sp=0x000078c1f24fe250
+Event: 4290,349 Thread 0x000078c1b0998c30 DEOPT UNPACKING pc=0x000078c21d78db2f sp=0x000078c1f24fd708 mode 0
+Event: 4290,352 Thread 0x000078c1b0998c30 DEOPT PACKING pc=0x000078c216a17e93 sp=0x000078c1f24fe250
+Event: 4290,352 Thread 0x000078c1b0998c30 DEOPT UNPACKING pc=0x000078c21d78db2f sp=0x000078c1f24fd708 mode 0
+Event: 4290,352 Thread 0x000078c1800b56a0 Uncommon trap: trap_request=0xffffff6e fr.pc=0x000078c21e0bb54c relative=0x0000000000000fac
+Event: 4290,352 Thread 0x000078c1800b56a0 Uncommon trap: reason=loop_limit_check action=maybe_recompile pc=0x000078c21e0bb54c method=org.eclipse.jdt.internal.compiler.util.SimpleLookupTable.rehash()V @ 50 c2
+Event: 4290,352 Thread 0x000078c1800b56a0 DEOPT PACKING pc=0x000078c21e0bb54c sp=0x000078c1f1ffc880
+Event: 4290,352 Thread 0x000078c1800b56a0 DEOPT UNPACKING pc=0x000078c21d78d399 sp=0x000078c1f1ffc6d0 mode 2
+Event: 4290,353 Thread 0x000078c1b0998c30 DEOPT PACKING pc=0x000078c216533e61 sp=0x000078c1f24fe300
+Event: 4290,353 Thread 0x000078c1b0998c30 DEOPT UNPACKING pc=0x000078c21d78db2f sp=0x000078c1f24fd7f8 mode 0
+Event: 4290,354 Thread 0x000078c1b0998c30 DEOPT PACKING pc=0x000078c216a17e93 sp=0x000078c1f24fe2d0
+Event: 4290,354 Thread 0x000078c1b0998c30 DEOPT UNPACKING pc=0x000078c21d78db2f sp=0x000078c1f24fd788 mode 0
+Event: 4290,359 Thread 0x000078c1b0998c30 DEOPT PACKING pc=0x000078c216a17e93 sp=0x000078c1f24fe2d0
+Event: 4290,359 Thread 0x000078c1b0998c30 DEOPT UNPACKING pc=0x000078c21d78db2f sp=0x000078c1f24fd788 mode 0
+
+Classes unloaded (20 events):
+Event: 3778,965 Thread 0x000078c228069210 Unloading class 0x0000000100220400 'java/lang/invoke/LambdaForm$MH+0x0000000100220400'
+Event: 3778,965 Thread 0x000078c228069210 Unloading class 0x0000000100220000 'java/lang/invoke/LambdaForm$MH+0x0000000100220000'
+Event: 3778,965 Thread 0x000078c228069210 Unloading class 0x000000010021fc00 'java/lang/invoke/LambdaForm$MH+0x000000010021fc00'
+Event: 3778,965 Thread 0x000078c228069210 Unloading class 0x000000010021ec00 'java/lang/invoke/LambdaForm$MH+0x000000010021ec00'
+Event: 3778,965 Thread 0x000078c228069210 Unloading class 0x000000010021e800 'java/lang/invoke/LambdaForm$MH+0x000000010021e800'
+Event: 3778,965 Thread 0x000078c228069210 Unloading class 0x000000010021e000 'java/lang/invoke/LambdaForm$MH+0x000000010021e000'
+Event: 3778,965 Thread 0x000078c228069210 Unloading class 0x00000001001b5c00 'java/lang/invoke/LambdaForm$MH+0x00000001001b5c00'
+Event: 3778,965 Thread 0x000078c228069210 Unloading class 0x00000001001b5800 'java/lang/invoke/LambdaForm$MH+0x00000001001b5800'
+Event: 3778,965 Thread 0x000078c228069210 Unloading class 0x00000001001b5400 'java/lang/invoke/LambdaForm$MH+0x00000001001b5400'
+Event: 3778,966 Thread 0x000078c228069210 Unloading class 0x00000001001b5000 'java/lang/invoke/LambdaForm$MH+0x00000001001b5000'
+Event: 3778,966 Thread 0x000078c228069210 Unloading class 0x00000001001b4c00 'java/lang/invoke/LambdaForm$MH+0x00000001001b4c00'
+Event: 3778,966 Thread 0x000078c228069210 Unloading class 0x00000001001b4800 'java/lang/invoke/LambdaForm$MH+0x00000001001b4800'
+Event: 3778,966 Thread 0x000078c228069210 Unloading class 0x00000001001b4400 'java/lang/invoke/LambdaForm$MH+0x00000001001b4400'
+Event: 3778,966 Thread 0x000078c228069210 Unloading class 0x00000001001b4000 'java/lang/invoke/LambdaForm$MH+0x00000001001b4000'
+Event: 3778,966 Thread 0x000078c228069210 Unloading class 0x0000000100129000 'jdk/internal/reflect/GeneratedMethodAccessor5'
+Event: 3778,966 Thread 0x000078c228069210 Unloading class 0x0000000100128c00 'jdk/internal/reflect/GeneratedMethodAccessor4'
+Event: 3778,966 Thread 0x000078c228069210 Unloading class 0x0000000100128800 'jdk/internal/reflect/GeneratedMethodAccessor3'
+Event: 3778,966 Thread 0x000078c228069210 Unloading class 0x0000000100128400 'jdk/internal/reflect/GeneratedMethodAccessor2'
+Event: 3778,966 Thread 0x000078c228069210 Unloading class 0x0000000100128000 'jdk/internal/reflect/GeneratedMethodAccessor1'
+Event: 3778,966 Thread 0x000078c228069210 Unloading class 0x00000001000cb400 'java/lang/invoke/LambdaForm$DMH+0x00000001000cb400'
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (20 events):
+Event: 7,169 Thread 0x000078c15c000ff0 Exception <a 'java/io/FileNotFoundException'{0x00000000eb9214a0}> (0x00000000eb9214a0) 
+thrown [src/hotspot/share/prims/jni.cpp, line 516]
+Event: 7,170 Thread 0x000078c15c000ff0 Exception <a 'java/io/FileNotFoundException'{0x00000000eb9223f0}> (0x00000000eb9223f0) 
+thrown [src/hotspot/share/prims/jni.cpp, line 516]
+Event: 8,135 Thread 0x000078c22878c8b0 Exception <a 'java/io/FileNotFoundException'{0x00000000eb2cfe80}> (0x00000000eb2cfe80) 
+thrown [src/hotspot/share/prims/jni.cpp, line 516]
+Event: 8,135 Thread 0x000078c22878c8b0 Exception <a 'java/io/FileNotFoundException'{0x00000000eb323cc8}> (0x00000000eb323cc8) 
+thrown [src/hotspot/share/prims/jni.cpp, line 516]
+Event: 9,008 Thread 0x000078c1b03c7fe0 Exception <a 'java/lang/NoSuchMethodError'{0x00000000eaebf668}: 'java.lang.Object java.lang.invoke.DirectMethodHandle$Holder.invokeSpecial(java.lang.Object, java.lang.Object, int, long)'> (0x00000000eaebf668) 
+thrown [src/hotspot/share/interpreter/linkResolver.cpp, line 758]
+Event: 9,689 Thread 0x000078c1b03c7fe0 Exception <a 'java/lang/NoSuchMethodError'{0x00000000eb0f0fd8}: 'int java.lang.invoke.DirectMethodHandle$Holder.invokeStatic(java.lang.Object, java.lang.Object, java.lang.Object, int)'> (0x00000000eb0f0fd8) 
+thrown [src/hotspot/share/interpreter/linkResolver.cpp, line 758]
+Event: 9,705 Thread 0x000078c1b03c7fe0 Exception <a 'java/lang/NoSuchMethodError'{0x00000000eb1c3d98}: 'int java.lang.invoke.DirectMethodHandle$Holder.invokeSpecialIFC(java.lang.Object, java.lang.Object, java.lang.Object)'> (0x00000000eb1c3d98) 
+thrown [src/hotspot/share/interpreter/linkResolver.cpp, line 758]
+Event: 9,913 Thread 0x000078c1b03c7fe0 Exception <a 'java/lang/NoSuchMethodError'{0x00000000eab20008}: 'int java.lang.invoke.DirectMethodHandle$Holder.invokeStatic(java.lang.Object, int, java.lang.Object)'> (0x00000000eab20008) 
+thrown [src/hotspot/share/interpreter/linkResolver.cpp, line 758]
+Event: 10,183 Thread 0x000078c1b03c7fe0 Implicit null exception at 0x000078c21e047b3e to 0x000078c21e047c9c
+Event: 13,005 Thread 0x000078c228788a50 Exception <a 'sun/nio/fs/UnixException'{0x00000000eab87bf0}> (0x00000000eab87bf0) 
+thrown [src/hotspot/share/prims/jni.cpp, line 516]
+Event: 306,758 Thread 0x000078c198001f80 Exception <a 'java/lang/NoSuchMethodError'{0x00000000eb049128}: 'java.lang.Object java.lang.invoke.DirectMethodHandle$Holder.newInvokeSpecial(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)'> (0x00000000eb049128) 
+thrown [src/hotspot/share/interpreter/linkResolver.cpp, line 758]
+Event: 306,759 Thread 0x000078c198001f80 Exception <a 'java/lang/NoSuchMethodError'{0x00000000eb04db30}: 'java.lang.Object java.lang.invoke.Invokers$Holder.linkToTargetMethod(java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object, java.lang.Object)'> (0x00000000eb04db30) 
+thrown [src/hotspot/share/interpreter/linkResolver.cpp, line 758]
+Event: 3778,822 Thread 0x000078c180089840 Exception <a 'java/lang/IncompatibleClassChangeError'{0x00000000ead89ca0}: Found class java.lang.Object, but interface was expected> (0x00000000ead89ca0) 
+thrown [src/hotspot/share/interpreter/linkResolver.cpp, line 826]
+Event: 3779,051 Thread 0x000078c180089840 Implicit null exception at 0x000078c21df13125 to 0x000078c21df134e4
+Event: 3779,347 Thread 0x000078c15c00e670 Exception <a 'java/lang/NoSuchMethodError'{0x00000000ead8f6e8}: 'void java.lang.invoke.DirectMethodHandle$Holder.invokeStatic(java.lang.Object, int, java.lang.Object)'> (0x00000000ead8f6e8) 
+thrown [src/hotspot/share/interpreter/linkResolver.cpp, line 758]
+Event: 3779,906 Thread 0x000078c180089840 Implicit null exception at 0x000078c21e0a703a to 0x000078c21e0a79e8
+Event: 3844,157 Thread 0x000078c1b0998c30 Exception <a 'sun/nio/fs/UnixException'{0x00000000eafe02b0}> (0x00000000eafe02b0) 
+thrown [src/hotspot/share/prims/jni.cpp, line 516]
+Event: 3844,264 Thread 0x000078c1b0998c30 Exception <a 'sun/nio/fs/UnixException'{0x00000000ead751a0}> (0x00000000ead751a0) 
+thrown [src/hotspot/share/prims/jni.cpp, line 516]
+Event: 3844,281 Thread 0x000078c180089840 Implicit null exception at 0x000078c21e20fe0f to 0x000078c21e20ffd0
+Event: 4290,244 Thread 0x000078c1b0998c30 Exception <a 'sun/nio/fs/UnixException'{0x00000000eae82940}> (0x00000000eae82940) 
+thrown [src/hotspot/share/prims/jni.cpp, line 516]
+
+VM Operations (20 events):
+Event: 4290,264 Executing VM operation: ParallelGCFailedAllocation
+Event: 4290,267 Executing VM operation: ParallelGCFailedAllocation done
+Event: 4290,269 Executing VM operation: ParallelGCFailedAllocation
+Event: 4290,273 Executing VM operation: ParallelGCFailedAllocation done
+Event: 4290,276 Executing VM operation: ParallelGCFailedAllocation
+Event: 4290,280 Executing VM operation: ParallelGCFailedAllocation done
+Event: 4290,288 Executing VM operation: ParallelGCFailedAllocation
+Event: 4290,292 Executing VM operation: ParallelGCFailedAllocation done
+Event: 4290,326 Executing VM operation: ParallelGCFailedAllocation
+Event: 4290,331 Executing VM operation: ParallelGCFailedAllocation done
+Event: 4290,334 Executing VM operation: ParallelGCFailedAllocation
+Event: 4290,338 Executing VM operation: ParallelGCFailedAllocation done
+Event: 4290,339 Executing VM operation: ParallelGCFailedAllocation
+Event: 4290,343 Executing VM operation: ParallelGCFailedAllocation done
+Event: 4290,344 Executing VM operation: ParallelGCFailedAllocation
+Event: 4290,347 Executing VM operation: ParallelGCFailedAllocation done
+Event: 4290,349 Executing VM operation: ParallelGCFailedAllocation
+Event: 4290,351 Executing VM operation: ParallelGCFailedAllocation done
+Event: 4290,357 Executing VM operation: ParallelGCFailedAllocation
+Event: 4290,359 Executing VM operation: ParallelGCFailedAllocation done
+
+Events (20 events):
+Event: 3847,942 Thread 0x000078c22822a720 flushing nmethod 0x000078c21792fb10
+Event: 3847,942 Thread 0x000078c22822a720 flushing nmethod 0x000078c217930190
+Event: 3847,942 Thread 0x000078c22822a720 flushing nmethod 0x000078c217932210
+Event: 3847,942 Thread 0x000078c22822a720 flushing nmethod 0x000078c217932690
+Event: 3847,942 Thread 0x000078c22822a720 flushing nmethod 0x000078c217937090
+Event: 3847,942 Thread 0x000078c22822a720 flushing nmethod 0x000078c217946990
+Event: 3847,942 Thread 0x000078c22822a720 flushing nmethod 0x000078c21796d290
+Event: 3847,943 Thread 0x000078c22822a720 flushing nmethod 0x000078c217a63b90
+Event: 3904,317 Thread 0x000078c180089840 Thread exited: 0x000078c180089840
+Event: 4078,731 Thread 0x000078c15c00d7a0 Thread added: 0x000078c15c00d7a0
+Event: 4078,731 Protecting memory [0x000078c1f1f00000,0x000078c1f1f04000] with protection modes 0
+Event: 4078,732 Thread 0x000078c1780f3360 Thread added: 0x000078c1780f3360
+Event: 4078,732 Protecting memory [0x000078c1f2500000,0x000078c1f2504000] with protection modes 0
+Event: 4078,732 Thread 0x000078c1780f38e0 Thread added: 0x000078c1780f38e0
+Event: 4078,732 Protecting memory [0x000078c1f1e00000,0x000078c1f1e04000] with protection modes 0
+Event: 4078,732 Thread 0x000078c1780f3360 Thread exited: 0x000078c1780f3360
+Event: 4078,732 Thread 0x000078c1780f38e0 Thread exited: 0x000078c1780f38e0
+Event: 4078,732 Thread 0x000078c15c00d7a0 Thread exited: 0x000078c15c00d7a0
+Event: 4290,331 Thread 0x000078c1800b56a0 Thread added: 0x000078c1800b56a0
+Event: 4290,331 Protecting memory [0x000078c1f1f00000,0x000078c1f1f04000] with protection modes 0
+
+
+Dynamic libraries:
+c0000000-c9e00000 rw-p 00000000 00:00 0 
+c9e00000-eab00000 ---p 00000000 00:00 0 
+eab00000-eb080000 rw-p 00000000 00:00 0 
+eb080000-100000000 ---p 00000000 00:00 0 
+100000000-100010000 rw-p 00000000 00:00 0 
+100010000-100030000 rw-p 00000000 00:00 0 
+100030000-1000b0000 rw-p 00000000 00:00 0 
+1000b0000-1000d0000 rw-p 00000000 00:00 0 
+1000d0000-100130000 rw-p 00000000 00:00 0 
+100130000-100170000 rw-p 00000000 00:00 0 
+100170000-1001b0000 rw-p 00000000 00:00 0 
+1001b0000-1001f0000 rw-p 00000000 00:00 0 
+1001f0000-1002d0000 rw-p 00000000 00:00 0 
+1002d0000-1002f0000 rw-p 00000000 00:00 0 
+1002f0000-1003b0000 rw-p 00000000 00:00 0 
+1003b0000-1003f0000 rw-p 00000000 00:00 0 
+1003f0000-100760000 rw-p 00000000 00:00 0 
+100760000-140000000 ---p 00000000 00:00 0 
+5f122d20f000-5f122d210000 r--p 00000000 103:03 10726107                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/bin/java
+5f122d210000-5f122d211000 r-xp 00001000 103:03 10726107                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/bin/java
+5f122d211000-5f122d212000 r--p 00002000 103:03 10726107                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/bin/java
+5f122d212000-5f122d213000 r--p 00002000 103:03 10726107                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/bin/java
+5f122d213000-5f122d214000 rw-p 00003000 103:03 10726107                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/bin/java
+5f122d8f2000-5f122d93a000 rw-p 00000000 00:00 0                          [heap]
+78c154000000-78c154021000 rw-p 00000000 00:00 0 
+78c154021000-78c158000000 ---p 00000000 00:00 0 
+78c15c000000-78c15c02f000 rw-p 00000000 00:00 0 
+78c15c02f000-78c160000000 ---p 00000000 00:00 0 
+78c160000000-78c160026000 rw-p 00000000 00:00 0 
+78c160026000-78c164000000 ---p 00000000 00:00 0 
+78c164000000-78c164048000 rw-p 00000000 00:00 0 
+78c164048000-78c168000000 ---p 00000000 00:00 0 
+78c16b600000-78c173e25000 r--s 00000000 103:03 8004881                   /usr/lib/jvm/java-11-openjdk-amd64/lib/modules
+78c174000000-78c17404d000 rw-p 00000000 00:00 0 
+78c17404d000-78c178000000 ---p 00000000 00:00 0 
+78c178000000-78c17811c000 rw-p 00000000 00:00 0 
+78c17811c000-78c17c000000 ---p 00000000 00:00 0 
+78c17c000000-78c17c041000 rw-p 00000000 00:00 0 
+78c17c041000-78c180000000 ---p 00000000 00:00 0 
+78c180000000-78c1800d4000 rw-p 00000000 00:00 0 
+78c1800d4000-78c184000000 ---p 00000000 00:00 0 
+78c184000000-78c1843fb000 rw-p 00000000 00:00 0 
+78c1843fb000-78c188000000 ---p 00000000 00:00 0 
+78c188000000-78c188021000 rw-p 00000000 00:00 0 
+78c188021000-78c18c000000 ---p 00000000 00:00 0 
+78c18c000000-78c18c082000 rw-p 00000000 00:00 0 
+78c18c082000-78c190000000 ---p 00000000 00:00 0 
+78c190000000-78c190796000 rw-p 00000000 00:00 0 
+78c190796000-78c194000000 ---p 00000000 00:00 0 
+78c194000000-78c194021000 rw-p 00000000 00:00 0 
+78c194021000-78c198000000 ---p 00000000 00:00 0 
+78c198000000-78c19813e000 rw-p 00000000 00:00 0 
+78c19813e000-78c19c000000 ---p 00000000 00:00 0 
+78c19c000000-78c19c021000 rw-p 00000000 00:00 0 
+78c19c021000-78c1a0000000 ---p 00000000 00:00 0 
+78c1a0000000-78c1a0176000 rw-p 00000000 00:00 0 
+78c1a0176000-78c1a4000000 ---p 00000000 00:00 0 
+78c1a4000000-78c1a4021000 rw-p 00000000 00:00 0 
+78c1a4021000-78c1a8000000 ---p 00000000 00:00 0 
+78c1a8000000-78c1a8021000 rw-p 00000000 00:00 0 
+78c1a8021000-78c1ac000000 ---p 00000000 00:00 0 
+78c1ac000000-78c1ac021000 rw-p 00000000 00:00 0 
+78c1ac021000-78c1b0000000 ---p 00000000 00:00 0 
+78c1b0000000-78c1b0b03000 rw-p 00000000 00:00 0 
+78c1b0b03000-78c1b4000000 ---p 00000000 00:00 0 
+78c1b4000000-78c1b4021000 rw-p 00000000 00:00 0 
+78c1b4021000-78c1b8000000 ---p 00000000 00:00 0 
+78c1b8000000-78c1b8021000 rw-p 00000000 00:00 0 
+78c1b8021000-78c1bc000000 ---p 00000000 00:00 0 
+78c1bc000000-78c1bc021000 rw-p 00000000 00:00 0 
+78c1bc021000-78c1c0000000 ---p 00000000 00:00 0 
+78c1c0000000-78c1c0021000 rw-p 00000000 00:00 0 
+78c1c0021000-78c1c4000000 ---p 00000000 00:00 0 
+78c1c4000000-78c1c4023000 rw-p 00000000 00:00 0 
+78c1c4023000-78c1c8000000 ---p 00000000 00:00 0 
+78c1c8000000-78c1c8021000 rw-p 00000000 00:00 0 
+78c1c8021000-78c1cc000000 ---p 00000000 00:00 0 
+78c1cc000000-78c1cc021000 rw-p 00000000 00:00 0 
+78c1cc021000-78c1d0000000 ---p 00000000 00:00 0 
+78c1d0000000-78c1d0021000 rw-p 00000000 00:00 0 
+78c1d0021000-78c1d4000000 ---p 00000000 00:00 0 
+78c1d4000000-78c1d4021000 rw-p 00000000 00:00 0 
+78c1d4021000-78c1d8000000 ---p 00000000 00:00 0 
+78c1d8000000-78c1d8021000 rw-p 00000000 00:00 0 
+78c1d8021000-78c1dc000000 ---p 00000000 00:00 0 
+78c1dc000000-78c1dc021000 rw-p 00000000 00:00 0 
+78c1dc021000-78c1e0000000 ---p 00000000 00:00 0 
+78c1e0000000-78c1e1481000 rw-p 00000000 00:00 0 
+78c1e1481000-78c1e4000000 ---p 00000000 00:00 0 
+78c1e4000000-78c1e4d87000 rw-p 00000000 00:00 0 
+78c1e4d87000-78c1e8000000 ---p 00000000 00:00 0 
+78c1e8000000-78c1e8089000 rw-p 00000000 00:00 0 
+78c1e8089000-78c1ec000000 ---p 00000000 00:00 0 
+78c1ec000000-78c1ef275000 rw-p 00000000 00:00 0 
+78c1ef275000-78c1f0000000 ---p 00000000 00:00 0 
+78c1f1b00000-78c1f1b04000 ---p 00000000 00:00 0 
+78c1f1b04000-78c1f1c00000 rw-p 00000000 00:00 0 
+78c1f1c00000-78c1f1c04000 ---p 00000000 00:00 0 
+78c1f1c04000-78c1f1d00000 rw-p 00000000 00:00 0 
+78c1f1d00000-78c1f1d04000 ---p 00000000 00:00 0 
+78c1f1d04000-78c1f1e00000 rw-p 00000000 00:00 0 
+78c1f1e00000-78c1f1e04000 ---p 00000000 00:00 0 
+78c1f1e04000-78c1f1f00000 rw-p 00000000 00:00 0 
+78c1f1f00000-78c1f1f04000 ---p 00000000 00:00 0 
+78c1f1f04000-78c1f2000000 rw-p 00000000 00:00 0 
+78c1f2000000-78c1f2004000 ---p 00000000 00:00 0 
+78c1f2004000-78c1f2100000 rw-p 00000000 00:00 0 
+78c1f2100000-78c1f2104000 ---p 00000000 00:00 0 
+78c1f2104000-78c1f2200000 rw-p 00000000 00:00 0 
+78c1f2200000-78c1f2204000 ---p 00000000 00:00 0 
+78c1f2204000-78c1f2300000 rw-p 00000000 00:00 0 
+78c1f2300000-78c1f2304000 ---p 00000000 00:00 0 
+78c1f2304000-78c1f2400000 rw-p 00000000 00:00 0 
+78c1f2400000-78c1f2404000 ---p 00000000 00:00 0 
+78c1f2404000-78c1f2500000 rw-p 00000000 00:00 0 
+78c1f2500000-78c1f2504000 ---p 00000000 00:00 0 
+78c1f2504000-78c1f2600000 rw-p 00000000 00:00 0 
+78c1f2600000-78c1f2604000 ---p 00000000 00:00 0 
+78c1f2604000-78c1f2700000 rw-p 00000000 00:00 0 
+78c1f2700000-78c1f2704000 ---p 00000000 00:00 0 
+78c1f2704000-78c1f2800000 rw-p 00000000 00:00 0 
+78c1f2800000-78c1f2804000 ---p 00000000 00:00 0 
+78c1f2804000-78c1f2900000 rw-p 00000000 00:00 0 
+78c1f2900000-78c1f2904000 ---p 00000000 00:00 0 
+78c1f2904000-78c1f2a00000 rw-p 00000000 00:00 0 
+78c1f2a00000-78c1f2a04000 ---p 00000000 00:00 0 
+78c1f2a04000-78c1f2b00000 rw-p 00000000 00:00 0 
+78c1f2b00000-78c1f2b04000 ---p 00000000 00:00 0 
+78c1f2b04000-78c1f2c00000 rw-p 00000000 00:00 0 
+78c1f2c00000-78c1f2c10000 r-xp 00000000 103:03 10726638                  /home/sergio/.config/Code/User/globalStorage/redhat.java/1.29.0/config_linux/org.eclipse.equinox.launcher/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.900.v20240129-1338/eclipse_11900.so
+78c1f2c10000-78c1f2e10000 ---p 00010000 103:03 10726638                  /home/sergio/.config/Code/User/globalStorage/redhat.java/1.29.0/config_linux/org.eclipse.equinox.launcher/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.900.v20240129-1338/eclipse_11900.so
+78c1f2e10000-78c1f2e11000 r--p 00010000 103:03 10726638                  /home/sergio/.config/Code/User/globalStorage/redhat.java/1.29.0/config_linux/org.eclipse.equinox.launcher/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.900.v20240129-1338/eclipse_11900.so
+78c1f2e11000-78c1f2e12000 rw-p 00011000 103:03 10726638                  /home/sergio/.config/Code/User/globalStorage/redhat.java/1.29.0/config_linux/org.eclipse.equinox.launcher/org.eclipse.equinox.launcher.gtk.linux.x86_64_1.2.900.v20240129-1338/eclipse_11900.so
+78c1f2e12000-78c1f2e13000 rw-p 00000000 00:00 0 
+78c1f2ef8000-78c1f2ef9000 ---p 00000000 00:00 0 
+78c1f2ef9000-78c1f2ff9000 rw-p 00000000 00:00 0 
+78c1f2ff9000-78c1f2ffd000 ---p 00000000 00:00 0 
+78c1f2ffd000-78c1f30f9000 rw-p 00000000 00:00 0 
+78c1f30f9000-78c1f30fd000 ---p 00000000 00:00 0 
+78c1f30fd000-78c1f31f9000 rw-p 00000000 00:00 0 
+78c1f31f9000-78c1f31fd000 ---p 00000000 00:00 0 
+78c1f31fd000-78c1f32f9000 rw-p 00000000 00:00 0 
+78c1f32f9000-78c1f32fa000 ---p 00000000 00:00 0 
+78c1f32fa000-78c1f33fa000 rw-p 00000000 00:00 0 
+78c1f33fa000-78c1f33fb000 ---p 00000000 00:00 0 
+78c1f33fb000-78c1f34fb000 rw-p 00000000 00:00 0 
+78c1f34fb000-78c1f34fc000 ---p 00000000 00:00 0 
+78c1f34fc000-78c1f35fc000 rw-p 00000000 00:00 0 
+78c1f35fc000-78c1f35fd000 ---p 00000000 00:00 0 
+78c1f35fd000-78c1f36fd000 rw-p 00000000 00:00 0 
+78c1f36fd000-78c1f36fe000 ---p 00000000 00:00 0 
+78c1f36fe000-78c1f37fe000 rw-p 00000000 00:00 0 
+78c1f37fe000-78c1f37ff000 ---p 00000000 00:00 0 
+78c1f37ff000-78c1f38ff000 rw-p 00000000 00:00 0 
+78c1f38ff000-78c1f3900000 ---p 00000000 00:00 0 
+78c1f3900000-78c1f3a00000 rw-p 00000000 00:00 0 
+78c1f3a00000-78c1f3a04000 ---p 00000000 00:00 0 
+78c1f3a04000-78c1f3b00000 rw-p 00000000 00:00 0 
+78c1f3b00000-78c1f3b04000 ---p 00000000 00:00 0 
+78c1f3b04000-78c1f3c00000 rw-p 00000000 00:00 0 
+78c1f3c00000-78c1f3c04000 ---p 00000000 00:00 0 
+78c1f3c04000-78c1f3d00000 rw-p 00000000 00:00 0 
+78c1f3d00000-78c1f3d04000 ---p 00000000 00:00 0 
+78c1f3d04000-78c1f3e00000 rw-p 00000000 00:00 0 
+78c1f3e00000-78c1f3e04000 ---p 00000000 00:00 0 
+78c1f3e04000-78c1f3f00000 rw-p 00000000 00:00 0 
+78c1f3f00000-78c1f3f04000 ---p 00000000 00:00 0 
+78c1f3f04000-78c1f4000000 rw-p 00000000 00:00 0 
+78c1f4000000-78c1f4021000 rw-p 00000000 00:00 0 
+78c1f4021000-78c1f8000000 ---p 00000000 00:00 0 
+78c1f8000000-78c1f8021000 rw-p 00000000 00:00 0 
+78c1f8021000-78c1fc000000 ---p 00000000 00:00 0 
+78c1fc000000-78c1fc021000 rw-p 00000000 00:00 0 
+78c1fc021000-78c200000000 ---p 00000000 00:00 0 
+78c200000000-78c200021000 rw-p 00000000 00:00 0 
+78c200021000-78c204000000 ---p 00000000 00:00 0 
+78c204000000-78c20424c000 rw-p 00000000 00:00 0 
+78c20424c000-78c208000000 ---p 00000000 00:00 0 
+78c208000000-78c208021000 rw-p 00000000 00:00 0 
+78c208021000-78c20c000000 ---p 00000000 00:00 0 
+78c20c000000-78c20c3f0000 rw-p 00000000 00:00 0 
+78c20c3f0000-78c20c450000 rw-p 00000000 00:00 0 
+78c20c450000-78c20c470000 rw-p 00000000 00:00 0 
+78c20c470000-78c20c4f0000 rw-p 00000000 00:00 0 
+78c20c4f0000-78c20c7f0000 rw-p 00000000 00:00 0 
+78c20c7f0000-78c20c870000 rw-p 00000000 00:00 0 
+78c20c870000-78c20c8f0000 rw-p 00000000 00:00 0 
+78c20c8f0000-78c20cb70000 rw-p 00000000 00:00 0 
+78c20cb70000-78c20cbf0000 rw-p 00000000 00:00 0 
+78c20cbf0000-78c20ccf0000 rw-p 00000000 00:00 0 
+78c20ccf0000-78c20cdf0000 rw-p 00000000 00:00 0 
+78c20cdf0000-78c20cef0000 rw-p 00000000 00:00 0 
+78c20cef0000-78c20cff0000 rw-p 00000000 00:00 0 
+78c20cff0000-78c20d170000 rw-p 00000000 00:00 0 
+78c20d170000-78c20d1f0000 rw-p 00000000 00:00 0 
+78c20d1f0000-78c20d4f0000 rw-p 00000000 00:00 0 
+78c20d4f0000-78c20d5f0000 rw-p 00000000 00:00 0 
+78c20d5f0000-78c20dd70000 rw-p 00000000 00:00 0 
+78c20dd70000-78c20ddf0000 rw-p 00000000 00:00 0 
+78c20ddf0000-78c20def0000 rw-p 00000000 00:00 0 
+78c20def0000-78c20dff0000 rw-p 00000000 00:00 0 
+78c20dff0000-78c20e2f0000 rw-p 00000000 00:00 0 
+78c20e2f0000-78c20e3f0000 rw-p 00000000 00:00 0 
+78c20e3f0000-78c20ed70000 rw-p 00000000 00:00 0 
+78c20ed70000-78c20edf0000 rw-p 00000000 00:00 0 
+78c20edf0000-78c20f6f0000 rw-p 00000000 00:00 0 
+78c20f6f0000-78c20f7a0000 rw-p 00000000 00:00 0 
+78c20f7a0000-78c20f800000 ---p 00000000 00:00 0 
+78c20f800000-78c20fed0000 rw-p 00000000 00:00 0 
+78c20fed0000-78c210000000 ---p 00000000 00:00 0 
+78c210000000-78c210021000 rw-p 00000000 00:00 0 
+78c210021000-78c214000000 ---p 00000000 00:00 0 
+78c21406e000-78c214072000 ---p 00000000 00:00 0 
+78c214072000-78c21416e000 rw-p 00000000 00:00 0 
+78c21416e000-78c214172000 ---p 00000000 00:00 0 
+78c214172000-78c21426e000 rw-p 00000000 00:00 0 
+78c21426e000-78c214272000 ---p 00000000 00:00 0 
+78c214272000-78c21436e000 rw-p 00000000 00:00 0 
+78c21436e000-78c2145e6000 r--p 00000000 07:02 186                        /snap/code/155/usr/lib/locale/aa_DJ.utf8/LC_COLLATE
+78c2145e6000-78c2145ea000 ---p 00000000 00:00 0 
+78c2145ea000-78c2146e6000 rw-p 00000000 00:00 0 
+78c2146e6000-78c2146ea000 ---p 00000000 00:00 0 
+78c2146ea000-78c2147e6000 rw-p 00000000 00:00 0 
+78c2147e6000-78c2147e7000 ---p 00000000 00:00 0 
+78c2147e7000-78c216200000 rw-p 00000000 00:00 0 
+78c216200000-78c217ae0000 rwxp 00000000 00:00 0 
+78c217ae0000-78c21d737000 ---p 00000000 00:00 0 
+78c21d737000-78c21d9a7000 rwxp 00000000 00:00 0 
+78c21d9a7000-78c21dcc9000 ---p 00000000 00:00 0 
+78c21dcc9000-78c21e399000 rwxp 00000000 00:00 0 
+78c21e399000-78c225200000 ---p 00000000 00:00 0 
+78c225200000-78c227e27000 r--s 00000000 103:03 10726434                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/modules
+78c227ec5000-78c227ec9000 ---p 00000000 00:00 0 
+78c227ec9000-78c227ee7000 rw-p 00000000 00:00 0 
+78c227ee7000-78c227eeb000 r--p 00000000 103:03 10726425                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libnet.so
+78c227eeb000-78c227ef9000 r-xp 00004000 103:03 10726425                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libnet.so
+78c227ef9000-78c227efd000 r--p 00012000 103:03 10726425                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libnet.so
+78c227efd000-78c227efe000 r--p 00015000 103:03 10726425                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libnet.so
+78c227efe000-78c227eff000 rw-p 00016000 103:03 10726425                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libnet.so
+78c227eff000-78c228000000 rw-p 00000000 00:00 0 
+78c228000000-78c22879b000 rw-p 00000000 00:00 0 
+78c22879b000-78c22c000000 ---p 00000000 00:00 0 
+78c22c005000-78c22c009000 r--p 00000000 103:03 10726432                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libverify.so
+78c22c009000-78c22c010000 r-xp 00004000 103:03 10726432                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libverify.so
+78c22c010000-78c22c012000 r--p 0000b000 103:03 10726432                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libverify.so
+78c22c012000-78c22c014000 r--p 0000c000 103:03 10726432                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libverify.so
+78c22c014000-78c22c015000 rw-p 0000e000 103:03 10726432                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libverify.so
+78c22c015000-78c22c069000 r--p 00000000 07:02 187                        /snap/code/155/usr/lib/locale/aa_DJ.utf8/LC_CTYPE
+78c22c069000-78c22e43a000 rw-p 00000000 00:00 0 
+78c22e43a000-78c22e541000 ---p 00000000 00:00 0 
+78c22e541000-78c22e542000 ---p 00000000 00:00 0 
+78c22e542000-78c22e691000 rw-p 00000000 00:00 0 
+78c22e691000-78c22e797000 ---p 00000000 00:00 0 
+78c22e797000-78c22e79b000 rw-p 00000000 00:00 0 
+78c22e79b000-78c22e842000 ---p 00000000 00:00 0 
+78c22e842000-78c22e851000 rw-p 00000000 00:00 0 
+78c22e851000-78c22e92e000 ---p 00000000 00:00 0 
+78c22e92e000-78c22e960000 rw-p 00000000 00:00 0 
+78c22e960000-78c22ea19000 ---p 00000000 00:00 0 
+78c22ea19000-78c22ea1d000 ---p 00000000 00:00 0 
+78c22ea1d000-78c22eb19000 rw-p 00000000 00:00 0 
+78c22eb19000-78c22eb27000 r--p 00000000 103:03 7997565                   /usr/lib/x86_64-linux-gnu/libm.so.6
+78c22eb27000-78c22eba3000 r-xp 0000e000 103:03 7997565                   /usr/lib/x86_64-linux-gnu/libm.so.6
+78c22eba3000-78c22ebfe000 r--p 0008a000 103:03 7997565                   /usr/lib/x86_64-linux-gnu/libm.so.6
+78c22ebfe000-78c22ebff000 r--p 000e4000 103:03 7997565                   /usr/lib/x86_64-linux-gnu/libm.so.6
+78c22ebff000-78c22ec00000 rw-p 000e5000 103:03 7997565                   /usr/lib/x86_64-linux-gnu/libm.so.6
+78c22ec00000-78c22ee53000 r--p 00000000 103:03 10726442                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/server/libjvm.so
+78c22ee53000-78c22fb72000 r-xp 00253000 103:03 10726442                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/server/libjvm.so
+78c22fb72000-78c22fdfe000 r--p 00f72000 103:03 10726442                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/server/libjvm.so
+78c22fdfe000-78c22fdff000 ---p 011fe000 103:03 10726442                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/server/libjvm.so
+78c22fdff000-78c22feb8000 r--p 011fe000 103:03 10726442                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/server/libjvm.so
+78c22feb8000-78c22feed000 rw-p 012b7000 103:03 10726442                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/server/libjvm.so
+78c22feed000-78c22ff47000 rw-p 00000000 00:00 0 
+78c22ff4d000-78c22ff54000 r--p 00000000 103:03 10726426                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libnio.so
+78c22ff54000-78c22ff5d000 r-xp 00007000 103:03 10726426                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libnio.so
+78c22ff5d000-78c22ff61000 r--p 00010000 103:03 10726426                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libnio.so
+78c22ff61000-78c22ff62000 ---p 00014000 103:03 10726426                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libnio.so
+78c22ff62000-78c22ff63000 r--p 00014000 103:03 10726426                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libnio.so
+78c22ff63000-78c22ff64000 rw-p 00015000 103:03 10726426                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libnio.so
+78c22ff64000-78c230000000 rw-p 00000000 00:00 0 
+78c230000000-78c230028000 r--p 00000000 103:03 7997547                   /usr/lib/x86_64-linux-gnu/libc.so.6
+78c230028000-78c2301bd000 r-xp 00028000 103:03 7997547                   /usr/lib/x86_64-linux-gnu/libc.so.6
+78c2301bd000-78c230215000 r--p 001bd000 103:03 7997547                   /usr/lib/x86_64-linux-gnu/libc.so.6
+78c230215000-78c230216000 ---p 00215000 103:03 7997547                   /usr/lib/x86_64-linux-gnu/libc.so.6
+78c230216000-78c23021a000 r--p 00215000 103:03 7997547                   /usr/lib/x86_64-linux-gnu/libc.so.6
+78c23021a000-78c23021c000 rw-p 00219000 103:03 7997547                   /usr/lib/x86_64-linux-gnu/libc.so.6
+78c23021c000-78c230229000 rw-p 00000000 00:00 0 
+78c23022e000-78c23022f000 r--p 00000000 07:02 278                        /snap/code/155/usr/lib/locale/agr_PE/LC_NUMERIC
+78c23022f000-78c230230000 r--p 00000000 07:02 2717                       /snap/code/155/usr/lib/locale/es_ES.utf8/LC_TIME
+78c230230000-78c230231000 r--p 00000000 07:02 332                        /snap/code/155/usr/lib/locale/an_ES.utf8/LC_MONETARY
+78c230231000-78c230232000 r--p 00000000 07:02 1955                       /snap/code/155/usr/lib/locale/en_AG/LC_MESSAGES/SYS_LC_MESSAGES
+78c230232000-78c230239000 r--s 00000000 103:03 8003855                   /usr/lib/x86_64-linux-gnu/gconv/gconv-modules.cache
+78c230239000-78c23023b000 r--p 00000000 103:03 10726433                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libzip.so
+78c23023b000-78c23024d000 r-xp 00002000 103:03 10726433                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libzip.so
+78c23024d000-78c230255000 r--p 00014000 103:03 10726433                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libzip.so
+78c230255000-78c230256000 r--p 0001b000 103:03 10726433                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libzip.so
+78c230256000-78c230257000 rw-p 0001c000 103:03 10726433                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libzip.so
+78c230257000-78c230270000 rw-p 00000000 00:00 0 
+78c230270000-78c230277000 ---p 00000000 00:00 0 
+78c230277000-78c23027f000 rw-s 00000000 103:03 10092563                  /tmp/hsperfdata_sergio/9243
+78c23027f000-78c23028d000 r--p 00000000 103:03 10726412                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjava.so
+78c23028d000-78c23029f000 r-xp 0000e000 103:03 10726412                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjava.so
+78c23029f000-78c2302a5000 r--p 00020000 103:03 10726412                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjava.so
+78c2302a5000-78c2302a6000 ---p 00026000 103:03 10726412                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjava.so
+78c2302a6000-78c2302a7000 r--p 00026000 103:03 10726412                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjava.so
+78c2302a7000-78c2302a8000 rw-p 00027000 103:03 10726412                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjava.so
+78c2302a8000-78c2302a9000 rw-p 00000000 00:00 0 
+78c2302a9000-78c2302ad000 r--p 00000000 103:03 10726416                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjimage.so
+78c2302ad000-78c2302c0000 r-xp 00004000 103:03 10726416                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjimage.so
+78c2302c0000-78c2302c6000 r--p 00017000 103:03 10726416                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjimage.so
+78c2302c6000-78c2302c8000 r--p 0001c000 103:03 10726416                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjimage.so
+78c2302c8000-78c2302c9000 rw-p 0001e000 103:03 10726416                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjimage.so
+78c2302c9000-78c2302ca000 r--p 00000000 103:03 7997651                   /usr/lib/x86_64-linux-gnu/librt.so.1
+78c2302ca000-78c2302cb000 r-xp 00001000 103:03 7997651                   /usr/lib/x86_64-linux-gnu/librt.so.1
+78c2302cb000-78c2302cc000 r--p 00002000 103:03 7997651                   /usr/lib/x86_64-linux-gnu/librt.so.1
+78c2302cc000-78c2302cd000 r--p 00002000 103:03 7997651                   /usr/lib/x86_64-linux-gnu/librt.so.1
+78c2302cd000-78c2302ce000 rw-p 00003000 103:03 7997651                   /usr/lib/x86_64-linux-gnu/librt.so.1
+78c2302ce000-78c2302d0000 rw-p 00000000 00:00 0 
+78c2302d0000-78c2302d1000 r--p 00000000 103:03 7997555                   /usr/lib/x86_64-linux-gnu/libdl.so.2
+78c2302d1000-78c2302d2000 r-xp 00001000 103:03 7997555                   /usr/lib/x86_64-linux-gnu/libdl.so.2
+78c2302d2000-78c2302d3000 r--p 00002000 103:03 7997555                   /usr/lib/x86_64-linux-gnu/libdl.so.2
+78c2302d3000-78c2302d4000 r--p 00002000 103:03 7997555                   /usr/lib/x86_64-linux-gnu/libdl.so.2
+78c2302d4000-78c2302d5000 rw-p 00003000 103:03 7997555                   /usr/lib/x86_64-linux-gnu/libdl.so.2
+78c2302d5000-78c2302d6000 r--p 00000000 103:03 7997648                   /usr/lib/x86_64-linux-gnu/libpthread.so.0
+78c2302d6000-78c2302d7000 r-xp 00001000 103:03 7997648                   /usr/lib/x86_64-linux-gnu/libpthread.so.0
+78c2302d7000-78c2302d8000 r--p 00002000 103:03 7997648                   /usr/lib/x86_64-linux-gnu/libpthread.so.0
+78c2302d8000-78c2302d9000 r--p 00002000 103:03 7997648                   /usr/lib/x86_64-linux-gnu/libpthread.so.0
+78c2302d9000-78c2302da000 rw-p 00003000 103:03 7997648                   /usr/lib/x86_64-linux-gnu/libpthread.so.0
+78c2302da000-78c2302db000 r--p 00000000 07:02 195                        /snap/code/155/usr/lib/locale/aa_DJ.utf8/LC_PAPER
+78c2302db000-78c2302dc000 r--p 00000000 07:02 277                        /snap/code/155/usr/lib/locale/agr_PE/LC_NAME
+78c2302dc000-78c2302dd000 r--p 00000000 07:02 2705                       /snap/code/155/usr/lib/locale/es_ES.utf8/LC_ADDRESS
+78c2302dd000-78c2302de000 r--p 00000000 07:02 336                        /snap/code/155/usr/lib/locale/an_ES.utf8/LC_TELEPHONE
+78c2302de000-78c2302df000 r--p 00000000 07:02 189                        /snap/code/155/usr/lib/locale/aa_DJ.utf8/LC_MEASUREMENT
+78c2302df000-78c2302e0000 r--p 00000000 07:02 2708                       /snap/code/155/usr/lib/locale/es_ES.utf8/LC_IDENTIFICATION
+78c2302e0000-78c2302e2000 r--p 00000000 103:03 10726407                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libinstrument.so
+78c2302e2000-78c2302e8000 r-xp 00002000 103:03 10726407                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libinstrument.so
+78c2302e8000-78c2302eb000 r--p 00008000 103:03 10726407                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libinstrument.so
+78c2302eb000-78c2302ec000 r--p 0000a000 103:03 10726407                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libinstrument.so
+78c2302ec000-78c2302ed000 rw-p 0000b000 103:03 10726407                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libinstrument.so
+78c2302ed000-78c2302ee000 ---p 00000000 00:00 0 
+78c2302ee000-78c2302ef000 r--p 00000000 00:00 0 
+78c2302ef000-78c2302f2000 r--p 00000000 103:03 10726417                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjli.so
+78c2302f2000-78c230302000 r-xp 00003000 103:03 10726417                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjli.so
+78c230302000-78c230309000 r--p 00013000 103:03 10726417                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjli.so
+78c230309000-78c23030a000 r--p 00019000 103:03 10726417                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjli.so
+78c23030a000-78c23030b000 rw-p 0001a000 103:03 10726417                  /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/jre/17.0.10-linux-x86_64/lib/libjli.so
+78c23030b000-78c23030d000 rw-p 00000000 00:00 0 
+78c23030d000-78c23030f000 r--p 00000000 103:03 7997536                   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+78c23030f000-78c230339000 r-xp 00002000 103:03 7997536                   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+78c230339000-78c230344000 r--p 0002c000 103:03 7997536                   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+78c230344000-78c230345000 ---p 00000000 00:00 0 
+78c230345000-78c230347000 r--p 00037000 103:03 7997536                   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+78c230347000-78c230349000 rw-p 00039000 103:03 7997536                   /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2
+7ffc37a21000-7ffc37a43000 rw-p 00000000 00:00 0                          [stack]
+7ffc37aae000-7ffc37ab2000 r--p 00000000 00:00 0                          [vvar]
+7ffc37ab2000-7ffc37ab4000 r-xp 00000000 00:00 0                          [vdso]
+ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsyscall]
+
+
+VM Arguments:
+jvm_args: --add-modules=ALL-SYSTEM --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/sun.nio.fs=ALL-UNNAMED -Declipse.application=org.eclipse.jdt.ls.core.id1 -Dosgi.bundles.defaultStartLevel=4 -Declipse.product=org.eclipse.jdt.ls.core.product -Djava.import.generatesMetadataFilesAtProjectRoot=false -DDetectVMInstallationsJob.disabled=true -Dfile.encoding=utf8 -XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx1G -Xms100m -Xlog:disable -javaagent:/home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/lombok/lombok-1.18.32.jar -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/sergio/.config/Code/User/workspaceStorage/1da632c8682adcdea3091ae82072a102/redhat.java -Daether.dependencyCollector.impl=bf 
+java_command: /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/server/plugins/org.eclipse.equinox.launcher_1.6.800.v20240304-1850.jar -configuration /home/sergio/.config/Code/User/globalStorage/redhat.java/1.29.0/config_linux -data /home/sergio/.config/Code/User/workspaceStorage/1da632c8682adcdea3091ae82072a102/redhat.java/jdt_ws --stdio
+java_class_path (initial): /home/sergio/.vscode/extensions/redhat.java-1.29.0-linux-x64/server/plugins/org.eclipse.equinox.launcher_1.6.800.v20240304-1850.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+    uintx AdaptiveSizePolicyWeight                 = 90                                        {product} {command line}
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+    uintx GCTimeRatio                              = 4                                         {product} {command line}
+     bool HeapDumpOnOutOfMemoryError               = true                                   {manageable} {command line}
+    ccstr HeapDumpPath                             = /home/sergio/.config/Code/User/workspaceStorage/1da632c8682adcdea3091ae82072a102/redhat.java         {manageable} {command line}
+   size_t InitialHeapSize                          = 104857600                                 {product} {command line}
+   size_t MaxHeapSize                              = 1073741824                                {product} {command line}
+   size_t MaxNewSize                               = 357564416                                 {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 524288                                    {product} {ergonomic}
+   size_t MinHeapSize                              = 104857600                                 {product} {command line}
+   size_t NewSize                                  = 34603008                                  {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5839372                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122909434                              {pd product} {ergonomic}
+   size_t OldSize                                  = 70254592                                  {product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122909434                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 1073741824                             {manageable} {ergonomic}
+     bool UseCompressedClassPointers               = true                           {product lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseParallelGC                            = true                                      {product} {command line}
+
+Logging:
+Log output configuration:
+ #0: stdout all=off uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+PATH=/home/sergio/.local/bin:/opt/verilator/bin:/home/sergio/.local/bin:/opt/verilator/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/sergio/Programs/install/bin:/opt/riscv/bin:/home/sergio/Programs/Cores-VeeR-EH1/tools
+USERNAME=sergio
+SHELL=/bin/bash
+DISPLAY=:0
+LANG=en_US.UTF-8
+LC_NUMERIC=es_ES.UTF-8
+LC_TIME=es_ES.UTF-8
+
+Active Locale:
+LC_ALL=LC_CTYPE=en_US.UTF-8;LC_NUMERIC=es_ES.UTF-8;LC_TIME=es_ES.UTF-8;LC_COLLATE=en_US.UTF-8;LC_MONETARY=es_ES.UTF-8;LC_MESSAGES=en_US.UTF-8;LC_PAPER=es_ES.UTF-8;LC_NAME=es_ES.UTF-8;LC_ADDRESS=es_ES.UTF-8;LC_TELEPHONE=es_ES.UTF-8;LC_MEASUREMENT=es_ES.UTF-8;LC_IDENTIFICATION=es_ES.UTF-8
+LC_COLLATE=en_US.UTF-8
+LC_CTYPE=en_US.UTF-8
+LC_MESSAGES=en_US.UTF-8
+LC_MONETARY=es_ES.UTF-8
+LC_NUMERIC=es_ES.UTF-8
+LC_TIME=es_ES.UTF-8
+
+Signal Handlers:
+   SIGSEGV: crash_handler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, unblocked
+    SIGBUS: crash_handler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, unblocked
+    SIGFPE: crash_handler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, unblocked
+   SIGPIPE: javaSignalHandler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, blocked
+   SIGXFSZ: javaSignalHandler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, blocked
+    SIGILL: crash_handler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, unblocked
+   SIGUSR2: SR_handler in libjvm.so, mask=00000000000000000000000000000000, flags=SA_RESTART|SA_SIGINFO, blocked
+    SIGHUP: UserHandler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, blocked
+    SIGINT: UserHandler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, blocked
+   SIGTERM: UserHandler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, blocked
+   SIGQUIT: UserHandler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, blocked
+   SIGTRAP: crash_handler in libjvm.so, mask=11100100010111111101111111111110, flags=SA_RESTART|SA_SIGINFO, unblocked
+
+
+Periodic native trim disabled
+
+
+---------------  S Y S T E M  ---------------
+
+OS:
+DISTRIB_ID=Ubuntu
+DISTRIB_RELEASE=22.04
+DISTRIB_CODENAME=jammy
+DISTRIB_DESCRIPTION="Ubuntu 22.04.4 LTS"
+uname: Linux 6.5.0-26-generic #26~22.04.1-Ubuntu SMP PREEMPT_DYNAMIC Tue Mar 12 10:22:43 UTC 2 x86_64
+OS uptime: 0 days 1:25 hours
+libc: glibc 2.35 NPTL 2.35 
+rlimit (soft/hard): STACK 8192k/infinity , CORE 0k/infinity , NPROC 27130/27130 , NOFILE 1048576/1048576 , AS infinity/infinity , CPU infinity/infinity , DATA infinity/infinity , FSIZE infinity/infinity , MEMLOCK 877760k/877760k
+load average: 0,32 0,26 0,19
+
+/proc/meminfo:
+MemTotal:        7022088 kB
+MemFree:          225660 kB
+MemAvailable:    3582580 kB
+Buffers:          163548 kB
+Cached:          3484540 kB
+SwapCached:            0 kB
+Active:          4143036 kB
+Inactive:        1874744 kB
+Active(anon):    2493692 kB
+Inactive(anon):    63516 kB
+Active(file):    1649344 kB
+Inactive(file):  1811228 kB
+Unevictable:          32 kB
+Mlocked:              32 kB
+SwapTotal:             0 kB
+SwapFree:              0 kB
+Zswap:                 0 kB
+Zswapped:              0 kB
+Dirty:              2044 kB
+Writeback:           104 kB
+AnonPages:       2369848 kB
+Mapped:          1135680 kB
+Shmem:            187516 kB
+KReclaimable:     198380 kB
+Slab:             383528 kB
+SReclaimable:     198380 kB
+SUnreclaim:       185148 kB
+KernelStack:       18976 kB
+PageTables:        38588 kB
+SecPageTables:         0 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     3511044 kB
+Committed_AS:    9331036 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:       70012 kB
+VmallocChunk:          0 kB
+Percpu:            15360 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:         0 kB
+ShmemHugePages:        0 kB
+ShmemPmdMapped:        0 kB
+FileHugePages:         0 kB
+FilePmdMapped:         0 kB
+Unaccepted:            0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+Hugetlb:               0 kB
+DirectMap4k:      497684 kB
+DirectMap2M:     5728256 kB
+DirectMap1G:     2097152 kB
+
+/sys/kernel/mm/transparent_hugepage/enabled: always [madvise] never
+/sys/kernel/mm/transparent_hugepage/defrag (defrag/compaction efforts parameter): always defer defer+madvise [madvise] never
+
+Process Memory:
+Virtual Size: 5553032K (peak: 5618568K)
+Resident Set Size: 426496K (peak: 442732K) (anon: 393472K, file: 33024K, shmem: 0K)
+Swapped out: 0K
+C-Heap outstanding allocations: 68064K, retained: 71463K
+glibc malloc tunables: (default)
+
+/proc/sys/kernel/threads-max (system-wide limit on the number of threads): 54261
+/proc/sys/vm/max_map_count (maximum number of memory map areas a process may have): 65530
+/proc/sys/kernel/pid_max (system-wide limit on number of process identifiers): 4194304
+
+container (cgroup) information:
+container_type: cgroupv2
+cpu_cpuset_cpus: not supported
+cpu_memory_nodes: not supported
+active_processor_count: 8
+cpu_quota: not supported
+cpu_period: not supported
+cpu_shares: not supported
+memory_limit_in_bytes: unlimited
+memory_and_swap_limit_in_bytes: unlimited
+memory_soft_limit_in_bytes: unlimited
+memory_usage_in_bytes: 1377048 k
+memory_max_usage_in_bytes: not supported
+memory_swap_current_in_bytes: unlimited
+memory_swap_max_limit_in_bytes: unlimited
+maximum number of tasks: 8139
+current number of tasks: 183
+
+Steal ticks since vm start: 0
+Steal ticks percentage since vm start:  0,000
+
+CPU: total 8 (initial active 8) (8 cores per cpu, 2 threads per core) family 23 model 24 stepping 1 microcode 0x8108109, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4a, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, clmul, bmi1, bmi2, adx, sha, fma, vzeroupper, clflush, clflushopt
+CPU Model and flags from /proc/cpuinfo:
+model name	: AMD Ryzen 5 3500U with Radeon Vega Mobile Gfx
+flags		: fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl nonstop_tsc cpuid extd_apicid aperfmperf rapl pni pclmulqdq monitor ssse3 fma cx16 sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand lahf_lm cmp_legacy svm extapic cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw skinit wdt tce topoext perfctr_core perfctr_nb bpext perfctr_llc mwaitx cpb hw_pstate ssbd ibpb vmmcall fsgsbase bmi1 avx2 smep bmi2 rdseed adx smap clflushopt sha_ni xsaveopt xsavec xgetbv1 clzero irperf xsaveerptr arat npt lbrv svm_lock nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold avic v_vmsave_vmload vgif overflow_recov succor smca sev sev_es
+
+Online cpus: 0-7
+Offline cpus: 8-15
+BIOS frequency limitation: 2100000
+Frequency switch latency (ns): 0
+Available cpu frequencies: 2100000 1700000 1400000 
+Current governor: schedutil
+Core performance/turbo boost: 1
+
+Memory: 4k page, physical 7022088k(225660k free), swap 0k(0k free)
+Page Sizes: 4k
+
+vm_info: OpenJDK 64-Bit Server VM (17.0.10+7) for linux-amd64 JRE (17.0.10+7), built on Jan 16 2024 00:00:00 by "admin" with gcc 10.3.0
+
+END.
