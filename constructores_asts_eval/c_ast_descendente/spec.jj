@@ -153,7 +153,7 @@ PARSER_END(ConstructorASTsTiny)
         {Tipo t; Token id;}
         {
           t = tipo() id = <iden>
-            {return (Var)sem.var(t,id.image);}
+            {return (Var)sem.var(t,id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}
         }
   
   Dec declaracion() : 

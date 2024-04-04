@@ -165,7 +165,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
          Tipo t; Token id;
       t = tipo();
       id = jj_consume_token(iden);
-             {if (true) return (Var)sem.var(t,id.image);}
+             {if (true) return (Var)sem.var(t,id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}
     throw new Error("Missing return statement in function");
     } finally {
       trace_return("variable");
