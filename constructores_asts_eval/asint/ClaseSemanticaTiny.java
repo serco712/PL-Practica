@@ -21,12 +21,4 @@ public class ClaseSemanticaTiny extends SintaxisAbstractaTiny {
             default: throw new UnsupportedOperationException("Bad op");
         }
     }
-    
-    public Exp mkopUn(String op, Exp opnd) {
-        switch(op) {
-            case "-": return exp_menos(opnd);
-            case "not": return exp_not(opnd);
-            default: throw new UnsupportedOperationException("Bad op");
-        }
-    }
 }

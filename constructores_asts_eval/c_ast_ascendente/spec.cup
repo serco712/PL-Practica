@@ -8,6 +8,7 @@ import asint.SintaxisAbstractaTiny.Prog;
 import asint.SintaxisAbstractaTiny.Blo;
 import asint.SintaxisAbstractaTiny.Decs;
 import asint.SintaxisAbstractaTiny.LDecs;
+import asint.SintaxisAbstractaTiny.Var;
 import asint.SintaxisAbstractaTiny.LVar;
 import asint.SintaxisAbstractaTiny.Dec;
 import asint.SintaxisAbstractaTiny.Tipo;
@@ -55,6 +56,7 @@ non terminal  Prog programa;
 non terminal  Blo bloq;
 non terminal  Decs declaraciones;
 non terminal  LDecs lista_declaraciones;
+non terminal  Var variable;
 non terminal  LVar lista_variables;
 non terminal  Dec declaracion;
 non terminal  Tipo tipo, tipo2, tipo3;
@@ -81,14 +83,16 @@ lista_declaraciones ::= lista_declaraciones: decs PCOMA declaracion: dec
    {: RESULT = sem.muchas_decs(decs,dec);:};
 lista_declaraciones ::= declaracion: dec 
    {: RESULT = sem.una_dec(dec);:};
-lista_variables ::= lista_variables: lvar COMA declaracion: dec
-   {: RESULT = sem.muchas_var(lvar, dec);:};
-lista_variables ::= declaracion: dec
-   {: RESULT = sem.una_var(dec);:};  
-declaracion ::= tipo: tipo IDEN: id 
-   {: RESULT = sem.dec_simple(tipo,id.str());:};
-declaracion ::= TYPE tipo: tipo IDEN: id 
-   {: RESULT = sem.dec_type(tipo,id.str());:};
+lista_variables ::= lista_variables: lvar COMA variable: var
+   {: RESULT = sem.muchas_var(lvar, var);:};
+lista_variables ::= variable: var
+   {: RESULT = sem.una_var(var);:};  
+variable ::= tipo: tipo IDEN: id 
+   {: RESULT = sem.var(tipo,id.str());:};
+declaracion ::= variable: var
+   {: RESULT = sem.dec_proc(var);:}
+declaracion ::= TYPE variable: var 
+   {: RESULT = sem.dec_type(var);:};
 declaracion ::= PROC IDEN: id par_formales: parf bloq: b
    {: RESULT = sem.dec_proc(id.str(), parf, b);:};
 tipo 	::= tipo: tipo CAP LIT_ENT : lit_ent CCI 
@@ -168,7 +172,7 @@ instruccion ::= bloq: b
 
 
 
-E0 ::= E0: opnd1 ASIG E1: opnd2 
+E0 ::= E1: opnd1 ASIG E0: opnd2 
    {: RESULT = sem.exp_asig(opnd1,opnd2); :};
 E0 ::= E1: exp 
    {: RESULT = exp; :};
@@ -192,12 +196,14 @@ E4 ::= E4: opnd1  OP4: op E5: opnd2
    {: RESULT = sem.mkopBin(op,opnd1,opnd2); :};
 E4 ::= E5: exp 
    {: RESULT = exp; :};
-E5 ::= OP5: op E6: opnd1 
-   {: RESULT = sem.mkopUn(op,opnd1); :};
+E5 ::= RESTA E5: opnd1 
+   {: RESULT = sem.exp_menos(opnd1); :};
+E5 ::= NOT E5: opnd1 
+   {: RESULT = sem.exp_not(opnd1); :};
 E5 ::= E6: exp 
    {: RESULT = exp; :};
 E6 ::= E6: exp CAP E0: exp1 CCI
-   {: RESULT = sem.exp_index(exp,exp1); :};
+   {: RESULT = sem.exp_index(exp); :};
 E6 ::= E6: exp PUNTO IDEN: iden
    {: RESULT = sem.exp_reg(exp,iden.str()); :};
 E6 ::= E6: exp INDIRECCION
@@ -238,7 +244,3 @@ OP4 ::= DIV
    {: RESULT = "/"; :};
 OP4 ::= MOD
    {: RESULT = "%"; :};
-OP5 ::= RESTA 
-   {: RESULT = "-"; :};
-OP5 ::= NOT 
-   {: RESULT = "not"; :};

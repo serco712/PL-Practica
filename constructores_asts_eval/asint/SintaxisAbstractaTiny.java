@@ -7,9 +7,9 @@ public class SintaxisAbstractaTiny {
         opnd.imprime();
         if(opnd.prioridad() < np) {System.out.println(")");};        
     }
-    private static void imprimeExpBin(Exp opnd0, String op, Exp opnd1, int np0, int np1) {
+    private static void imprimeExpBin(Exp opnd0, String op, Exp opnd1, int np0, int np1, int fila, int col) {
         imprimeOpnd(opnd0,np0);
-        System.out.println(op);
+        System.out.format(op + "$f:%d,c:%d$%n", fila, col);
         imprimeOpnd(opnd1,np1);
     }
 
@@ -315,7 +315,7 @@ public class SintaxisAbstractaTiny {
        }
        public void imprime() {
            System.out.println("<proc>");
-           System.out.println(str);
+           System.out.format("%s$f:%d,c:%d$%n", str, leeFila(), leeCol());
            parfor.imprime();
            bloq.imprime();
         }
@@ -334,8 +334,7 @@ public class SintaxisAbstractaTiny {
       }
       public void imprime() {
             tipo.imprime();
-            System.out.println(",");
-            System.out.println(str);
+            System.out.format("[%s%n]$f:%d,c:%d$%n", str, leeFila(), leeCol());
         }
       public String toString() {
             return "tipo_array("+tipo+","+str+")";
@@ -560,7 +559,7 @@ public class SintaxisAbstractaTiny {
        }
        public void imprime() {
             tipo.imprime();
-            System.out.println(str);
+            System.out.format("%s$f:%d,c:%d$%n", str, leeFila(), leeCol());
         }
        public String toString() {
             return "pformal_ref("+tipo+","+str+")";
@@ -577,7 +576,7 @@ public class SintaxisAbstractaTiny {
         }
         public void imprime() {
             tipo.imprime();
-            System.out.println(str);
+            System.out.format("%s$f:%d,c:%d$%n", str, leeFila(), leeCol());
         }
         public String toString() {
              return "pformal_noref("+tipo+","+str+")";
@@ -787,7 +786,7 @@ public class SintaxisAbstractaTiny {
         }
         public void imprime() {
             System.out.println("<call>");
-            System.out.println(id);
+            System.out.format("%s$f:%d,c:%d$%n", id, leeFila(), leeCol());
             pr.imprime();
         }
         public String toString() {
@@ -832,7 +831,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 0; }
         public void imprime() {
-           imprimeExpBin(exp1, "=", exp2, 1, 0);
+           imprimeExpBin(exp1, "=", exp2, 1, 0, leeFila(), leeCol());
        }
         public String toString() {
             return "exp_asig("+exp1+","+exp2+")";
@@ -849,7 +848,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 1; }
         public void imprime() {
-           imprimeExpBin(exp1, "<", exp2, 1, 2);
+           imprimeExpBin(exp1, "<", exp2, 1, 2, leeFila(), leeCol());
        }
         public String toString() {
             return "exp_menor("+exp1+","+exp2+")";
@@ -866,7 +865,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 1; }
         public void imprime() {
-           imprimeExpBin(exp1, "<=", exp2, 1, 2);
+           imprimeExpBin(exp1, "<=", exp2, 1, 2, leeFila(), leeCol());
        }
         public String toString() {
             return "exp_menIgual("+exp1+","+exp2+")";
@@ -883,7 +882,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 1; }
         public void imprime() {
-           imprimeExpBin(exp1, ">", exp2, 1, 2);
+           imprimeExpBin(exp1, ">", exp2, 1, 2, leeFila(), leeCol());
        }
         public String toString() {
             return "exp_mayor("+exp1+","+exp2+")";
@@ -900,7 +899,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 1; }
         public void imprime() {
-           imprimeExpBin(exp1, ">=", exp2, 1, 2);
+           imprimeExpBin(exp1, ">=", exp2, 1, 2, leeFila(), leeCol());
        }
         public String toString() {
             return "exp_mayIgual("+exp1+","+exp2+")";
@@ -917,7 +916,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 1; }
         public void imprime() {
-           imprimeExpBin(exp1, "==", exp2, 1, 2);
+           imprimeExpBin(exp1, "==", exp2, 1, 2, leeFila(), leeCol());
        }
         public String toString() {
             return "exp_igual("+exp1+","+exp2+")";
@@ -934,7 +933,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 1; }
         public void imprime() { 
-            imprimeExpBin(exp1, "!=", exp2, 1, 2);
+            imprimeExpBin(exp1, "!=", exp2, 1, 2, leeFila(), leeCol());
         }
         public String toString() {
             return "exp_dist("+exp1+","+exp2+")";
@@ -951,7 +950,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 2; }
         public void imprime() { 
-            imprimeExpBin(exp1, "+", exp2, 2, 3);
+            imprimeExpBin(exp1, "+", exp2, 2, 3, leeFila(), leeCol());
         }
         public String toString() {
             return "exp_suma("+exp1+","+exp2+")";
@@ -968,7 +967,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 2; }
         public void imprime() { 
-            imprimeExpBin(exp1, "-", exp2, 3, 3);
+            imprimeExpBin(exp1, "-", exp2, 3, 3, leeFila(), leeCol());
         }
         public String toString() {
             return "exp_resta("+exp1+","+exp2+")";
@@ -985,7 +984,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 4; }
         public void imprime() { 
-            imprimeExpBin(exp1, "*", exp2, 4, 5);
+            imprimeExpBin(exp1, "*", exp2, 4, 5, leeFila(), leeCol());
         }
         public String toString() {
             return "exp_mult("+exp1+","+exp2+")";
@@ -1002,7 +1001,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 4; }
         public void imprime() { 
-            imprimeExpBin(exp1, "/", exp2, 4, 5);
+            imprimeExpBin(exp1, "/", exp2, 4, 5, leeFila(), leeCol());
         }
         public String toString() {
             return "exp_div("+exp1+","+exp2+")";
@@ -1018,7 +1017,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 4; }
         public void imprime() { 
-            imprimeExpBin(exp1, "%", exp2, 4, 5);
+            imprimeExpBin(exp1, "%", exp2, 4, 5, leeFila(), leeCol());
         }
         public String toString() {
             return "exp_mod("+exp1+","+exp2+")";
@@ -1035,7 +1034,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 3; }
         public void imprime() { 
-            imprimeExpBin(exp1, "<and>", exp2, 4, 3);
+            imprimeExpBin(exp1, "<and>", exp2, 4, 3, leeFila(), leeCol());
         }
         public String toString() {
             return "exp_and("+exp1+","+exp2+")";
@@ -1052,7 +1051,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 3; }
         public void imprime() { 
-            imprimeExpBin(exp1, "<or>", exp2, 4, 4);
+            imprimeExpBin(exp1, "<or>", exp2, 4, 4, leeFila(), leeCol());
         }
         public String toString() {
             return "exp_or("+exp1+","+exp2+")";
@@ -1067,7 +1066,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 5; }
         public void imprime() { 
-            System.out.println("-");
+            System.out.format("-$f:%d,c:%d$%n", leeFila(), leeCol());
             imprimeOpnd(exp, 5);
         }
         public String toString() {
@@ -1123,7 +1122,7 @@ public class SintaxisAbstractaTiny {
         public void imprime() { 
             imprimeOpnd(exp, 6);
             System.out.println(".");
-            System.out.println(s);
+            System.out.format("%$f:%d,c:%d$%n", leeFila(), leeCol());
         }
         public String toString() {
             return "exp_reg("+exp+","+s+")";
@@ -1139,7 +1138,7 @@ public class SintaxisAbstractaTiny {
         public int prioridad() { return 6; }
         public void imprime() { 
             imprimeOpnd(exp, 6);
-            System.out.println("^");
+            System.out.format("^$f:%d,c:%d$%n", leeFila(), leeCol());
         }
         public String toString() {
             return "exp_indir("+exp+")";
@@ -1152,7 +1151,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 7; }
         public void imprime() { 
-            System.out.println("<true>");
+            System.out.format("<true>$f:%d,c:%d$%n", leeFila(), leeCol());
         }
         public String toString() {
             return "exp_true()";
@@ -1165,7 +1164,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 7; }
         public void imprime() { 
-            System.out.println("<false>");
+            System.out.format("<false>$f:%d,c:%d$%n", leeFila(), leeCol());
         }
         public String toString() {
             return "exp_false()";
@@ -1180,7 +1179,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 7; }
         public void imprime() { 
-            System.out.println(s);
+            System.out.format("%s$f:%d,c:%d$%n", s, leeFila(), leeCol());
         }
         public String toString() {
             return "exp_litEnt("+s+")";
@@ -1195,7 +1194,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 7; }
         public void imprime() { 
-            System.out.println(s);
+            System.out.format("%s$f:%d,c:%d$%n", s, leeFila(), leeCol());
         }
         public String toString() {
             return "exp_litReal("+s+")";
@@ -1210,7 +1209,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 7; }
         public void imprime() { 
-            System.out.println(s);
+            System.out.format("%s$f:%d,c:%d$%n", s, leeFila(), leeCol());
         }
         public String toString() {
             return "exp_litCad("+s+")";
@@ -1225,7 +1224,7 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 7; }
         public void imprime() { 
-            System.out.println(s);
+            System.out.format("%s$f:%d,c:%d$%n", s, leeFila(), leeCol());
         }
         public String toString() {
             return "exp_iden("+s+")";
@@ -1238,13 +1237,13 @@ public class SintaxisAbstractaTiny {
         }
         public int prioridad() { return 7; }
         public void imprime() {
-            System.out.println("<null>");
+            System.out.format("<null>$f:%d,c:%d$%n", leeFila(), leeCol());
         }
         public String toString() {
             return "exp_null()";
         } 
     }
-    
+	
      // Constructoras    
     public Prog prog(Blo b) {
         return new Prog(b);
