@@ -652,11 +652,11 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
       case ELSE:
         jj_consume_token(ELSE);
         bloq2 = bloq();
-          {if (true) return sem.inst_else(e0, bloq1, bloq2);}
+           {if (true) return sem.inst_else(e0, bloq1, bloq2);}
         break;
       default:
         jj_la1[15] = jj_gen;
-          {if (true) return sem.inst_if(e0,bloq1);}
+           {if (true) return sem.inst_if(e0,bloq1);}
       }
     throw new Error("Missing return statement in function");
     } finally {
@@ -680,12 +680,12 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
   final public Exp re0(Exp e) throws ParseException {
     trace_call("re0");
     try {
-         Exp e1;
+         Token t; Exp e1;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case operadorAsig:
-        jj_consume_token(operadorAsig);
+        t = jj_consume_token(operadorAsig);
         e1 = e0();
-              {if (true) return (Exp)sem.exp_asig(e,e1);}
+              {if (true) return (Exp)sem.exp_asig(e,e1).ponFila(t.beginLine).ponCol(t.beginColumn);}
         break;
       default:
         jj_la1[16] = jj_gen;
@@ -713,7 +713,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
   final public Exp re1(Exp eh) throws ParseException {
     trace_call("re1");
     try {
-         String op; Exp e1,e2;
+         Token op; Exp e1,e2;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case operadorMenor:
       case operadorMayor:
@@ -723,7 +723,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
       case operadorMayIgual:
         op = op1();
         e1 = e2();
-        e2 = re1(sem.mkopBin(op,eh,e1));
+        e2 = re1(sem.mkopBin(op.image,eh,e1).ponFila(op.beginLine).ponCol(op.beginColumn));
               {if (true) return e2;}
         break;
       default:
@@ -753,12 +753,12 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
   final public Exp re2p(Exp eh) throws ParseException {
     trace_call("re2p");
     try {
-         Exp e3;
+         Token t; Exp e3;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case operadorResta:
-        jj_consume_token(operadorResta);
+        t = jj_consume_token(operadorResta);
         e3 = e3();
-              {if (true) return (Exp)sem.exp_resta(eh,e3);}
+              {if (true) return (Exp)sem.exp_resta(eh,e3).ponFila(t.beginLine).ponCol(t.beginColumn);}
         break;
       default:
         jj_la1[18] = jj_gen;
@@ -773,12 +773,12 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
   final public Exp re2(Exp eh) throws ParseException {
     trace_call("re2");
     try {
-         Exp e1,e2;
+         Token t; Exp e1,e2;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case operadorSuma:
-        jj_consume_token(operadorSuma);
+        t = jj_consume_token(operadorSuma);
         e1 = e3();
-        e2 = re2(sem.exp_suma(eh,e1));
+        e2 = re2(sem.exp_suma(eh,e1).ponFila(t.beginLine).ponCol(t.beginColumn));
               {if (true) return e2;}
         break;
       default:
@@ -807,17 +807,17 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
   final public Exp re3(Exp e) throws ParseException {
     trace_call("re3");
     try {
-         Exp e1;
+         Token t; Exp e1;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case and:
-        jj_consume_token(and);
+        t = jj_consume_token(and);
         e1 = e3();
-             {if (true) return (Exp)sem.exp_and(e1,e);}
+             {if (true) return (Exp)sem.exp_and(e1,e).ponFila(t.beginLine).ponCol(t.beginColumn);}
         break;
       case or:
-        jj_consume_token(or);
+        t = jj_consume_token(or);
         e1 = e4();
-              {if (true) return (Exp)sem.exp_or(e1,e);}
+              {if (true) return (Exp)sem.exp_or(e1,e).ponFila(t.beginLine).ponCol(t.beginColumn);}
         break;
       default:
         jj_la1[20] = jj_gen;
@@ -845,14 +845,14 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
   final public Exp re4(Exp eh) throws ParseException {
     trace_call("re4");
     try {
-         String op; Exp e1,e2;
+         Token t; Exp e1,e2;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case operadorMul:
       case operadorDiv:
       case operadorMod:
-        op = op4();
+        t = op4();
         e1 = e5();
-        e2 = re4(sem.mkopBin(op,eh,e1));
+        e2 = re4(sem.mkopBin(t.image,eh,e1).ponFila(t.beginLine).ponCol(t.beginColumn));
               {if (true) return e2;}
         break;
       default:
@@ -868,13 +868,17 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
   final public Exp e5() throws ParseException {
     trace_call("e5");
     try {
-         String op; Exp e6;
+         Token t; Exp e6;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
-      case not:
       case operadorResta:
-        op = op5();
+        t = jj_consume_token(operadorResta);
         e6 = e5();
-             {if (true) return (Exp)sem.mkopUn(op,e6);}
+             {if (true) return (Exp)sem.exp_menos(e6).ponFila(t.beginLine).ponCol(t.beginColumn);}
+        break;
+      case not:
+        t = jj_consume_token(not);
+        e6 = e5();
+             {if (true) return (Exp)sem.exp_not(e6).ponFila(t.beginLine).ponCol(t.beginColumn);}
         break;
       case TRUE:
       case FALSE:
@@ -885,7 +889,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
       case iden:
       case parentesisAp:
         e6 = e6();
-             {if (true) return e6;}
+                 {if (true) return e6;}
         break;
       default:
         jj_la1[22] = jj_gen;
@@ -951,11 +955,11 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case TRUE:
         t = jj_consume_token(TRUE);
-           {if (true) return (Exp)sem.exp_true();}
+           {if (true) return (Exp)sem.exp_true().ponFila(t.beginLine).ponCol(t.beginColumn);}
         break;
       case FALSE:
         t = jj_consume_token(FALSE);
-           {if (true) return (Exp)sem.exp_false();}
+           {if (true) return (Exp)sem.exp_false().ponFila(t.beginLine).ponCol(t.beginColumn);}
         break;
       case iden:
         t = jj_consume_token(iden);
@@ -994,33 +998,34 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
     }
   }
 
-  final public String op1() throws ParseException {
+  final public Token op1() throws ParseException {
     trace_call("op1");
     try {
+        Token t;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case operadorMenor:
-        jj_consume_token(operadorMenor);
-          {if (true) return "<";}
+        t = jj_consume_token(operadorMenor);
+          {if (true) return t;}
         break;
       case operadorMenIgual:
-        jj_consume_token(operadorMenIgual);
-          {if (true) return "<=";}
+        t = jj_consume_token(operadorMenIgual);
+          {if (true) return t;}
         break;
       case operadorMayor:
-        jj_consume_token(operadorMayor);
-          {if (true) return ">";}
+        t = jj_consume_token(operadorMayor);
+          {if (true) return t;}
         break;
       case operadorMayIgual:
-        jj_consume_token(operadorMayIgual);
-          {if (true) return ">=";}
+        t = jj_consume_token(operadorMayIgual);
+          {if (true) return t;}
         break;
       case operadorIgual:
-        jj_consume_token(operadorIgual);
-          {if (true) return "==";}
+        t = jj_consume_token(operadorIgual);
+          {if (true) return t;}
         break;
       case operadorDistinto:
-        jj_consume_token(operadorDistinto);
-          {if (true) return "!=";}
+        t = jj_consume_token(operadorDistinto);
+          {if (true) return t;}
         break;
       default:
         jj_la1[25] = jj_gen;
@@ -1033,21 +1038,22 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
     }
   }
 
-  final public String op4() throws ParseException {
+  final public Token op4() throws ParseException {
     trace_call("op4");
     try {
+        Token t;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case operadorMul:
-        jj_consume_token(operadorMul);
-           {if (true) return "*";}
+        t = jj_consume_token(operadorMul);
+           {if (true) return t;}
         break;
       case operadorDiv:
-        jj_consume_token(operadorDiv);
-           {if (true) return "/";}
+        t = jj_consume_token(operadorDiv);
+           {if (true) return t;}
         break;
       case operadorMod:
-        jj_consume_token(operadorMod);
-           {if (true) return "%";}
+        t = jj_consume_token(operadorMod);
+           {if (true) return t;}
         break;
       default:
         jj_la1[26] = jj_gen;
@@ -1060,17 +1066,18 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
     }
   }
 
-  final public String op5() throws ParseException {
+  final public Token op5() throws ParseException {
     trace_call("op5");
     try {
+        Token t;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case not:
-        jj_consume_token(not);
-           {if (true) return "not";}
+        t = jj_consume_token(not);
+           {if (true) return t;}
         break;
       case operadorResta:
-        jj_consume_token(operadorResta);
-           {if (true) return "-";}
+        t = jj_consume_token(operadorResta);
+           {if (true) return t;}
         break;
       default:
         jj_la1[27] = jj_gen;
@@ -1282,7 +1289,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
     }
   }
 
-  protected void trace_token(Token t, String where) {
+  private void trace_token(Token t, String where) {
     if (trace_enabled) {
       for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
       System.out.print("Consumed token: <" + tokenImage[t.kind]);
