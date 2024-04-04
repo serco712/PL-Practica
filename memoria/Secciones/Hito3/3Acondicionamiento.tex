@@ -177,8 +177,10 @@
     | \hspace{1cm}rE4_0.\textbf{a} \;= rE4_1.\textbf{a}\\
     rE4 \longrightarrow \epsilon\\
     | \hspace{1cm}rE4.\textbf{a} \;= rE4.\textbf{ah}\\
-    E5 \longrightarrow OP5\;\;E6\\
-    | \hspace{1cm}E5.\textbf{a} \;= \textbf{mkop}(OP5.\textbf{op},E6.\textbf{a})\\
+    E5 \longrightarrow -\;E5\\
+    | \hspace{1cm}E5_0.\textbf{a} \;= \textbf{exp$\_$menos}(E5_1.\textbf{a})\\
+    E5 \longrightarrow \textbf{not}\;E5\\
+    | \hspace{1cm}E5_0.\textbf{a} \;= \textbf{exp$\_$not}(E5_1.\textbf{a})\\
     E5 \longrightarrow E6\\
     | \hspace{1cm}E5.\textbf{a} \;= E6.\textbf{a}\\
     E6 \longrightarrow E7\;rE6\\
@@ -222,16 +224,12 @@
     OP1 \longrightarrow \;==\\
     | \hspace{1cm}OP1.\textbf{op} \;=\; \textbf{``\;==\;''}\\  
     OP1 \longrightarrow \;!=\\
-    | \hspace{1cm}OP1.\textbf{op} \;=\; \textbf{``\;!=\;''}\\  
+    | \hspace{1cm}OP1.\textbf{op} \;=\; \textbf{``\;!=\;s''}\\  
     OP4 \longrightarrow \;*\\
     | \hspace{1cm}OP4.\textbf{op} \;=\; \textbf{``\;*\;''}\\  
     OP4 \longrightarrow \;/\\
     | \hspace{1cm}OP4.\textbf{op} \;=\; \textbf{``\;/\;''}\\  
     OP4 \longrightarrow \;\%\\  
-    | \hspace{1cm}OP4.\textbf{op} \;=\; \textbf{``\;\%\;''}\\  
-    OP5 \longrightarrow \;-\\
-    | \hspace{1cm}OP5.\textbf{op} \;=\; \textbf{``\;-\;''}\\  
-    OP5 \longrightarrow \;\textbf{not}\\
-    | \hspace{1cm}OP5.\textbf{op} \;=\; \textbf{``\;not\;''}\\  
+    | \hspace{1cm}OP4.\textbf{op} \;=\; \textbf{``\;\%\;''}\\
 
 \end{math}
