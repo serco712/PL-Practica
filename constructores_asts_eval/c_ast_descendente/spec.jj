@@ -349,7 +349,7 @@ PARSER_END(ConstructorASTsTiny)
          {return sem.inst_write(e0);}
          |
          <call> tok = <iden> preales= par_reales()
-         {return sem.inst_call(tok.image, preales);}
+         {return (Inst)sem.inst_call(tok.image, preales).ponFila(tok.beginLine).ponCol(tok.beginColumn);}
          |
          <nl>
          {return sem.inst_nl();}

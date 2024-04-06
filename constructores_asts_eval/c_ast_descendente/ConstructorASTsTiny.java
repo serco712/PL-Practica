@@ -623,7 +623,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
         jj_consume_token(call);
         tok = jj_consume_token(iden);
         preales = par_reales();
-          {if (true) return sem.inst_call(tok.image, preales);}
+          {if (true) return (Inst)sem.inst_call(tok.image, preales).ponFila(tok.beginLine).ponCol(tok.beginColumn);}
         break;
       case nl:
         jj_consume_token(nl);
