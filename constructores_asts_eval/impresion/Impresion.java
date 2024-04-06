@@ -89,9 +89,9 @@ import asint.SintaxisAbstractaTiny.Exp_true;
 
 public class Impresion extends ProcesamientoDef {
     private void imprimeOpnd(Exp opnd, int np) {
-        if(opnd.prioridad() < np) {System.out.print("(");};
+        if(opnd.prioridad() < np) {System.out.println("(");};
         opnd.procesa(this);
-        if(opnd.prioridad() < np) {System.out.print(")");};        
+        if(opnd.prioridad() < np) {System.out.println(")");};        
     }
     private void imprimeExpBin(Exp opnd0, String op, Exp opnd1, int np0, int np1, int fila, int col) {
         imprimeOpnd(opnd0,np0);
@@ -163,6 +163,7 @@ public class Impresion extends ProcesamientoDef {
 
 
 	public void procesa(Dec_proc dec) {
+		System.out.println("<proc>");
         System.out.format("%s$f:%d,c:%d$%n", dec.id(), dec.leeFila(), dec.leeCol());
 		dec.par_for().procesa(this);
         dec.bloq().procesa(this);
@@ -172,8 +173,8 @@ public class Impresion extends ProcesamientoDef {
 	public void procesa(Tipo_array tipo) {
         tipo.tipo().procesa(this);
 		System.out.println("[");
-        System.out.format("%s$f:%d,c:%d$%n", tipo.litEnt(), tipo.leeFila(), tipo.leeCol());
-        System.out.println("]");
+		System.out.println(tipo.litEnt());
+        System.out.format("]$f:%d,c:%d$%n", tipo.leeFila(), tipo.leeCol());
 	}
 
 
@@ -238,18 +239,22 @@ public class Impresion extends ProcesamientoDef {
 
 
 	public void procesa(Si_pformal pfmls) {
+		System.out.println("(");
         pfmls.lpfml().procesa(this);
+		System.out.println(")");
 	}
 
 
 	public void procesa(No_pformal pfmls) {
+		System.out.println("(");
+		System.out.println(")");
 	}
 
 
 	public void procesa(Muchos_pformal pfmls) {
-		pfmls.pfml().procesa(this);
-		System.out.println(",");
 		pfmls.lpfml().procesa(this);
+		System.out.println(",");
+		pfmls.pfml().procesa(this);
 	}
 
 
@@ -266,16 +271,20 @@ public class Impresion extends ProcesamientoDef {
 
 	public void procesa(Pformal_noref pfml) {
 		pfml.tipo().procesa(this);
-        System.out.format("&%n%s$f:%d,c:%d$%n", pfml.id(), pfml.leeFila(), pfml.leeCol());
+        System.out.format("%s$f:%d,c:%d$%n", pfml.id(), pfml.leeFila(), pfml.leeCol());
 	}
 
 
 	public void procesa(Si_preales preales) {
+		System.out.println("(");
 		preales.lpr().procesa(this);
+		System.out.println(")");
 	}
 
 
 	public void procesa(No_preales preales) {
+		System.out.println("(");
+		System.out.println(")");
 	}
 
 
@@ -432,7 +441,7 @@ public class Impresion extends ProcesamientoDef {
 
 	public void procesa(Exp_index index) {
 		index.exp1().procesa(this);
-        System.out.println("[");
+		System.out.format("[$f:%d,c:%d$%n", index.leeFila(), index.leeCol());
 		index.exp2().procesa(this);
         System.out.println("]");
 	}

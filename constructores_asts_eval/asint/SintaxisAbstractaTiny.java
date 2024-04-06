@@ -430,7 +430,7 @@ public class SintaxisAbstractaTiny {
         public String litEnt() { return str; }
         public void imprime() {
             tipo.imprime();
-            System.out.format("[%s%n]$f:%d,c:%d$%n", str, leeFila(), leeCol());
+            System.out.format("[%n%s%n]$f:%d,c:%d$%n", str, leeFila(), leeCol());
         }
         public String toString() {
                 return "tipo_array("+tipo+","+str+")";
@@ -639,7 +639,9 @@ public class SintaxisAbstractaTiny {
         }
         public LPFml lpfml() { return lpfml; }
         public void imprime() {
-            lpfml.imprime();
+        	System.out.println("(");
+            lpfml.imprime();        	
+            System.out.println(")");
         }
         public String toString() {
             return "si_pformal("+lpfml+")";
@@ -654,6 +656,8 @@ public class SintaxisAbstractaTiny {
             super();
         }
         public void imprime() {
+        	System.out.println("(");
+        	System.out.println(")");
         }
         public String toString() {
             return "no_pformal()";
@@ -674,9 +678,9 @@ public class SintaxisAbstractaTiny {
         public PFml pfml() { return pfml; }
         public LPFml lpfml() { return lpfml; }
         public void imprime() {
-            pfml.imprime();
-            System.out.println(",");
             lpfml.imprime();
+            System.out.println(",");
+            pfml.imprime();
         }
         public String toString() {
             return "muchas_pformal("+pfml+","+lpfml+")";
@@ -716,7 +720,7 @@ public class SintaxisAbstractaTiny {
         public String id() { return str; }
         public void imprime() {
             tipo.imprime();
-            System.out.format("%s$f:%d,c:%d$%n", str, leeFila(), leeCol());
+            System.out.format("&%n%s$f:%d,c:%d$%n", str, leeFila(), leeCol());
         }
         public String toString() {
             return "pformal_ref("+tipo+","+str+")";
@@ -738,7 +742,7 @@ public class SintaxisAbstractaTiny {
         public String id() { return str; }
         public void imprime() {
             tipo.imprime();
-            System.out.format("&%n%s$f:%d,c:%d$%n", str, leeFila(), leeCol());
+            System.out.format("%s$f:%d,c:%d$%n", str, leeFila(), leeCol());
         }
         public String toString() {
              return "pformal_noref("+tipo+","+str+")";
@@ -756,7 +760,9 @@ public class SintaxisAbstractaTiny {
         }
         public LPReal lpr() { return lpr; }
         public void imprime() {
+        	System.out.println("(");
             lpr.imprime();
+            System.out.println(")");
         }
         public String toString() {
              return "si_preales("+lpr+")";
@@ -771,6 +777,8 @@ public class SintaxisAbstractaTiny {
            super();
         }
         public void imprime() {
+        	System.out.println("(");
+        	System.out.println(")");
         }
         public String toString() {
              return "no_preales()";
@@ -1018,7 +1026,8 @@ public class SintaxisAbstractaTiny {
             super();
         }
         public void imprime() {
-        }
+        	System.out.println("<nl>");
+        }        
         public String toString() {
             return "inst_nl()";
         } 
@@ -1406,7 +1415,7 @@ public class SintaxisAbstractaTiny {
         public int prioridad() { return 6; }
         public void imprime() { 
             imprimeOpnd(exp1, 6);
-            System.out.println("[");
+            System.out.format("[$f:%d,c:%d$%n", leeFila(), leeCol());
             imprimeOpnd(exp2, 0);
             System.out.println("]");
         }

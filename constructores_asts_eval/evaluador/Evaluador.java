@@ -7,9 +7,9 @@ public class Evaluador extends SintaxisAbstractaTiny {
     public Evaluador() {}
     
     private void imprimeOpnd(Exp opnd, int np) {
-        if(opnd.prioridad() < np) {System.out.print("(");};
+        if(opnd.prioridad() < np) {System.out.println("(");};
         consEnv(opnd);
-        if(opnd.prioridad() < np) {System.out.print(")");};        
+        if(opnd.prioridad() < np) {System.out.println(")");};        
     }
     private void imprimeExpBin(Exp opnd0, String op, Exp opnd1, int np0, int np1, int fila, int col) {
         imprimeOpnd(opnd0,np0);
@@ -282,11 +282,11 @@ public class Evaluador extends SintaxisAbstractaTiny {
             }
             else if(claseDe(exp,Exp_not.class)) {
                 System.out.format("<not>$f:%d,c:%d$%n", exp.leeFila(), exp.leeCol());
-                imprimeOpnd(exp.exp1(),6);
+                imprimeOpnd(exp.exp1(),5);
             }
      		else if(claseDe(exp,Exp_menos.class)) {
                   System.out.format("-$f:%d,c:%d$%n", exp.leeFila(), exp.leeCol());
-                  imprimeOpnd(exp.exp1(),6);
+                  imprimeOpnd(exp.exp1(),5);
             }
      		else if (claseDe(exp,Exp_indir.class)) {
      			imprimeOpnd(exp.exp1(),6);
