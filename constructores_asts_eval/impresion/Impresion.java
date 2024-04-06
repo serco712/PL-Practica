@@ -95,7 +95,8 @@ public class Impresion extends ProcesamientoDef {
     }
     private void imprimeExpBin(Exp opnd0, String op, Exp opnd1, int np0, int np1, int fila, int col) {
         imprimeOpnd(opnd0,np0);
-        System.out.format(op + "$f:%d,c:%d$%n", fila, col);
+        System.out.print(op);
+        System.out.format("$f:%d,c:%d$%n", fila, col);
         imprimeOpnd(opnd1,np1);
     }
     public void procesa(Prog prog) {
@@ -361,89 +362,89 @@ public class Impresion extends ProcesamientoDef {
 
 
 	public void procesa(Exp_asig exp) {
-        imprimeExpBin(exp.ex1(), "=", exp.ex2(), 1, 0, exp.leeFila(), exp.leeCol());	
+        imprimeExpBin(exp.exp1(), "=", exp.exp2(), 1, 0, exp.leeFila(), exp.leeCol());	
 	}
 
 
 	public void procesa(Exp_menor exp) {
-        imprimeExpBin(exp.ex1(), "<", exp.ex2(), 1, 2, exp.leeFila(), exp.leeCol());	
+        imprimeExpBin(exp.exp1(), "<", exp.exp2(), 1, 2, exp.leeFila(), exp.leeCol());	
 	}
 
 
 	public void procesa(Exp_menIgual exp) {
-        imprimeExpBin(exp.ex1(), "<=", exp.ex2(), 1, 2, exp.leeFila(), exp.leeCol());	
+        imprimeExpBin(exp.exp1(), "<=", exp.exp2(), 1, 2, exp.leeFila(), exp.leeCol());	
 	}
 
 
 	public void procesa(Exp_mayor exp) {
-		imprimeExpBin(exp.ex1(), ">", exp.ex2(), 1, 2, exp.leeFila(), exp.leeCol());
+		imprimeExpBin(exp.exp1(), ">", exp.exp2(), 1, 2, exp.leeFila(), exp.leeCol());
 	}
 
 	public void procesa(Exp_mayIgual exp) {
-		imprimeExpBin(exp.ex1(), ">=", exp.ex2(), 1, 2, exp.leeFila(), exp.leeCol());
+		imprimeExpBin(exp.exp1(), ">=", exp.exp2(), 1, 2, exp.leeFila(), exp.leeCol());
 	}
 
 	public void procesa(Exp_igual exp) {
-		imprimeExpBin(exp.ex1(), "==", exp.ex2(), 1, 2, exp.leeFila(), exp.leeCol());
+		imprimeExpBin(exp.exp1(), "==", exp.exp2(), 1, 2, exp.leeFila(), exp.leeCol());
 	}
 
 	public void procesa(Exp_dist exp) {
-		imprimeExpBin(exp.ex1(), "!=", exp.ex2(), 1, 2, exp.leeFila(), exp.leeCol());
+		imprimeExpBin(exp.exp1(), "!=", exp.exp2(), 1, 2, exp.leeFila(), exp.leeCol());
 	}
 
 	public void procesa(Exp_suma exp) {
-		imprimeExpBin(exp.ex1(), "+", exp.ex2(), 2, 3, exp.leeFila(), exp.leeCol());
+		imprimeExpBin(exp.exp1(), "+", exp.exp2(), 2, 3, exp.leeFila(), exp.leeCol());
 	}
 
 	public void procesa(Exp_resta exp) {
-		imprimeExpBin(exp.expr1(), "-", exp.expr2(), 3, 3, exp.leeFila(), exp.leeCol());
+		imprimeExpBin(exp.exp1(), "-", exp.exp2(), 3, 3, exp.leeFila(), exp.leeCol());
 	}
 
 	public void procesa(Exp_mult exp) {
-		imprimeExpBin(exp.expr1(), "*", exp.expr2(), 4, 5, exp.leeFila(), exp.leeCol());
+		imprimeExpBin(exp.exp1(), "*", exp.exp2(), 4, 5, exp.leeFila(), exp.leeCol());
 	}
 
 	public void procesa(Exp_div exp) {
-		imprimeExpBin(exp.expr1(), "/", exp.expr2(), 4, 5, exp.leeFila(), exp.leeCol());
+		imprimeExpBin(exp.exp1(), "/", exp.exp2(), 4, 5, exp.leeFila(), exp.leeCol());
 	}
 
 	public void procesa(Exp_mod exp) {
-		imprimeExpBin(exp.expr1(), "%", exp.expr2(), 4, 5, exp.leeFila(), exp.leeCol());
+		imprimeExpBin(exp.exp1(), "%", exp.exp2(), 4, 5, exp.leeFila(), exp.leeCol());
 	}
 
 	public void procesa(Exp_and and) {
-        imprimeExpBin(and.expr1(), "<and>", and.expr2(), 4, 3, and.leeFila(), and.leeCol());
+        imprimeExpBin(and.exp1(), "<and>", and.exp2(), 4, 3, and.leeFila(), and.leeCol());
 	}
 
 	public void procesa(Exp_or or) {
-		imprimeExpBin(or.expr1(), "<or>", or.expr2(), 4, 4, or.leeFila(), or.leeCol());
+		imprimeExpBin(or.exp1(), "<or>", or.exp2(), 4, 4, or.leeFila(), or.leeCol());
 	}
 
 	public void procesa(Exp_menos menos) {
         System.out.format("-$f:%d,c:%d$%n", menos.leeFila(), menos.leeCol());
-        menos.menos().procesa(this);
+        menos.exp1().procesa(this);
 	}
 
 	public void procesa(Exp_not not) {
     	System.out.format("<not>$f:%d,c:%d$%n", not.leeFila(), not.leeCol());
-		not.not().procesa(this);
+		not.exp1().procesa(this);
 	}
 
 	public void procesa(Exp_index index) {
-		index.exrr1().procesa(this);
+		index.exp1().procesa(this);
         System.out.println("[");
-		index.expr2().procesa(this);
+		index.exp2().procesa(this);
         System.out.println("]");
 	}
 
 	public void procesa(Exp_reg reg) {
-		 reg.expr().procesa(this);
+		 reg.exp1().procesa(this);
          System.out.println(".");
-         System.out.format("%$f:%d,c:%d$%n", reg.leeFila(), reg.leeCol());
+         System.out.format("%s$f:%d,c:%d$%n", reg.id(), reg.leeFila(), reg.leeCol());
 	}
 
 	public void procesa(Exp_indir indir) {
-		indir.indir().procesa(this);
+		indir.exp1().procesa(this);
         System.out.format("^$f:%d,c:%d$%n", indir.leeFila(), indir.leeCol());
 	}
 

@@ -477,13 +477,13 @@ PARSER_END(ConstructorASTsTiny)
   Exp re6(Exp eh) : 
         {Token t; Exp e6, e7;} 
         {
-           <corcheteAp> e6 = e0() <corcheteCi> e7 = re6(sem.exp_index(eh,e6))
+           t = <corcheteAp> e6 = e0() <corcheteCi> e7 = re6(sem.exp_index(eh,e6).ponFila(t.beginLine).ponCol(t.beginColumn))
               {return e7;} 
         | 
-           <punto> t = <iden> e7 = re6(sem.exp_reg(eh,t.image))
+           <punto> t = <iden> e7 = re6(sem.exp_reg(eh,t.image).ponFila(t.beginLine).ponCol(t.beginColumn))
               {return e7;} 
         | 
-           <indireccion> e7 = re6(sem.exp_indir(eh))
+           t = <indireccion> e7 = re6(sem.exp_indir(eh).ponFila(t.beginLine).ponCol(t.beginColumn))
               {return e7;} 
         | 
               {return eh;}

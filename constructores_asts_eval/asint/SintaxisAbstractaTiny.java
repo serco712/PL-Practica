@@ -9,7 +9,8 @@ public class SintaxisAbstractaTiny {
     }
     private static void imprimeExpBin(Exp opnd0, String op, Exp opnd1, int np0, int np1, int fila, int col) {
         imprimeOpnd(opnd0,np0);
-        System.out.format(op + "$f:%d,c:%d$%n", fila, col);
+        System.out.print(op);
+        System.out.format("$f:%d,c:%d$%n", fila, col);
         imprimeOpnd(opnd1,np1);
     }
 
@@ -28,7 +29,7 @@ public class SintaxisAbstractaTiny {
             return this;			
 	   }
 	   public int leeFila() {
-		  return fila; 
+		  return fila+1; 
 	   }
 	   public int leeCol() {
 		  return col; 
@@ -78,18 +79,23 @@ public class SintaxisAbstractaTiny {
         public Decs() {
             super();
         }
+        public LDecs decs() { throw new UnsupportedOperationException(); }
     }
 
     public static abstract class LDecs extends Nodo {
         public LDecs() {
             super();
         }
+        public LDecs decs() { throw new UnsupportedOperationException(); }
+        public Dec dec() { throw new UnsupportedOperationException(); }
     }
 
     public static abstract class LVar extends Nodo {
         public LVar() {
             super();
         }
+        public LVar vars() { throw new UnsupportedOperationException(); }
+        public Var var() { throw new UnsupportedOperationException(); }
     }
 
     public static class Var extends Nodo {
@@ -118,66 +124,102 @@ public class SintaxisAbstractaTiny {
         public Dec() {
             super();
         }
+        public Var var() { throw new UnsupportedOperationException(); }
+        public String id() { throw new UnsupportedOperationException(); }
+        public PFmls par_for() { throw new UnsupportedOperationException(); }
+        public Blo bloq() { throw new UnsupportedOperationException(); }
     }
 
     public static abstract class Tipo extends Nodo {
         public Tipo() {
             super();
         }
+        public Tipo tipo() { throw new UnsupportedOperationException(); }
+        public String litEnt() { throw new UnsupportedOperationException(); }
+        public String id() { throw new UnsupportedOperationException(); }
+        public LVar lvar() { throw new UnsupportedOperationException(); }
     }
     
     public static abstract class Insts extends Nodo {
         public Insts() {
             super();
         }
+        public LInst insts() { throw new UnsupportedOperationException(); }
     }
 
     public static abstract class LInst extends Nodo {
         public LInst() {
             super();
         }
+        public LInst insts() { throw new UnsupportedOperationException(); }
+        public Inst inst() { throw new UnsupportedOperationException(); }
     }
 
     public static abstract class PFmls extends Nodo {
         public PFmls() {
             super();
         }
+        public LPFml lpfml() { throw new UnsupportedOperationException(); }
     }
 
     public static abstract class LPFml extends Nodo {
         public LPFml() {
             super();
         }
+        public PFml pfml() { throw new UnsupportedOperationException(); }
+        public LPFml lpfml() { throw new UnsupportedOperationException(); }
     }
 
     public static abstract class PFml extends Nodo {
         public PFml() {
             super();
         }
+        public Tipo tipo() { throw new UnsupportedOperationException(); }
+        public String id() { throw new UnsupportedOperationException(); }
     }
 
     public static abstract class PReales extends Nodo {
         public PReales() {
             super();
         }
+        public LPReal lpr() { throw new UnsupportedOperationException(); }
     }
 
     public static abstract class LPReal extends Nodo {
         public LPReal() {
             super();
         }
+        public Exp exp() { throw new UnsupportedOperationException(); }
+        public LPReal lpr() { throw new UnsupportedOperationException(); }
     }
 
     public static abstract class Inst extends Nodo {
         public Inst() {
             super();
         }
+        public LInst insts() { throw new UnsupportedOperationException(); }
+        public Exp exp() { throw new UnsupportedOperationException(); }
+        public Blo bloq() { throw new UnsupportedOperationException(); }
+        public Blo bloq1() { throw new UnsupportedOperationException(); }
+        public Blo bloq2() { throw new UnsupportedOperationException(); }
+		public String id() { throw new UnsupportedOperationException(); }
+        public PReales pr() { throw new UnsupportedOperationException(); }
+
     }
 
     public static abstract class Exp  extends  Nodo {
        public Exp() {
 		   super();
        }   
+       public Exp exp1(){throw new UnsupportedOperationException(); }
+       public Exp exp2(){throw new UnsupportedOperationException(); }
+       public String litEnt(){throw new UnsupportedOperationException(); }
+       public String litReal(){throw new UnsupportedOperationException(); }
+       public String litCad(){throw new UnsupportedOperationException(); }
+       public String valor(){throw new UnsupportedOperationException(); }
+       public String id(){throw new UnsupportedOperationException(); }
+
+
 
        public abstract int prioridad();
     }
@@ -1012,8 +1054,8 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
-        public Exp ex1(){ return exp1;}
-        public Exp ex2(){ return exp2;}
+        public Exp exp1(){return exp1;}
+        public Exp exp2(){return exp2;}
         public int prioridad() { return 0; }
         public void imprime() {
            imprimeExpBin(exp1, "=", exp2, 1, 0, leeFila(), leeCol());
@@ -1034,8 +1076,8 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
-        public Exp ex1(){return exp1;}
-        public Exp ex2(){return exp2;}
+        public Exp exp1(){return exp1;}
+        public Exp exp2(){return exp2;}
         public int prioridad() { return 1; }
         public void imprime() {
            imprimeExpBin(exp1, "<", exp2, 1, 2, leeFila(), leeCol());
@@ -1056,8 +1098,8 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
-        public Exp ex1(){return exp1;}
-        public Exp ex2(){return exp2;}
+        public Exp exp1(){return exp1;}
+        public Exp exp2(){return exp2;}
         public int prioridad() { return 1; }
         public void imprime() {
            imprimeExpBin(exp1, "<=", exp2, 1, 2, leeFila(), leeCol());
@@ -1078,8 +1120,8 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
-        public Exp ex1(){return exp1;}
-        public Exp ex2(){return exp2;}
+        public Exp exp1(){return exp1;}
+        public Exp exp2(){return exp2;}
         public int prioridad() { return 1; }
         public void imprime() {
            imprimeExpBin(exp1, ">", exp2, 1, 2, leeFila(), leeCol());
@@ -1100,8 +1142,8 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
-        public Exp ex1(){return exp1;}
-        public Exp ex2(){return exp2;}
+        public Exp exp1(){return exp1;}
+        public Exp exp2(){return exp2;}
         public int prioridad() { return 1; }
         public void imprime() {
            imprimeExpBin(exp1, ">=", exp2, 1, 2, leeFila(), leeCol());
@@ -1122,8 +1164,8 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
-        public Exp ex1(){return exp1;}
-        public Exp ex2(){return exp2;}
+        public Exp exp1(){return exp1;}
+        public Exp exp2(){return exp2;}
         public int prioridad() { return 1; }
         public void imprime() {
            imprimeExpBin(exp1, "==", exp2, 1, 2, leeFila(), leeCol());
@@ -1144,8 +1186,8 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
-        public Exp ex1(){return exp1;}
-        public Exp ex2(){return exp2;}
+        public Exp exp1(){return exp1;}
+        public Exp exp2(){return exp2;}
         public int prioridad() { return 1; }
         public void imprime() { 
             imprimeExpBin(exp1, "!=", exp2, 1, 2, leeFila(), leeCol());
@@ -1166,8 +1208,8 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
-        public Exp ex1(){return exp1;}
-        public Exp ex2(){return exp2;}
+        public Exp exp1(){return exp1;}
+        public Exp exp2(){return exp2;}
         public int prioridad() { return 2; }
         public void imprime() { 
             imprimeExpBin(exp1, "+", exp2, 2, 3, leeFila(), leeCol());
@@ -1188,14 +1230,8 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
-        public Exp expr1() {
-        	return exp1;
-        }
-        public Exp expr2() {
-        	return exp2;
-        }
-        public Exp ex1(){return exp1;}
-        public Exp ex2(){return exp2;}
+        public Exp exp1(){return exp1;}
+        public Exp exp2(){return exp2;}
         public int prioridad() { return 2; }
         public void imprime() { 
             imprimeExpBin(exp1, "-", exp2, 3, 3, leeFila(), leeCol());
@@ -1216,12 +1252,8 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
-        public Exp expr1() {
-        	return exp1;
-        }
-        public Exp expr2() {
-        	return exp2;
-        }
+        public Exp exp1(){return exp1;}
+        public Exp exp2(){return exp2;}
         public int prioridad() { return 4; }
         public void imprime() { 
             imprimeExpBin(exp1, "*", exp2, 4, 5, leeFila(), leeCol());
@@ -1242,12 +1274,8 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
-        public Exp expr1() {
-        	return exp1;
-        }
-        public Exp expr2() {
-        	return exp2;
-        }
+        public Exp exp1(){return exp1;}
+        public Exp exp2(){return exp2;}
         public int prioridad() { return 4; }
         public void imprime() { 
             imprimeExpBin(exp1, "/", exp2, 4, 5, leeFila(), leeCol());
@@ -1267,12 +1295,8 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
-        public Exp expr1() {
-        	return exp1;
-        }
-        public Exp expr2() {
-        	return exp2;
-        }
+        public Exp exp1(){return exp1;}
+        public Exp exp2(){return exp2;}
         public int prioridad() { return 4; }
         public void imprime() { 
             imprimeExpBin(exp1, "%", exp2, 4, 5, leeFila(), leeCol());
@@ -1293,12 +1317,8 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
-        public Exp expr1() {
-        	return exp1;
-        }
-        public Exp expr2() {
-        	return exp2;
-        }
+        public Exp exp1(){return exp1;}
+        public Exp exp2(){return exp2;}
         public int prioridad() { return 3; }
         public void imprime() { 
             imprimeExpBin(exp1, "<and>", exp2, 4, 3, leeFila(), leeCol());
@@ -1319,12 +1339,8 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
-        public Exp expr1() {
-        	return exp1;
-        }
-        public Exp expr2() {
-        	return exp2;
-        }
+        public Exp exp1(){return exp1;}
+        public Exp exp2(){return exp2;}
         public int prioridad() { return 3; }
         public void imprime() { 
             imprimeExpBin(exp1, "<or>", exp2, 4, 4, leeFila(), leeCol());
@@ -1343,9 +1359,7 @@ public class SintaxisAbstractaTiny {
             super();
             this.exp = exp;
         }
-        public Exp menos() {
-        	return exp;
-        }
+        public Exp exp1(){return exp;}
         public int prioridad() { return 5; }
         public void imprime() { 
             System.out.format("-$f:%d,c:%d$%n", leeFila(), leeCol());
@@ -1365,9 +1379,7 @@ public class SintaxisAbstractaTiny {
             super();
             this.exp = exp;
         }
-        public Exp not() {
-        	return exp;
-        }
+        public Exp exp1(){return exp;}
         public int prioridad() { return 5; }
         public void imprime() { 
         	System.out.format("<not>$f:%d,c:%d$%n", leeFila(), leeCol());
@@ -1389,12 +1401,8 @@ public class SintaxisAbstractaTiny {
             this.exp1 = exp1;
             this.exp2 = exp2;
         }
-        public Exp exrr1() {
-        	return exp1;
-        }
-        public Exp expr2() {
-        	return exp2;
-        }
+        public Exp exp1(){return exp1;}
+        public Exp exp2(){return exp2;}
         public int prioridad() { return 6; }
         public void imprime() { 
             imprimeOpnd(exp1, 6);
@@ -1418,17 +1426,13 @@ public class SintaxisAbstractaTiny {
             this.exp = exp;
             this.s = s;
         }
-        public Exp expr() {
-        	return exp;
-        }
-        public String reg() {
-        	return s;
-        }
+        public Exp exp1(){return exp;}
+        public String id(){return s;}
         public int prioridad() { return 6; }
         public void imprime() { 
             imprimeOpnd(exp, 6);
             System.out.println(".");
-            System.out.format("%$f:%d,c:%d$%n", leeFila(), leeCol());
+            System.out.format("%s$f:%d,c:%d$%n",s , leeFila(), leeCol());
         }
         public String toString() {
             return "exp_reg("+exp+","+s+")";
@@ -1444,9 +1448,7 @@ public class SintaxisAbstractaTiny {
             super();
             this.exp = exp;
         }
-        public Exp indir() {
-        	return exp;
-        }
+        public Exp exp1(){return exp;}
         public int prioridad() { return 6; }
         public void imprime() { 
             imprimeOpnd(exp, 6);
