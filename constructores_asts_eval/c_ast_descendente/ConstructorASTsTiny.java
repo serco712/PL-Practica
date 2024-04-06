@@ -924,18 +924,18 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
         t = jj_consume_token(corcheteAp);
         e6 = e0();
         jj_consume_token(corcheteCi);
-        e7 = re6(sem.exp_index(eh,e6).ponFila(t.beginLine).ponCol(t.beginColumn));
+        e7 = re6((Exp)sem.exp_index(eh,e6).ponFila(t.beginLine).ponCol(t.beginColumn));
                {if (true) return e7;}
         break;
       case punto:
         jj_consume_token(punto);
         t = jj_consume_token(iden);
-        e7 = re6(sem.exp_reg(eh,t.image).ponFila(t.beginLine).ponCol(t.beginColumn));
+        e7 = re6((Exp)sem.exp_reg(eh,t.image).ponFila(t.beginLine).ponCol(t.beginColumn));
                {if (true) return e7;}
         break;
       case indireccion:
         t = jj_consume_token(indireccion);
-        e7 = re6(sem.exp_indir(eh).ponFila(t.beginLine).ponCol(t.beginColumn));
+        e7 = re6((Exp)sem.exp_indir(eh).ponFila(t.beginLine).ponCol(t.beginColumn));
                {if (true) return e7;}
         break;
       default:
@@ -1289,7 +1289,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
     }
   }
 
-  private void trace_token(Token t, String where) {
+  protected void trace_token(Token t, String where) {
     if (trace_enabled) {
       for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
       System.out.print("Consumed token: <" + tokenImage[t.kind]);
