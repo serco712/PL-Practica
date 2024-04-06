@@ -158,8 +158,8 @@ public class Evaluador extends SintaxisAbstractaTiny {
     private void consEnv(LPReal preales) {
     	consEnv(preales.exp());
     	if(claseDe(preales,Muchas_exp.class)) {
-    		consEnv(preales.lpr());
     		System.out.println(",");
+    		consEnv(preales.lpr());
     	}
     }
     
@@ -299,7 +299,7 @@ public class Evaluador extends SintaxisAbstractaTiny {
      		}
      		else if (claseDe(exp,Exp_index.class)) {
      			imprimeOpnd(exp.exp1(),6);
-     			System.out.println("[");
+                System.out.format("[$f:%d,c:%d$%n", exp.leeFila(), exp.leeCol());
      			imprimeOpnd(exp.exp2(),0);
      			System.out.println("]");
      		}
