@@ -43,13 +43,13 @@ action code {:
 :}
 
 
-terminal    BOOL,ENT,REAL,STRING,SUMA,
+terminal    BOOL,ENT,REAL,STRING,
             PAP,PCI,COMA,PCOMA,EVAL,
             LLAP,LLCI,PROC,IF,ELSE,WHILE,
             STRUCT,NEW,DELETE,READ,WRITE,NL,TYPE,
             CALL,REFERENCIA,CCI,PUNTO,FIN;
 
-terminal StringLocalizado LIT_ENT,LIT_REAL,LIT_CAD,IDEN,AND,OR,NOT,
+terminal StringLocalizado LIT_ENT,LIT_REAL,LIT_CAD,IDEN,AND,OR,NOT,SUMA,
             RESTA,MUL,DIV,MOD,MENOR,MAYOR,MEN_IGUAL,MAY_IGUAL,IGUAL,
             ASIG,DISTINTO,TRUE,FALSE,NULL,INDIRECCION,CAP;
 
@@ -178,7 +178,7 @@ E0 ::= E1: opnd1 ASIG E0: opnd2
 E0 ::= E1: exp 
    {: RESULT = exp; :};
 E1 ::= E1: opnd1  OP1: op E2: opnd2 
-   {: RESULT = (Exp)sem.mkopBin(op,opnd1,opnd2); :};
+   {: RESULT = (Exp)sem.mkopBin(op.str(),opnd1,opnd2).ponFila(op.fila()).ponCol(op.col()); :};
 E1 ::= E2: exp 
    {: RESULT = exp; :};
 E2 ::= E2: opnd1 SUMA:s E3: opnd2 
@@ -194,7 +194,7 @@ E3 ::= E4: exp OR:o E4: exp1
 E3 ::= E4: exp 
    {: RESULT = exp; :};
 E4 ::= E4: opnd1  OP4: op E5: opnd2 
-   {: RESULT = (Exp)sem.mkopBin(op,opnd1,opnd2); :};
+   {: RESULT = (Exp)sem.mkopBin(op.str(),opnd1,opnd2).ponFila(op.fila()).ponCol(op.col()); :};
 E4 ::= E5: exp 
    {: RESULT = exp; :};
 E5 ::= RESTA:r E5: opnd1 
@@ -204,9 +204,9 @@ E5 ::= NOT:n E5: opnd1
 E5 ::= E6: exp 
    {: RESULT = exp; :};
 E6 ::= E6: exp CAP:c E0: exp1 CCI
-   {: RESULT = (Exp)sem.exp_index(exp).ponFila(c.fila()).ponCol(c.col()); :};
+   {: RESULT = (Exp)sem.exp_index(exp,exp1).ponFila(c.fila()).ponCol(c.col()); :};
 E6 ::= E6: exp PUNTO IDEN: iden
-   {: RESULT = (Exp)sem.exp_reg(exp,iden.str()).ponFila(iden.fila()).ponCol(iden.col()); :};
+   {: RESULT = (Exp)sem.exp_reg(exp).ponFila(iden.fila()).ponCol(iden.col()); :};
 E6 ::= E6: exp INDIRECCION: indir
    {: RESULT = (Exp)sem.exp_indir(exp,indir.str()).ponFila(indir.fila()).ponCol(indir.col()); :};
 E6 ::= E7: exp 
@@ -223,8 +223,8 @@ E7 ::= LIT_CAD: cad
    {: RESULT = (Exp)sem.exp_litCad(cad.str()).ponFila(cad.fila()).ponCol(cad.col()); :};
 E7 ::= IDEN: id 
    {: RESULT = (Exp)sem.exp_iden(id.str()).ponFila(id.fila()).ponCol(id.col()); :};
-E7 ::= 	NULL: null
-   {: RESULT = (Exp)sem.exp_null(null.str()).ponFila(null.fila()).ponCol(null.col()); :};
+E7 ::= 	NULL: n
+   {: RESULT = (Exp)sem.exp_null(n.str()).ponFila(n.fila()).ponCol(n.col()); :};
 E7 ::= PAP E0: exp PCI
    {: RESULT = exp; :};
 OP1 ::= MENOR:m
