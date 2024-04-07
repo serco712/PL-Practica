@@ -18,13 +18,15 @@ import java.io.Reader;
 public class Domjudge {
    public static void main(String[] args) throws Exception {
 	   try {
-	        Reader input = new FileReader("C:/hlocal/PL-Practica/constructores_asts_eval/sample5d.in");
-	        BufferedReader br = new BufferedReader(input); //Ya tenemos el "lector"
+	        //Reader input = new FileReader("C:/hlocal/PL-Practica/constructores_asts_eval/sample1a.in");
+	        Reader br = new InputStreamReader(System.in);
+	        //BufferedReader br = new BufferedReader(input); //Ya tenemos el "lector"
 	        Prog p;
-	        if(br.readLine().startsWith("a")) {
+	        //if(br.readLine().startsWith("a")) {
+	        if(true) {
 	            System.out.println("CONSTRUCCION AST ASCENDENTE");
 	            AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(br);
-	            c_ast_ascendente.ConstructorASTsTiny asint = new c_ast_ascendente.ConstructorASTsTiny(alex);
+	            c_ast_ascendente.ConstructorASTsTiny asint = new c_ast_ascendente.ConstructorASTsTinyDJ(alex);
 	            p = (Prog)asint.parse().value;
 	        }
 	        else {
@@ -47,6 +49,12 @@ public class Domjudge {
 	      System.out.println("ERROR_LEXICO"); 
 	   }
 	   catch(ParseException e) {
+	      System.out.println("ERROR_SINTACTICO"); 
+	   }
+	   catch(ErrorLexico e) {
+		      System.out.println("ERROR_LEXICO"); 
+	   }
+	   catch(ErrorSintactico e) {
 	      System.out.println("ERROR_SINTACTICO"); 
 	   }
     }

@@ -100,7 +100,7 @@ public class ALexOperations {
 		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.TRUE, "<true>");
 	}
 	public UnidadLexica unidadFalse() {
-		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.TRUE, "<false>");
+		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.FALSE, "<false>");
 	}
 	public UnidadLexica unidadString() {
 		return new UnidadLexica(alex.fila(), alex.columna(),ClaseLexica.STRING,"<string>"); 
