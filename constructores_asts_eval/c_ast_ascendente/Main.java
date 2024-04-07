@@ -11,7 +11,7 @@ public class Main {
    public static void main(String[] args) throws Exception {
          Reader input = new InputStreamReader(System.in);
 	 AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(input);
-	 AnalizadorSintacticoTiny asint = new AnalizadorSintacticoTinyDJ(alex);
+	 ConstructorASTsTiny asint = new ConstructorASTsTinyDJ(alex);
 	 //asint.setScanner(alex);
 	 try {    
         asint.debug_parse();
