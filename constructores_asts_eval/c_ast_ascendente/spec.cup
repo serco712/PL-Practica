@@ -70,7 +70,7 @@ non terminal  PReales par_reales;
 non terminal  LPReal lista_par_real;
 non terminal  Inst instruccion;
 non terminal  Exp E0, E1, E2, E3, E4, E5, E6, E7;
-non terminal  StringLocalizado OP1, OP4, OP5;
+non terminal  StringLocalizado OP1, OP4;
 
 programa      ::= bloq: b
    {: RESULT = sem.prog(b); :};  
@@ -91,7 +91,7 @@ lista_variables ::= variable: var
 variable ::= tipo: tipo IDEN: id 
    {: RESULT = sem.var(tipo,id.str()).ponFila(id.fila()).ponCol(id.col());:};
 declaracion ::= variable: var
-   {: RESULT = sem.dec_simple(var);:}
+   {: RESULT = sem.dec_simple(var);:};
 declaracion ::= TYPE variable: var 
    {: RESULT = sem.dec_type(var);:};
 declaracion ::= PROC IDEN: id par_formales: parf bloq: b
@@ -231,7 +231,7 @@ OP1 ::= MENOR:m
    {: RESULT = m; :};
 OP1 ::= MEN_IGUAL
    {: RESULT = ; :};
-OP1 ::= MAYORm
+OP1 ::= MAYOR:m
    {: RESULT = m; :};
 OP1 ::= MAY_IGUAL 
    {: RESULT = ">="; :};
