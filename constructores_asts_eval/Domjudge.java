@@ -18,15 +18,14 @@ import java.io.Reader;
 public class Domjudge {
    public static void main(String[] args) throws Exception {
 	   try {
-	        //Reader input = new FileReader("C:/hlocal/PL-Practica/constructores_asts_eval/sample1a.in");
-	        Reader br = new InputStreamReader(System.in);
-	        //BufferedReader br = new BufferedReader(input); //Ya tenemos el "lector"
+	        Reader input = new FileReader("/Users/lijie/Downloads/casos_prueba_ast/sample1d.in");
+	        BufferedReader br = new BufferedReader(input); //Ya tenemos el "lector"
 	        Prog p;
-	        //if(br.readLine().startsWith("a")) {
-	        if(true) {
+	        if(br.readLine().startsWith("a")) {
 	            System.out.println("CONSTRUCCION AST ASCENDENTE");
 	            AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(br);
 	            c_ast_ascendente.ConstructorASTsTiny asint = new c_ast_ascendente.ConstructorASTsTinyDJ(alex);
+	            asint.debug_parse();
 	            p = (Prog)asint.parse().value;
 	        }
 	        else {
