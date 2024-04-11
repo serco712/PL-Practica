@@ -25,7 +25,7 @@
     | \hspace{1cm}declaracion.\textbf{a} \;=\textbf{dec$\_$simple}(variable.\textbf{a})\\
     declaracion \longrightarrow \textbf{type}\;variable\\
     | \hspace{1cm}declaracion.\textbf{a} \;=\textbf{dec$\_$type}(variable.\textbf{a})\\
-    declaracion \longrightarrow \textbf{identificador}\;par$-$formales\;bloque\\
+    declaracion \longrightarrow \textbf{proc identificador}\;par$-$formales\;bloque\\
     | \hspace{1cm}declaracion.\textbf{a} \;=\textbf{dec$\_$proc}(\textbf{identificador.lex}, par$-$formales.\textbf{a},bloque.\textbf{a})\\
    % declaracion \longrightarrow \textbf{type}\;\textbf{struct}\;\{\;lista$-$variables\;\}\;\textbf{identificador}\\
     tipo \longrightarrow tipo[\textbf{literalEntero}]\\
@@ -131,11 +131,11 @@
     E5 \longrightarrow E6\\
     | \hspace{1cm}E5.\textbf{a} \;= E6.\textbf{a}\\
     E6 \longrightarrow E6\;[\;E0\;]\\
-    | \hspace{1cm}E6.\textbf{a} \;= \textbf{exp$\_$index}(E6.\textbf{a})\\  
+    | \hspace{1cm}E6_0.\textbf{a} \;= \textbf{exp$\_$index}(E6_1.\textbf{a}, E0.\textbf{a})\\  
     E6 \longrightarrow E6.\textbf{identificador}\\
-    | \hspace{1cm}E6.\textbf{a} \;= \textbf{exp$\_$reg}(E6.\textbf{a},\textbf{identificador.lex})\\  
+    | \hspace{1cm}E6_0.\textbf{a} \;= \textbf{exp$\_$reg}(E6_1.\textbf{a},\textbf{identificador.lex})\\  
     E6 \longrightarrow E6\;\hat{}\\
-    | \hspace{1cm}E6.\textbf{a} \;= \textbf{exp$\_$ind}(E6.\textbf{a})\\    
+    | \hspace{1cm}E6_0.\textbf{a} \;= \textbf{exp$\_$ind}(E6_1.\textbf{a})\\    
     E6 \longrightarrow E7\\
     | \hspace{1cm}E6.\textbf{a} \;= E7.\textbf{a}\\
     E7 \longrightarrow \textbf{true}\\

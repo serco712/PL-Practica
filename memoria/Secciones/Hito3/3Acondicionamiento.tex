@@ -84,7 +84,7 @@
     rlista$-$par$-$formal \longrightarrow \epsilon\\
     | \hspace{1cm}rlista$-$par$-$formal.\textbf{a} \;= rlista$-$par$-$formal.\textbf{ah}\\
     par$-$formal \longrightarrow tipo\;rpar$-$formal\\
-    | \hspace{1cm}rpar$-$formal.\textbf{ah} \;= \textbf{pformal$\_$noref}(tipo.\textbf{a},\textbf{indentificador.lex})\\
+    | \hspace{1cm}rpar$-$formal.\textbf{ah} \;= tipo.\textbf{a}\\
     | \hspace{1cm}par$-$formal.\textbf{a} \;= rpar$-$formal.\textbf{a}\\
     rpar$-$formal \longrightarrow \&\textbf{identificador}\\
     | \hspace{1cm}rpar$-$formal.\textbf{a} \;= \textbf{pformal$\_$ref}(tipo.\textbf{a},\textbf{indentificador.lex})\\
@@ -115,7 +115,7 @@
     rif \longrightarrow \textbf{else}\;bloque\\
     | \hspace{1cm}rif.\textbf{a} \;= \textbf{inst$\_$else}(E0.\textbf{a}, bloque_0.\textbf{a},bloque_1.\textbf{a})\\
     rif \longrightarrow \epsilon\\
-    | \hspace{1cm}rif.\textbf{a} \;= \textbf{inst$\_$if}(E0.\textbf{a}, bloque.\textbf{a})\\
+    | \hspace{1cm}rif.\textbf{a} \;= rif.\textbf{ah}\\
     instruccion \longrightarrow \textbf{while}\;E0\;bloque\\
     | \hspace{1cm}instruccion.\textbf{a} \;= \textbf{inst$\_$while}(E0.\textbf{a}, bloque.\textbf{a})\\
     instruccion \longrightarrow \textbf{new}\;E0\\
@@ -138,7 +138,7 @@
     rE0 \longrightarrow = E0\\
     | \hspace{1cm}rE0.\textbf{a} \;= \textbf{exp$\_$asig}(E1.\textbf{a},E0.\textbf{a})\\
     rE0 \longrightarrow \epsilon\\
-    | \hspace{1cm}rE0.\textbf{a} \;= E1.\textbf{a}\\
+    | \hspace{1cm}rE0.\textbf{a} \;= rE0.\textbf{ah}\\
     E1 \longrightarrow E2\;rE1\\
     | \hspace{1cm}rE1.\textbf{ah} \;= E2.a\\
     | \hspace{1cm}E1.\textbf{a} \;= rE1.\textbf{a}\\  
@@ -168,7 +168,7 @@
     rE3 \longrightarrow or\;\;E4\\
     | \hspace{1cm}rE3.\textbf{a} \;= \textbf{exp$\_$or}(E4_0.\textbf{a},E4_1.\textbf{a})\\
     rE3 \longrightarrow \epsilon\\
-    | \hspace{1cm}rE3.\textbf{a} \;= E4.\textbf{a}\\
+    | \hspace{1cm}rE3.\textbf{a} \;= rE3.\textbf{a}\\
     E4 \longrightarrow E5\;rE4\\
     | \hspace{1cm}rE4.\textbf{ah} \;= E5.a\\
     | \hspace{1cm}E4.\textbf{a} \;= rE4.\textbf{a}\\  
@@ -187,30 +187,30 @@
     | \hspace{1cm}rE6.\textbf{ah} \;= E7.a\\
     | \hspace{1cm}E6.\textbf{a} \;= rE6.\textbf{a}\\  
     rE6 \longrightarrow [E0]\;rE6\\ 
-    | \hspace{1cm}rE6_1.\textbf{ah} \;= E0.\textbf{a}\\  
+    | \hspace{1cm}rE6_1.\textbf{ah} \;= exp_index(rE6_0.\textbf{ah}, E0.\textbf{a})\\  
     | \hspace{1cm}rE6_0.\textbf{a} \;= rE6_1.\textbf{a}\\
     rE6 \longrightarrow \;\textbf{identificador}\;rE6\\ 
-    | \hspace{1cm}rE6_1.\textbf{ah} \;= \textbf{identificador.lex}\\  
+    | \hspace{1cm}rE6_1.\textbf{ah} \;= exp_reg(rE6_0.\textbf{ah},\textbf{identificador.lex})\\  
     | \hspace{1cm}rE6_0.\textbf{a} \;= rE6_1.\textbf{a}\\
     rE6 \longrightarrow \;\;\hat{}\;rE6\\ 
-    | \hspace{1cm}rE6_1.\textbf{ah} \;=  ``\;\hat{}\;'' \\  
+    | \hspace{1cm}rE6_1.\textbf{ah} \;=  exp_ind(rE6_0.\textbf{a}) \\  
     | \hspace{1cm}rE6_0.\textbf{a} \;= rE6_1.\textbf{a}\\
     rE6 \longrightarrow \epsilon\\
     | \hspace{1cm}rE6.\textbf{a} \;= rE6.\textbf{ah}\\ 
     E7 \longrightarrow \textbf{true}\\
-    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$true}(\textbf{true.lex})\\
+    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$true}()\\
     E7 \longrightarrow \textbf{false}\\
-    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$false}(\textbf{false.lex})\\
+    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$false}()\\
     E7 \longrightarrow \textbf{literalEntero}\\
     | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$litEnt}(\textbf{literalEntero.lex})\\
     E7 \longrightarrow \textbf{literalReal}\\
     | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$litReal}(\textbf{literalReal.lex})\\
     E7 \longrightarrow \textbf{literalCadena}\\
     | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$litCad}(\textbf{literalCadena.lex})\\
-    E7 \longrightarrow \textbf{identificador}\\
+    E7 \longrightarrow \textbf{.identificador}\\
     | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$iden}(\textbf{identificador.lex})\\
     E7 \longrightarrow \textbf{null}\\
-    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$null}(\textbf{null.lex})\\
+    | \hspace{1cm}E7.\textbf{a} \;= \textbf{exp$\_$null}()\\
     E7 \longrightarrow (\;E0\;)\\
     | \hspace{1cm}E7.\textbf{a} \;= E.\textbf{a}\\
     OP1 \longrightarrow \;<\\
@@ -224,7 +224,7 @@
     OP1 \longrightarrow \;==\\
     | \hspace{1cm}OP1.\textbf{op} \;=\; \textbf{``\;==\;''}\\  
     OP1 \longrightarrow \;!=\\
-    | \hspace{1cm}OP1.\textbf{op} \;=\; \textbf{``\;!=\;s''}\\  
+    | \hspace{1cm}OP1.\textbf{op} \;=\; \textbf{``\;!=\;''}\\  
     OP4 \longrightarrow \;*\\
     | \hspace{1cm}OP4.\textbf{op} \;=\; \textbf{``\;*\;''}\\  
     OP4 \longrightarrow \;/\\
