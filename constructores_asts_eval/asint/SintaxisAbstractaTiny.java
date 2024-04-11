@@ -57,7 +57,7 @@ public class SintaxisAbstractaTiny {
          } 
     }
 
-    public static abstract class Blo extends Nodo {
+    public static class Blo extends Nodo {
         protected Decs decla;
         protected Insts instr;
         public Blo(Decs d, Insts i) {
@@ -67,6 +67,9 @@ public class SintaxisAbstractaTiny {
         }
         public Decs decla() { return decla; }
         public Insts instr() { return instr; }
+        public void procesa(Procesamiento p) {
+            p.procesa(this);
+        }
         public void imprime() {
             System.out.println("{");
             decla.imprime();
@@ -225,19 +228,6 @@ public class SintaxisAbstractaTiny {
     }
    
    // ----------------------------------------------------
-    
-    
-    public static class Bloq extends Blo {
-        public Bloq(Decs decla, Insts instr) {
-            super(decla, instr);
-        }
-        public void procesa(Procesamiento p) {
-            p.procesa(this);
-        }
-        public String toString() {
-            return "bloq("+decla+","+instr+")";
-        }
-    }
     
     public static class Si_decs extends Decs {
        private LDecs decs; 
@@ -1609,7 +1599,7 @@ public class SintaxisAbstractaTiny {
         return new Prog(b);
     }
     public Blo bloq(Decs d, Insts i) {
-        return new Bloq(d,i);
+        return new Blo(d,i);
     }
     public Decs si_decs(LDecs ld) {
         return new Si_decs(ld);

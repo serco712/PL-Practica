@@ -8,7 +8,5 @@
 	<classpathentry kind="src" path=""/>
 	<classpathentry exported="true" kind="lib" path="c_ast_ascendente/cup.jar"/>
 	<classpathentry exported="true" kind="lib" path="c_ast_descendente/javacc.jar"/>
-	<classpathentry exported="true" kind="lib" path="java-cup-11b.jar"/>
-	<classpathentry exported="true" kind="lib" path="java-cup-11b-runtime.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
