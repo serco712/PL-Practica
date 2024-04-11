@@ -54,19 +54,14 @@ imprime(dec_simple(Tipo, Id)):
     imprime(Tipo)
     print Id
     nl
-
-
-imprime(dec_proc(Id, Par-formal,bloq)):
-    print Id
-    nl
-    imprime(Par-formal)
-    imprime(bloq)
-
+    
 imprime(tipo_array(Tipo, N)):
+    
     imprime(Tipo)
-    print ","
+    print "["
     nl
     imprime(N)
+    print "]"
 
 imprime(tipo_punt(Tipo2)):
     print "^"
@@ -118,6 +113,8 @@ imprime(un_pformal(par-formal)):
 
 imprime(pformal-ref(Tipo,Id)):
     imprime(Tipo)
+    print "&"
+    nl
     print Id
     nl
 
@@ -223,23 +220,7 @@ imprime(exp_true()):
 imprime(exp_false()):
     print "<false>"
     nl
-    
-imprime(exp_and(Exp4, Exp3)):
-    imprime(Exp4)
-    print "<and>"
-    nl
-    imprime(Exp3)
-    
-imprime(exp_or(Exp4, exp4)):
-    imprime(Exp4)
-    print "<or>"
-    nl
-    imprime(Exp4)
-    
-imprime(exp_not()):
-    print "<not>"
-    nl
-
+        
 imprime(exp_null()):
     print "<null>"
     nl
@@ -266,9 +247,9 @@ imprime(exp_suma(Opnd0,Opnd1)):
 imprime(exp_resta(Opnd0,Opnd1)):
     imprimeExpBin(Opnd0,"-",Opnd1,3,3)
 imprime(exp_and(Opnd0,Opnd1)):
-    imprimeExpBin(Opnd0,"and",Opnd1,4,3)
+    imprimeExpBin(Opnd0,"<and>",Opnd1,4,3)
 imprime(exp_or(Opnd0,Opnd1)):
-    imprimeExpBin(Opnd0,"or",Opnd1,4,4)
+    imprimeExpBin(Opnd0,"<or>",Opnd1,4,4)
 imprime(exp_mult(Opnd0,Opnd1)):
     imprimeExpBin(Opnd0,"*",Opnd1,4,5)
 imprime(exp_div(Opnd0,Opnd1)):
@@ -290,20 +271,33 @@ imprime(exp_dist(Opnd0,Opnd1)):
     imprimeExpBin(Opnd0,“!=",Opnd1,1,2)
 
 imprime(exp_menos(Opnd0)):
-    imprimeExpBin(“-",Opnd0,6)
+    print “-"
+    nl
+    imprimeOpnd(Opnd0,5)
+    
 imprime(exp_not(Opnd0)):
-    imprimeExpBin(“not",Opnd0,6)
-imprime(exp_index(Opnd0)):
-    imprimeExpBin(“Exp",Opnd0,6)
+    print “<not>"
+    nl
+    imprimeOpnd(Opnd0, 5);
+ 
+imprime(exp_index(Opnd0, Opnd1)):
+    imprimeOpnd(Opnd0,6)
+    print "["
+    nl
+    imprimeOpnd(Opnd1,0)
+    print "]"
+    nl
+    
 imprime(exp_reg(Opnd0)):
-    imprimeExpBin(“Id",Opnd0,6)
-imprime(exp_ind(Opnd0)):
-    imprimeExpBin("^",Opnd0,6)
-
-imprimeExpUnario(Opnd0,Op,np0):
-    print " "++Op++" "
-    imprimeOpnd(Opnd0,np0)
-       
+    imprimeOpnd(Opnd0,6)
+    print "."
+    nl
+    
+imprime(exp_indir(Opnd0)):
+    imprimeOpnd(Opnd0,6)
+    print "^"
+    nl
+    
 imprimeExpBin(Opnd0,Op,Opnd1,np0,np1):
     imprimeOpnd(Opnd0,np0)
     print " "++Op++" "
@@ -343,7 +337,7 @@ prioridad(exp_menos(_)): return 5
 prioridad(exp_not(_)): return 5
 prioridad(exp_index(_)): return 6
 prioridad(exp_reg(_)): return 6
-prioridad(exp_ind(_)): return 6
+prioridad(exp_indir(_)): return 6
 
 
 
