@@ -320,13 +320,13 @@ prioridad(exp_suma(_,_)): return 2
 prioridad(exp_resta(_,_)): return 2
 prioridad(exp_and(_,_)): return 3
 prioridad(exp_or(_,_)): return 3
-prioridad(exp_mul(_,_)): return 4
+prioridad(exp_mult(_,_)): return 4
 prioridad(exp_div(_,_)): return 4
 prioridad(exp_mod(_,_)): return 4
 
 prioridad(exp_asig(_,_)): return 0
 prioridad(exp_men(_,_)): return 1
-prioridad(exp_menorIgual(_,_)): return 1
+prioridad(exp_menIgual(_,_)): return 1
 prioridad(exp_mayor(_,_)): return 1
 prioridad(exp_mayIgual(_,_)): return 1
 prioridad(exp_igual(_,_)): return 1
