@@ -548,7 +548,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
     try {
         Exp e0; LPReal rlpreal;
       e0 = e0();
-      rlpreal = rlista_par_real(e0);
+      rlpreal = rlista_par_real(sem.una_exp(e0));
           {if (true) return rlpreal;}
     throw new Error("Missing return statement in function");
     } finally {
@@ -556,19 +556,20 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
     }
   }
 
-  final public LPReal rlista_par_real(Exp e0) throws ParseException {
+  final public LPReal rlista_par_real(LPReal eh) throws ParseException {
     trace_call("rlista_par_real");
     try {
-        LPReal lpreal;
+        Exp e0;LPReal lpreal;
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case coma:
         jj_consume_token(coma);
-        lpreal = lista_par_real();
-          {if (true) return sem.muchas_exp(e0, lpreal);}
+        e0 = e0();
+        lpreal = rlista_par_real(sem.muchas_exp(e0, eh));
+          {if (true) return lpreal;}
         break;
       default:
         jj_la1[13] = jj_gen;
-                  {if (true) return sem.una_exp(e0);}
+                  {if (true) return eh;}
       }
     throw new Error("Missing return statement in function");
     } finally {
@@ -1289,7 +1290,7 @@ public class ConstructorASTsTiny implements ConstructorASTsTinyConstants {
     }
   }
 
-  protected void trace_token(Token t, String where) {
+  private void trace_token(Token t, String where) {
     if (trace_enabled) {
       for (int i = 0; i < trace_indent; i++) { System.out.print(" "); }
       System.out.print("Consumed token: <" + tokenImage[t.kind]);
