@@ -1,1 +1,1 @@
--parser ConstructorASTsTiny -symbols ClaseLexica
+-parser ConstructorASTsTiny -symbols ClaseLexica -nopositions
