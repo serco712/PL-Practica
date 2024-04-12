@@ -25,8 +25,8 @@ public class Domjudge {
 	            System.out.println("CONSTRUCCION AST ASCENDENTE");
 	            AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(br);
 	            c_ast_ascendente.ConstructorASTsTiny asint = new c_ast_ascendente.ConstructorASTsTinyDJ(alex);
-	            asint.debug_parse();
-	            p = (Prog)asint.parse().value;
+	            //asint.debug_parse();
+	            p = (Prog)asint.debug_parse().value;
 	        }
 	        else {
 	            System.out.println("CONSTRUCCION AST DESCENDENTE");
