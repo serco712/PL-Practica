@@ -18,7 +18,7 @@ import java.io.Reader;
 public class Domjudge {
    public static void main(String[] args) throws Exception {
 	   try {
-	        Reader input = new FileReader("C:/hlocal/PL-Practica/constructores_asts_eval/sample1a.in");
+	        Reader input = new FileReader("C:/hlocal/PL-Practica/constructores_asts_eval/sample1d.in");
 	        BufferedReader br = new BufferedReader(input); //Ya tenemos el "lector"
 	        Prog p;
 	        if(br.readLine().startsWith("a")) {

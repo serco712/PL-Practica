@@ -362,7 +362,7 @@ public class AnalizadorLexicoTiny implements java_cup.runtime.Scanner {
   /* user code: */
   private ALexOperations ops;
   public String lexema() {return yytext();}
-  public int fila() {return yyline+1;}
+  public int fila() {return yyline+2;}
   public int columna() {return yycolumn+1;}
   private GestionErroresTiny errores;
   public void fijaGestionErrores(GestionErroresTiny errores){

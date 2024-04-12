@@ -311,17 +311,17 @@ PARSER_END(ConstructorASTsTiny)
   LPReal lista_par_real() :
        {Exp e0; LPReal rlpreal;}
        {
-         e0=e0() rlpreal= rlista_par_real(e0)
+         e0=e0() rlpreal= rlista_par_real(sem.una_exp(e0))
          {return rlpreal;} 
        }
        
-   LPReal rlista_par_real(Exp e0) :
-       {LPReal lpreal;}
+   LPReal rlista_par_real(Exp eh) :
+       {Exp e0;LPReal lpreal;}
        {
-         <coma> lpreal = lista_par_real()
-         {return sem.muchas_exp(e0, lpreal);}
+         <coma> e0=e0() lpreal = rlista_par_real(sem.muchas_exp(e0, eh))
+         {return lpreal;}
   		 |
-  		 {return sem.una_exp(e0);}
+  		 {return eh;}
   	   }
   
    Inst instruccion() : 

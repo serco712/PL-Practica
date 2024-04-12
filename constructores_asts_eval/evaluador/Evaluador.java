@@ -156,11 +156,11 @@ public class Evaluador extends SintaxisAbstractaTiny {
     }
     
     private void consEnv(LPReal preales) {
-    	consEnv(preales.exp());
     	if(claseDe(preales,Muchas_exp.class)) {
+            consEnv(preales.lpr());
     		System.out.println(",");
-    		consEnv(preales.lpr());
     	}
+        consEnv(preales.exp());
     }
     
     private void consEnv(Inst inst) {

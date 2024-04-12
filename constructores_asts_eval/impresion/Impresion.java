@@ -289,9 +289,9 @@ public class Impresion extends ProcesamientoDef {
 
 
 	public void procesa(Muchas_exp lpreal) {
-		lpreal.exp().procesa(this);
+		lpreal.lpr().procesa(this);
         System.out.println(",");
-        lpreal.lpr().procesa(this);
+		lpreal.exp().procesa(this);
 	}
 
 

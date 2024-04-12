@@ -789,12 +789,12 @@ public class SintaxisAbstractaTiny {
         public Exp exp() { return e; }
         public LPReal lpr() { return lpr; }
         public void imprime() {
-            e.imprime();
-            System.out.println(",");
             lpr.imprime();
+            System.out.println(",");
+            e.imprime();
         }
         public String toString() {
-             return "una_exp("+e+","+lpr+")";
+             return "una_exp("+lpr+","+e+")";
         } 
         public void procesa(Procesamiento p) {
             p.procesa(this);
