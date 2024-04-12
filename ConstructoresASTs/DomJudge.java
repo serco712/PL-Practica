@@ -15,17 +15,16 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-public class Domjudge {
+public class DomJudge {
    public static void main(String[] args) throws Exception {
 	   try {
-	        Reader input = new FileReader("C:/hlocal/PL-Practica/constructores_asts_eval/sample1d.in");
+	        Reader input = new FileReader(System.in);
 	        BufferedReader br = new BufferedReader(input); //Ya tenemos el "lector"
 	        Prog p;
 	        if(br.readLine().startsWith("a")) {
 	            System.out.println("CONSTRUCCION AST ASCENDENTE");
 	            AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(br);
 	            c_ast_ascendente.ConstructorASTsTiny asint = new c_ast_ascendente.ConstructorASTsTinyDJ(alex);
-	            //asint.debug_parse();
 	            p = (Prog)asint.debug_parse().value;
 	        }
 	        else {
@@ -51,7 +50,7 @@ public class Domjudge {
 	      System.out.println("ERROR_SINTACTICO"); 
 	   }
 	   catch(ErrorLexico e) {
-		      System.out.println("ERROR_LEXICO"); 
+	      System.out.println("ERROR_LEXICO"); 
 	   }
 	   catch(ErrorSintactico e) {
 	      System.out.println("ERROR_SINTACTICO"); 

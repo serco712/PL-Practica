@@ -45,13 +45,13 @@
     tipo2 \longrightarrow tipo3\\
     | \hspace{1cm}tipo2.\textbf{a} \;= tipo3.\textbf{a}\\
     tipo3 \longrightarrow \textbf{bool}\\
-    | \hspace{1cm}tipo3.\textbf{a} \;=\textbf{tipo$\_$bool}\\
+    | \hspace{1cm}tipo3.\textbf{a} \;=\textbf{tipo$\_$bool}()\\
     tipo3 \longrightarrow \textbf{int}\\
-    | \hspace{1cm}tipo3.\textbf{a} \;=\textbf{tipo$\_$int}\\
+    | \hspace{1cm}tipo3.\textbf{a} \;=\textbf{tipo$\_$int}()\\
     tipo3 \longrightarrow \textbf{real}\\
-    | \hspace{1cm}tipo3.\textbf{a} \;=\textbf{tipo$\_$real}\\
+    | \hspace{1cm}tipo3.\textbf{a} \;=\textbf{tipo$\_$real}()\\
     tipo3 \longrightarrow \textbf{string}\\
-    | \hspace{1cm}tipo3.\textbf{a} \;=\textbf{tipo$\_$string}\\
+    | \hspace{1cm}tipo3.\textbf{a} \;=\textbf{tipo$\_$string}()\\
     tipo3 \longrightarrow \textbf{identificador}\\
     | \hspace{1cm}tipo3.\textbf{a} \;=\textbf{tipo$\_$ident}(\textbf{identificador.lex})\\
      tipo3 \longrightarrow \textbf{struct}\;\{\;lista$-$variables\;\}\\
