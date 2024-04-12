@@ -243,7 +243,7 @@
     $par$-$formal \longrightarrow tipo\;\textbf{identificador}$ & pformal\_noref: Tipo $\times$ \textbf{string} $\rightarrow$ PFml \\ \hline
     $par$-$reales \longrightarrow lista$-$par$-$real$ & si\_preales: LPReal $\rightarrow$ PReales \\ \hline
     $par$-$reales \longrightarrow \epsilon$ & no\_preales: $\rightarrow$ PReales \\ \hline
-    $lista$-$par$-$real \longrightarrow E\;lista$-$par$-$real$ & muchas\_exp: Exp $\times$ LPReal $\rightarrow$ LPReal \\ \hline
+    $lista$-$par$-$real \longrightarrow lista$-$par$-$real\;E$ & muchas\_exp: LPReal $\times$ Exp $\rightarrow$ LPReal \\ \hline
     $lista$-$par$-$real \longrightarrow E$ & una\_exp: Exp $\rightarrow$ LPReal\\ \hline
     $instruccion \longrightarrow E$ & inst\_eval: Exp $\rightarrow$ Inst \\ \hline
     $instruccion \longrightarrow \textbf{if}\;E\;\;bloque$ & inst\_if: Exp $\times$ Blo $\rightarrow$ Inst \\ \hline

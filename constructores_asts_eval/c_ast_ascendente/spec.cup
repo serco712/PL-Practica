@@ -72,7 +72,7 @@ non terminal  Inst instruccion;
 non terminal  Exp E0, E1, E2, E3, E4, E5, E6, E7;
 non terminal  StringLocalizado OP1, OP4;
 
-programa      ::= bloq: b
+programa      ::= bloq: b 
    {: RESULT = sem.prog(b); :};  
 bloq		  ::= LLAP declaraciones: decs instrucciones: instrs LLCI
    {: RESULT = sem.bloq(decs,instrs); :};
@@ -141,7 +141,7 @@ par_reales ::= PAP lista_par_real: lpr PCI
    {: RESULT = sem.si_preales(lpr);:};
 par_reales ::= PAP PCI
    {: RESULT = sem.no_preales();:};
-lista_par_real ::= lista_par_real: lpr COMA E0: exp
+lista_par_real ::= E0: exp COMA lista_par_real: lpr
    {: RESULT = sem.muchas_exp(exp,lpr);:};
 lista_par_real ::= E0: exp
    {: RESULT = sem.una_exp(exp);:};
