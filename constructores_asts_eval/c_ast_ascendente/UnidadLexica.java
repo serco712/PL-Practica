@@ -9,7 +9,7 @@ public class UnidadLexica extends Symbol {
      private String s;
      public StringLocalizado(String s, int fila, int col) {
          this.s = s;
-         this.fila = fila;
+         this.fila = fila -1;
          this.col = col;  
      }
      public int fila() {return fila;}
