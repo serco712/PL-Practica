@@ -15,10 +15,10 @@ import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-public class Domjudge {
+public class DomJudge {
    public static void main(String[] args) throws Exception {
 	   try {
-	        Reader input = new FileReader("/Users/lijie/Downloads/casos_prueba_ast/sample3d.in");
+	        Reader input = new InputStreamReader(System.in);
 	        BufferedReader br = new BufferedReader(input); //Ya tenemos el "lector"
 	        Prog p;
 	        if(br.readLine().startsWith("a")) {
@@ -45,16 +45,16 @@ public class Domjudge {
 	        p.procesa(new Impresion());
 	   }
 	   catch(TokenMgrError e) {
-	      System.out.println("ERROR_LEXICO"); 
+	      System.out.print("ERROR_LEXICO"); 
 	   }
 	   catch(ParseException e) {
-	      System.out.println("ERROR_SINTACTICO"); 
+	      System.out.print("ERROR_SINTACTICO"); 
 	   }
 	   catch(ErrorLexico e) {
-		      System.out.println("ERROR_LEXICO"); 
+	      System.out.print("ERROR_LEXICO"); 
 	   }
 	   catch(ErrorSintactico e) {
-	      System.out.println("ERROR_SINTACTICO"); 
+	      System.out.print("ERROR_SINTACTICO"); 
 	   }
     }
 }   
