@@ -1,0 +1,318 @@
+\chapterA{Especificación del procesamiento de comprobación de tipos}
+
+\begin{lstlisting}
+    tipado(prog(Blo)):
+        tipado(Blo)
+        $.tipo = Blo.tipo
+
+    tipado(bloq(Decs,Insts)):
+        tipado(Decs)
+        tipado(Insts)
+        $.tipo = ambos-ok(Decs.tipo,Insts.tipo)
+        
+    tipado(muchas_decs(LDecs,Dec)):
+        tipado(LDecs)
+        tipado(Dec)
+        $.tipo = ambos-ok(LDecs.tipo,Dec.tipo)
+    
+    tipado(una_dec(Dec)):
+        tipado(Dec)
+        $.tipo = Dec.tipo
+
+    tipado(muchas_var(LVar,Var)):
+        tipado(LVar)
+        tipado(Var)
+        $.tipo = ambos-ok(LVar.tipo,Var.tipo)
+
+    tipado(una_var(Var)):
+        tipado(Var)
+        $.tipo = Var.tipo
+    
+    tipado(var(Tipo,id)):
+        tipado(Tipo)
+        $.tipo = Tipo.tipo
+
+    tipo(dec_simple(Var)):
+        tipado(Var)
+        $.tipo = Var.tipo
+
+    tipo(dec_type(Var)):
+        tipado(Var)
+        $.tipo = Var.tipo
+    
+    tipo(dec_proc(id,PFmls,Blo)):
+        tipado(PFmls)
+        tipado(Bloq)
+        $.tipo = ambos-ok(PFmls.tipo,Blo.tipo)
+
+    tipado(tipo_array(Tipo,litEnt)):
+        tipado(Tipo)
+        $.tipo = Tipo.tipo 
+
+    tipado(tipo_punt(Tipo)):
+        tipado(Tipo)
+        $.tipo = Tipo.tipo
+
+    tipado(tipo_bool()): $.tipo = bool
+
+    tipado(tipo_int()): $.tipo = int
+
+    tipado(tipo_real()): $.tipo = real
+
+    tipado(tipo_string()): $.tipo = string
+
+    tipado(tipo_ident(id)):
+        let $.vinculo = Dec_var(T,I) in
+            $.tipo = T
+        end let
+
+    tipado(tipo_struct(LVar)):
+        tipado(LVar)
+        $.tipo = LVar.tipo
+
+    tipado(muchas_inst(LInst,Inst)):
+        tipado(LInst)
+        tipado(Inst)
+        $.tipo = ambos-ok(LInst.tipo,Inst.tipo)
+
+    tipado(una_inst(Inst)):
+        tipado(Inst)
+        $.tipo = Inst.tipo
+
+    tipado(muchos_pformal(LPFml,PFml)):
+        tipado(LPFml)
+        tipado(PFml)
+        $.tipo = ambos-ok(LPFml.tipo,PFml.tipo)
+
+    tipado(un_pformal(PFml))
+        tipado(PFml)
+        $.tipo = PFml.tipo
+
+    tipado(pformal_ref(Tipo,id)):
+        tipado(Tipo)
+        $.tipo = Tipo.tipo
+
+    recolectaPFml(pformal_noref(Tipo,id)):
+        tipado(Tipo)
+        $.tipo = Tipo.tipo
+
+    tipado(muchas_exp(LPReal,Exp)):
+        tipado(LPReal)
+        tipado(Exp)
+        $.tipo = ambos-ok(LPReal.tipo,Exp.tipo)     
+
+    tipado(una_exp(Exp)):
+        tipado(Exp)
+        $.tipo = Exp.tipo
+
+    tipado(inst_eval(Exp)):
+        tipado(Exp)
+        $.tipo = Exp.tipo
+
+    tipado(inst_if(Exp,Blo)):
+        tipado(Exp)
+        tipado(Blo)
+        $.tipo = ambos-ok(Exp.tipo,Blo.tipo)
+
+    tipado(inst_else(Exp,Blo1,Blo2)):
+        tipado(Exp)
+        tipado(Blo1)
+        tipado(Blo2)
+        if Exp.tipo == ok ^ Blo1 == ok ^ Blo2 == ok then
+            $.tipo = ok
+        else
+            return error
+        end if
+
+    tipado(inst_while(Exp,Blo)):
+        tipado(Exp)
+        tipado(Blo)       
+        $.tipo = ambos-ok(Exp.tipo,Blo.tipo)
+
+    tipado(inst_new(Exp)):
+        tipado(Exp)
+        $.tipo = Exp.tipo
+
+    tipado(inst_delete(Exp)):
+        tipado(Exp)
+        $.tipo = Exp.tipo
+
+    tipado(inst_read(Exp)):
+        tipado(Exp)
+        $.tipo = Exp.tipo
+
+    tipado(inst_write(Exp)):
+        tipado(Exp)
+        $.tipo = Exp.tipo
+
+    tipado(inst_call(id,PReales)):
+        tipado(PReales)
+        $.tipo = PReales.tipo
+
+    tipado(inst_nl()): $.tipo = nl
+
+    tipado(inst_blo(Blo)):
+        tipado(Blo)
+        $.tipo = Blo.tipo
+
+    tipado(exp_asig(Opnd0,Opnd1)):
+        tipado(Opnd0)
+        tipado(Opnd1)
+        if es-designador(Opnd0) then
+            if compatibles(Opnd0.tipo, Opnd1.tipo) then
+                $.tipo = ok
+            else 
+                aviso-error(Opnd0.tipo,Opnd1.tipo)
+                $.tipo = error
+            end if
+        else
+            error
+            $.tipo = error
+        end if
+
+    tipado(exp_menor(Opnd0,Opnd1)):
+        tipado-bin(Opnd0,Opnd1)
+
+    tipado(exp_menIgual(Opnd0,Opnd1)):
+        tipado-bin(Opnd0,Opnd1)
+
+    tipado(exp_mayor(Opnd0,Opnd1)):
+        tipado-bin(Opnd0,Opnd1)
+
+    tipado(exp_mayIgual(Opnd0,Opnd1)):
+        tipado-bin(Opnd0,Opnd1)
+
+    tipado(exp_igual(Opnd0,Opnd1)):
+        tipado-bin(Opnd0,Opnd1)
+
+    tipado(exp_dist(Opnd0,Opnd1)):
+        tipado-bin(Opnd0,Opnd1)
+
+    tipado(exp_sum(Opnd0,Opnd1)):
+        tipado-bin(Opnd0,Opnd1)
+
+    tipado(exp_resta(Opnd0,Opnd1)):
+        tipado-bin(Opnd0,Opnd1)
+
+    tipado(exp_mult(Opnd0,Opnd1)):
+        tipado-bin(Opnd0,Opnd1)
+
+    tipado(exp_div(Opnd0,Opnd1)):
+        tipado-bin(Opnd0,Opnd1)
+
+    tipado(exp_mod(Opnd0,Opnd1)):
+        tipado-bin(Opnd0,Opnd1)
+
+    tipado(exp_and(Opnd0,Opnd1)):
+        tipado-bin(Opnd0,Opnd1)
+
+    tipado(exp_or(Opnd0,Opnd1)):
+        tipado-bin(Opnd0,Opnd1)
+
+    tipado(exp_menos(Exp)):
+        tipado(Exp)
+        $.tipo = Exp.tipo
+
+    tipado(exp_not(Exp)):
+        tipado(Exp)
+        $.tipo = Exp.tipo
+
+    tipado(inst_index(Opnd0,Opnd1)):
+        tipado-bin(Opnd0,Opnd1)
+
+    tipado(exp_reg(Exp,id)):
+        tipado(Exp)
+        tipado-bin(Opnd0,Opnd1)
+
+    tipado(exp_ind(Exp)):
+        tipado(Exp)
+
+    tipado(exp_true()): $.tipo = true
+
+    tipado(exp_false()): $.tipo = false
+
+    tipado(exp_litEnt(litEnt)): $.tipo = literalEntero
+
+    tipado(exp_litReal(litReal)): $.tipo = literalReal
+
+    tipado(exp_litCad(litCad)): $.tipo = literalCadena
+
+    tipado(exp_iden(id)):
+        let $.vinculo = Dec_var(T,I) in
+            $.tipo = T
+        end let
+
+    tipado(exp_null()): $.tipo = null
+
+    tipado(elem1(E)):
+        tipado(E)
+        if ref!(E.tipo) = par(T,_) then
+            Acc.tipo = T
+        else
+            aviso-error(T)
+            Acc.tipo = error
+        end if
+
+    tipado(elem2(E)):
+        tipado(E)
+        if ref!(E.tipo) = par(_,T) then
+            Acc.tipo = T
+        else
+            aviso-error(T)
+            Acc.tipo = error
+        end if
+
+    ambos-ok(T0,T1):
+        if T0 == ok ^ T1 == ok then
+            return ok
+        else 
+            return error
+        end if
+
+    aviso-error(T0,T1):
+        if T0 != error ^ T1 != error then
+            error
+        end if
+
+    aviso-error(T):
+        if T != error then
+            error
+        end if 
+
+    ref!(T):
+        if T == Ref(I) then
+            let T.vinculo = Dec_tipo(T',I) in
+                return ref!(T')
+            end let
+        else
+            return T
+        end if
+
+    tipado-bin(E0,E1,E):
+        tipado(E0)
+        tipado(E1)
+        E.tipo = tipo-bin(E0.tipo,E1.tipo)
+
+    tipo-bin(T0,T1):
+        if compatibles(T0,T1)  then
+            return T0
+        else
+            aviso-error(T0,T1)
+            return error
+        end if
+
+    compatibles(T1,T2):
+        let T1' = ref!(T1) ^ T2' = ref!(T2) in
+            if T1' == T2' then
+                return true;
+            elsif T1' == par(T1_a,T1_b) ^ T2' == par(T2_a,T2_b)then
+                return compatibles(T1_a,T2_a) ^ compatibles(T1_b,T2_b)
+            else
+                return false
+            end if
+        end let
+
+    es-designador(E):
+        return E = id(v) v E = elem1(E') v E = elem2(E')
+
+\end{lstlisting}
