@@ -1,0 +1,271 @@
+\chapterA{Especificación del procesamiento de vinculación}
+
+\begin{lstlisting}
+
+    var ts //Tabla de simbolos
+
+    vincula(prog(Blo)):
+        ts = creaTS()
+        vincula(Blo)
+
+    vincula(bloq(Decs,Insts)):
+        abreAmbito(ts)
+        recolectaDecs(Decs)
+        vincula(Insts)
+        cierraAmbito(ts)
+    
+    recolectaDecs(si_decs(LDecs)):
+        recolectaDecs(Ldecs)
+    
+    recolectaDecs(no_decs()): noop
+    
+    recolectaDecs(muchas_decs(LDecs,Dec)):
+        recolectaDecs(LDecs)
+        recolectaDec(Dec)
+    
+    recolectaDecs(una_dec(Dec)):
+        recolectaDec(Dec)
+
+    recolectaVars(muchas_var(LVar,Var)):
+        recolectaVars(LVar)
+        recolectaVar(Var)
+
+    recolectaVars(una_var(Var)):
+        recolectaVar(Var)
+    
+    recolectaVar(var(Tipo,id)):
+        vincula(Tipo)
+        if contiene(ts,id) then
+            error
+        else
+            inserta(ts,id,$)
+        end if
+    
+    recolectaDec(dec_simple(Var)):
+        recolectaVar(Var)
+
+    recolectaDec(dec_type(Var)):
+        recolectaVar(Var)
+    
+    recolectaDec(dec_proc(id,PFmls,Blo)):
+        if contiene(ts,id) then
+            error
+        else
+            inserta(ts,id,$)
+        end if
+        abreAmbito(ts)
+        recolectaPFmls(PFmls)
+        vincula(Blo)
+        cierraAmbito(ts)
+
+    vincula(tipo_array(Tipo,litEnt)):
+        vincula(Tipo)
+
+    vincula(tipo_punt(Tipo)):
+        vincula(Tipo)
+
+    vincula(tipo_bool()): noop
+
+    vincula(tipo_int()): noop
+
+    vincula(tipo_real()): noop
+
+    vincula(tipo_string()): noop
+
+    vincula(tipo_ident(id)):
+        $.vinculo = vinculoDe(ts,id)
+        if $.vinculo == false then
+            error
+        end if
+
+    vincula(tipo_struct(LVar)):
+        recolectaVars(LVar)
+
+    vincula(si_inst(LInst)):
+        vincula(LInst):
+
+    vincula(no_inst()): noop
+
+    vincula(muchas_inst(LInst,Inst)):
+        vincula(LInst)
+        vincula(Inst)
+
+    vincula(una_inst(Inst)):
+        vincula(Inst)
+
+    recolectaPFmls(si_pformal(LPFml)):
+        recolectaPFmls(LPFml)
+
+    recolectaPFmls(no_pformal()): noop
+
+    recolectaPFmls(muchos_pformal(LPFml,PFml)):
+        recolectaPFmls(LPFml)
+        recolectaPFml(PFml)
+
+    recolectaPFmls(un_pformal(PFml))
+        recolectaPFml(PFml)
+
+    recolectaPFml(pformal_ref(Tipo,id)):
+        vincula(Tipo)
+        if contiene(ts,id) then
+            error
+        else
+            inserta(ts,id,$)
+        end if
+
+    recolectaPFml(pformal_noref(Tipo,id)):
+        vincula(Tipo)
+        if contiene(ts,id) then
+            error
+        else
+            inserta(ts,id,$)
+        end if
+
+    vincula(si_preales(LPReal)):
+        vincula(LPReal)
+
+    vincula(no_preales()): noop
+
+    vincula(muchas_exp(LPReal,Exp)):
+        vincula(LPReal)
+        vincula(Exp)
+
+    vincula(una_exp(Exp)):
+        vincula(Exp)
+
+    vincula(inst_eval(Exp)):
+        vincula(Exp)
+
+    vincula(inst_if(Exp,Blo)):
+        vincula(Exp)
+        vincula(Blo)
+
+    vincula(inst_else(Exp,Blo1,Blo2)):
+        vincula(Exp)
+        vincula(Blo1)
+        vincula(Blo2)
+
+    vincula(inst_while(Exp,Blo)):
+        vincula(Exp)
+        vincula(Blo)
+
+    vincula(inst_new(Exp)):
+        vincula(Exp)
+
+    vincula(inst_delete(Exp)):
+        vincula(Exp)
+
+    vincula(inst_read(Exp)):
+        vincula(Exp)
+
+    vincula(inst_write(Exp)):
+        vincula(Exp)
+
+    vincula(inst_call(id,PReales)):
+        $.vinculo = vinculoDe(ts,Id)
+        if $.vinculo == false then
+            error
+        end if
+        vincula(PReales)
+
+    vincula(inst_nl()): noop
+
+    vincula(inst_blo(Blo)):
+        vincula(Blo)
+
+    vincula(exp_asig(Opnd0,Opnd1)):
+        vincula(Opnd0)
+        vincula(Opnd1)
+
+    vincula(exp_menor(Opnd0,Opnd1)):
+        vincula(Opnd0)
+        vincula(Opnd1)
+
+    vincula(exp_menIgual(Opnd0,Opnd1)):
+        vincula(Opnd0)
+        vincula(Opnd1)
+
+    vincula(exp_mayor(Opnd0,Opnd1)):
+        vincula(Opnd0)
+        vincula(Opnd1)
+
+    vincula(exp_mayIgual(Opnd0,Opnd1)):
+        vincula(Opnd0)
+        vincula(Opnd1)
+
+    vincula(exp_igual(Opnd0,Opnd1)):
+        vincula(Opnd0)
+        vincula(Opnd1)
+
+    vincula(exp_dist(Opnd0,Opnd1)):
+        vincula(Opnd0)
+        vincula(Opnd1)
+
+    vincula(exp_sum(Opnd0,Opnd1)):
+        vincula(Opnd0)
+        vincula(Opnd1)
+
+    vincula(exp_resta(Opnd0,Opnd1)):
+        vincula(Opnd0)
+        vincula(Opnd1)
+
+    vincula(exp_mult(Opnd0,Opnd1)):
+        vincula(Opnd0)
+        vincula(Opnd1)
+
+    vincula(exp_div(Opnd0,Opnd1)):
+        vincula(Opnd0)
+        vincula(Opnd1)
+
+    vincula(exp_mod(Opnd0,Opnd1)):
+        vincula(Opnd0)
+        vincula(Opnd1)
+
+    vincula(exp_and(Opnd0,Opnd1)):
+        vincula(Opnd0)
+        vincula(Opnd1)
+
+    vincula(exp_or(Opnd0,Opnd1)):
+        vincula(Opnd0)
+        vincula(Opnd1)
+
+    vincula(exp_menos(Exp)):
+        vincula(Exp)
+
+    vincula(exp_not(Exp)):
+        vincula(Exp)
+
+    vincula(inst_index(Opnd0,Opnd1)):
+        vincula(Opnd0)
+        vincula(Opnd1)
+
+    vincula(exp_reg(Exp,id)):
+        vincula(Exp)
+        $.vinculo = vinculoDe(ts,Id)
+        if $.vinculo == false then
+            error
+        end if
+
+    vincula(exp_ind(Exp)):
+        vincula(Exp)
+
+    vincula(exp_true()): noop
+
+    vincula(exp_false()): noop
+
+    vincula(exp_litEnt(litEnt)): noop
+
+    vincula(exp_litReal(litReal)): noop
+
+    vincula(exp_litCad(litCad)): noop
+
+    vincula(exp_iden(id)):
+        $.vinculo = vinculoDe(ts,Id)
+        if $.vinculo == false then
+            error
+        end if
+
+    vincula(exp_null()): noop
+
+
+\end{lstlisting}
