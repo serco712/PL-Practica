@@ -1,0 +1,249 @@
+\chapterA{Especificación del procesamiento de asignación de espacio}
+\begin{lstlisting}
+
+    var dir = 0 //contador de direcciones
+
+    asig-espacio(prog(Blo)):
+        asig-espacio(Blo)
+
+    asig-espacio(bloq(Decs,Insts)):
+        asig-espacio(Decs)
+        asig-espacio(Insts)
+    
+    asig-espacio(si_decs(LDecs)):
+        asig-espacio(Ldecs)
+    
+    asig-espacio(no_decs()):noop
+    
+    asig-espacio(muchas_decs(LDecs,Dec)):
+        asig-espacio(LDecs)
+        asig-espacio(Dec)
+    
+    asig-espacio(una_dec(Dec)):
+        asig-espacio(Dec)
+
+    asig-espacio(muchas_var(LVar,Var)):
+        asig-espacio(LVar)
+        asig-espacio(Var)
+
+    asig-espacio(una_var(Var)):
+        asig-espacio(Var)
+    
+    asig-espacio(var(Tipo,id)):
+        $.dir = dir
+        dir++
+        asig-espacio(Tipo)
+    
+    asig-espacio(dec_simple(Var)):
+        asig-espacio(Var)
+
+    asig-espacio(dec_type(Var)):
+        asig-espacio(Var)
+    
+    asig-espacio(dec_proc(id,PFmls,Blo)):
+        $.dir = dir
+        dir++
+        asig-espacio(PFmls)
+        asig-espacio(Blo)
+
+    asig-espacio(tipo_array(Tipo,litEnt)):
+        $.dir = dir
+        dir++
+        asig-espacio(Tipo)
+
+    asig-espacio(tipo_punt(Tipo)):
+        asig-espacio(Tipo)
+
+    asig-espacio(tipo_bool()): noop
+
+    asig-espacio(tipo_int()): noop
+
+    asig-espacio(tipo_real()): noop
+
+    asig-espacio(tipo_string()): noop
+
+    asig-espacio(tipo_ident(id)):
+       $.dir = dir
+        dir++
+
+    asig-espacio(tipo_struct(LVar)):
+        asig-espacio(LVar)
+
+    asig-espacio(si_inst(LInst)):
+        asig-espacio(LInst):
+
+    asig-espacio(no_inst()): noop
+
+    asig-espacio(muchas_inst(LInst,Inst)):
+        asig-espacio(LInst)
+        asig-espacio(Inst)
+
+    asig-espacio(una_inst(Inst)):
+        asig-espacio(Inst)
+
+    asig-espacio(si_pformal(LPFml)):
+        asig-espacio(LPFml)
+
+    asig-espacio(no_pformal()): noop
+
+    asig-espacio(muchos_pformal(LPFml,PFml)):
+        asig-espacio(LPFml)
+        asig-espacio(PFml)
+
+    asig-espacio(un_pformal(PFml))
+        asig-espacio(PFml)
+
+    asig-espacio(pformal_ref(Tipo,id)):
+        $.dir = dir
+        dir++
+        asig-espacio(Tipo)
+
+    asig-espacio(pformal_noref(Tipo,id)):
+        $.dir = dir
+        dir++
+        asig-espacio(Tipo)
+        
+
+    asig-espacio(si_preales(LPReal)):
+        asig-espacio(LPReal)
+
+    asig-espacio(no_preales()): noop
+
+    asig-espacio(muchas_exp(LPReal,Exp)):
+        asig-espacio(LPReal)
+        asig-espacio(Exp)
+
+    asig-espacio(una_exp(Exp)):
+        asig-espacio(Exp)
+
+    asig-espacio(inst_eval(Exp)):
+        asig-espacio(Exp)
+
+    asig-espacio(inst_if(Exp,Blo)):
+        asig-espacio(Exp)
+        asig-espacio(Blo)
+
+    asig-espacio(inst_else(Exp,Blo1,Blo2)):
+        asig-espacio(Exp)
+        asig-espacio(Blo1)
+        asig-espacio(Blo2)
+
+    asig-espacio(inst_while(Exp,Blo)):
+        asig-espacio(Exp)
+        asig-espacio(Blo)
+
+    asig-espacio(inst_new(Exp)):
+        asig-espacio(Exp)
+
+    asig-espacio(inst_delete(Exp)):
+        asig-espacio(Exp)
+
+    asig-espacio(inst_read(Exp)):
+        asig-espacio(Exp)
+
+    asig-espacio(inst_write(Exp)):
+        asig-espacio(Exp)
+
+    asig-espacio(inst_call(id,PReales)):
+        $.dir = dir
+        dir++
+        asig-espacio(PReales)
+
+    asig-espacio(inst_nl()): noop
+
+    asig-espacio(inst_blo(Blo)):
+        asig-espacio(Blo)
+
+    asig-espacio(exp_asig(Opnd0,Opnd1)):
+        asig-espacio(Opnd0)
+        asig-espacio(Opnd1)
+
+    asig-espacio(exp_menor(Opnd0,Opnd1)):
+        asig-espacio(Opnd0)
+        asig-espacio(Opnd1)
+
+    asig-espacio(exp_menIgual(Opnd0,Opnd1)):
+        asig-espacio(Opnd0)
+        asig-espacio(Opnd1)
+
+    asig-espacio(exp_mayor(Opnd0,Opnd1)):
+        asig-espacio(Opnd0)
+        asig-espacio(Opnd1)
+
+    asig-espacio(exp_mayIgual(Opnd0,Opnd1)):
+        asig-espacio(Opnd0)
+        asig-espacio(Opnd1)
+
+    asig-espacio(exp_igual(Opnd0,Opnd1)):
+        asig-espacio(Opnd0)
+        asig-espacio(Opnd1)
+
+    asig-espacio(exp_dist(Opnd0,Opnd1)):
+        asig-espacio(Opnd0)
+        asig-espacio(Opnd1)
+
+    asig-espacio(exp_sum(Opnd0,Opnd1)):
+        asig-espacio(Opnd0)
+        asig-espacio(Opnd1)
+
+    asig-espacio(exp_resta(Opnd0,Opnd1)):
+        asig-espacio(Opnd0)
+        asig-espacio(Opnd1)
+
+    asig-espacio(exp_mult(Opnd0,Opnd1)):
+        asig-espacio(Opnd0)
+        asig-espacio(Opnd1)
+
+    asig-espacio(exp_div(Opnd0,Opnd1)):
+        asig-espacio(Opnd0)
+        asig-espacio(Opnd1)
+
+    asig-espacio(exp_mod(Opnd0,Opnd1)):
+        asig-espacio(Opnd0)
+        asig-espacio(Opnd1)
+
+    asig-espacio(exp_and(Opnd0,Opnd1)):
+        asig-espacio(Opnd0)
+        asig-espacio(Opnd1)
+
+    asig-espacio(exp_or(Opnd0,Opnd1)):
+        asig-espacio(Opnd0)
+        asig-espacio(Opnd1)
+
+    asig-espacio(exp_menos(Exp)):
+        asig-espacio(Exp)
+
+    asig-espacio(exp_not(Exp)):
+        asig-espacio(Exp)
+
+    asig-espacio(inst_index(Opnd0,Opnd1)):
+        asig-espacio(Opnd0)
+        asig-espacio(Opnd1)
+
+    asig-espacio(exp_reg(Exp,id)):
+        $.dir = dir
+        dir++
+        asig-espacio(Exp)
+       
+
+    asig-espacio(exp_ind(Exp)):
+        asig-espacio(Exp)
+
+    asig-espacio(exp_true()): noop
+
+    asig-espacio(exp_false()): noop
+
+    asig-espacio(exp_litEnt(litEnt)): noop
+
+    asig-espacio(exp_litReal(litReal)): noop
+
+    asig-espacio(exp_litCad(litCad)): noop
+
+    asig-espacio(exp_iden(id)):
+        $.dir = dir
+        dir++
+
+    asig-espacio(exp_null()): noop
+
+
+\end{lstlisting}
