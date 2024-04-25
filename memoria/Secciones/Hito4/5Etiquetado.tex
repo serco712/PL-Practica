@@ -1,0 +1,387 @@
+\chapterA{Especificación del procesamiento de asignación de espacio}
+\begin{lstlisting}
+
+    var etq = 0 
+
+    etiquetado(prog(Blo)):
+        $.prim = etq
+        etiquetado(Blo)
+        $.sig = etq
+
+    etiquetado(bloq(Decs,Insts)):
+        $.prim = etq
+        etiquetado(Insts)
+        $.sig = etq
+    
+    etiquetado(si_decs(LDecs)):
+        $.prim = etq
+        etiquetado(Ldecs)
+        $.sig = etq
+    
+    etiquetado(no_decs()):noop
+    
+    etiquetado(muchas_decs(LDecs,Dec)):
+        $.prim = etq
+        etiquetado(LDecs)
+        etiquetado(Dec)
+        $.sig = etq
+    
+    etiquetado(una_dec(Dec)):
+        $.prim = etq
+        etiquetado(Dec)
+        $.sig = etq
+
+    etiquetado(muchas_var(LVar,Var)):
+        $.prim = etq
+        etiquetado(LVar)
+        etiquetado(Var)
+        $.sig = etq
+
+    etiquetado(una_var(Var)):
+        $.prim = etq
+        etiquetado(Var)
+        $.sig = etq
+    
+    etiquetado(var(Tipo,id)):
+        $.prim = etq
+        etiquetado(Tipo)
+        $.sig = etq
+    
+    etiquetado(dec_simple(Var)):
+        $.prim = etq
+        etiquetado(Var)
+        $.sig = etq
+
+    etiquetado(dec_type(Var)):
+        $.prim = etq
+        etiquetado(Var)
+        $.sig = etq
+    
+    etiquetado(dec_proc(id,PFmls,Blo)):
+        $.prim = etq
+        etiquetado(PFmls)
+        etiquetado(Blo)
+        $.sig = etq
+
+    etiquetado(tipo_array(Tipo,litEnt)):
+        $.prim = etq
+        etiquetado(Tipo)
+        $.sig = etq
+
+    etiquetado(tipo_punt(Tipo)):
+        $.prim = etq
+        etiquetado(Tipo)
+        $.sig = etq
+
+    etiquetado(tipo_bool()): noop
+
+    etiquetado(tipo_int()): noop
+
+    etiquetado(tipo_real()): noop
+
+    etiquetado(tipo_string()): noop
+
+    etiquetado(tipo_ident(id)):
+        $.prim = etq
+        etq++
+        $.sig = etq
+
+    etiquetado(tipo_struct(LVar)):
+        $.prim = etq
+        etiquetado(LVar)
+        $.sig = etq
+
+    etiquetado(si_inst(LInst)):
+        $.prim = etq
+        etiquetado(LInst):
+        $.sig = etq
+
+    etiquetado(no_inst()): noop
+
+    etiquetado(muchas_inst(LInst,Inst)):
+        $.prim = etq
+        etiquetado(LInst)
+        etiquetado(Inst)
+        $.sig = etq
+
+    etiquetado(una_inst(Inst)):
+        $.prim = etq
+        etiquetado(Inst)
+        $.sig = etq
+
+    etiquetado(si_pformal(LPFml)):
+        $.prim = etq
+        etiquetado(LPFml)
+        $.sig = etq
+
+    etiquetado(no_pformal()): noop
+
+    etiquetado(muchos_pformal(LPFml,PFml)):
+        $.prim = etq
+        etiquetado(LPFml)
+        etiquetado(PFml)
+        $.sig = etq
+
+    etiquetado(un_pformal(PFml))
+        $.prim = etq
+        etiquetado(PFml)
+        $.sig = etq
+
+    etiquetado(pformal_ref(Tipo,id)):
+        $.prim = etq
+        etiquetado(Tipo)
+        $.sig = etq
+
+    etiquetado(pformal_noref(Tipo,id)):
+        $.prim = etq
+        etiquetado(Tipo)
+        $.sig = etq
+        
+
+    etiquetado(si_preales(LPReal)):
+        $.prim = etq
+        etiquetado(LPReal)
+        $.sig = etq
+
+    etiquetado(no_preales()): noop
+
+    etiquetado(muchas_exp(LPReal,Exp)):
+        $.prim = etq
+        etiquetado(LPReal)
+        etq++
+        etiquetado(Exp)
+        etq++
+        $.sig = etq
+
+    etiquetado(una_exp(Exp)):
+        $.prim = etq
+        etiquetado(Exp)
+        etq++
+        $.sig = etq
+
+    etiquetado(inst_eval(Exp)):
+        $.prim = etq
+        etiquetado(Exp)
+        etq++
+        $.sig = etq
+
+    etiquetado(inst_if(Exp,Blo)):
+        $.prim = etq
+        etiquetado(Exp)
+        etq++
+        etiquetado(Blo)
+        etq++
+        $.sig = etq
+
+    etiquetado(inst_else(Exp,Blo1,Blo2)):
+        $.prim = etq
+        etiquetado(Exp)
+        etq++
+        etiquetado(Blo1)
+        etq++
+        etiquetado(Blo2)
+        etq++
+        $.sig = etq
+
+    etiquetado(inst_while(Exp,Blo)):
+        $.prim = etq
+        etiquetado(Exp)
+        etq++
+        etiquetado(Blo)
+        etq++
+        $.sig = etq
+
+    etiquetado(inst_new(Exp)):
+        $.prim = etq
+        etiquetado(Exp)
+        etq++
+        $.sig = etq
+
+    etiquetado(inst_delete(Exp)):
+        $.prim = etq
+        etiquetado(Exp)
+        etq++
+        $.sig = etq
+
+    etiquetado(inst_read(Exp)):
+        $.prim = etq
+        etiquetado(Exp)
+        etq++
+        $.sig = etq
+
+    etiquetado(inst_write(Exp)):
+        $.prim = etq
+        etiquetado(Exp)
+        etq++
+        $.sig = etq
+
+    etiquetado(inst_call(id,PReales)):
+        $.prim = etq
+        etiquetado(PReales)
+        $.sig = etq
+
+    etiquetado(inst_nl()): noop
+
+    etiquetado(inst_blo(Blo)):
+        $.prim = etq
+        etiquetado(Blo)
+        $.sig = etq
+
+    etiquetado(exp_asig(Opnd0,Opnd1)):
+        $.prim = etq
+        etiquetado(Opnd0)
+        etiquetado(Opnd1)
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_menor(Opnd0,Opnd1)):
+        $.prim = etq
+        etiquetado(Opnd0)
+        etiquetado(Opnd1)
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_menIgual(Opnd0,Opnd1)):
+        $.prim = etq
+        etiquetado(Opnd0)
+        etiquetado(Opnd1)
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_mayor(Opnd0,Opnd1)):
+        $.prim = etq
+        etiquetado(Opnd0)
+        etiquetado(Opnd1)
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_mayIgual(Opnd0,Opnd1)):
+        $.prim = etq
+        etiquetado(Opnd0)
+        etiquetado(Opnd1)
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_igual(Opnd0,Opnd1)):
+        $.prim = etq
+        etiquetado(Opnd0)
+        etiquetado(Opnd1)
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_dist(Opnd0,Opnd1)):
+        $.prim = etq
+        etiquetado(Opnd0)
+        etiquetado(Opnd1)
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_sum(Opnd0,Opnd1)):
+        $.prim = etq
+        etiquetado(Opnd0)
+        etiquetado(Opnd1)
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_resta(Opnd0,Opnd1)):
+        $.prim = etq
+        etiquetado(Opnd0)
+        etiquetado(Opnd1)
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_mult(Opnd0,Opnd1)):
+        $.prim = etq
+        etiquetado(Opnd0)
+        etiquetado(Opnd1)
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_div(Opnd0,Opnd1)):
+        $.prim = etq
+        etiquetado(Opnd0)
+        etiquetado(Opnd1)
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_mod(Opnd0,Opnd1)):
+        $.prim = etq
+        etiquetado(Opnd0)
+        etiquetado(Opnd1)
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_and(Opnd0,Opnd1)):
+        $.prim = etq
+        etiquetado(Opnd0)
+        etiquetado(Opnd1)
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_or(Opnd0,Opnd1)):
+        $.prim = etq
+        etiquetado(Opnd0)
+        etiquetado(Opnd1)
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_menos(Exp)):
+        $.prim = etq
+        etiquetado(Exp)
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_not(Exp)):
+        $.prim = etq
+        etiquetado(Exp)
+        etq++
+        $.sig = etq
+
+    etiquetado(inst_index(Opnd0,Opnd1)):
+        $.prim = etq
+        etiquetado(Opnd0)
+        etiquetado(Opnd1)
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_reg(Exp,id)):
+        $.prim = etq
+        etiquetado(Exp)
+        etq++
+        $.sig = etq
+       
+
+    etiquetado(exp_ind(Exp)):
+        $.prim = etq
+        etiquetado(Exp)
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_true()): noop
+
+    etiquetado(exp_false()): noop
+
+    etiquetado(exp_litEnt(litEnt)): 
+        $.prim = etq
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_litReal(litReal)):
+        $.prim = etq
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_litCad(litCad)):
+        $.prim = etq
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_iden(id)):
+        $.prim = etq
+        etq++
+        $.sig = etq
+
+    etiquetado(exp_null()): noop
+
+
+\end{lstlisting}
