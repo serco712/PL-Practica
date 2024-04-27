@@ -10,76 +10,138 @@
 
     vincula(bloq(Decs,Insts)):
         abreAmbito(ts)
-        recolectaDecs(Decs)
+        vincula(Decs)
         vincula(Insts)
         cierraAmbito(ts)
     
-    recolectaDecs(si_decs(LDecs)):
-        recolectaDecs(Ldecs)
+    vincula(si_decs(LDecs)):
+        vincula1(LDecs)
+        vincula2(LDecs)
     
-    recolectaDecs(no_decs()): noop
+    vincula1(no_decs()): noop
     
-    recolectaDecs(muchas_decs(LDecs,Dec)):
-        recolectaDecs(LDecs)
-        recolectaDec(Dec)
+    vincula1(muchas_decs(LDecs,Dec)):
+        vincula1(LDecs)
+        vincula1(Dec)
     
-    recolectaDecs(una_dec(Dec)):
-        recolectaDec(Dec)
+    vincula2(muchas_decs(LDecs,Dec)):
+        vincula2(LDecs)
+        vincula2(Dec)
+    
+    vincula1(una_dec(Dec)):
+        vincula1(Dec)
 
-    recolectaVars(muchas_var(LVar,Var)):
-        recolectaVars(LVar)
-        recolectaVar(Var)
+    vincula2(una_dec(Dec)):
+        vincula2(Dec)
 
-    recolectaVars(una_var(Var)):
-        recolectaVar(Var)
+    vincula1(muchas_var(LVar,Var)):
+        vincula1(LVar)
+        vincula1(Var)
+
+    vincula2(muchas_var(LVar,Var)):
+        vincula2(LVar)
+        vincula2(Var)
+
+    vincula1(una_var(Var)):
+        vincula1(Var)
     
-    recolectaVar(var(Tipo,id)):
-        vincula(Tipo)
+    vincula2(una_var(Var)):
+        vincula2(Var)
+
+    vincula1(var(Tipo,id)):
+        vincula1(Tipo)
         if contiene(ts,id) then
             error
         else
             inserta(ts,id,$)
         end if
-    
-    recolectaDec(dec_simple(Var)):
-        recolectaVar(Var)
 
-    recolectaDec(dec_type(Var)):
-        recolectaVar(Var)
+    vincula2(var(Tipo,id)):
+        vincula2(Tipo)
     
-    recolectaDec(dec_proc(id,PFmls,Blo)):
+    vincula1(dec_simple(Var)):
+        vincula1(Var)
+
+    vincula2(dec_simple(Var)):
+        vincula2(Var)
+
+    vincula1(dec_type(Var)):
+        vincula1(Var)
+    
+    vincula2(dec_type(Var)):
+        vincula2(Var)
+    
+    vincula1(dec_proc(id,PFmls,Blo)):
         if contiene(ts,id) then
             error
         else
             inserta(ts,id,$)
         end if
         abreAmbito(ts)
-        recolectaPFmls(PFmls)
-        vincula(Blo)
+        vincula1(PFmls)
+        vincula1(Blo)
+
+    vincula2(dec_proc(id,PFmls,Blo)):
+        vincula2(PFmls)
+        vincula2(Blo)
         cierraAmbito(ts)
 
-    vincula(tipo_array(Tipo,litEnt)):
-        vincula(Tipo)
+    vincula1(tipo_array(Tipo,litEnt)):
+        if Tipo != tipo_ident(_) then
+            vincula1(Tipo)
+        end if
 
-    vincula(tipo_punt(Tipo)):
-        vincula(Tipo)
+    vincula2(tipo_array(Tipo,litEnt)):
+        if Tipo == tipo_ident(id) then
+            Tipo.vinculo = vinculoDe(ts,id)
+            if Tipo.vinculo != dec_type(_) then
+                error
+            end if
+        else
+            vincula2(Tipo)
+        end if
 
-    vincula(tipo_bool()): noop
+    vincula1(tipo_punt(Tipo)):
+        if Tipo != tipo_ident(_) then
+            vincula1(Tipo)
+        end if
 
-    vincula(tipo_int()): noop
+    vincula2(tipo_punt(Tipo)):
+        if Tipo == tipo_ident(id) then
+            Tipo.vinculo = vinculoDe(ts,id)
+            if Tipo.vinculo != dec_type(_) then
+                error
+            end if
+        else
+            vincula2(Tipo)
+        end if
 
-    vincula(tipo_real()): noop
+    vincula1(tipo_bool()): noop
 
-    vincula(tipo_string()): noop
+    vincula2(tipo_bool()): noop
 
-    vincula(tipo_ident(id)):
+    vincula1(tipo_int()): noop
+
+    vincula2(tipo_int()): noop
+
+    vincula1(tipo_real()): noop
+
+    vincula2(tipo_real()): noop
+
+    vincula1(tipo_string()): noop
+
+    vincula2(tipo_string()): noop
+
+    vincula1(tipo_ident(id)):
         $.vinculo = vinculoDe(ts,id)
-        if $.vinculo == false then
+        if $.vinculo != dec_type(_) then
             error
         end if
 
+    vincula2(tipo_ident(id)): noop
+
     vincula(tipo_struct(LVar)):
-        recolectaVars(LVar)
+        vincula1(LVar)
 
     vincula(si_inst(LInst)):
         vincula(LInst):
@@ -93,33 +155,51 @@
     vincula(una_inst(Inst)):
         vincula(Inst)
 
-    recolectaPFmls(si_pformal(LPFml)):
-        recolectaPFmls(LPFml)
+    vincula1(si_pformal(LPFml)):
+        vincula1(LPFml)
 
-    recolectaPFmls(no_pformal()): noop
+    vincula2(si_pformal(LPFml)):
+        vincula2(LPFml)
 
-    recolectaPFmls(muchos_pformal(LPFml,PFml)):
-        recolectaPFmls(LPFml)
-        recolectaPFml(PFml)
+    vincula1(no_pformal()): noop
 
-    recolectaPFmls(un_pformal(PFml))
-        recolectaPFml(PFml)
+    vincula2(no_pformal()): noop
 
-    recolectaPFml(pformal_ref(Tipo,id)):
-        vincula(Tipo)
+    vincula1(muchos_pformal(LPFml,PFml)):
+        vincula1(LPFml)
+        vincula1(PFml)
+
+    vincula2(muchos_pformal(LPFml,PFml)):
+        vincula2(LPFml)
+        vincula2(PFml)
+
+    vincula1(un_pformal(PFml))
+        vincula1(PFml)
+
+    vincula2(un_pformal(PFml))
+        vincula2(PFml)
+
+    vincula1(pformal_ref(Tipo,id)):
+        vincula1(Tipo)
         if contiene(ts,id) then
             error
         else
             inserta(ts,id,$)
         end if
 
-    recolectaPFml(pformal_noref(Tipo,id)):
+    vincula2(pformal_ref(Tipo,id)):
         vincula(Tipo)
+
+    vincula1(pformal_noref(Tipo,id)):
+        vincula1(Tipo)
         if contiene(ts,id) then
             error
         else
             inserta(ts,id,$)
         end if
+
+    vincula2(pformal_noref(Tipo,id)):
+        vincula2(Tipo)
 
     vincula(si_preales(LPReal)):
         vincula(LPReal)
