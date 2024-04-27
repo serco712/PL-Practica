@@ -1,0 +1,15 @@
+\babel@toc {spanish}{}\relax 
+\contentsline {chapter}{\numberline {1}Especificación del procesamiento de vinculación}{2}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Especificación del procesamiento de comprobación de tipos}{8}{chapter.2}%
+\contentsline {chapter}{\numberline {3}Especificación del procesamiento de asignación de espacio}{14}{chapter.3}%
+\contentsline {chapter}{\numberline {4}Instrucciones de la máquina-p necesarias para soportar la traducción de Tiny a código-p}{20}{chapter.4}%
+\contentsline {subsection}{\numberline {4.0.1}Instrucciones Aritmético-Lógicas}{20}{subsection.4.0.1}%
+\contentsline {subsection}{\numberline {4.0.2}Instrucciones de movimiento de datos}{21}{subsection.4.0.2}%
+\contentsline {subsection}{\numberline {4.0.3}Instrucciones de salto}{21}{subsection.4.0.3}%
+\contentsline {subsection}{\numberline {4.0.4}Instrucciones de gestión de memoria dinámica}{22}{subsection.4.0.4}%
+\contentsline {subsection}{\numberline {4.0.5}Instrucciones de Soporte de la ejecución de procedimientos}{22}{subsection.4.0.5}%
+\contentsline {chapter}{\numberline {5}Especificación del procesamiento de etiquetado}{24}{chapter.5}%
+\contentsline {chapter}{\numberline {6}Especificación del procesamiento de generación de código}{31}{chapter.6}%
+\contentsline {section}{\numberline {6.1}Tipos construidos}{31}{section.6.1}%
+\contentsline {section}{\numberline {6.2}Bloques y subprogramas}{34}{section.6.2}%
+\contentsline {chapter}{Índice de figuras}{35}{chapter*.3}%
