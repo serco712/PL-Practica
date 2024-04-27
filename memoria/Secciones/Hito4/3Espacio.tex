@@ -1,8 +1,9 @@
 \chapterA{Especificación del procesamiento de asignación de espacio}
 \begin{lstlisting}
 
-    var dir = 0 //contador de direcciones
-
+    global dir = 0 //contador de direcciones
+    global nivel = 0 //nivel de anidamiento
+    
     asig-espacio(prog(Blo)):
         asig-espacio(Blo)
 
@@ -10,10 +11,10 @@
         asig-espacio(Decs)
         asig-espacio(Insts)
     
-    asig-espacio(si_decs(LDecs)):
+    asig-espacio1(si_decs(LDecs)):
         asig-espacio(Ldecs)
     
-    asig-espacio(no_decs()):noop
+    asig-espacio(no_decs()): skip
     
     asig-espacio(muchas_decs(LDecs,Dec)):
         asig-espacio(LDecs)
@@ -31,8 +32,9 @@
     
     asig-espacio(var(Tipo,id)):
         $.dir = dir
-        dir++
-        asig-espacio(Tipo)
+        $.nivel = nivel
+        asig-espacio-tipo(Tipo)
+        dir += Tipo.tam
     
     asig-espacio(dec_simple(Var)):
         asig-espacio(Var)
@@ -41,30 +43,76 @@
         asig-espacio(Var)
     
     asig-espacio(dec_proc(id,PFmls,Blo)):
-        $.dir = dir
-        dir++
-        asig-espacio(PFmls)
-        asig-espacio(Blo)
+        ant_dir = dir 
+        nivel = nivel + 1
+        $.nivel = nivel
+        dir = 0 
+        asigna_espacio(PFmls)
+        asigna_espacio(Blo)
+        $.tam_datos = dir 
+        dir = ant_dir 
+        nivel = nivel - 1 
+        
+    asig-espacio-tipo(Tipo):
+            si indefinido(Tipo.tam) 
+                asig-espacio-tipo1(Tipo) 
+                asig-espacio-tipo2(Tipo)
+            fin s
 
-    asig-espacio(tipo_array(Tipo,litEnt)):
-        $.dir = dir
-        dir++
-        asig-espacio(Tipo)
+            
+    asig-espacio-tipo1(tipo_array(Tipo,litEnt)):
+        $.tam = 1
+        si Tipo != ref(_)
+            asig-espacio-tipo1(Tipo)
+        fin si
 
-    asig-espacio(tipo_punt(Tipo)):
-        asig-espacio(Tipo)
+    asig-espacio-tipo2(tipo_array(Tipo,litEnt)):
+        si Tipo = ref(id)
+            sea Tipo.vinculo = dec_type(Tipo’,_)
+                asig-espacio-tipo(Tipo’) 
+            $.tam= Tipo’.tam
+        fin si 
 
-    asig-espacio(tipo_bool()): noop
+    asig-espacio-tipo1(tipo_punt(Tipo)):
+        $.tam = 1
+        si Tipo != tipo_ident(_)
+            asig-espacio-tipo1(Tipo)
+        fin si
 
-    asig-espacio(tipo_int()): noop
+    asig-espacio-tipo2(tipo_punt(Tipo)):
+        si Tipo = tipo_ident(id)
+            sea Tipo.vinculo = var(Tipo’,_)
+                asig-espacio-tipo(Tipo’) 
+            $.tam= Tipo’.tam
+        fin si 
+ 
 
-    asig-espacio(tipo_real()): noop
+    asig-espacio-tipo1(tipo_bool()): 
+        $.tam = 1
 
-    asig-espacio(tipo_string()): noop
+    asig-espacio-tipo2(tipo_bool()): skip
 
-    asig-espacio(tipo_ident(id)):
-       $.dir = dir
-        dir++
+    asig-espacio-tipo1(tipo_int()): 
+        $.tam = 1
+
+    asig-espacio-tipo2(tipo_int()): skip
+
+    asig-espacio-tipo1(tipo_real()): 
+        $.tam = 1
+
+    asig-espacio-tipo2(tipo_real()): skip
+
+    asig-espacio-tipo1(tipo_string()): 
+        $.tam = 1
+
+    asig-espacio-tipo2(tipo_string()): skip
+
+    asig-espacio-tipo1(tipo_ident(id)):
+        asig-espacio-tipo1($.vinculo)
+        sea $.vinculo = var(Tipo,_) en
+            $.tam = Tipo.tam
+
+    asig-espacio-tipo2(tipo_ident(id)): skip
 
     asig-espacio(tipo_struct(LVar)):
         asig-espacio(LVar)
@@ -72,7 +120,7 @@
     asig-espacio(si_inst(LInst)):
         asig-espacio(LInst):
 
-    asig-espacio(no_inst()): noop
+    asig-espacio(no_inst()): skip
 
     asig-espacio(muchas_inst(LInst,Inst)):
         asig-espacio(LInst)
@@ -84,7 +132,7 @@
     asig-espacio(si_pformal(LPFml)):
         asig-espacio(LPFml)
 
-    asig-espacio(no_pformal()): noop
+    asig-espacio(no_pformal()): skip
 
     asig-espacio(muchos_pformal(LPFml,PFml)):
         asig-espacio(LPFml)
@@ -95,19 +143,21 @@
 
     asig-espacio(pformal_ref(Tipo,id)):
         $.dir = dir
-        dir++
-        asig-espacio(Tipo)
+        $.nivel = nivel
+        asig-espacio-tipo(Tipo)
+        dir += Tipo.tam
 
     asig-espacio(pformal_noref(Tipo,id)):
         $.dir = dir
-        dir++
-        asig-espacio(Tipo)
+        $.nivel = nivel
+        asig-espacio-tipo(Tipo)
+        dir += Tipo.tam
         
 
     asig-espacio(si_preales(LPReal)):
         asig-espacio(LPReal)
 
-    asig-espacio(no_preales()): noop
+    asig-espacio(no_preales()): skip
 
     asig-espacio(muchas_exp(LPReal,Exp)):
         asig-espacio(LPReal)
@@ -145,11 +195,16 @@
         asig-espacio(Exp)
 
     asig-espacio(inst_call(id,PReales)):
-        $.dir = dir
-        dir++
-        asig-espacio(PReales)
+        ant_dir = dir 
+        nivel = nivel + 1
+        $.nivel = nivel
+        dir = 0 
+        asigna_espacio(PReales)
+        $.tam_datos = dir 
+        dir = ant_dir 
+        nivel = nivel - 1 
 
-    asig-espacio(inst_nl()): noop
+    asig-espacio(inst_nl()): skip
 
     asig-espacio(inst_blo(Blo)):
         asig-espacio(Blo)
@@ -220,30 +275,38 @@
         asig-espacio(Opnd0)
         asig-espacio(Opnd1)
 
-    asig-espacio(exp_reg(Exp,id)):
-        $.dir = dir
-        dir++
-        asig-espacio(Exp)
+    asig-tam1(exp_reg(Exp,id)):
+        ant_dir = dir 
+        nivel = nivel + 1
+        $.nivel = nivel
+        dir = 0 
+        asigna_espacio(Exp)
+        $.tam_datos = dir 
+        dir = ant_dir 
+        nivel = nivel - 1 
        
 
     asig-espacio(exp_ind(Exp)):
         asig-espacio(Exp)
 
-    asig-espacio(exp_true()): noop
+    asig-espacio(exp_true()): skip
 
-    asig-espacio(exp_false()): noop
+    asig-espacio(exp_false()): skip
 
-    asig-espacio(exp_litEnt(litEnt)): noop
+    asig-espacio(exp_litEnt(litEnt)): skip
 
-    asig-espacio(exp_litReal(litReal)): noop
+    asig-espacio(exp_litReal(litReal)): skip
 
-    asig-espacio(exp_litCad(litCad)): noop
+    asig-espacio(exp_litCad(litCad)): skip
 
-    asig-espacio(exp_iden(id)):
-        $.dir = dir
-        dir++
+    asig-espacio-tipo1(exp_iden(id)):
+        asig-espacio-tipo1($.vinculo)
+        sea $.vinculo = dec_type(Tipo,_) en
+            $.tam = Tipo.tam
+            
+    asig-espacio-tipo2(exp_iden(id)): skip
 
-    asig-espacio(exp_null()): noop
+    asig-espacio(exp_null()): skip
 
 
 \end{lstlisting}
