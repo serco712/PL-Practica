@@ -61,7 +61,7 @@
 
             
     asig-espacio-tipo1(tipo_array(Tipo,litEnt)):
-        $.tam = 1
+        $.tam = litEnt.tam
         si Tipo != ref(_)
             asig-espacio-tipo1(Tipo)
         fin si
