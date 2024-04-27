@@ -1,4 +1,4 @@
-\chapterA{Especificación del procesamiento de etiquetado}
+\chapterA{Especificación del procesamiento de asignación de espacio}
 \begin{lstlisting}
 
     var etq = 0 
@@ -6,10 +6,23 @@
     etiquetado(prog(Blo)):
         $.prim = etq
         etiquetado(Blo)
+        etq++
+        while != es-vacia(sub_pendientes)
+            sub = cima(sub_pendientes)
+            desapila(sub_pendientes)
+            let sub = dec_proc(id,Param,Decs,Is) in
+                sub.prim = etq
+                etq++
+                etiquetado(Blo)
+                etq+=2
+                sub.sig = etq
+            end let
+        end while
         $.sig = etq
 
     etiquetado(bloq(Decs,Insts)):
         $.prim = etq
+        recolecta-subs(Decs)
         etiquetado(Insts)
         $.sig = etq
     
@@ -150,24 +163,26 @@
         etiquetado(LPReal)
         etq++
         etiquetado(Exp)
+        etiquetado-acc-val(Exp)
         etq++
         $.sig = etq
 
     etiquetado(una_exp(Exp)):
         $.prim = etq
         etiquetado(Exp)
-        etq++
+        etq +=2
         $.sig = etq
 
     etiquetado(inst_eval(Exp)):
         $.prim = etq
         etiquetado(Exp)
-        etq++
+        etq +=2
         $.sig = etq
 
     etiquetado(inst_if(Exp,Blo)):
         $.prim = etq
         etiquetado(Exp)
+        etiquetado-acc-val(Exp)
         etq++
         etiquetado(Blo)
         etq++
@@ -176,6 +191,7 @@
     etiquetado(inst_else(Exp,Blo1,Blo2)):
         $.prim = etq
         etiquetado(Exp)
+        etiquetado-acc-val(Exp)
         etq++
         etiquetado(Blo1)
         etq++
@@ -186,6 +202,7 @@
     etiquetado(inst_while(Exp,Blo)):
         $.prim = etq
         etiquetado(Exp)
+        etiquetado-acc-val(Exp)
         etq++
         etiquetado(Blo)
         etq++
@@ -194,25 +211,25 @@
     etiquetado(inst_new(Exp)):
         $.prim = etq
         etiquetado(Exp)
-        etq++
+        etq +=2
         $.sig = etq
 
     etiquetado(inst_delete(Exp)):
         $.prim = etq
         etiquetado(Exp)
-        etq++
+        etq +=2
         $.sig = etq
 
     etiquetado(inst_read(Exp)):
         $.prim = etq
         etiquetado(Exp)
-        etq++
+        etq +=2
         $.sig = etq
 
     etiquetado(inst_write(Exp)):
         $.prim = etq
         etiquetado(Exp)
-        etq++
+        etq +=2
         $.sig = etq
 
     etiquetado(inst_call(id,PReales)):
@@ -229,123 +246,108 @@
 
     etiquetado(exp_asig(Opnd0,Opnd1)):
         $.prim = etq
-        etiquetado(Opnd0)
-        etiquetado(Opnd1)
+        etiquetado-opnds(Opnd0,Opnd1)
         etq++
         $.sig = etq
 
     etiquetado(exp_menor(Opnd0,Opnd1)):
         $.prim = etq
-        etiquetado(Opnd0)
-        etiquetado(Opnd1)
+        etiquetado-opnds(Opnd0,Opnd1)
         etq++
         $.sig = etq
 
     etiquetado(exp_menIgual(Opnd0,Opnd1)):
         $.prim = etq
-        etiquetado(Opnd0)
-        etiquetado(Opnd1)
+        etiquetado-opnds(Opnd0,Opnd1)
         etq++
         $.sig = etq
 
     etiquetado(exp_mayor(Opnd0,Opnd1)):
         $.prim = etq
-        etiquetado(Opnd0)
-        etiquetado(Opnd1)
+        etiquetado-opnds(Opnd0,Opnd1)
         etq++
         $.sig = etq
 
     etiquetado(exp_mayIgual(Opnd0,Opnd1)):
         $.prim = etq
-        etiquetado(Opnd0)
-        etiquetado(Opnd1)
+        etiquetado-opnds(Opnd0,Opnd1)
         etq++
         $.sig = etq
 
     etiquetado(exp_igual(Opnd0,Opnd1)):
         $.prim = etq
-        etiquetado(Opnd0)
-        etiquetado(Opnd1)
+        etiquetado-opnds(Opnd0,Opnd1)
         etq++
         $.sig = etq
 
     etiquetado(exp_dist(Opnd0,Opnd1)):
         $.prim = etq
-        etiquetado(Opnd0)
-        etiquetado(Opnd1)
+        etiquetado-opnds(Opnd0,Opnd1)
         etq++
         $.sig = etq
 
     etiquetado(exp_sum(Opnd0,Opnd1)):
         $.prim = etq
-        etiquetado(Opnd0)
-        etiquetado(Opnd1)
+        etiquetado-opnds(Opnd0,Opnd1)
         etq++
         $.sig = etq
 
     etiquetado(exp_resta(Opnd0,Opnd1)):
         $.prim = etq
-        etiquetado(Opnd0)
-        etiquetado(Opnd1)
+        etiquetado-opnds(Opnd0,Opnd1)
         etq++
         $.sig = etq
 
     etiquetado(exp_mult(Opnd0,Opnd1)):
         $.prim = etq
-        etiquetado(Opnd0)
-        etiquetado(Opnd1)
+        etiquetado-opnds(Opnd0,Opnd1)
         etq++
         $.sig = etq
 
     etiquetado(exp_div(Opnd0,Opnd1)):
         $.prim = etq
-        etiquetado(Opnd0)
-        etiquetado(Opnd1)
+        etiquetado-opnds(Opnd0,Opnd1)
         etq++
         $.sig = etq
 
     etiquetado(exp_mod(Opnd0,Opnd1)):
         $.prim = etq
-        etiquetado(Opnd0)
-        etiquetado(Opnd1)
+        etiquetado-opnds(Opnd0,Opnd1)
         etq++
         $.sig = etq
 
     etiquetado(exp_and(Opnd0,Opnd1)):
         $.prim = etq
-        etiquetado(Opnd0)
-        etiquetado(Opnd1)
+        etiquetado-opnds(Opnd0,Opnd1)
         etq++
         $.sig = etq
 
     etiquetado(exp_or(Opnd0,Opnd1)):
         $.prim = etq
-        etiquetado(Opnd0)
-        etiquetado(Opnd1)
+        etiquetado-opnds(Opnd0,Opnd1)
         etq++
         $.sig = etq
 
     etiquetado(exp_menos(Exp)):
         $.prim = etq
         etiquetado(Exp)
-        etq++
         $.sig = etq
 
     etiquetado(exp_not(Exp)):
         $.prim = etq
         etiquetado(Exp)
-        etq++
+        etq +=2
         $.sig = etq
 
     etiquetado(inst_index(Opnd0,Opnd1)):
         $.prim = etq
-        etiquetado(Opnd0)
-        etiquetado(Opnd1)
+        etiquetado-opnds(Opnd0,Opnd1)
         etq++
         $.sig = etq
 
     etiquetado(exp_reg(Exp,id)):
         $.prim = etq
+        etq++
         etiquetado(Exp)
         etq++
         $.sig = etq
@@ -378,10 +380,43 @@
 
     etiquetado(exp_iden(id)):
         $.prim = etq
-        etq++
+        etiquetado-acc-var(id.vinculo)
         $.sig = etq
 
     etiquetado(exp_null()): noop
+
+
+    etiquetado-cod-opns(Opnd0,Opnd1):
+        etiquetado(Opnd0)
+        etiquetado-acc-val(Opnd0)
+        etiquetado(Opnd1)
+        etiquetado-acc-val(Opnd1)
+
+        
+    etiquetado-acc-id(dec_var(Tipo,id)):
+        if $.nivel = 0 then
+            etq++
+        else
+            etiquetado-acc-var($)
+        end if
+
+        
+    etiquetado-acc-id(pval(Tipo,id)):
+        etiquetado-acc-var($)
+
+        
+    etiquetado-acc-id(pref(Tipo,id)):
+        etiquetado-acc-var($)
+        etq++
+
+        
+    etiquetado-acc-var(V):
+        etq += 3
+
+    etiquetado-acc-val(Exp):
+        if es-designador(Exp) then
+        etq++
+        end if
 
 
 \end{lstlisting}
