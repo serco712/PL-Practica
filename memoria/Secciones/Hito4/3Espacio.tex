@@ -8,8 +8,10 @@
         asig-espacio(Blo)
 
     asig-espacio(bloq(Decs,Insts)):
+        dir_ant = dir
         asig-espacio(Decs)
         asig-espacio(Insts)
+        dir = dir_ant
     
     asig-espacio1(si_decs(LDecs)):
         asig-espacio(Ldecs)

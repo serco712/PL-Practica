@@ -230,3 +230,329 @@
 \end{lstlisting}
 
 \section{Bloques y subprogramas}
+
+\begin{lstlisting}
+
+    var sub_pendientes = pila_vacia()
+
+    gen_cod(prog(Blo)):
+        gen_cod(Blo)
+
+    gen_cod(bloq(Decs,Insts)):
+        recolecta_subs(Decs)
+        gen_cod(Insts)
+        emit stop()
+        while not es_vacia(sub_pendientes)
+            sub = cima(sub_pendientes)
+            desapila(sub_pendientes)
+            let sub = dec_proc(id,PFml,Decs,Insts) in
+                emit desapilad(sub.nivel)
+                recolecta_subs(Decs)
+                gen_cod(Is)
+                emit desactiva(sub.nivel, sub.tam)
+                emid ir_ind()
+            end let
+        end while
+
+    gen_cod(si_inst(LInst)):
+        gen_cod(LInst):
+
+    gen_cod(no_inst()): noop
+
+    gen_cod(muchas_inst(LInst,Inst)):
+        gen_cod(LInst)
+        gen_cod(Inst)
+
+    gen_cod(una_inst(Inst)):
+        gen_cod(Inst)
+
+    gen_cod(si_preales(LPReal)):
+        gen_cod(LPReal)
+
+    gen_cod(no_preales()): noop
+
+    gen_cod(muchas_exp(LPReal,Exp)):
+        gen_cod(LPReal)
+        gen_cod(Exp)
+
+    gen_cod(una_exp(Exp)):
+        gen_cod(Exp)
+
+    gen_cod(inst_eval(Exp)):
+        gen_cod(Exp)
+        gen_acc_val(Exp)
+
+    gen_cod(inst_if(Exp,Blo)):
+        gen_cod(Exp)
+        gen_acc_val(Exp)
+        emit ir_f($.sig)
+        gen_cod(Blo)
+
+    gen_cod(inst_else(Exp,Blo1,Blo2)):
+        gen_cod(Exp)
+        gen_acc_val(Exp)
+        emit ir_v($.sig)
+        gen_cod(Blo1)
+        emit ir_f($.sig)
+        gen_cod(Blo2)
+
+    gen_cod(inst_while(Exp,Blo)):
+        gen_cod(Exp)
+        gen_acc_val(Exp)
+        emit ir_f($.sig)
+        gen_cod(Blo)
+        emit ir_a($.prim)
+
+    gen_cod(inst_new(Exp)):
+        gen_cod(Exp)
+        let ref!(Exp.tipo) = pointer(T) in
+            emit alloc(T.tam)
+        end
+        emit desapila_ind()
+
+    gen_cod(inst_delete(Exp)):
+        gen_cod(Exp)
+        emit apila_ind()
+        let ref!(Exp.tipo) = pointer(T) in
+            emit dealloc(T.tam)
+        end
+
+    gen_cod(inst_read(Exp)):
+        gen_cod(Exp)
+
+    gen_cod(inst_write(Exp)):
+        gen_cod(Exp)
+
+    gen_cod(inst_call(id,PReales)):
+        emit activa($.vinculo.nivel,$.vinculo.tam,$.sig)
+        gen_paso_PFml($.vinculo,E)
+        emit ir_a($.vinculo.prim)
+
+    gen_cod(inst_nl()):
+        emit nl
+
+    gen_cod(inst_blo(Blo)):
+        gen_cod(Blo)
+
+    gen_cod(exp_asig(Opnd0,Opnd1)):
+        gen_cod(Opnd0)
+        gen_cod(Opnd1)
+        if es_designador(E) then
+            emit copia(E.tipo.tam)
+        else
+            emit desapila_ind()
+        end
+
+    gen_cod(exp_menor(Opnd0,Opnd1)):
+        gen_cod(Opnd0)
+        gen_acc_val(Opnd0)
+        gen_cod(Opnd1)
+        gen_acc_val(Opnd1)
+        emit menor
+
+    gen_cod(exp_menIgual(Opnd0,Opnd1)):
+        gen_cod(Opnd0)
+        gen_acc_val(Opnd0)
+        gen_cod(Opnd1)
+        gen_acc_val(Opnd1)
+        emit menIgual
+
+    gen_cod(exp_mayor(Opnd0,Opnd1)):
+        gen_cod(Opnd0)
+        gen_acc_val(Opnd0)
+        gen_cod(Opnd1)
+        gen_acc_val(Opnd1)
+        emit mayor
+
+    gen_cod(exp_mayIgual(Opnd0,Opnd1)):
+        gen_cod(Opnd0)
+        gen_acc_val(Opnd0)
+        gen_cod(Opnd1)
+        gen_acc_val(Opnd1)
+        emit mayIgual
+
+    gen_cod(exp_igual(Opnd0,Opnd1)):
+        gen_cod(Opnd0)
+        gen_acc_val(Opnd0)
+        gen_cod(Opnd1)
+        gen_acc_val(Opnd1)
+        emit igual
+
+    gen_cod(exp_dist(Opnd0,Opnd1)):
+        gen_cod(Opnd0)
+        gen_acc_val(Opnd0)
+        gen_cod(Opnd1)
+        gen_acc_val(Opnd1)
+        emit distinto
+
+    gen_cod(exp_sum(Opnd0,Opnd1)):
+        gen_cod(Opnd0)
+        gen_acc_val(Opnd0)
+        gen_cod(Opnd1)
+        gen_acc_val(Opnd1)
+        emit suma
+
+    gen_cod(exp_resta(Opnd0,Opnd1)):
+        gen_cod(Opnd0)
+        gen_acc_val(Opnd0)
+        gen_cod(Opnd1)
+        gen_acc_val(Opnd1)
+        emit resta
+
+    gen_cod(exp_mult(Opnd0,Opnd1)):
+        gen_cod(Opnd0)
+        gen_acc_val(Opnd0)
+        gen_cod(Opnd1)
+        gen_acc_val(Opnd1)
+        emit mult
+
+    gen_cod(exp_div(Opnd0,Opnd1)):
+        gen_cod(Opnd0)
+        gen_acc_val(Opnd0)
+        gen_cod(Opnd1)
+        gen_acc_val(Opnd1)
+        emit div
+
+    gen_cod(exp_mod(Opnd0,Opnd1)):
+        gen_cod(Opnd0)
+        gen_acc_val(Opnd0)
+        gen_cod(Opnd1)
+        gen_acc_val(Opnd1)
+        emit mod
+
+    gen_cod(exp_and(Opnd0,Opnd1)):
+        gen_cod(Opnd0)
+        gen_acc_val(Opnd0)
+        gen_cod(Opnd1)
+        gen_acc_val(Opnd1)
+        emit or
+
+    gen_cod(exp_or(Opnd0,Opnd1)):
+        gen_cod(Opnd0)
+        gen_acc_val(Opnd0)
+        gen_cod(Opnd1)
+        gen_acc_val(Opnd1)
+        emit or
+
+    gen_cod(exp_menos(Exp)):
+        gen_cod(Exp)
+        gen_acc_val(Exp)
+        emit menos
+
+    gen_cod(exp_not(Exp)):
+        gen_cod(Exp)
+        gen_acc_val(Exp)
+        emit not
+
+    gen_cod(inst_index(Opnd0,Opnd1)):
+        gen_cod(Opnd0)
+        gen_cod(Opnd1)
+        gen_acc_val(Opnd1)
+        let ref!(Opnd1.tipo) = array(T,d) in
+            emit apilaInt(T.tam)
+        end let
+        emit mult
+        emit suma
+
+    gen_cod(exp_reg(Exp,id)):
+        gen_cod(Exp)
+        let ref!(E.tipo) = struct(Cs) in
+            emit apilaInt(desplazamiento(Cs,c))
+        end let
+        emit suma
+
+    gen_cod(exp_ind(Exp)):
+        gen_cod(Exp)
+        emit apilaInd()
+
+    gen_cod(exp_true()):
+        emit apilaBool("true")
+
+    gen_cod(exp_false()):
+        emit apilaBool("false")
+
+    gen_cod(exp_litEnt(litEnt)):
+        emit apilaInt(litEnt)
+
+    gen_cod(exp_litReal(litReal)):
+        emit apilaReal(litReal)
+
+    gen_cod(exp_litCad(litCad)):
+        emit apilaString(litCad)
+
+    gen_cod(exp_iden(id)):
+        emit apilaInt($.viculo.dir)
+
+    gen_cod(exp_null()): noop
+
+    gen_cod(elem1(Exp)):
+        gen_cod(Exp)
+
+    gen_cod(elem2(Exp)):
+        gen_cod(Exp)
+        let ref!(Exp.tipo) = Par(T_0,T_1) in 
+            emit apila_int(T_0.tam)
+            emit suma
+        end let
+
+    gen_cod(dref(Exp)):
+        gen_cod(Exp)
+        emit apila_ind()
+
+    gen_acc_val(Exp):
+        if es_designador(ref!(E)) then
+            emit apilaInd()
+        end if
+
+    gen_acc_id(dec_var(T,id)):
+        if $.nivel = 0 then
+            emit apila_int($.vinculo.dir)
+        else
+            gen_acc_var($)
+        end if
+    
+    gen_acc_id(pval(T,id)):
+        gen_acc_var($)
+       
+    gen_acc_id(pref(T,id)):
+        gen_acc_var($)
+        emit apila_ind()
+    
+    gen_acc_var(V):
+        emit apilad(V.nivel)
+        emit apila_int(V.dir)
+        emit suma()
+       
+    gen_acc_val(E):
+        if es_designador(E) then
+            emit apila_ind()
+        end if
+    
+    gen_paso_PFml(proc(id,PFml,Decs,Is),PReal):
+        emit dup
+        emit apila_int(PFml.dir)
+        emit suma
+        gen_cod(PReal)
+        if PFml = pref(T,id) v not es_designador(PReal) then
+            emit desapila_ind()
+        else
+            let PFml = pval(T, id) in
+                emit copia(T.tam)
+            end let
+        end if
+        
+    recolecta_procs(muchas_decs(Decs, Dec)):
+        recolecta_procs(muchas_decs(Decs))
+        recolecta_procs(Dec)
+    
+    recolecta_procs(una_dec(Dec)):
+        recolecta_procs(Dec)
+
+    recolecta_procs(dec_simple(Tipo,id)): noop
+
+    recolecta_procs(dec_type(Tipo,id)): noop
+
+    recolecta_procs(dec_proc(id,PFml,Decs,Is)): 
+        apila(sub_pendientes,$)
+
+\end{lstlisting}
