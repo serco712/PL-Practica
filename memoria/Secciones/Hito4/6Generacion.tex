@@ -305,7 +305,7 @@
 
     gen_cod(inst_new(Exp)):
         gen_cod(Exp)
-        let ref!(Exp.tipo) = pointer(T) in
+        let ref!(Exp.tipo) = tipo_punt(T) in
             emit alloc(T.tam)
         end
         emit desapila_ind()
@@ -313,7 +313,7 @@
     gen_cod(inst_delete(Exp)):
         gen_cod(Exp)
         emit apila_ind()
-        let ref!(Exp.tipo) = pointer(T) in
+        let ref!(Exp.tipo) = tipo_punt(T) in
             emit dealloc(T.tam)
         end
 
@@ -485,20 +485,6 @@
 
     gen_cod(exp_null()): noop
 
-    gen_cod(elem1(Exp)):
-        gen_cod(Exp)
-
-    gen_cod(elem2(Exp)):
-        gen_cod(Exp)
-        let ref!(Exp.tipo) = Par(T_0,T_1) in 
-            emit apila_int(T_0.tam)
-            emit suma
-        end let
-
-    gen_cod(dref(Exp)):
-        gen_cod(Exp)
-        emit apila_ind()
-
     gen_acc_val(Exp):
         if es_designador(ref!(E)) then
             emit apilaInd()
@@ -506,7 +492,7 @@
 
     gen_acc_id(dec_var(T,id)):
         if $.nivel = 0 then
-            emit apila_int($.vinculo.dir)
+            emit apilaInt($.vinculo.dir)
         else
             gen_acc_var($)
         end if
@@ -520,17 +506,17 @@
     
     gen_acc_var(V):
         emit apilad(V.nivel)
-        emit apila_int(V.dir)
+        emit apilaInt(V.dir)
         emit suma()
        
     gen_acc_val(E):
         if es_designador(E) then
-            emit apila_ind()
+            emit apilaInd
         end if
     
     gen_paso_PFml(proc(id,PFml,Decs,Is),PReal):
         emit dup
-        emit apila_int(PFml.dir)
+        emit apilaInt(PFml.dir)
         emit suma
         gen_cod(PReal)
         if PFml = pref(T,id) v not es_designador(PReal) then
