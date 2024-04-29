@@ -39,9 +39,6 @@ si la operación necesita dos argumentos, en la cima estará el 2º argumento, e
     mayIgual & Desapila los 2 primeros argumentos de la pila y apila true si el primer argumento es mayor o igual \\ \hline
     igual  &  Desapila los 2 primeros argumentos de la pila y apila true si ambos argumentos son iguales\\ \hline
     distinto &  Desapila los 2 primeros argumentos de la pila y apila true si los argumentos son distintos\\ \hline
-    indireccion  & Desapila el primer argumento y apila el de su indirección \\ \hline
-    indexacion & Desapila los 2 primeros argumentos y apila el valor resultante de la indexación\\ \hline
-    accesoReg & Desapila los 2 primeros argumentos y apila el resultado del acceso a registro(con el 2º argumento)  sobre el primero. \\ \hline
     
 \end{longtblr}
 
@@ -89,7 +86,8 @@ dir0. \\ \hline
     irA(d) &  Salto incondicional a la dirección d.  \\ \hline
     irF(d) &  Desapila el valor v. Si es falso salta a la dirección d.\\ \hline
     irV(d) &  Desqapila el valor v. Si es verdadero salta a la dirección d. \\ \hline
-    irInd &   \\ \hline
+    irInd & Desapila una dirección d de la pila de evaluación, y realiza
+un salto incondicional a dicha dirección  \\ \hline
 
     
 \end{longtblr}
