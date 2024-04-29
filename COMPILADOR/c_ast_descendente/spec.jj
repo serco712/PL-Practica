@@ -1,0 +1,556 @@
+options  {
+  STATIC=false;
+  DEBUG_PARSER=true;
+}  
+PARSER_BEGIN(ConstructorASTsTiny)
+package c_ast_descendente;
+import asint.ClaseSemanticaTiny;
+import asint.SintaxisAbstractaTiny.Prog;
+import asint.SintaxisAbstractaTiny.Blo;
+import asint.SintaxisAbstractaTiny.Decs;
+import asint.SintaxisAbstractaTiny.LDecs;
+import asint.SintaxisAbstractaTiny.LVar;
+import asint.SintaxisAbstractaTiny.Var;
+import asint.SintaxisAbstractaTiny.Dec;
+import asint.SintaxisAbstractaTiny.Tipo;
+import asint.SintaxisAbstractaTiny.Insts;
+import asint.SintaxisAbstractaTiny.LInst;
+import asint.SintaxisAbstractaTiny.PFmls;
+import asint.SintaxisAbstractaTiny.LPFml;
+import asint.SintaxisAbstractaTiny.PFml;
+import asint.SintaxisAbstractaTiny.PReales;
+import asint.SintaxisAbstractaTiny.LPReal;
+import asint.SintaxisAbstractaTiny.Inst;
+import asint.SintaxisAbstractaTiny.Exp;
+import c_ast_ascendente.UnidadLexica.StringLocalizado;
+
+public class ConstructorASTsTiny {
+   private ClaseSemanticaTiny sem = new ClaseSemanticaTiny();   
+}
+PARSER_END(ConstructorASTsTiny)
+
+  TOKEN:{<#letra:["a"-"z","A"-"Z"]>}
+  TOKEN:{<#digitoPositivo:["1"-"9"]>}
+  TOKEN:{<#digito:<digitoPositivo>|"0">} 
+  TOKEN:{<#parteEntera:<digitoPositivo> (<digito>)* |"0">} 
+  TOKEN:{<#parteDecimal: (<digito>)* <digitoPositivo> | "0">}
+  TOKEN:{<#parteExponencial: ["e","E"](["+","-"])?<parteEntera>>}
+  SKIP:{<["\t"," ","\r","\b","\n"]>}  
+  SKIP:{<"##"(~["\n"])*>}  
+  TOKEN:{<bool:["b","B"]["o","O"]["o","O"]["l","L"]>}
+  TOKEN:{<INT:["i","I"]["n","N"]["t","T"]>}
+  TOKEN:{<real:["r","R"]["e","E"]["a","A"]["l","L"]>}
+  TOKEN:{<string:["s","S"]["t","T"]["r","R"]["i","I"]["n","N"]["g","G"]>}
+  TOKEN:{<and:["a","A"]["n","N"]["d","D"]>}
+  TOKEN:{<or:["o","O"]["r","R"]>}
+  TOKEN:{<not:["n","N"]["o","O"]["t","T"]>}
+  TOKEN:{<TRUE:["t","T"]["r","R"]["u","U"]["e","E"]>}
+  TOKEN:{<FALSE:["f","F"]["a","A"]["l","L"]["s","S"]["e","E"]>}
+  TOKEN:{<NULL:["n","N"]["u","U"]["l","L"]["l","L"]>}
+  TOKEN:{<proc:["p","P"]["r","R"]["o","O"]["c","C"]>}
+  TOKEN:{<IF:["i","I"]["f","F"]>}
+  TOKEN:{<ELSE:["e","E"]["l","L"]["s","S"]["e","E"]>}
+  TOKEN:{<WHILE:["w","W"]["h","H"]["i","I"]["l","L"]["e","E"]>}
+  TOKEN:{<struct:["s","S"]["t","T"]["r","R"]["u","U"]["c","C"]["t","T"]>}
+  TOKEN:{<NEW:["n","N"]["e","E"]["w","W"]>}
+  TOKEN:{<delete:["d","D"]["e","E"]["l","L"]["e","E"]["t","T"]["e","E"]>}
+  TOKEN:{<read:["r","R"]["e","E"]["a","A"]["d","D"]>}
+  TOKEN:{<write:["w","W"]["r","R"]["i","I"]["t","T"]["e","E"]>}
+  TOKEN:{<nl:["n","N"]["l","L"]>}
+  TOKEN:{<type:["t","T"]["y","Y"]["p","P"]["e","E"]>}
+  TOKEN:{<call:["c","C"]["a","A"]["l","L"]["l","L"]>}
+  TOKEN:{<punto:".">}
+  TOKEN:{<literalEntero:(["+","-"])?<parteEntera>>}
+  TOKEN:{<literalReal:<literalEntero> ((<punto> <parteDecimal>) | <parteExponencial> | (<punto> <parteDecimal> <parteExponencial>))>}
+  TOKEN:{<literalCadena:("\""(~["\""])*"\"")>}
+  TOKEN:{<iden:("_"|<letra>)(<letra>|<digito>|"_")*>}
+  TOKEN:{<operadorSuma:"+">}
+  TOKEN:{<operadorResta:"-">}
+  TOKEN:{<operadorMul:"*">}
+  TOKEN:{<operadorDiv:"/">}
+  TOKEN:{<operadorMod:"%">}
+  TOKEN:{<operadorMenor:"<">}
+  TOKEN:{<operadorMayor:">">}
+  TOKEN:{<operadorIgual:"==">}
+  TOKEN:{<operadorDistinto:"!=">}
+  TOKEN:{<operadorMenIgual:"<=">}
+  TOKEN:{<operadorMayIgual:">=">}
+  TOKEN:{<operadorAsig:"=">}
+  TOKEN:{<parentesisAp:"(">}
+  TOKEN:{<parentesisCi:")">}
+  TOKEN:{<puntoYComa:";">}
+  TOKEN:{<arroba:"@">}
+  TOKEN:{<coma:",">}
+  TOKEN:{<indireccion:"^">}
+  TOKEN:{<FINAL:"&&">}
+  TOKEN:{<porReferencia:"&">}
+  TOKEN:{<llaveAp:"{">}
+  TOKEN:{<llaveCi:"}">}
+  TOKEN:{<corcheteAp:"[">}
+  TOKEN:{<corcheteCi:"]">}
+  
+  Prog analiza()   : 
+      {Prog prog;} 
+      {
+         prog = programa() <EOF> 
+            {return prog;} 
+      }
+  
+  Prog programa()  : 
+    {Blo bloq;} 
+    {
+        bloq = bloq() 
+          {return sem.prog(bloq);}
+    }     
+    
+  Blo bloq()  : 
+     {Insts insts; Decs decs;} 
+     {
+         <llaveAp> decs = declaraciones() insts = instrucciones() <llaveCi>
+           {return sem.bloq(decs, insts);}
+     }
+
+  Decs declaraciones() : 
+      {LDecs decs;} 
+      {
+        decs = lista_declaraciones() <FINAL>
+           {return sem.si_decs(decs);} 
+        | 
+           {return sem.no_decs();}
+      }
+  LDecs lista_declaraciones() : 
+       {Dec dec; LDecs decs;} 
+       {
+          dec = declaracion() decs = rlista_decs(sem.una_dec(dec)) 
+           {return decs;}
+       }
+  LDecs rlista_decs(LDecs decsh) : 
+       {Dec dec; LDecs decs;} 
+       {
+         <puntoYComa> dec = declaracion() decs = rlista_decs(sem.muchas_decs(decsh,dec))  
+           {return decs;}
+         | 
+           {return decsh;}
+       }
+  
+  LVar lista_variables() :
+       {Var v; LVar vars;} 
+       {
+          v = variable() vars = rlista_var(sem.una_var(v)) 
+           {return vars;}
+       }    
+       
+  LVar rlista_var(LVar varsh) :
+       {Var v; LVar vars;} 
+       {
+         <coma> v = variable() vars = rlista_var(sem.muchas_var(varsh,v))  
+           {return vars;}
+         | 
+           {return varsh;}
+       } 
+
+  Var variable() :
+        {Tipo t; Token id;}
+        {
+          t = tipo() id = <iden>
+            {return (Var)sem.var(t,id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}
+        }
+  
+  Dec declaracion() : 
+       {Var v; Token id; PFmls pfmls; Blo bloq;} 
+       {
+         v = variable()
+          {return (Dec)sem.dec_simple(v);}
+          |
+         <type> v = variable()
+          {return (Dec)sem.dec_type(v);}
+          |
+         <proc> id = <iden> pfmls = par_formales() bloq = bloq()
+          {return (Dec)sem.dec_proc(id.image, pfmls, bloq).ponFila(id.beginLine).ponCol(id.beginColumn);}         
+       }
+       
+  Tipo tipo() :
+  	   {Tipo tip2, tiparray;}
+  	   {
+  	   	 tip2 = tipo2() tiparray = rtipo(tip2)
+  	   	  {return tiparray;}
+  	   }
+ 
+  Tipo rtipo(Tipo tiph) :
+  	   {Token lent; Tipo tip;}
+  	   {
+  	   	 <corcheteAp> lent = <literalEntero> <corcheteCi> tip = rtipo((Tipo)sem.tipo_array(tiph, lent.image).ponFila(lent.beginLine).ponCol(lent.beginColumn))
+  	   	   {return tip;}
+         | 
+           {return tiph;}  
+       }
+  
+  Tipo tipo2() :
+  	   {Tipo tip;}
+  	   {
+  	   	 <indireccion> tip = tipo2()
+  	   	  {return (Tipo)sem.tipo_punt(tip);}
+          |
+  	   	 tip = tipo3()
+  	   	  {return tip;}
+  	   }
+ 
+  Tipo tipo3() :
+  	   {Token tok; LVar vars;}
+  	   {
+  	   	 tok = <bool>
+  	   	  {return (Tipo)sem.tipo_bool();}
+          |
+  	   	 tok = <INT>
+  	   	  {return (Tipo)sem.tipo_int();}
+          |
+  	   	 tok = <real>
+  	   	  {return (Tipo)sem.tipo_real();}
+          |
+  	   	 tok = <string>
+  	   	  {return (Tipo)sem.tipo_string();}
+          |
+  	   	 tok = <iden>
+  	   	  {return (Tipo)sem.tipo_ident(tok.image).ponFila(tok.beginLine).ponCol(tok.beginColumn);}
+          |
+  	   	 tok = <struct> <llaveAp> vars = lista_variables() <llaveCi>
+  	   	  {return (Tipo)sem.tipo_struct(vars);}
+  	   }
+  
+  Insts instrucciones() :
+       {LInst insts;} 
+       {
+         insts = lista_instrucciones()  
+           {return (Insts)sem.si_inst(insts);}
+         | 
+           {return (Insts)sem.no_inst();}
+       } 
+  
+  LInst lista_instrucciones() :
+       {Inst inst; LInst insts;} 
+       {
+         inst = instruccion() insts = rlista_inst(sem.una_inst(inst))  
+           {return insts;}
+       }
+  
+  LInst rlista_inst(LInst instsh) :
+       {Inst inst; LInst insts;} 
+       {
+         <puntoYComa> inst = instruccion() insts = rlista_inst(sem.muchas_inst(instsh,inst))  
+           {return insts;}
+         | 
+           {return instsh;}
+       } 
+  
+  PFmls par_formales() :
+       {PFmls pfmls;} 
+       {
+         <parentesisAp> pfmls = rpar_formales()  
+           {return pfmls;}
+       } 
+  
+  PFmls rpar_formales() :
+       {LPFml pfmls;} 
+       {
+         pfmls = lista_par_formal() <parentesisCi>
+           {return (PFmls)sem.si_pformal(pfmls);}
+           |
+         <parentesisCi>
+           {return (PFmls)sem.no_pformal();}
+       }   
+  
+  LPFml lista_par_formal() :
+       {PFml pfml; LPFml pfmls;} 
+       {
+         pfml = par_formal() pfmls = rlista_par_formal(sem.un_pformal(pfml))  
+           {return pfmls;}
+       }  
+       
+  LPFml rlista_par_formal(LPFml pfmlsh) :
+       {PFml pfml; LPFml pfmls;} 
+       {
+         <coma> pfml = par_formal() pfmls = rlista_par_formal(sem.muchos_pformal(pfml, pfmlsh))
+           {return pfmls;}
+         | 
+           {return pfmlsh;}
+       } 
+  
+  PFml par_formal() :
+  	   {Tipo tipo; PFml lpfml; Token id;}
+  	   {
+  	     tipo = tipo() lpfml = rpar_formal(tipo)
+  	     {return lpfml;}
+  	   }  
+  
+  PFml rpar_formal(Tipo t) :
+  	   {Token id;}
+  	   {
+  	     <porReferencia> id = <iden> 
+  	     {return (PFml)sem.pformal_ref(t, id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}	  
+  	     | 	 
+  	   	 id = <iden>
+  	   	 {return (PFml)sem.pformal_noref(t, id.image).ponFila(id.beginLine).ponCol(id.beginColumn);}
+  	   }	 	
+
+  PReales par_reales() :
+  	   {PReales lpreal;}
+  	   {
+  	     <parentesisAp> lpreal = rpar_reales()
+  	     {return lpreal;}
+  	   }
+  
+  PReales rpar_reales() :
+       {LPReal lpreal;}
+       {
+         lpreal = lista_par_real() <parentesisCi>
+         {return (PReales)sem.si_preales(lpreal);}
+         |
+       	 <parentesisCi>
+       	  {return (PReales)sem.no_preales();}
+       }
+  LPReal lista_par_real() :
+       {Exp e0; LPReal rlpreal;}
+       {
+         e0=e0() rlpreal= rlista_par_real(sem.una_exp(e0))
+         {return rlpreal;} 
+       }
+       
+   LPReal rlista_par_real(LPReal eh) :
+       {Exp e0;LPReal lpreal;}
+       {
+         <coma> e0=e0() lpreal = rlista_par_real(sem.muchas_exp(e0, eh))
+         {return lpreal;}
+  		 |
+  		 {return eh;}
+  	   }
+  
+   Inst instruccion() : 
+       {Exp e0; Blo bloq; Inst rif; Token tok; PReales preales;}
+       {
+         <arroba> e0= e0()
+         {return sem.inst_eval(e0);}
+         |
+         <IF> e0=e0() bloq=bloq() rif=rif(e0, bloq)
+         {return rif;}
+         |
+         <WHILE> e0=e0() bloq=bloq()
+         {return sem.inst_while(e0, bloq);}
+         |
+         <NEW> e0=e0()
+         {return sem.inst_new(e0);}
+         |
+         <delete> e0=e0()
+         {return sem.inst_delete(e0);}
+         |
+         <read> e0=e0()
+         {return sem.inst_read(e0);}
+         |
+         <write> e0=e0()
+         {return sem.inst_write(e0);}
+         |
+         <call> tok = <iden> preales= par_reales()
+         {return (Inst)sem.inst_call(tok.image, preales).ponFila(tok.beginLine).ponCol(tok.beginColumn);}
+         |
+         <nl>
+         {return sem.inst_nl();}
+         |
+         bloq=bloq()
+         {return sem.inst_blo(bloq);}
+       }
+   
+   Inst rif(Exp e0, Blo bloq1) :
+       {Blo bloq2;}
+       {
+         <ELSE> bloq2 = bloq()
+          {return sem.inst_else(e0, bloq1, bloq2);}
+         |
+          {return sem.inst_if(e0,bloq1);}
+	     }
+      
+  Exp e0() : 
+        {Exp e1,e2;} 
+        {
+          e1 = e1() e2 = re0(e1) 
+            {return e2;}
+        }
+
+  Exp re0(Exp e) : 
+        {Token t; Exp e1;} 
+        {
+          t = <operadorAsig> e1 = e0()
+             {return (Exp)sem.exp_asig(e,e1).ponFila(t.beginLine).ponCol(t.beginColumn);} 
+        | 
+             {return e;}
+        }
+
+  Exp e1() : 
+        {Exp e1,e2;} 
+        {
+          e1 = e2() e2 = re1(e1) 
+            {return e2;}
+        }
+        
+  Exp re1(Exp eh) : 
+        {Token op; Exp e1,e2;} 
+        {
+          op = op1() e1 = e2() e2 = re1((Exp)sem.mkopBin(op.image,eh,e1).ponFila(op.beginLine).ponCol(op.beginColumn))
+             {return e2;} 
+        | 
+             {return eh;}
+        }
+                
+ 	
+ Exp e2() : 
+        {Exp e1, e2, e3;} 
+        {
+          e1 = e3() e2 = re2p(e1) e3 = re2((Exp)e2) 
+            {return e3;}
+        }
+
+  Exp re2p(Exp eh) :
+        {Token t; Exp e3;} 
+        {
+          t = <operadorResta>  e3 = e3()
+             {return (Exp)sem.exp_resta(eh,e3).ponFila(t.beginLine).ponCol(t.beginColumn);} 
+        | 
+             {return eh;}
+        }
+  
+  Exp re2(Exp eh) : 
+        {Token t; Exp e1,e2;} 
+        {
+          t = <operadorSuma>  e1 = e3() e2 = re2((Exp)sem.exp_suma(eh,e1).ponFila(t.beginLine).ponCol(t.beginColumn))
+             {return e2;} 
+        | 
+             {return eh;}
+        }
+  Exp e3() : 
+        {Exp e1,e2;} 
+        {
+          e1 = e4() e2 = re3(e1) 
+            {return e2;}
+        }
+  Exp re3(Exp e) : 
+        {Token t; Exp e1;} 
+        {
+          
+         t = <and> e1 = e3() 
+            {return (Exp)sem.exp_and(e,e1).ponFila(t.beginLine).ponCol(t.beginColumn);} 
+        | 
+         t = <or> e1 = e4()
+             {return (Exp)sem.exp_or(e,e1).ponFila(t.beginLine).ponCol(t.beginColumn);} 
+        | 
+             {return e;}
+        }     
+  Exp e4() : 
+        {Exp e1,e2;} 
+        {
+          e1 = e5() e2 = re4(e1) 
+            {return e2;}
+        }
+  Exp re4(Exp eh) : 
+        {Token t; Exp e1,e2;} 
+        {
+          t = op4() e1 = e5() e2 = re4((Exp)sem.mkopBin(t.image,eh,e1).ponFila(t.beginLine).ponCol(t.beginColumn))
+             {return e2;} 
+        | 
+             {return eh;}
+        }
+  Exp e5() : 
+        {Token t; Exp e6;} 
+        {
+          t = <operadorResta> e6 = e5()
+            {return (Exp)sem.exp_menos(e6).ponFila(t.beginLine).ponCol(t.beginColumn);}
+            |
+          t = <not> e6 = e5()
+            {return (Exp)sem.exp_not(e6).ponFila(t.beginLine).ponCol(t.beginColumn);}
+            |
+          e6 = e6()
+          	{return e6;}
+        }
+  Exp e6() : 
+        {Exp e6,e7;} 
+        {
+          e6 = e7() e7 = re6(e6) 
+             {return e7;}
+        }
+  Exp re6(Exp eh) : 
+        {Token t; Exp e6, e7;} 
+        {
+           t = <corcheteAp> e6 = e0() <corcheteCi> e7 = re6((Exp)sem.exp_index(eh,e6).ponFila(t.beginLine).ponCol(t.beginColumn))
+              {return e7;} 
+        | 
+           <punto> t = <iden> e7 = re6((Exp)sem.exp_reg(eh,t.image).ponFila(t.beginLine).ponCol(t.beginColumn))
+              {return e7;} 
+        | 
+           t = <indireccion> e7 = re6((Exp)sem.exp_indir(eh).ponFila(t.beginLine).ponCol(t.beginColumn))
+              {return e7;} 
+        | 
+              {return eh;}
+        }
+  Exp e7() : 
+       {Token t; Exp e;} 
+       {
+        t = <TRUE> 
+          {return (Exp)sem.exp_true().ponFila(t.beginLine).ponCol(t.beginColumn);} 
+        |
+        t = <FALSE> 
+          {return (Exp)sem.exp_false().ponFila(t.beginLine).ponCol(t.beginColumn);} 
+        |
+        t = <iden> 
+          {return (Exp)sem.exp_iden(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);} 
+        |
+        t = <literalEntero> 
+          {return (Exp)sem.exp_litEnt(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);} 
+        |  
+        t = <literalReal> 
+          {return (Exp)sem.exp_litReal(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);} 
+        | 
+        t = <literalCadena> 
+          {return (Exp)sem.exp_litCad(t.image).ponFila(t.beginLine).ponCol(t.beginColumn);} 
+        | 
+        t = <NULL> 
+          {return (Exp)sem.exp_null().ponFila(t.beginLine).ponCol(t.beginColumn);} 
+        | 
+        <parentesisAp> e =e0() <parentesisCi> 
+          {return e;}
+       }
+  Token op1()  : 
+       {Token t;} 
+       { t = <operadorMenor> 
+         {return t;} 
+        |
+         t = <operadorMenIgual> 
+         {return t;}
+        |
+        t = <operadorMayor> 
+         {return t;}
+        |
+        t = <operadorMayIgual> 
+         {return t;}
+        |
+        t = <operadorIgual> 
+         {return t;}
+        |
+        t = <operadorDistinto> 
+         {return t;}
+       }
+  Token op4()  :       
+       {Token t;} 
+       { t = <operadorMul> 
+          {return t;} 
+        |
+         t = <operadorDiv> 
+          {return t;}
+        |
+         t = <operadorMod> 
+          {return t;}
+       }
+  Token op5()  :       
+       {Token t;} 
+       { t = <not> 
+          {return t;} 
+        |
+         t = <operadorResta> 
+          {return t;}
+       }

@@ -1,0 +1,247 @@
+package c_ast_ascendente;
+
+import java_cup.runtime.*;
+import asint.ClaseSemanticaTiny;
+import errors.GestionErroresTiny;
+
+import asint.SintaxisAbstractaTiny.Prog;
+import asint.SintaxisAbstractaTiny.Blo;
+import asint.SintaxisAbstractaTiny.Decs;
+import asint.SintaxisAbstractaTiny.LDecs;
+import asint.SintaxisAbstractaTiny.Var;
+import asint.SintaxisAbstractaTiny.LVar;
+import asint.SintaxisAbstractaTiny.Dec;
+import asint.SintaxisAbstractaTiny.Tipo;
+import asint.SintaxisAbstractaTiny.Insts;
+import asint.SintaxisAbstractaTiny.LInst;
+import asint.SintaxisAbstractaTiny.PFmls;
+import asint.SintaxisAbstractaTiny.LPFml;
+import asint.SintaxisAbstractaTiny.PFml;
+import asint.SintaxisAbstractaTiny.PReales;
+import asint.SintaxisAbstractaTiny.LPReal;
+import asint.SintaxisAbstractaTiny.Inst;
+import asint.SintaxisAbstractaTiny.Exp;
+import c_ast_ascendente.UnidadLexica.StringLocalizado;
+
+
+scan with {: 
+  return getScanner().next_token(); 
+:};
+parser code {: 
+   private GestionErroresTiny errores;
+   public void syntax_error(Symbol unidadLexica) {
+     errores.errorSintactico((UnidadLexica)unidadLexica);
+   }
+:};
+init with {: 
+   errores = new GestionErroresTiny();
+   AnalizadorLexicoTiny alex = (AnalizadorLexicoTiny)getScanner();
+   alex.fijaGestionErrores(errores);
+:};
+action code {:
+  ClaseSemanticaTiny sem = new ClaseSemanticaTiny();
+:}
+
+
+terminal    BOOL,ENT,REAL,STRING,
+            PAP,PCI,COMA,PCOMA,EVAL,
+            LLAP,LLCI,PROC,IF,ELSE,WHILE,
+            STRUCT,NEW,DELETE,READ,WRITE,NL,TYPE,
+            CALL,REFERENCIA,CCI,PUNTO,FIN;
+
+terminal StringLocalizado LIT_ENT,LIT_REAL,LIT_CAD,IDEN,AND,OR,NOT,SUMA,
+            RESTA,MUL,DIV,MOD,MENOR,MAYOR,MEN_IGUAL,MAY_IGUAL,IGUAL,
+            ASIG,DISTINTO,TRUE,FALSE,NULL,INDIRECCION,CAP;
+
+non terminal  Prog programa;
+non terminal  Blo bloq;
+non terminal  Decs declaraciones;
+non terminal  LDecs lista_declaraciones;
+non terminal  Var variable;
+non terminal  LVar lista_variables;
+non terminal  Dec declaracion;
+non terminal  Tipo tipo, tipo2, tipo3;
+non terminal  Insts instrucciones;
+non terminal  LInst lista_instrucciones;
+non terminal  PFmls par_formales;
+non terminal  LPFml lista_par_formal;
+non terminal  PFml par_formal;
+non terminal  PReales par_reales;
+non terminal  LPReal lista_par_real;
+non terminal  Inst instruccion;
+non terminal  Exp E0, E1, E2, E3, E4, E5, E6, E7;
+non terminal  StringLocalizado OP1, OP4;
+
+programa      ::= bloq: b 
+   {: RESULT = sem.prog(b); :};  
+bloq		  ::= LLAP declaraciones: decs instrucciones: instrs LLCI
+   {: RESULT = sem.bloq(decs,instrs); :};
+declaraciones ::= lista_declaraciones: decs FIN
+   {: RESULT = sem.si_decs(decs); :};
+declaraciones ::= 
+   {: RESULT = sem.no_decs(); :};
+lista_declaraciones ::= lista_declaraciones: decs PCOMA declaracion: dec 
+   {: RESULT = sem.muchas_decs(decs,dec);:};
+lista_declaraciones ::= declaracion: dec 
+   {: RESULT = sem.una_dec(dec);:};
+lista_variables ::= lista_variables: lvar COMA variable: var
+   {: RESULT = sem.muchas_var(lvar, var);:};
+lista_variables ::= variable: var
+   {: RESULT = sem.una_var(var);:};  
+variable ::= tipo: t IDEN: id 
+   {: RESULT = (Var)sem.var(t,id.str()).ponFila(id.fila()).ponCol(id.col());:};
+declaracion ::= variable: var
+   {: RESULT = sem.dec_simple(var);:};
+declaracion ::= TYPE variable: var 
+   {: RESULT = sem.dec_type(var);:};
+declaracion ::= PROC IDEN: id par_formales: parf bloq: b
+   {: RESULT = (Dec)sem.dec_proc(id.str(), parf, b).ponFila(id.fila()).ponCol(id.col());:};
+tipo 	::= tipo: t CAP LIT_ENT : lit_ent CCI 
+   {: RESULT = (Tipo)sem.tipo_array(t, lit_ent.str()).ponFila(lit_ent.fila()).ponCol(lit_ent.col());:};
+tipo 	::= tipo2: t 
+   {: RESULT = t;:};
+tipo2 ::= INDIRECCION tipo2: t 
+   {: RESULT = sem.tipo_punt(t);:};
+tipo2	::= tipo3: t
+   {: RESULT = t;:};
+tipo3	::= BOOL
+   {: RESULT = sem.tipo_bool();:};
+tipo3	::= ENT
+   {: RESULT =sem.tipo_int();:};
+tipo3	::= REAL
+   {: RESULT =sem.tipo_real();:};
+tipo3	::= STRING 
+   {: RESULT =sem.tipo_string();:};
+tipo3	::= IDEN: id 
+   {: RESULT = (Tipo)sem.tipo_ident(id.str()).ponFila(id.fila()).ponCol(id.col());:};
+tipo3 	::= STRUCT LLAP lista_variables: lvars LLCI 
+   {: RESULT = sem.tipo_struct(lvars);:};
+instrucciones  ::= lista_instrucciones: linstrs
+   {: RESULT  = sem.si_inst(linstrs);:};
+instrucciones  ::= 
+   {: RESULT  = sem.no_inst();:};
+lista_instrucciones  ::= lista_instrucciones: linstrs PCOMA instruccion: instr
+   {: RESULT  = sem.muchas_inst(linstrs, instr);:};
+lista_instrucciones  ::= instruccion: instr
+   {: RESULT  = sem.una_inst(instr);:};
+par_formales  ::= PAP lista_par_formal: lpf PCI 
+   {: RESULT  = sem.si_pformal(lpf);:};
+par_formales  ::= PAP PCI 
+   {: RESULT  = sem.no_pformal();:};
+
+lista_par_formal ::= lista_par_formal: lpf COMA par_formal: pf
+   {: RESULT = sem.muchos_pformal(pf,lpf);:};
+lista_par_formal ::= par_formal: pf
+   {: RESULT = sem.un_pformal(pf);:};
+par_formal ::= tipo: t REFERENCIA IDEN: id
+   {: RESULT = (PFml)sem.pformal_ref(t,id.str()).ponFila(id.fila()).ponCol(id.col());:};
+par_formal ::= tipo: t IDEN: id
+   {: RESULT = (PFml)sem.pformal_noref(t,id.str()).ponFila(id.fila()).ponCol(id.col());:};
+par_reales ::= PAP lista_par_real: lpr PCI
+   {: RESULT = sem.si_preales(lpr);:};
+par_reales ::= PAP PCI
+   {: RESULT = sem.no_preales();:};
+lista_par_real ::= E0: exp COMA lista_par_real: lpr
+   {: RESULT = sem.muchas_exp(exp,lpr);:};
+lista_par_real ::= E0: exp
+   {: RESULT = sem.una_exp(exp);:};
+
+
+instruccion ::= EVAL E0: exp
+   {: RESULT = sem.inst_eval(exp);:};
+instruccion ::= IF E0: exp bloq: b
+   {: RESULT = sem.inst_if(exp,b);:};
+instruccion ::= IF E0: exp bloq: b1 ELSE bloq: b2 
+   {: RESULT = sem.inst_else(exp,b1,b2);:};
+instruccion ::= WHILE E0: exp bloq: b
+   {: RESULT = sem.inst_while(exp,b);:};
+instruccion ::= NEW E0: exp
+   {: RESULT = sem.inst_new(exp);:};
+instruccion ::= DELETE E0: exp
+   {: RESULT = sem.inst_delete(exp);:};
+instruccion ::= READ E0: exp
+   {: RESULT = sem.inst_read(exp);:};
+instruccion ::= WRITE E0: exp
+   {: RESULT = sem.inst_write(exp);:};
+instruccion ::= CALL IDEN: id par_reales: pr
+   {: RESULT = (Inst)sem.inst_call(id.str(),pr).ponFila(id.fila()).ponCol(id.col());:};
+instruccion ::= NL
+   {: RESULT = sem.inst_nl();:};
+instruccion ::= bloq: b
+   {: RESULT = sem.inst_blo(b);:};
+   
+
+
+
+E0 ::= E1: opnd1 ASIG: op E0: opnd2 
+   {: RESULT = (Exp)sem.exp_asig(opnd1,opnd2).ponFila(op.fila()).ponCol(op.col()); :};
+E0 ::= E1: exp 
+   {: RESULT = exp; :};
+E1 ::= E1: opnd1  OP1: op E2: opnd2 
+   {: RESULT = (Exp)sem.mkopBin(op.str(),opnd1,opnd2).ponFila(op.fila()).ponCol(op.col()); :};
+E1 ::= E2: exp 
+   {: RESULT = exp; :};
+E2 ::= E2: opnd1 SUMA:s E3: opnd2 
+   {: RESULT = (Exp)sem.exp_suma(opnd1,opnd2).ponFila(s.fila()).ponCol(s.col()); :};
+E2 ::= E3: opnd1 RESTA:r E3: opnd2 
+   {: RESULT = (Exp)sem.exp_resta(opnd1,opnd2).ponFila(r.fila()).ponCol(r.col()); :};
+E2 ::= E3: exp 
+   {: RESULT = exp; :};
+E3 ::= E4: exp AND:a E3: exp1
+   {: RESULT = (Exp)sem.exp_and(exp,exp1).ponFila(a.fila()).ponCol(a.col()); :};  
+E3 ::= E4: exp OR:o E4: exp1
+   {: RESULT = (Exp)sem.exp_or(exp,exp1).ponFila(o.fila()).ponCol(o.col()); :};   
+E3 ::= E4: exp 
+   {: RESULT = exp; :};
+E4 ::= E4: opnd1  OP4: op E5: opnd2 
+   {: RESULT = (Exp)sem.mkopBin(op.str(),opnd1,opnd2).ponFila(op.fila()).ponCol(op.col()); :};
+E4 ::= E5: exp 
+   {: RESULT = exp; :};
+E5 ::= RESTA:r E5: opnd1 
+   {: RESULT = (Exp)sem.exp_menos(opnd1).ponFila(r.fila()).ponCol(r.col()); :};
+E5 ::= NOT:n E5: opnd1 
+   {: RESULT = (Exp)sem.exp_not(opnd1).ponFila(n.fila()).ponCol(n.col()); :};
+E5 ::= E6: exp 
+   {: RESULT = exp; :};
+E6 ::= E6: exp CAP:c E0: exp1 CCI
+   {: RESULT = (Exp)sem.exp_index(exp,exp1).ponFila(c.fila()).ponCol(c.col()); :};
+E6 ::= E6: exp PUNTO IDEN: iden
+   {: RESULT = (Exp)sem.exp_reg(exp,iden.str()).ponFila(iden.fila()).ponCol(iden.col()); :};
+E6 ::= E6: exp INDIRECCION: indir
+   {: RESULT = (Exp)sem.exp_indir(exp).ponFila(indir.fila()).ponCol(indir.col()); :};
+E6 ::= E7: exp 
+   {: RESULT = exp; :};
+E7 ::= TRUE: t
+   {: RESULT = (Exp)sem.exp_true().ponFila(t.fila()).ponCol(t.col()); :};
+E7 ::= FALSE: f
+   {: RESULT = (Exp)sem.exp_false().ponFila(f.fila()).ponCol(f.col()); :};
+E7 ::= LIT_REAL: num 
+   {: RESULT = (Exp)sem.exp_litReal(num.str()).ponFila(num.fila()).ponCol(num.col());:};
+E7 ::= LIT_ENT: num 
+   {: RESULT = (Exp)sem.exp_litEnt(num.str()).ponFila(num.fila()).ponCol(num.col()); :};
+E7 ::= LIT_CAD: cad 
+   {: RESULT = (Exp)sem.exp_litCad(cad.str()).ponFila(cad.fila()).ponCol(cad.col()); :};
+E7 ::= IDEN: id 
+   {: RESULT = (Exp)sem.exp_iden(id.str()).ponFila(id.fila()).ponCol(id.col()); :};
+E7 ::= 	NULL: n
+   {: RESULT = (Exp)sem.exp_null().ponFila(n.fila()).ponCol(n.col()); :};
+E7 ::= PAP E0: exp PCI
+   {: RESULT = exp; :};
+OP1 ::= MENOR:m
+   {: RESULT = m; :};
+OP1 ::= MEN_IGUAL:m
+   {: RESULT = m; :};
+OP1 ::= MAYOR:m
+   {: RESULT = m; :};
+OP1 ::= MAY_IGUAL:m
+   {: RESULT = m; :};
+OP1 ::= IGUAL:i
+   {: RESULT = i; :};
+OP1 ::= DISTINTO:d
+   {: RESULT = d; :};
+OP4 ::= MUL:m
+   {: RESULT = m; :}; 
+OP4 ::= DIV:d
+   {: RESULT = d; :};
+OP4 ::= MOD:m
+   {: RESULT = m; :};
