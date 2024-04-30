@@ -189,4 +189,196 @@ public class Vinculacion {
 
     public void vincula2(Tipo_ident t) { }
 
+    public void vincula1(Tipo_struct t) {
+
+    }
+
+    public void vincula(Si_inst i) {
+        vincula(i.insts());
+    }
+
+    public void vincula(No_inst i) { }
+
+    public void vincula(Muchas_inst i) {
+        vincula(i.insts());
+        vincula(i.inst());
+    }
+
+    public void vincula(Si_preales pr) {
+        vincula(pr.lpr());
+    }
+
+    public void vincula(No_preales pr) { }
+
+    public void vincula(Muchas_exp e) {
+        vincula(e.lpr());
+        vincula(e.exp());
+    }
+
+    public void vincula(Una_exp e) {
+        vincula(e.exp());
+    }
+
+    public void vincula(Inst_eval i) {
+        vincula(i.exp());
+    }
+
+    public void vincula(Inst_if i) {
+        vincula(i.exp());
+        vincula(i.bloq());
+    }
+
+    public void vincula(Inst_else i) {
+        vincula(i.exp());
+        vincula(i.bloq1());
+        vincula(i.bloq2());
+    }
+
+    public void vincula(Inst_while i) {
+        vincula(i.exp());
+        vincula(i.bloq());
+    }
+
+    public void vincula(Inst_new i) {
+        vincula(i.exp());
+    }
+
+    public void vincula(Inst_delete i) {
+        vincula(i.exp());
+    }
+
+    public void vincula(Inst_read i) {
+        vincula(i.exp());
+    }
+
+    public void vincula(Inst_write i) {
+        vincula(i.exp());
+    }
+
+    public void vincula(Inst_call i) {
+        Nodo n = ts.vinculoDe(t.id());
+        if (n.getClass() != Dec_proc.class)
+            throw new ErrorVinculacion();
+        vincula(i.pr());
+    }
+
+    public void vincula(Inst_nl i) { }
+
+    public void vincula(Inst_blo i) {
+        vincula(i.bloq());
+    }
+
+    public void vincula(Exp_asig exp) {
+        vincula(exp.exp1());
+        vincula(exp.exp2());
+    }
+
+    public void vincula(Exp_menor exp) {
+        vincula(exp.exp1());
+        vincula(exp.exp2());
+    }
+
+    public void vincula(Exp_menIgual exp) {
+        vincula(exp.exp1());
+        vincula(exp.exp2());
+    }
+
+    public void vincula(Exp_mayor exp) {
+        vincula(exp.exp1());
+        vincula(exp.exp2());
+    }
+
+    public void vincula(Exp_mayIgual exp) {
+        vincula(exp.exp1());
+        vincula(exp.exp2());
+    }
+
+    public void vincula(Exp_igual exp) {
+        vincula(exp.exp1());
+        vincula(exp.exp2());
+    }
+
+    public void vincula(Exp_dist exp) {
+        vincula(exp.exp1());
+        vincula(exp.exp2());
+    }
+
+    public void vincula(Exp_suma exp) {
+        vincula(exp.exp1());
+        vincula(exp.exp2());
+    }
+
+    public void vincula(Exp_resta exp) {
+        vincula(exp.exp1());
+        vincula(exp.exp2());
+    }
+
+    public void vincula(Exp_mult exp) {
+        vincula(exp.exp1());
+        vincula(exp.exp2());
+    }
+
+    public void vincula(Exp_div exp) {
+        vincula(exp.exp1());
+        vincula(exp.exp2());
+    }
+
+    public void vincula(Exp_mod exp) {
+        vincula(exp.exp1());
+        vincula(exp.exp2());
+    }
+
+    public void vincula(Exp_and exp) {
+        vincula(exp.exp1());
+        vincula(exp.exp2());
+    }
+
+    public void vincula(Exp_or exp) {
+        vincula(exp.exp1());
+        vincula(exp.exp2());
+    }
+
+    public void vincula(Exp_menos exp) {
+        vincula(exp.exp1());
+    }
+
+    public void vincula(Exp_not exp) {
+        vincula(exp.exp1());
+    }
+
+    public void vincula(Exp_index exp) {
+        vincula(exp.exp1());
+        vincula(exp.exp2());
+    }
+
+    public void vincula(Exp_reg exp) {
+        vincula(exp.exp1());
+        Nodo n = ts.vinculoDe(exp.id());
+        if (n.getClass() != Tipo_struct.class)
+            throw new ErrorVinculacion();
+    }
+
+    public void vincula(Exp_indir exp) {
+        vincula(exp.exp1());
+        vincula(exp.exp2());
+    }
+
+    public void vincula(Exp_true exp) { }
+
+    public void vincula(Exp_false exp) { }
+
+    public void vincula(Exp_litEnt exp) { }
+
+    public void vincula(Exp_litReal exp) { }
+
+    public void vincula(Exp_litCadena exp) { }
+
+    public void vincula(Exp_iden exp) {
+        Nodo n = ts.vinculoDe(n.id());
+        if (n.getClass() != Dec_simple.class)
+            throw new ErrorVinculacion();
+    }
+
+    public void vincula(Exp_null exp) { }
+
 }
