@@ -62,13 +62,10 @@ si la operación necesita dos argumentos, en la cima estará el 2º argumento, e
     apilaInd & Desapila una dirección (dir) de la pila de evaluación, y apila (en
 dicha pila) el contenido de la celda (dir) en la memoria de datos  \\ \hline
 
-    desapilaind & Desapila el valor v y una dirección (dir) de la pila de evaluación
-(primero v, después d), y actualiza el contenido de la celda dir
-en la memoria de datos con el valor de v  \\ \hline
-    mueve(n) & Desapila dos direcciones dir1 y dir0 de la pila de evaluación en ese orden y copia el contenido de
-las n celdas consecutivas desde la dirección dir1 a
-las correspondientes n celdas que comienzan en la dirección
-dir0. \\ \hline
+    desapilaind & Desapila el valor v y una dirección (dir) de la pila de evaluación (primero v, después d), y actualiza el contenido de la celda dir en la memoria de datos con el valor de v  \\ \hline
+    mueve(n) & Desapila dos direcciones dir1 y dir0 de la pila de evaluación en ese orden y copia el contenido de las n celdas consecutivas desde la dirección dir1 a las correspondientes n celdas que comienzan en la dirección dir0. \\ \hline
+
+    cast(v1, v1') & v1 se convierte al valor real equivalente v1'. \\ \hline
 \end{longtblr}
 
 \subsection{Instrucciones de salto}
@@ -104,11 +101,15 @@ un salto incondicional a dicha dirección  \\ \hline
 }
     \hline
     \textbf{} \\ \hline
-     alloc(n)& Reserva un bloque de n celdas consecutivas en el heap y
-apila la dirección de comienzo en la pila de evaluación.  \\ \hline
-     dealloc(n)& Desapila una dirección d de la pila de evaluación y libera en
-el heap el bloque de n celdas consecutivas que comienza en
-d.  \\ \hline
+     alloc(t)& e reserva una zona de memoria adecuada para almacenar valores del tipo t. La operación en sí devuelve la dirección de comienzo de dicha zona de memoria.  \\ \hline
+     dealloc(d,t)& Se notifica que la zona de memoria que comienza en d y que permite almacenar valores del tipo t queda liberada  \\ \hline
+     fetch(d)& Devuelve el valor almacenado en la celda direccionada por d.\\ \hline
+     store(d,v)& Almacena v en la celda direccionada por d.\\ \hline
+     copy(d,d',t)& Copia el valor del tipo t que se encuentra almacenado a partir de la dirección d’ en el bloque que comienza a partir de la dirección d \\ \hline
+     indx(d,i,t)& Considera que, a partir de d, comienza un array cuyos elementos son valores del tipo , y devuelve la dirección de comienzo del elemento i-esimo de dicho array.\\ \hline
+     acc(d,c,t) &Con t un tipo record. Considera que, a partir de d, está almacenado un registro de tipo t, que contiene un campo c. Devuelve la dirección de comienzo de dicho campo.\\ \hline
+
+     dir(u)&  Dirección de la variable u. \\ \hline 
  
 \end{longtblr}
     
