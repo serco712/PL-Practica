@@ -13,47 +13,76 @@
         asig-espacio(Insts)
         dir = dir_ant
     
-    asig-espacio1(si_decs(LDecs)):
-        asig-espacio(Ldecs)
+    asig-espacio(si_decs(LDecs)):
+        asig-espacio1(Ldecs)
+        asig-espacio2(Ldecs)
     
     asig-espacio(no_decs()): skip
     
-    asig-espacio(muchas_decs(LDecs,Dec)):
-        asig-espacio(LDecs)
-        asig-espacio(Dec)
+    asig-espacio1(muchas_decs(LDecs,Dec)):
+        asig-espacio1(LDecs)
+        asig-espacio1(Dec)
     
-    asig-espacio(una_dec(Dec)):
-        asig-espacio(Dec)
-
-    asig-espacio(muchas_var(LVar,Var)):
-        asig-espacio(LVar)
-        asig-espacio(Var)
-
-    asig-espacio(una_var(Var)):
-        asig-espacio(Var)
+    asig-espacio2(muchas_decs(LDecs,Dec)):
+        asig-espacio2(LDecs)
+        asig-espacio2(Dec)
     
-    asig-espacio(var(Tipo,id)):
+    asig-espacio1(una_dec(Dec)):
+        asig-espacio1(Dec)
+
+    asig-espacio2(una_dec(Dec)):
+        asig-espacio2(Dec)
+
+    asig-espacio1(muchas_var(LVar,Var)):
+        asig-espacio1(LVar)
+        asig-espacio1(Var)
+    
+    asig-espacio2(muchas_var(LVar,Var)):
+        asig-espacio2(LVar)
+        asig-espacio2(Var)
+
+    asig-espacio1(una_var(Var)):
+        asig-espacio1(Var)
+
+    asig-espacio2(una_var(Var)):
+        asig-espacio2(Var)
+    
+    asig-espacio1(var(Tipo,id)):
         $.dir = dir
         $.nivel = nivel
         asig-espacio-tipo(Tipo)
         dir += Tipo.tam
-    
-    asig-espacio(dec_simple(Var)):
-        asig-espacio(Var)
 
-    asig-espacio(dec_type(Var)):
-        asig-espacio(Var)
+    asig-espacio2(var(Tipo,id)): skip
     
-    asig-espacio(dec_proc(id,PFmls,Blo)):
+    asig-espacio1(dec_simple(Var)):
+        asig-espacio1(Var)
+
+    asig-espacio2(dec_simple(Var)):
+        asig-espacio2(Var)
+
+    asig-espacio1(dec_type(Var)):
+        asig-espacio1(Var)
+
+    asig-espacio2(dec_type(Var)):
+        asig-espacio2(Var)
+    
+    asig-espacio1(dec_proc(id,PFmls,Blo)):
         ant_dir = dir 
         nivel = nivel + 1
         $.nivel = nivel
         dir = 0 
-        asigna_espacio(PFmls)
-        asigna_espacio(Blo)
+        asigna_espacio1(PFmls)
+        asigna_espacio1(Blo)
         $.tam_datos = dir 
         dir = ant_dir 
         nivel = nivel - 1 
+        
+
+    asig-espacio2(dec_proc(id,PFmls,Blo)):
+        asigna_espacio2(PFmls)
+        asigna_espacio2(Blo) 
+    
         
     asig-espacio-tipo(Tipo):
             si indefinido(Tipo.tam) 
@@ -64,15 +93,16 @@
             
     asig-espacio-tipo1(tipo_array(Tipo,litEnt)):
         $.tam = litEnt.tam
-        si Tipo != ref(_)
+        si Tipo != tipo_ident(_)
             asig-espacio-tipo1(Tipo)
         fin si
 
     asig-espacio-tipo2(tipo_array(Tipo,litEnt)):
-        si Tipo = ref(id)
+        si Tipo = tipo_ident(id)
+            Tipo.vinculo = vinculoDe(ts,id)
             sea Tipo.vinculo = dec_type(Tipo’,_)
                 asig-espacio-tipo(Tipo’) 
-            $.tam= Tipo’.tam
+            $.tam= Tipo’.tam*litEnt.tam
         fin si 
 
     asig-espacio-tipo1(tipo_punt(Tipo)):
@@ -83,7 +113,7 @@
 
     asig-espacio-tipo2(tipo_punt(Tipo)):
         si Tipo = tipo_ident(id)
-            sea Tipo.vinculo = var(Tipo’,_)
+            sea Tipo.vinculo = dec_type(Tipo’,_)
                 asig-espacio-tipo(Tipo’) 
             $.tam= Tipo’.tam
         fin si 
@@ -111,7 +141,7 @@
 
     asig-espacio-tipo1(tipo_ident(id)):
         asig-espacio-tipo1($.vinculo)
-        sea $.vinculo = var(Tipo,_) en
+        sea $.vinculo = dec_type(Tipo,_) en
             $.tam = Tipo.tam
 
     asig-espacio-tipo2(tipo_ident(id)): skip
@@ -131,29 +161,47 @@
     asig-espacio(una_inst(Inst)):
         asig-espacio(Inst)
 
-    asig-espacio(si_pformal(LPFml)):
-        asig-espacio(LPFml)
+    asig-espacio1(si_pformal(LPFml)):
+        asig-espacio1(LPFml)
 
-    asig-espacio(no_pformal()): skip
+    asig-espacio2(si_pformal(LPFml)):
+        asig-espacio2(LPFml)
 
-    asig-espacio(muchos_pformal(LPFml,PFml)):
-        asig-espacio(LPFml)
-        asig-espacio(PFml)
+    asig-espacio1(no_pformal()): skip
 
-    asig-espacio(un_pformal(PFml))
-        asig-espacio(PFml)
+    asig-espacio2(no_pformal()): skip
 
-    asig-espacio(pformal_ref(Tipo,id)):
+    asig-espacio1(muchos_pformal(LPFml,PFml)):
+        asig-espacio1(LPFml)
+        asig-espacio1(PFml)
+
+    asig-espacio2(muchos_pformal(LPFml,PFml)):
+        asig-espacio2(LPFml)
+        asig-espacio2(PFml)
+
+    asig-espacio1(un_pformal(PFml))
+        asig-espacio1(PFml)
+
+    asig-espacio2(un_pformal(PFml))
+        asig-espacio2(PFml)
+
+    asig-espacio1(pformal_ref(Tipo,id)):
         $.dir = dir
         $.nivel = nivel
         asig-espacio-tipo(Tipo)
         dir += Tipo.tam
 
-    asig-espacio(pformal_noref(Tipo,id)):
+    asig-espacio2(pformal_ref(Tipo,id)):
+        asig-espacio-tipo(Tipo)
+
+    asig-espacio1(pformal_noref(Tipo,id)):
         $.dir = dir
         $.nivel = nivel
         asig-espacio-tipo(Tipo)
         dir += Tipo.tam
+
+    asig-espacio2(pformal_noref(Tipo,id)):
+        asig-espacio-tipo(Tipo)
         
 
     asig-espacio(si_preales(LPReal)):
@@ -168,43 +216,27 @@
     asig-espacio(una_exp(Exp)):
         asig-espacio(Exp)
 
-    asig-espacio(inst_eval(Exp)):
-        asig-espacio(Exp)
+    asig-espacio(inst_eval(Exp)): skip
 
     asig-espacio(inst_if(Exp,Blo)):
-        asig-espacio(Exp)
         asig-espacio(Blo)
 
     asig-espacio(inst_else(Exp,Blo1,Blo2)):
-        asig-espacio(Exp)
         asig-espacio(Blo1)
         asig-espacio(Blo2)
 
     asig-espacio(inst_while(Exp,Blo)):
-        asig-espacio(Exp)
         asig-espacio(Blo)
 
-    asig-espacio(inst_new(Exp)):
-        asig-espacio(Exp)
+    asig-espacio(inst_new(Exp)): skip
 
-    asig-espacio(inst_delete(Exp)):
-        asig-espacio(Exp)
+    asig-espacio(inst_delete(Exp)): skip
 
-    asig-espacio(inst_read(Exp)):
-        asig-espacio(Exp)
+    asig-espacio(inst_read(Exp)): skip
 
-    asig-espacio(inst_write(Exp)):
-        asig-espacio(Exp)
+    asig-espacio(inst_write(Exp)): skip
 
-    asig-espacio(inst_call(id,PReales)):
-        ant_dir = dir 
-        nivel = nivel + 1
-        $.nivel = nivel
-        dir = 0 
-        asigna_espacio(PReales)
-        $.tam_datos = dir 
-        dir = ant_dir 
-        nivel = nivel - 1 
+    asig-espacio(inst_call(id,PReales)): skip
 
     asig-espacio(inst_nl()): skip
 
@@ -277,15 +309,10 @@
         asig-espacio(Opnd0)
         asig-espacio(Opnd1)
 
-    asig-tam1(exp_reg(Exp,id)):
-        ant_dir = dir 
-        nivel = nivel + 1
-        $.nivel = nivel
-        dir = 0 
-        asigna_espacio(Exp)
-        $.tam_datos = dir 
-        dir = ant_dir 
-        nivel = nivel - 1 
+    asig-espacio(exp_reg(Exp,id)):
+        asig-espacio($.vinculo)
+        sea $.vinculo = tipo_struct(Tipo,_) en
+            $.tam = Tipo.tam
        
 
     asig-espacio(exp_ind(Exp)):
@@ -301,12 +328,11 @@
 
     asig-espacio(exp_litCad(litCad)): skip
 
-    asig-espacio-tipo1(exp_iden(id)):
-        asig-espacio-tipo1($.vinculo)
+    asig-espacio(exp_iden(id)):
+        asig-espacio($.vinculo)
         sea $.vinculo = dec_type(Tipo,_) en
             $.tam = Tipo.tam
             
-    asig-espacio-tipo2(exp_iden(id)): skip
 
     asig-espacio(exp_null()): skip
 

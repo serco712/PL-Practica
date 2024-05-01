@@ -4,8 +4,11 @@
     var etq = 0 
 
     etiquetado(prog(Blo)):
-        $.prim = etq
         etiquetado(Blo)
+
+    etiquetado(bloq(Decs,Insts)):
+       $.prim = etq
+        etiquetado(Insts)
         etq++
         while != es-vacia(sub_pendientes)
             sub = cima(sub_pendientes)
@@ -13,17 +16,12 @@
             let sub = dec_proc(id,Param,Decs,Is) in
                 sub.prim = etq
                 etq++
-                etiquetado(Blo)
+                recolecta_subs(Decs)
+                etiquetado(Is)
                 etq+=2
                 sub.sig = etq
             end let
         end while
-        $.sig = etq
-
-    etiquetado(bloq(Decs,Insts)):
-        $.prim = etq
-        recolecta-subs(Decs)
-        etiquetado(Insts)
         $.sig = etq
     
     etiquetado(si_decs(LDecs)):
@@ -234,7 +232,9 @@
 
     etiquetado(inst_call(id,PReales)):
         $.prim = etq
-        etiquetado(PReales)
+        etq++
+        etiquetado-paso-param($.vinculo,PReales)
+        etq++
         $.sig = etq
 
     etiquetado(inst_nl()): noop
@@ -331,11 +331,13 @@
     etiquetado(exp_menos(Exp)):
         $.prim = etq
         etiquetado(Exp)
+        etiquetado-acc-val(Exp)
         $.sig = etq
 
     etiquetado(exp_not(Exp)):
         $.prim = etq
         etiquetado(Exp)
+        etiquetado-acc-val(Exp)
         etq +=2
         $.sig = etq
 
@@ -417,6 +419,11 @@
         if es-designador(Exp) then
         etq++
         end if
+
+    etiquetado-paso-param(dec_proc(id,Param,Decs,Is),PReales):
+        etq += 2
+        etiquetado(PReales)
+        etq++
 
 
 \end{lstlisting}

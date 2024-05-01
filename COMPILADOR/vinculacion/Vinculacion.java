@@ -8,8 +8,8 @@ import asint.SintaxisAbstractaTiny.*;
 public class Vinculacion {
     public static class ErrorVinculacion extends RuntimeException {} 
     private class TablaValores {
-        Map<String,Nodo> diccionario;
-        TablaValores tv;
+        private Map<String,Nodo> diccionario;
+        private TablaValores tv;
 
         public TablaValores() { 
             diccionario = new HashMap<>(); 
@@ -30,6 +30,9 @@ public class Vinculacion {
         }
         public TablaValores cierraAmbito() {
             return tv;
+        }
+        public Map<String,Nodo> devuelveAmbito() {
+            return diccionario;
         }
         public Nodo vinculoDe(String s) {
             return diccionario.get(s);
@@ -95,6 +98,14 @@ public class Vinculacion {
         vincula2(v.vars());
     }
 
+    public void vincula1(Var v) {
+        vincula1(v.tipo());
+        if (ts.contiene(v.id()))
+            throw new ErrorVinculacion();
+        
+        ts.inserta(v.id(), d);
+    }
+
     public void vincula2(Var v) {
         vincula2(v.tipo());
     }
@@ -126,11 +137,18 @@ public class Vinculacion {
     }
 
     public void vincula1(Dec_proc d) {
-        
+        if (ts.contiene(d.id()))
+            throw new ErrorVinculacion();
+
+        ts.inserta(d.id(), d);
     }
 
     public void vincula2(Dec_proc d) {
-        
+        ts.abreAmbito();
+        vincula1(d.par_for());
+        vincul2(d.par_for());
+        vincula(d.bloq());
+        ts.cierraAmbito();
     }
 
     public void vincula1(Tipo_array t) {
@@ -182,15 +200,22 @@ public class Vinculacion {
     public void vincula2(Tipo_string t) { }
 
     public void vincula1(Tipo_ident t) {
+        
+    }
+
+    public void vincula2(Tipo_ident t) {
         Nodo n = ts.vinculoDe(t.id());
         if (n.getClass() != Dec_type.class)
             throw new ErrorVinculacion();
+        t.vincula(n);
     }
 
-    public void vincula2(Tipo_ident t) { }
-
     public void vincula1(Tipo_struct t) {
-
+        ts.abreAmbito();
+        vincula1(t.lvar());
+        vincula2(t.lvar());
+        t.vincula(ts.devuelveAmbito());
+        ts.cierraAmbito();
     }
 
     public void vincula(Si_inst i) {
@@ -202,6 +227,60 @@ public class Vinculacion {
     public void vincula(Muchas_inst i) {
         vincula(i.insts());
         vincula(i.inst());
+    }
+
+    public void vincula(Una_inst i) {
+        vincula(i.inst());
+    }
+
+    public void vincula1(Si_pformal pf) {
+        vincula1(pf.lpfml());
+    }
+
+    public void vincula2(Si_pformal pf) {
+        vincula2(pf.lpfml());
+    }
+
+    public void vincula1(Muchos_pformal pf) {
+        vincula1(pf.lpfml());
+        vincula1(pf.pfml());
+    }
+
+    public void vincula2(Muchos_pformal pf) {
+        vincula2(pf.lpfml());
+        vincula2(pf.pfml());
+    }
+
+    public void vincula1(Un_pformal pf) {
+        vincula1(pf.pfml());
+    }
+
+    public void vincula2(Un_pformal pf) {
+        vincula2(pf.pfml());
+    }
+
+    public void vincula1(Pformal_ref pf) {
+        vincula1(pf.tipo());
+        if (ts.contiene(pf.id()))
+            throw new ErrorVinculacion();
+        
+        ts.inserta(pf.id(), pf);
+    }
+
+    public void vincula2(Pformal_ref pf) {
+        vincula2(pf.tipo());
+    }
+
+    public void vincula1(Pformal_noref pf) {
+        vincula1(pf.tipo());
+        if (ts.contiene(pf.id()))
+            throw new ErrorVinculacion();
+        
+        ts.inserta(pf.id(), pf);
+    }
+
+    public void vincula2(Pformal_noref pf) {
+        vincula2(pf.tipo());
     }
 
     public void vincula(Si_preales pr) {
@@ -259,6 +338,7 @@ public class Vinculacion {
         Nodo n = ts.vinculoDe(t.id());
         if (n.getClass() != Dec_proc.class)
             throw new ErrorVinculacion();
+        i.vincula(n);
         vincula(i.pr());
     }
 
@@ -377,6 +457,8 @@ public class Vinculacion {
         Nodo n = ts.vinculoDe(n.id());
         if (n.getClass() != Dec_simple.class)
             throw new ErrorVinculacion();
+
+        exp.vincula(n);
     }
 
     public void vincula(Exp_null exp) { }

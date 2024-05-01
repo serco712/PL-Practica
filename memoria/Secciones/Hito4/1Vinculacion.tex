@@ -77,13 +77,12 @@
         else
             inserta(ts,id,$)
         end if
-        abreAmbito(ts)
-        vincula1(PFmls)
-        vincula1(Blo)
 
     vincula2(dec_proc(id,PFmls,Blo)):
+        abreAmbito(ts)
         vincula2(PFmls)
-        vincula2(Blo)
+        vincula1(PFmls)
+        vincula(Blo)
         cierraAmbito(ts)
 
     vincula1(tipo_array(Tipo,litEnt)):
@@ -188,7 +187,7 @@
         end if
 
     vincula2(pformal_ref(Tipo,id)):
-        vincula(Tipo)
+        vincula2(Tipo)
 
     vincula1(pformal_noref(Tipo,id)):
         vincula1(Tipo)
@@ -321,10 +320,6 @@
 
     vincula(exp_reg(Exp,id)):
         vincula(Exp)
-        $.vinculo = vinculoDe(ts,Id)
-        if $.vinculo == false then
-            error
-        end if
 
     vincula(exp_ind(Exp)):
         vincula(Exp)

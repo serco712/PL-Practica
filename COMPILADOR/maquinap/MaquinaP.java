@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import maquinap.MaquinaP.Instruccion;
+
 
 
 
@@ -24,6 +26,13 @@ public class MaquinaP {
       public int valorInt() {throw new EAccesoIlegitimo();}  
       public float valorReal() {throw new EAccesoIlegitimo();}  
       public String valorString() {throw new EAccesoIlegitimo();} 
+      public boolean esBool() {return false;}
+      public boolean esInt() {return false;}
+      public boolean esReal() {return false;}
+      public boolean esString() {return false;}
+      public boolean menorQue(Valor v) {return false;}
+      public boolean igualQue(Valor v) {return false;}
+      public boolean mayorQue(Valor v) {return false;}
    } 
 
    private class ValorBool extends Valor {
@@ -32,6 +41,16 @@ public class MaquinaP {
          this.valor = valor; 
       }
       public boolean valorBool() {return valor;}
+      public boolean esBool() {return true;}
+      public boolean menorQue(Valor v) {
+         return !valor && b.valorBool();
+      }
+      public boolean igualQue(Valor v) {
+         return valor == v.valorBool();
+      }
+      public boolean mayorQue(Valor v) {
+         return valor && !v.valorBool();
+      }
       public String toString() {
         return String.valueOf(valor);
       }
@@ -42,6 +61,16 @@ public class MaquinaP {
          this.valor = valor; 
       }
       public int valorInt() {return valor;}
+      public boolean esInt() {return true;}
+      public boolean menorQue(Valor v) {
+         return valor < v.valorInt();
+      }
+      public boolean igualQue(Valor v) {
+         return valor == v.valorInt();
+      }
+      public boolean mayorQue(Valor v) {
+         return valor > v.valorInt();
+      }
       public String toString() {
         return String.valueOf(valor);
       }
@@ -52,6 +81,16 @@ public class MaquinaP {
          this.valor = valor; 
       }
       public float valorReal() {return valor;}
+      public boolean esReal() {return true;}
+      public boolean menorQue(Valor v) {
+         return valor < v.valorReal();
+      }
+      public boolean igualQue(Valor v) {
+         return valor == v.valorReal();
+      }
+      public boolean mayorQue(Valor v) {
+         return valor > v.valorReal();
+      }
       public String toString() {
         return String.valueOf(valor);
       }
@@ -62,6 +101,32 @@ public class MaquinaP {
          this.valor = valor; 
       }
       public String valorString() {return valor;}
+      public boolean esString() {return true;}
+      public boolean menorQue(Valor v) {
+         boolean menorque;
+         int n;
+         if (valor.length() < v.valorString().length()) {
+            menorque = true;
+            n = v.valorString().length();
+         }
+         else {
+            menorque = false;
+            n = valor.length();
+         }
+
+         for (int i = 0; i < n; i++) {
+            if (valor.charAt(i) > v.valorString().charAt(i))
+               return false;
+         }
+
+         return menorque;
+      }
+      public boolean igualQue(Valor v) {
+         return valor.equals(v.valorString());
+      }
+      public boolean mayorQue(Valor v) {
+         return !menorQue(v) && !igualQue(v);
+      }
       public String toString() {
         return String.valueOf(valor);
       }
@@ -80,20 +145,62 @@ public class MaquinaP {
       public void ejecuta() {
          Valor opnd2 = pilaEvaluacion.pop(); 
          Valor opnd1 = pilaEvaluacion.pop();
-         pilaEvaluacion.push(new ValorInt(opnd1.valorInt()+opnd2.valorInt()));
+         if (opnd1.esInt())
+            pilaEvaluacion.push(new ValorInt(opnd1.valorInt()+opnd2.valorInt()));
+         else
+            pilaEvaluacion.push(new ValorReal(opnd1.valorReal()+opnd2.valorReal()));
          pc++;
       } 
       public String toString() {return "suma";};
+   }
+   private IResta IRESTA;
+   private class IResta implements Instruccion {
+      public void ejecuta() {
+         Valor opnd2 = pilaEvaluacion.pop(); 
+         Valor opnd1 = pilaEvaluacion.pop();
+         if (opnd1.esInt())
+            pilaEvaluacion.push(new ValorInt(opnd1.valorInt()-opnd2.valorInt()));
+         else
+            pilaEvaluacion.push(new ValorReal(opnd1.valorReal()-opnd2.valorReal()));
+         pc++;
+      } 
+      public String toString() {return "resta";};
    }
    private IMul IMUL;
    private class IMul implements Instruccion {
       public void ejecuta() {
          Valor opnd2 = pilaEvaluacion.pop(); 
          Valor opnd1 = pilaEvaluacion.pop();
-         pilaEvaluacion.push(new ValorInt(opnd1.valorInt()*opnd2.valorInt()));
+         if (opnd1.esInt())
+            pilaEvaluacion.push(new ValorInt(opnd1.valorInt()*opnd2.valorInt()));
+         else
+            pilaEvaluacion.push(new ValorReal(opnd1.valorReal()*opnd2.valorReal()));
          pc++;
       } 
       public String toString() {return "mul";};
+   }
+   private IDiv IDIV;
+   private class IDiv implements Instruccion {
+      public void ejecuta() {
+         Valor opnd2 = pilaEvaluacion.pop(); 
+         Valor opnd1 = pilaEvaluacion.pop();
+         if (opnd1.esInt())
+            pilaEvaluacion.push(new ValorInt(opnd1.valorInt()/opnd2.valorInt()));
+         else
+            pilaEvaluacion.push(new ValorReal(opnd1.valorReal()/opnd2.valorReal()));
+         pc++;
+      } 
+      public String toString() {return "div";};
+   }
+   private IMod IMOD;
+   private class IResta implements Instruccion {
+      public void ejecuta() {
+         Valor opnd2 = pilaEvaluacion.pop(); 
+         Valor opnd1 = pilaEvaluacion.pop();
+         pilaEvaluacion.push(new ValorInt(opnd1.valorInt()%opnd2.valorInt()));
+         pc++;
+      } 
+      public String toString() {return "mod";};
    }
    private IAnd IAND;
    private class IAnd implements Instruccion {
@@ -104,6 +211,98 @@ public class MaquinaP {
          pc++;
       } 
       public String toString() {return "and";};
+   }
+   private IOr IOR;
+   private class IOr implements Instruccion {
+      public void ejecuta() {
+         Valor opnd2 = pilaEvaluacion.pop(); 
+         Valor opnd1 = pilaEvaluacion.pop();
+         pilaEvaluacion.push(new ValorBool(opnd1.valorBool()||opnd2.valorBool()));
+         pc++;
+      } 
+      public String toString() {return "or";};
+   }
+   private IMayor IMAYOR;
+   private class IMayor implements Instruccion {
+      public void ejecuta() {
+         Valor opnd2 = pilaEvaluacion.pop(); 
+         Valor opnd1 = pilaEvaluacion.pop();
+         pilaEvaluacion.push(new ValorBool(opnd1.mayorQue(opnd2)));
+         pc++;
+      } 
+      public String toString() {return ">";};
+   }
+   private IMayorIgual IMAYORIGUAL;
+   private class IMayorIgual implements Instruccion {
+      public void ejecuta() {
+         Valor opnd2 = pilaEvaluacion.pop(); 
+         Valor opnd1 = pilaEvaluacion.pop();
+         pilaEvaluacion.push(new ValorBool(opnd1.mayorQue(opnd2) || opnd1.igualQue(opnd2)));
+         pc++;
+      } 
+      public String toString() {return ">=";};
+   }
+   private IMenor IMENOR;
+   private class IMenor implements Instruccion {
+      public void ejecuta() {
+         Valor opnd2 = pilaEvaluacion.pop(); 
+         Valor opnd1 = pilaEvaluacion.pop();
+         pilaEvaluacion.push(new ValorBool(opnd1.menorQue(opnd2)));
+         pc++;
+      } 
+      public String toString() {return "<";};
+   }
+   private IMenorIgual IMENORIGUAL;
+   private class IMenorIgual implements Instruccion {
+      public void ejecuta() {
+         Valor opnd2 = pilaEvaluacion.pop(); 
+         Valor opnd1 = pilaEvaluacion.pop();
+         pilaEvaluacion.push(new ValorBool(opnd1.menorQue(opnd2) || opnd1.igualQue(opnd2)));
+         pc++;
+      } 
+      public String toString() {return "<=";};
+   }
+   private IIgual IIGUAL;
+   private class IIgual implements Instruccion {
+      public void ejecuta() {
+         Valor opnd2 = pilaEvaluacion.pop(); 
+         Valor opnd1 = pilaEvaluacion.pop();
+         if (opnd1.esInt())
+            pilaEvaluacion.push(new ValorBool(opnd1.igualQue(opnd2)));
+         pc++;
+      } 
+      public String toString() {return "==";};
+   }
+   private IDistinto IDISTINTO;
+   private class IDistinto implements Instruccion {
+      public void ejecuta() {
+         Valor opnd2 = pilaEvaluacion.pop(); 
+         Valor opnd1 = pilaEvaluacion.pop();
+         pilaEvaluacion.push(new ValorBool(!opnd1.igualQue(opnd2)));
+         pc++;
+      } 
+      public String toString() {return "!=";};
+   }
+   private IMenos IMENOS;
+   private class IMenos implements Instruccion {
+      public void ejecuta() {
+         Valor opnd1 = pilaEvaluacion.pop();
+         if (opnd1.esInt())
+            pilaEvaluacion.push(new ValorInt(-opnd1.valorInt()));
+         else
+            pilaEvaluacion.push(new ValorReal(-opnd1.valorReal()));
+         pc++;
+      } 
+      public String toString() {return "suma";};
+   }
+   private INot INOT;
+   private class INot implements Instruccion {
+      public void ejecuta() {
+         Valor opnd1 = pilaEvaluacion.pop();
+         pilaEvaluacion.push(new ValorBool(!opnd1.valorBool()));
+         pc++;
+      } 
+      public String toString() {return "!=";};
    }
    private class IApilaInt implements Instruccion {
       private int valor;

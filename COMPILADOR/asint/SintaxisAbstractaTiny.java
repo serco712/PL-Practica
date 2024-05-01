@@ -14,8 +14,14 @@ public class SintaxisAbstractaTiny {
         imprimeOpnd(opnd1,np1);
     }
 
+    public enum Tipado{
+        literalEntero, bool, literalReal, literalCadena, error, ok, tipoPuntero, nl, tipoStruct, tipoArray
+    }
+
     public static abstract class Nodo  {
+       private Boolean ok;
        public Nodo() {
+           ok = true;
 		   fila=col=-1;
        }   
 	   private int fila;
@@ -37,6 +43,10 @@ public class SintaxisAbstractaTiny {
 
        public abstract void imprime();
        public abstract void procesa(Procesamiento p);
+       public Tipo tipo() {throw new IllegalArgumentException();}
+
+       public Boolean getOk() {return this.ok;}
+       public void setOk(Boolean ok) {this.ok = ok;}
     }
     
     public static class Prog extends Nodo {
@@ -134,9 +144,12 @@ public class SintaxisAbstractaTiny {
     }
 
     public static abstract class Tipo extends Nodo {
+        protected Tipado t;
         public Tipo() {
             super();
         }
+        public Tipado getTipado() {return t;}
+        public void setTipado(Tipado t) {this.t = t;}
         public Tipo tipo() { throw new UnsupportedOperationException(); }
         public String litEnt() { throw new UnsupportedOperationException(); }
         public String id() { throw new UnsupportedOperationException(); }
@@ -197,6 +210,7 @@ public class SintaxisAbstractaTiny {
     }
 
     public static abstract class Inst extends Nodo {
+        protected Tipado t;
         public Inst() {
             super();
         }
@@ -208,9 +222,12 @@ public class SintaxisAbstractaTiny {
 		public String id() { throw new UnsupportedOperationException(); }
         public PReales pr() { throw new UnsupportedOperationException(); }
 
+        public void setTipado(Tipado t){this.t = t;}
+        public Tipado getTipado(){return this.t;}
     }
 
     public static abstract class Exp  extends  Nodo {
+       Tipado t;
        public Exp() {
 		   super();
        }   
@@ -222,7 +239,15 @@ public class SintaxisAbstractaTiny {
        public String valor(){throw new UnsupportedOperationException(); }
        public String id(){throw new UnsupportedOperationException(); }
 
+       public Nodo getVinculo(){
+        throw new UnsupportedOperationException("Vinculo erróneo");
+       }
+       public void vincula(Nodo n){
+        throw new UnsupportedOperationException("Vinculo no fijado");
+       } 
 
+       public void setTipado(Tipado t){this.t = t;}
+       public Tipado getTipado(){return this.t;}
 
        public abstract int prioridad();
     }
@@ -362,20 +387,20 @@ public class SintaxisAbstractaTiny {
         }
     }   
     
-    public static class Dec_type extends Dec {
+    public static class Dec_Tipado extends Dec {
         private Var v;
-        public Dec_type(Var v) {
+        public Dec_Tipado(Var v) {
             super();
             this.v = v;
         }
         public Var var() { return v; }
         public void imprime() {
-            System.out.println("<type>");
+            System.out.println("<Tipado>");
             v.imprime();
         }
         public String toString() {
-            return "dec_type("+v+")";
-        } 
+            return "dec_Tipado("+v+")";
+        }
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }       
@@ -411,6 +436,7 @@ public class SintaxisAbstractaTiny {
     public static class Tipo_array extends Tipo {
         private Tipo tipo;
         private String str;
+        private int tam;
         public Tipo_array(Tipo tipo, String str) {
             super();
             this.tipo = tipo;
@@ -428,6 +454,8 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        public void setTam(int tam) {this.tam = tam;}
+        public int getTam() {return tam;}
     }
          
     public static class Tipo_punt extends Tipo {
@@ -452,6 +480,7 @@ public class SintaxisAbstractaTiny {
     public static class Tipo_bool extends Tipo {
         public Tipo_bool() {
             super();
+            this.t = Tipado.bool;
         }
         public void imprime() {
             System.out.println("<bool>");
@@ -467,6 +496,7 @@ public class SintaxisAbstractaTiny {
 	public static class Tipo_int extends Tipo {
         public Tipo_int() {
             super();
+            this.t = Tipado.literalEntero;
         }
         public void imprime() {
             System.out.println("<int>");
@@ -482,6 +512,7 @@ public class SintaxisAbstractaTiny {
     public static class Tipo_real extends Tipo {
         public Tipo_real() {
             super();
+            this.t = Tipado.literalReal;
         }
         public void imprime() {
             System.out.println("<real>");
@@ -511,6 +542,7 @@ public class SintaxisAbstractaTiny {
     
     public static class Tipo_ident extends Tipo {
       private String ident;
+      private Nodo vinculo;
         public Tipo_ident(String ident) {
             super();
             this.ident = ident;
@@ -521,7 +553,13 @@ public class SintaxisAbstractaTiny {
         }
         public String toString() {
             return "tipo_ident("+ident+")";
-        } 
+        }
+        public Nodo getVinculo() {
+            return vinculo;
+        }
+        public void vincula(Nodo n) {
+            vinculo = n;
+        }
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
@@ -529,6 +567,7 @@ public class SintaxisAbstractaTiny {
     
     public static class Tipo_struct extends Tipo {
         private LVar lvar;
+        private Map<String,Node> reg;
         public Tipo_struct(LVar lvar) {
             super();
             this.lvar = lvar;
@@ -539,6 +578,10 @@ public class SintaxisAbstractaTiny {
             System.out.println("{");
             lvar.imprime();
             System.out.println("}");
+        }
+        public Map<String,Node> accedeReg() {return reg;}
+        public void vincula(Map<String,Node> reg) {
+            this.reg = reg;
         }
         public String toString() {
                 return "tipo_struct("+lvar+")";
@@ -991,6 +1034,7 @@ public class SintaxisAbstractaTiny {
     public static class Inst_call extends Inst {
         private String id;
         private PReales pr;
+        private Nodo vinculo;
         public Inst_call(String iden, PReales p) {
             super();
             id = iden;
@@ -1005,7 +1049,15 @@ public class SintaxisAbstractaTiny {
         }
         public String toString() {
             return "inst_call("+id+","+pr+")";
-        } 
+        }
+        @Override
+        public Nodo getVinculo() {
+            return vinculo;
+        }
+        @Override
+        public void vincula(Nodo n) {
+            vinculo = n;
+        }
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
@@ -1559,6 +1611,7 @@ public class SintaxisAbstractaTiny {
     
     public static class Exp_iden extends Exp{
         private String s;
+        private Nodo vinculo;
         public Exp_iden(String s){
             super();
             this.s = s;
@@ -1572,7 +1625,15 @@ public class SintaxisAbstractaTiny {
         }
         public String toString() {
             return "exp_iden("+s+")";
-        } 
+        }
+        @Override
+        public Nodo getVinculo() {
+            return vinculo;
+        }
+        @Override
+        public void vincula(Nodo n) {
+            vinculo = n;
+        }
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
@@ -1625,8 +1686,8 @@ public class SintaxisAbstractaTiny {
     public Dec dec_simple(Var v) {
         return new Dec_simple(v);
     }
-    public Dec dec_type(Var v) {
-        return new Dec_type(v);
+    public Dec dec_Tipado(Var v) {
+        return new Dec_Tipado(v);
     }
     public Dec dec_proc(String id, PFmls pfs, Blo b) {
         return new Dec_proc(id, pfs, b);

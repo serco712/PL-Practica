@@ -9,7 +9,13 @@
         tipado(Decs)
         tipado(Insts)
         $.tipo = ambos-ok(Decs.tipo,Insts.tipo)
-        
+
+    tipado(no_decs()): $.tipo = ok
+    
+    tipado(si_decs(LDecs)):
+        tipado(LDecs)
+        $.tipo = ok
+
     tipado(muchas_decs(LDecs,Dec)):
         tipado(LDecs)
         tipado(Dec)
@@ -34,20 +40,24 @@
 
     tipo(dec_simple(Var)):
         tipado(Var)
-        $.tipo = Var.tipo
+        $.tipo = ok
 
     tipo(dec_type(Var)):
         tipado(Var)
-        $.tipo = Var.tipo
+        $.tipo = ok
     
     tipo(dec_proc(id,PFmls,Blo)):
         tipado(PFmls)
         tipado(Bloq)
-        $.tipo = ambos-ok(PFmls.tipo,Blo.tipo)
+        $.tipo = Blo.tipo
 
     tipado(tipo_array(Tipo,litEnt)):
-        tipado(Tipo)
-        $.tipo = Tipo.tipo 
+        if litEnt < 0 then
+            $.tipo = error
+        else
+            tipado(Tipo)
+            $.tipo = Tipo.tipo 
+        end if
 
     tipado(tipo_punt(Tipo)):
         tipado(Tipo)
@@ -62,13 +72,19 @@
     tipado(tipo_string()): $.tipo = string
 
     tipado(tipo_ident(id)):
-        let $.vinculo = Dec_var(T,I) in
+        let $.vinculo = var(T,I) in
             $.tipo = T
         end let
 
     tipado(tipo_struct(LVar)):
         tipado(LVar)
         $.tipo = LVar.tipo
+
+    tipado(si_inst(LInst)):
+        tipado(LInst)
+        $.tipo = ok
+
+    tipado(no_inst()): $.tipo = ok
 
     tipado(muchas_inst(LInst,Inst)):
         tipado(LInst)
@@ -79,6 +95,12 @@
         tipado(Inst)
         $.tipo = Inst.tipo
 
+    tipado(si_pformal(LPFml)):
+        tipado(LPFml)
+        $.tipo = ok
+
+    tipado(no_pformal()): $.tipo = ok
+
     tipado(muchos_pformal(LPFml,PFml)):
         tipado(LPFml)
         tipado(PFml)
@@ -88,13 +110,11 @@
         tipado(PFml)
         $.tipo = PFml.tipo
 
-    tipado(pformal_ref(Tipo,id)):
-        tipado(Tipo)
-        $.tipo = Tipo.tipo
+    tipado(si_preales(LPReal)):
+        tipado(LPReal)
+        $.tipo = ok
 
-    tipado(pformal_noref(Tipo,id)):
-        tipado(Tipo)
-        $.tipo = Tipo.tipo
+    tipado(no_preales()): $.tipo = ok
 
     tipado(muchas_exp(LPReal,Exp)):
         tipado(LPReal)
@@ -105,9 +125,17 @@
         tipado(Exp)
         $.tipo = Exp.tipo
 
+    tipado(pformal_ref(Tipo,id)):
+        tipado(Tipo)
+        $.tipo = Tipo.tipo
+
+    tipado(pformal_noref(Tipo,id)):
+        tipado(Tipo)
+        $.tipo = Tipo.tipo
+
     tipado(inst_eval(Exp)):
         tipado(Exp)
-        $.tipo = Exp.tipo
+        $.tipo = ok
 
     tipado(inst_if(Exp,Blo)):
         tipado(Exp)
@@ -174,8 +202,42 @@
         end if
 
     tipado(inst_call(id,PReales)):
+        if $.vinculo == dec_proc(id, PFmls, Blo) then
+            if num_elems(PReales) != num_elems(PFmls)
+                $.tipo = error
+            else
+                tipado_parametros(PReales, PFmls)
+            end if
+        else 
+            $.tipo = error
+        end if
         tipado(PReales)
         $.tipo = ok
+
+    tipado_parametros(no_preales(), no_pformal()):
+        return ok
+
+    tipado_parametros(si_preales(LPReal), si_pformal(LPFml)):
+        return tipado_paramentros(LPReal, LPFml)
+
+    tipado_parametros(muchas_exp(LPReal,Exp), muchas_pformal(LPFml, PFml)):
+        return ambos_ok(tipado_parametros(LPReal,LPFml), tipado_parametros(Exp,PFml))
+
+    tipado_parametros(una_exp(Exp), pformal_ref(Tipo,id)):
+        tipado(Exp)
+        if compatibles(Exp.tipo,Tipo.tipo) entonces
+            return ok
+        else
+            aviso-error(Tipo.tipo)
+            return error
+
+    tipado_parametros(una_exp(Exp), pformal_noref(Tipo,id)):
+        tipado(Exp)
+        if es-designador(Exp) ^ compatibles(Exp.tipo,Tipo.tipo) entonces
+            return ok
+        else
+            aviso-error(Tipo.tipo)
+            return error
 
     tipado(inst_nl()): $.tipo = nl
 
@@ -188,7 +250,7 @@
         tipado(Opnd1)
         if es-designador(Opnd0) then
             if compatibles(Opnd0.tipo, Opnd1.tipo) then
-                $.tipo = ok
+                $.tipo = Opnd0.tipo
             else 
                 aviso-error(Opnd0.tipo,Opnd1.tipo)
                 $.tipo = error
@@ -282,9 +344,9 @@
 
     tipado(exp_reg(Exp,id)):
         tipado(Exp)
-        let $.vinculo = Dec_var(T,I) in
+        let $.vinculo = var(T,I) in
             if ref!(Exp.tipo) == tipo_struct(T) then
-                return tipo_punt(T)
+                return T.tipo
             else 
                 return error
         end let
@@ -309,8 +371,12 @@
     tipado(exp_litCad(litCad)): $.tipo = literalCadena
 
     tipado(exp_iden(id)):
-        let $.vinculo = Dec_var(T,I) in
-            $.tipo = T
+        let $.vinculo = Dec in
+            if Dec = var(Tipo,id) v Dec = pformal_ref(Tipo,id) v Dec = pformal_noref(Tipo,id) then
+                $.tipo = Tipo
+            else
+                aviso-error(id)
+                $.tipo = error()
         end let
 
     tipado(exp_null()): $.tipo = null
@@ -334,7 +400,7 @@
 
     ref!(T):
         if T == Ref(I) then
-            let T.vinculo = Dec_tipo(T',I) in
+            let T.vinculo = Dec_type(Var(T',I)) in
                 return ref!(T')
             end let
         else
@@ -401,6 +467,16 @@
         let T1' = ref!(T1) ^ T2' = ref!(T2) in
             if T1' == T2' then
                 return true;
+            else if T1 == literalReal ^ (T2== literalEntero v T2==literalReal)) then
+            	return true;
+            else if T1 == tipo_array(T,literalEntero) ^ T2 == tipo_array(T,literalEntero) then
+            	return true;
+            else if T1 == tipo_struct(LVar) ^ T2 == tipo_struct(LVar) then
+            	return true;
+            else if T1== tipo_punt(T) ^ T2== null then
+            	return true;
+            else if  T1== tipo_punt(T) ^ T2 == tipo_punt(T) then
+            	return true;
             else
                 return false
             end if
