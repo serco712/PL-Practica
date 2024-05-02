@@ -239,6 +239,9 @@ public class SintaxisAbstractaTiny {
        public String valor(){throw new UnsupportedOperationException(); }
        public String id(){throw new UnsupportedOperationException(); }
 
+       public boolean esDesignador() { 
+    	   return false; 
+       }
        public Nodo getVinculo(){
         throw new UnsupportedOperationException("Vinculo erróneo");
        }
@@ -1117,6 +1120,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
      }
     
      public static class Exp_menor extends Exp{
@@ -1139,6 +1146,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
      }
     
      public static class Exp_menIgual extends Exp{
@@ -1161,6 +1172,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
      }
     
      public static class Exp_mayor extends Exp{
@@ -1183,6 +1198,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
      }
     
     public static class Exp_mayIgual extends Exp{
@@ -1205,6 +1224,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
      }
     
     public static class Exp_igual extends Exp{
@@ -1227,6 +1250,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
      }
     
     public static class Exp_dist extends Exp{
@@ -1249,6 +1276,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
      }
     
     public static class Exp_suma extends Exp{
@@ -1271,6 +1302,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
      }
     
     public static class Exp_resta extends Exp{
@@ -1293,6 +1328,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
      }
     
     public static class Exp_mult extends Exp{
@@ -1315,6 +1354,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
      }
     
     public static class Exp_div extends Exp{
@@ -1337,6 +1380,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
      }
     public static class Exp_mod extends Exp{
         private Exp exp1;
@@ -1358,6 +1405,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
      }
   
   public static class Exp_and extends Exp{
@@ -1380,6 +1431,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
      }
 
 	public static class Exp_or extends Exp{
@@ -1402,6 +1457,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
      }
      
     public static class Exp_menos extends Exp{
@@ -1422,6 +1481,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
      }
      
     public static class Exp_not extends Exp{
@@ -1442,6 +1505,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
      }
     
      public static class Exp_index extends Exp{
@@ -1467,6 +1534,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
     }
     
      public static class Exp_reg extends Exp{

@@ -172,7 +172,7 @@ public class Etiquetado implements Procesamiento{
         exp.lpr().procesa(this);
         etq++;
         exp.exp().procesa(this);
-        exp.exp().procesa_acc_val(this);
+    	etiquetado_acc_val(exp.exp());
         etq++;
         exp.sig = etq;
     }
@@ -184,23 +184,281 @@ public class Etiquetado implements Procesamiento{
         exp.sig = etq;
     }
 
-    public void procesa(Inst_eval exp){
-        exp.prim = etq;
-        exp.exp().procesa(this);
+    public void procesa(Inst_eval inst){
+    	inst.prim = etq;
+    	inst.exp().procesa(this);
         etq = etq +2;
-        exp.sig = etq;
+        inst.sig = etq;
     }
 
-    public void procesa(Inst_eval exp){
+    public void procesa(Inst_if inst){
+    	inst.prim = etq;
+    	inst.exp().procesa(this);
+    	etiquetado_acc_val(inst.exp());
+        etq++;
+        inst.bloq().procesa(this);
+        etq++;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Inst_else inst){
+    	inst.prim = etq;
+    	inst.exp().procesa(this);
+    	etiquetado_acc_val(inst.exp());
+        etq++;
+        inst.bloq1().procesa(this);
+        etq++;
+        inst.bloq2().procesa(this);
+        etq++;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Inst_while inst){
+    	inst.prim = etq;
+    	inst.exp().procesa(this);
+    	etiquetado_acc_val(inst.exp());
+        etq++;
+        inst.bloq().procesa(this);
+        etq++;
+        inst.sig = etq;
+    }
+
+    public void procesa(Inst_new inst){
+    	inst.prim = etq;
+    	inst.exp().procesa(this);
+        etq = etq +2;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Inst_delete inst){
+    	inst.prim = etq;
+    	inst.exp().procesa(this);
+        etq = etq +2;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Inst_read inst){
+    	inst.prim = etq;
+    	inst.exp().procesa(this);
+        etq = etq +2;
+        inst.sig = etq;
+    }
+
+    public void procesa(Inst_write inst){
+    	inst.prim = etq;
+    	inst.exp().procesa(this);
+        etq = etq +2;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Inst_call inst){
+    	inst.prim = etq;
+    	etq++;
+    	//TODO
+    	etiquetado_paso_param(inst.vincula(),inst.pr());
+        etq++;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Inst_nl inst){}
+    
+
+    public void procesa(Inst_blo inst){
+    	inst.prim = etq;
+    	inst.bloq().procesa(this);
+        inst.sig = etq;
+    }
+    
+    public void procesa(Exp_asig exp){
+    	inst.prim = etq;
+    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etq++;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Exp_menor exp){
+    	inst.prim = etq;
+    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etq++;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Exp_menIgual exp){
+    	inst.prim = etq;
+    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etq++;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Exp_mayor exp){
+    	inst.prim = etq;
+    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etq++;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Exp_mayIgual exp){
+    	inst.prim = etq;
+    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etq++;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Exp_igual exp){
+    	inst.prim = etq;
+    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etq++;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Exp_dist exp){
+    	inst.prim = etq;
+    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etq++;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Exp_suma exp){
+    	inst.prim = etq;
+    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etq++;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Exp_resta exp){
+    	inst.prim = etq;
+    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etq++;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Exp_mult exp){
+    	inst.prim = etq;
+    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etq++;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Exp_div exp){
+    	inst.prim = etq;
+    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etq++;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Exp_mod exp){
+    	inst.prim = etq;
+    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etq++;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Exp_and exp){
+    	inst.prim = etq;
+    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etq++;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Exp_or exp){
+    	inst.prim = etq;
+    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etq++;
+        inst.sig = etq;
+    }
+    
+    public void procesa(Exp_menos exp){
         exp.prim = etq;
         exp.exp().procesa(this);
-        exp.exp().procesa_acc_val(this);
-        etq++;
-        exp.bloq().procesa(this);
+    	etiquetado_acc_val(exp.exp());
+        exp.sig = etq;
+    }
+    
+    public void procesa(Exp_not exp){
+        exp.prim = etq;
+        exp.exp().procesa(this);
+    	etiquetado_acc_val(exp.exp());
+    	etq = etq+2;
+        exp.sig = etq;
+    }
+    
+    public void procesa(Exp_index exp){
+        exp.prim = etq;
+        etiquetado_opnds(exp.exp1(),exp.exp2());
         etq++;
         exp.sig = etq;
     }
-
-
-
+    
+    public void procesa(Exp_reg exp){
+        exp.prim = etq;
+        etq++;
+        exp.exp().procesa(this);
+        etq++;
+        exp.sig = etq;
+    }
+    
+    public void procesa(Exp_indir exp){
+        exp.prim = etq;
+        exp.exp().procesa(this);
+        etq++;
+        exp.sig = etq;
+    }
+    
+    public void procesa(Exp_true exp){}
+    
+    public void procesa(Exp_false exp){}
+    
+    public void procesa(Exp_litEnt exp){
+        exp.prim = etq;
+        etq++;
+        exp.sig = etq;
+    }
+    
+    public void procesa(Exp_litReal exp){
+        exp.prim = etq;
+        etq++;
+        exp.sig = etq;
+    }
+    
+    public void procesa(Exp_litCadena exp){
+        exp.prim = etq;
+        etq++;
+        exp.sig = etq;
+    }
+    
+    public void procesa(Exp_iden exp){
+        exp.prim = etq;
+        if(exp.nivel == 0) {
+        	etq++;
+        }
+        else {
+        	etq = etq +3;
+        }
+        exp.sig = etq;
+    }
+    
+    public void procesa(Exp_null exp){}
+    
+    public void etiquetado_opnds(Exp exp1,Exp exp2) {
+    	exp1.procesa(this);
+    	etiquetado_acc_val(exp1);
+    	exp2.procesa(this);
+    	etiquetado_acc_val(exp2);
+    }
+    
+    public void etiquetado_acc_val(Exp exp) {
+    	if(exp.esDesignador()) {
+    		etq++;
+    	}
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
