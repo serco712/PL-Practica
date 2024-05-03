@@ -243,40 +243,64 @@ public class Comprobacion_tipos {
             //error
         }
 	}
-    public void proceas(inst_call instr){
+    
+    public void procesa(inst_call instr){
+        Dec_proc p = (Dec_proc)instr.getVinculo();
+        
+        if (p == null) {
+        	ok &= false;
+        	instr.setOk(false);
+        }
+        else {
+        	instr.setTipado(tipado_parametros(instr.pr().procesa(this), p.par_for().procesa(this)));
+        }
+        if (instr.getTipado() == Tipado.error) {
+        	ok &= false;
+        	instr.setOk(false);
+        }
+        
         instr.id().procesa(this);
         instr.pr().procesa(this);
     }   
-     
-    tipado(inst_call(id,PReales)):
-        if $.vinculo == dec_proc(id, PFmls, Blo) then
-            if num_elems(PReales) != num_elems(PFmls)
-                $.tipo = error
-            else
-                tipado_parametros(PReales, PFmls)
-            end if
-        else 
-            $.tipo = error
-        end if
-        tipado(PReales)
-        $.tipo = ok
+    
+    public Tipado tipado_parametros(No_preales preales, No_pformal pfmls) {
+        return Tipado.ok;
+    }
+    
+    public Tipado tipado_parametros(Si_preales preales, Si_pformal pfmls) {
+        return tipado_parametros(preales.lpr().procesa(this), pfmls.lpfml().procesa(this));
+    }
 
-    tipado_parametros(no_preales(), no_pformal()):
-        return ok
+    public Tipado tipado_parametros(Muchas_exp lpreal, Muchos_pformal pfmls) {
+        return tipado_parametros(preales.lpr().procesa(this), pfmls.lpfml().procesa(this)) == Tipado.ok &&
+        		tipado_parametros(preales.exp().procesa(this), pfmls.pfml().procesa(this)) == Tipado.ok;
+    }
+    
+    public Tipado tipado_parametros(Una_exp e, Pformal_ref pfml) {
+    	e.exp().procesa(this);
+    	if (compatibles(e.getTipado(), pfml.tipo().getTipado())) 
+    		return Tipado.ok;
+    	else {
+    		//error
+    		return Tipado.error;
+    	}
+    }
 
-    tipado_parametros(si_preales(LPReal), si_pformal(LPFml)):
-        return tipado_paramentros(LPReal, LPFml)
+	public Tipado tipado_parametros(Una_exp e, Pformal_noref pfml) {
+    	e.exp().procesa(this);
+    	if (e.esDesignador() && compatibles(e.getTipado(), pfml.tipo().getTipado())) 
+    		return Tipado.ok;
+    	else {
+    		//error
+    		return Tipado.error;
+    	}
+    }
+            		
+	public void procesa(Inst_nl inst) {}
 
-    tipado_parametros(muchas_exp(LPReal,Exp), muchas_pformal(LPFml, PFml)):
-        return ambos_ok(tipado_parametros(LPReal,LPFml), tipado_parametros(Exp,PFml))
-
-    tipado_parametros(una_exp(Exp), pformal_ref(Tipo,id)):
-        tipado(Exp)
-        if compatibles(Exp.tipo,Tipo.tipo) entonces
-            return ok
-        else
-            aviso-error(Tipo.tipo)
-            return error
+	public void procesa(Inst_blo inst) {
+        inst.bloq().procesa(this);		
+	}
 
     public void procesa(exp_asig exp){
         exp.opnd0().procesa(this);
@@ -291,64 +315,65 @@ public class Comprobacion_tipos {
                 //error  
             } 
         }
-        else
+        else {
             ok &= false;
             exp.setOk(false);
             //error
+        }
    }
 
 	public void procesa(exp_menor exp){
         exp.opnd0().procesa(this);
         exp.opnd1().procesa(this);
-        tipado_bin2(exp, exp.opnd0(), exp.opnd1());
+        exp.setTipado(tipo_bin2(exp, exp.opnd0(), exp.opnd1()));
     }
     public void procesa(exp_menIgual exp){
         exp.opnd0().procesa(this);
         exp.opnd1().procesa(this);
-        tipado_bin2(exp, exp.opnd0(), exp.opnd1());
+        exp.setTipado(tipo_bin2(exp, exp.opnd0(), exp.opnd1()));
     }
     public void procesa(exp_mayor exp){
         exp.opnd0().procesa(this);
         exp.opnd1().procesa(this);
-        tipado_bin2(exp, exp.opnd0(), exp.opnd1());
+        exp.setTipado(tipo_bin2(exp, exp.opnd0(), exp.opnd1()));
     }
     public void procesa(exp_mayIgual exp){
         exp.opnd0().procesa(this);
         exp.opnd1().procesa(this);
-        tipado_bin2(exp, exp.opnd0(), exp.opnd1());
+        exp.setTipado(tipo_bin2(exp, exp.opnd0(), exp.opnd1()));
     }
 	public void procesa(exp_igual exp){
         exp.opnd0().procesa(this);
         exp.opnd1().procesa(this);
-        tipado_bin3(exp, exp.opnd0(), exp.opnd1());
+        exp.setTipado(tipo_bin3(exp, exp.opnd0(), exp.opnd1()));
     }
   
     public void procesa(exp_dist exp){
         exp.opnd0().procesa(this);
         exp.opnd1().procesa(this);
-        tipado_bin3(exp, exp.opnd0(), exp.opnd1());
+        exp.setTipado(tipo_bin3(exp, exp.opnd0(), exp.opnd1()));
     }
     public void procesa(exp_sum exp){
         exp.opnd0().procesa(this);
         exp.opnd1().procesa(this);
-        tipado_bin1(exp, exp.opnd0(), exp.opnd1());
+        exp.setTipado(tipo_bin1(exp.opnd0(), exp.opnd1()));
     }
     public void procesa(exp_resta exp){
         exp.opnd0().procesa(this);
         exp.opnd1().procesa(this);
-        tipado_bin1(exp, exp.opnd0(), exp.opnd1());
+        exp.setTipado(tipo_bin1(exp, exp.opnd0(), exp.opnd1()));
     }
 
     public void procesa(exp_mult exp){
         exp.opnd0().procesa(this);
         exp.opnd1().procesa(this);
-        tipado_bin1(exp, exp.opnd0(), exp.opnd1());
+        exp.setTipado(tipo_bin1(exp, exp.opnd0(), exp.opnd1()));
     }
 
     public void procesa(exp_div exp){
         exp.opnd0().procesa(this);
         exp.opnd1().procesa(this);
-        tipado_bin1(exp, exp.opnd0(), exp.opnd1());
+        exp.setTipado(tipo_bin1(exp, exp.opnd0(), exp.opnd1()));
     }
 	public void procesa(exp_mod exp){
         exp.opnd0().procesa(this);
@@ -368,10 +393,7 @@ public class Comprobacion_tipos {
         	exp.setTipado(Type.error);
     	}
     }
-   
-	
-
-      
+         
     public void procesa(Exp_menos menos) {
         menos.exp1().procesa(this);
         if (menos.exp1().getTipado() != Tipado.literalEntero && menos.exp1().getTipado() != Tipado.literalReal) {
@@ -461,83 +483,95 @@ public class Comprobacion_tipos {
 	}
 
 
-    tipado-bin1(E0,E1,E):
-        tipado(E0)
-        tipado(E1)
-        E.tipo = tipo-bin1(E0.tipo,E1.tipo)
+    private Tipado tipo_bin1(Tipado t0, Tipado t1) {
+    	if (compatibles(t0,t1)) 
+    		return t0;
+    	else if (t1 == Tipado.literalReal) {
+    		if (t0 == Tipado.literalReal || t0 == Tipado.literalEntero)
+    			return Tipado.literalReal;
+    		else 
+    			return Tipado.error;
+    	}    	
+    	else if (t0 == Tipado.literalReal) {
+    		if (t1 == Tipado.literalReal || t1 == Tipado.literalEntero)
+    			return Tipado.literalReal;
+    		else 
+    			return Tipado.error;
+    	}
+    	else 
+    		return Tipado.error;
+    }
 
-    tipo-bin1(T0,T1):
-        if compatibles(T0,T1)  then
-            return T0
-        else if ref!(T1) == literalReal then
-            if ref!(T0) == literalReal v ref!(T0) == literalEntero then
-                return literalEntero
-            else 
-                aviso-error(T0,T1)
-                return error
-            end if
+    private Tipado tipo_bin2(Tipado t0, Tipado t1) {
+    	if ((t0 == Tipado.literalReal || t0 == Tipado.literalEntero) && (t1 == Tipado.literalReal || t0 == Tipado.literalEntero))
+    		return Tipado.bool;
+    	else if (t0 == Tipado.bool && t1 == Tipado.bool)
+    		return Tipado.bool;
+    	else if (t0 == Tipado.literalCadena && t1 == Tipado.literalCadena)
+    		return Tipado.bool;
+    	else
+    		return Tipado.error;
+    }
+
+
+    private Tipado tipo_bin3(Tipado t0, Tipado t1) {
+    	 if ((t0 == Tipado.literalReal || t0 == Tipado.literalEntero) && (t1 == Tipado.literalReal || t0 == Tipado.literalEntero))
+     		return Tipado.bool;
+     	else if (t0 == Tipado.bool && t1 == Tipado.bool)
+     		return Tipado.bool;
+     	else if (t0 == Tipado.literalCadena && t1 == Tipado.literalCadena)
+     		return Tipado.bool;
+        else if ((t0 == Tipado.tipoPuntero || t0 == Tipado.nl) && (t1 == Tipado.tipoPuntero || t1 == Tipado.nl))
+            return Tipado.bool;
         else
-            aviso-error(T0,T1)
-            return error
-        end if
+            return Tipado.error;
+    }
 
-    tipado-bin2(E0,E1,E):
-        tipado(E0)
-        tipado(E1)
-        E.tipo = tipo-bin2(E0.tipo,E1.tipo)
+    private boolean compatibles(Tipado t1, Tipado t2) {
+    	if (t1 == t2)
+            return true;
+        else if (t1 == Tipado.literalReal && t2 == TipadoliteralEntero)
+        	return true;
+        else if (t1 == Tipado.tipoArray && t1 == Tipado.tipoArray) {
+        	Tipo_array a1 = (Tipo_array)t1;
+        	Tipo_array a2 = (Tipo_array)t2;
+        	if (a1.getTam() != a2.getTam())
+        		return false;
+        	else 
+        		return true;
+        }
+        else if (t1 == Tipado.tipoStruct && t2 == Tipado.tipoStruct) {
+        	Tipo struct s1 = (Tipo_struct)t1;
+        	Tipo struct s2 = (Tipo_struct)t2;
+        	Map<String,Node> r1 = s1.accedeReg();
+        	Map<String,Node> r2 = s1.accedeReg();
 
-    private Tipado tipo-bin2(T0,T1):
-        if (ref!(T0) == literalReal v ref!(T0) == literalEntero) ^ (ref!(T1) == literalReal v ref!(T1) == literalEntero) then
-            return bool
-        else if ref!(T0) == bool ^ ref!(T1) == bool then
-            return bool
-        else if ref!(T0) == literalCadena v ref!(T1) == literalCadena then 
-            return bool
+        	if (r1 == null || r2 == null || r1.size() != r2.size())
+        		return false;
+        	
+            for (String id : r1.keySet()) {
+                if (!r2.containsKey(id)) {
+                    return false;
+                }
+                if (r1.get(id).tipo().getTipado() != r2.get(id).tipo().getTipado()) {
+                    return false;
+                }
+            }
+        	
+        	return true;
+        }
+        else if (t1 == Tipado.tipoPuntero && t2 == Tipado.nl)
+        	return true;
+        else if (t1 == Tipado.tipoPuntero && t2 == Tipado.tipoPuntero) {
+        	Tipo_punt p1 = (Tipo_punt)t1;
+        	Tipo_punt p2 = (Tipo_punt)t2;
+        	if (p1.tipo().getTipado() != p2.tipo().getTipado())
+        		return false;
+        	else 
+        		return true;
+        }
         else
-            aviso-error(T0,T1)
-            return error
-        end if
+            return false;
+    }
 
-    tipado-bin3(E0,E1,E):
-        tipado(E0)
-        tipado(E1)
-        E.tipo = tipo-bin3(E0.tipo,E1.tipo)
-
-     tipo-bin3(T0,T1):
-        if (ref!(T0) == literalReal v ref!(T0) == literalEntero) ^ (ref!(T1) == literalReal v ref!(T1) == literalEntero) then
-            return bool
-        else if ref!(T0) == bool ^ ref!(T1) == bool then
-            return bool
-        else if ref!(T0) == literalCadena v ref!(T1) == literalCadena then 
-            return bool
-        else if (ref!(T0) == tipo_punt(T) v ref!(T0) == null) ^ (ref!(T1) == tipo_punt(T) v ref!(T1) == null) then
-            return bool
-        else
-            aviso-error(T0,T1)
-            return error
-        end if
-
-     compatibles(T1,T2):
-        let T1' = ref!(T1) ^ T2' = ref!(T2) in
-            if T1' == T2' then
-                return true;
-            else if T1 == literalReal ^ (T2== literalEntero v T2==literalReal)) then
-            	return true;
-            else if T1 == tipo_array(T,literalEntero) ^ T2 == tipo_array(T,literalEntero) then
-            	return true;
-            else if T1 == tipo_struct(LVar) ^ T2 == tipo_struct(LVar) then
-            	return true;
-            else if T1== tipo_punt(T) ^ T2== null then
-            	return true;
-            else if  T1== tipo_punt(T) ^ T2 == tipo_punt(T) then
-            	return true;
-            else
-                return false
-            end if
-        end let
-
-     esDesignador(E):
-        return E = id(v) v E = elem1(E') v E = elem2(E')
-    
-    } 
 }

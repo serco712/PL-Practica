@@ -261,34 +261,34 @@
         end if
 
     tipado(exp_menor(Opnd0,Opnd1)):
-        tipado-bin2(Opnd0,Opnd1)
+        tipado-bin2(Opnd0,Opnd1,$)
 
     tipado(exp_menIgual(Opnd0,Opnd1)):
-        tipado-bin2(Opnd0,Opnd1)
+        tipado-bin2(Opnd0,Opnd1,$)
 
     tipado(exp_mayor(Opnd0,Opnd1)):
-        tipado-bin2(Opnd0,Opnd1)
+        tipado-bin2(Opnd0,Opnd1,$)
 
     tipado(exp_mayIgual(Opnd0,Opnd1)):
-        tipado-bin2(Opnd0,Opnd1)
+        tipado-bin2(Opnd0,Opnd1,$)
 
     tipado(exp_igual(Opnd0,Opnd1)):
-        tipado-bin3(Opnd0,Opnd1)
+        tipado-bin3(Opnd0,Opnd1,$)
 
     tipado(exp_dist(Opnd0,Opnd1)):
-        tipado-bin3(Opnd0,Opnd1)
+        tipado-bin3(Opnd0,Opnd1,$)
 
     tipado(exp_sum(Opnd0,Opnd1)):
-        tipado-bin1(Opnd0,Opnd1)
+        tipado-bin1(Opnd0,Opnd1,$)
 
     tipado(exp_resta(Opnd0,Opnd1)):
-        tipado-bin1(Opnd0,Opnd1)
+        tipado-bin1(Opnd0,Opnd1,$)
 
     tipado(exp_mult(Opnd0,Opnd1)):
-        tipado-bin1(Opnd0,Opnd1)
+        tipado-bin1(Opnd0,Opnd1,$)
 
     tipado(exp_div(Opnd0,Opnd1)):
-        tipado-bin1(Opnd0,Opnd1)
+        tipado-bin1(Opnd0,Opnd1,$)
 
     tipado(exp_mod(Opnd0,Opnd1)):
         tipado(Opnd0)
@@ -417,13 +417,17 @@
             return T0
         else if ref!(T1) == literalReal then
             if ref!(T0) == literalReal v ref!(T0) == literalEntero then
-                return literalEntero
+                return literalReal
             else 
-                aviso-error(T0,T1)
+                return error
+            end if
+        else if ref!(T0) == literalReal then
+            if ref!(T1) == literalReal v ref!(T1) == literalEntero then
+                return literalReal
+            else 
                 return error
             end if
         else
-            aviso-error(T0,T1)
             return error
         end if
 
@@ -437,10 +441,9 @@
             return bool
         else if ref!(T0) == bool ^ ref!(T1) == bool then
             return bool
-        else if ref!(T0) == literalCadena v ref!(T1) == literalCadena then 
+        else if ref!(T0) == literalCadena ^ ref!(T1) == literalCadena then 
             return bool
         else
-            aviso-error(T0,T1)
             return error
         end if
 
@@ -454,12 +457,11 @@
             return bool
         else if ref!(T0) == bool ^ ref!(T1) == bool then
             return bool
-        else if ref!(T0) == literalCadena v ref!(T1) == literalCadena then 
+        else if ref!(T0) == literalCadena ^ ref!(T1) == literalCadena then 
             return bool
         else if (ref!(T0) == tipo_punt(T) v ref!(T0) == null) ^ (ref!(T1) == tipo_punt(T) v ref!(T1) == null) then
             return bool
         else
-            aviso-error(T0,T1)
             return error
         end if
 
