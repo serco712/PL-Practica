@@ -258,30 +258,6 @@
         if es_designador(ref!(E)) then
             emit apilaInd()
         end if
-
-    gen_acc_id(dec_var(T,id)):
-        if $.nivel = 0 then
-            emit apilaInt($.vinculo.dir)
-        else
-            gen_acc_var($)
-        end if
-    
-    gen_acc_id(pval(T,id)):
-        gen_acc_var($)
-       
-    gen_acc_id(pref(T,id)):
-        gen_acc_var($)
-        emit apila_ind()
-    
-    gen_acc_var(V):
-        emit apilad(V.nivel)
-        emit apilaInt(V.dir)
-        emit suma()
-       
-    gen_acc_val(E):
-        if es_designador(E) then
-            emit apilaInd
-        end if
     
     gen_paso_PFml(proc(id,PFml,Decs,Is),PReal):
         emit dup
