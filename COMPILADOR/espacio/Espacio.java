@@ -65,10 +65,11 @@ public class Espacio {
     }
 
     public void asigEspacio1(Var v) {
-        v.dir = dir;
-        v.nivel = nivel;
+        //v.setDir(dir);
+        //v.setNivel(nivel);
         asigEspacioTipo(v.tipo());
-        dir = dir + v.tipo().tam;
+        v.setDesplaza(v.tipo().getEspacio());
+        dir = dir + v.tipo().getEspacio();
     }
 
     public void asigEspacio2(Var v) {}
@@ -92,7 +93,7 @@ public class Espacio {
     public void asigEspacio1(Dec_proc d) {
        int aux = dir;
        nivel++;
-       d.nivel = nivel;
+       d.setNivel(nivel);
        dir = 0;
        asigEspacio1(d.par_for());
        asigEspacio1(d.bloq());
@@ -107,14 +108,14 @@ public class Espacio {
     }
 
     public void asigEspacioTipo(Tipo t){
-        if(t.tam == null){
+        if(t.getEspacio() == null){
             asigEspacioTipo1(t);
             asigEspacioTipo2(t);
         }
 
     }
     public void asigEspacioTipo1(Tipo_array t) {
-        t.tam = t.litEnt().tam;
+        t.setEspacio(t.litEnt().getEspacio());
         if (t.tipo().getClass() != Tipo_ident.class) {
             asigEspacioTipo1(t);
         }
@@ -123,66 +124,73 @@ public class Espacio {
     public void asigEspacio2(Tipo_array t) {
         if (t.tipo().getClass() == Tipo_ident.class) {
             if (t.tipo().getClass().getVinculo() == Dec_type.class){
-               asigEspacioTipo(Dec_type.tam);
+               asigEspacioTipo(Dec_type.getEspacio());
             }
-            t.tam = t.litEnt().tam *Dec_type.tam;
+            t.setEspacio(t.litEnt().getEspacio()*Dec_type.getEspacio());
         }
     }
 
     public void asigEspacioTipo1(Tipo_punt t) {
-        t.tam = 1;
+        t.setEspacio(1);
         if (t.tipo().getClass() != Tipo_ident.class)
             asigEspacioTipo1(t.tipo());
     }
 
     public void asigEspacio2(Tipo_punt t) {
         if (t.tipo().getClass() == Tipo_ident.class) {
-            if (t.tipo().getClass().getVinculo() == Dec_type.class){
-               asigEspacioTipo(Dec_type.tam);
+            if (t.tipo().getVinculo() == Dec_type.class){
+               asigEspacioTipo(Dec_type.getEspacio());
             }
-             t.tam = Dec_type.tam;
+            t.setEspacio(Dec_type.getEspacio());
         }
 
     }
 
     public void asigEspacioTipo1(Tipo_bool t) {
-        t.tam = 1;
+        t.setEspacio(1);
      }
 
     public void asigEspacioTipo2(Tipo_bool t) { }
 
     public void asigEspacioTipo1(Tipo_int t) { 
-        t.tam = 1;
+        t.setEspacio(1);
     }
 
     public void asigEspacioTipo2(Tipo_int t) { }
 
     public void asigEspacioTipo1(Tipo_real t) { 
-        t.tam = 1;
+        t.setEspacio(1);
     }
 
     public void asigEspacioTipo2(Tipo_real t) { }
 
     public void asigEspacioTipo1(Tipo_string t) {
-        t.tam = 1;
+        t.setEspacio(1);
     }
 
     public void asigEspacioTipo2(Tipo_string t) { }
 
     public void asigEspacioTipo1(Tipo_ident t) {
-        asigEspacioTipo1(t.getClass().getVinculo());
-        if (t.getClass().getVinculo() != Dec_type.class){
-            t.tam = Dec_type.tam;
+        asigEspacioTipo1(t.getVinculo());
+        if (t.getVinculo() != Dec_type.class){
+            t.setEspacio(Dec_type.getEspacio());
         }
            
     }
 
     public void asigEspacioTipo2(Tipo_ident t) { }
 
-    public void asigEspacio(Tipo_struct t) {
-         asigEspacio(t.vars());
+    public void asigEspacio1(Tipo_struct t) {
+         int dir_ant = dir;
+         dir = 0;
+         asigEspacio1(t.vars());
+         t.setEspacio(dir);
+         dir = dir_ant;
     }
 
+  	public void asigEspacio2(Tipo_struct t) {
+        asigEspacio2(t.vars());
+    }
     public void asigEspacio(Si_inst i) {
         asigEspacio(i.insts());
     }
@@ -229,10 +237,10 @@ public class Espacio {
     }
 
     public void asigEspacio1(Pformal_ref pf) {
-        pf.dir = dir;
-        pf.nivel = nivel;
+        pf.setDir(dir);
+        pf.setNivel(nivel);
         asigEspacioTipo(pf.tipo());
-        dir = dir + pf.tipo().tam;
+        dir = dir + pf.tipo().getEspacio();
     }
 
     public void asigEspacio2(Pformal_ref pf) {
@@ -240,10 +248,10 @@ public class Espacio {
     }
 
     public void asigEspacio1(Pformal_noref pf) {
-        pf.dir = dir;
-        pf.nivel = nivel;
+        pf.setDir(dir);
+        pf.setNivel(nivel);
         asigEspacioTipo(pf.tipo());
-        dir = dir + pf.tipo().tam;
+        dir = dir + pf.tipo().getEspacio();
     }
 
     public void asigEspacio2(Pformal_noref pf) {
@@ -380,9 +388,9 @@ public class Espacio {
     }
 
     public void asigEspacio(Exp_reg exp) {
-        asigEspacio(exp.getClass().getVinculo());
-        if (exp.getClass().getVinculo() == Tipo_struct.class){
-            exp.tam = Tipo_struct.tam;
+        asigEspacio(exp.getVinculo());
+        if (exp.getVinculo() == Tipo_struct.class){
+            exp.setEspacio(Tipo_struct.getEspacio());
         }
     }
 
@@ -402,9 +410,9 @@ public class Espacio {
     public void asigEspacio(Exp_litCadena exp) { }
 
     public void asigEspacio(Exp_iden exp) {
-        asigEspacio(exp.getClass().getVinculo());
-        if (exp.getClass().getVinculo() == Dec_type.class){
-            exp.tam = Dec_type.tam;
+        asigEspacio(exp.getVinculo());
+        if (exp.getVinculo() == Dec_type.class){
+            exp.setEspacio(Dec_type.getEspacio());
         }
     }
 

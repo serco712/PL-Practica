@@ -1,5 +1,7 @@
 package maquinap;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -148,7 +150,7 @@ public class MaquinaP {
          if (opnd1.esInt())
             pilaEvaluacion.push(new ValorInt(opnd1.valorInt()+opnd2.valorInt()));
          else
-            pilaEvaluacion.push(new ValorReal(opnd1.valorReal()+opnd2.valorReal()));
+            pilaEvaluacion.push(new ValorReal(opnd1.valorReal()+opnd2.valorReal())); 
          pc++;
       } 
       public String toString() {return "suma";};
@@ -166,6 +168,7 @@ public class MaquinaP {
       } 
       public String toString() {return "resta";};
    }
+   
    private IMul IMUL;
    private class IMul implements Instruccion {
       public void ejecuta() {
@@ -179,6 +182,7 @@ public class MaquinaP {
       } 
       public String toString() {return "mul";};
    }
+   
    private IDiv IDIV;
    private class IDiv implements Instruccion {
       public void ejecuta() {
@@ -186,7 +190,7 @@ public class MaquinaP {
          Valor opnd1 = pilaEvaluacion.pop();
          if (opnd1.esInt())
             pilaEvaluacion.push(new ValorInt(opnd1.valorInt()/opnd2.valorInt()));
-         else
+         else 
             pilaEvaluacion.push(new ValorReal(opnd1.valorReal()/opnd2.valorReal()));
          pc++;
       } 
@@ -293,7 +297,7 @@ public class MaquinaP {
             pilaEvaluacion.push(new ValorReal(-opnd1.valorReal()));
          pc++;
       } 
-      public String toString() {return "suma";};
+      public String toString() {return "menos";};
    }
    private INot INOT;
    private class INot implements Instruccion {
@@ -327,6 +331,43 @@ public class MaquinaP {
       } 
       public String toString() {return "apila-bool("+valor+")";};
    }
+   
+   private class IApilaReal implements Instruccion {
+      private double valor;
+      public IApilaReal(int valor) {
+        this.valor = valor;  
+      }
+      public void ejecuta() {
+         pilaEvaluacion.push(new ValorReal(valor)); 
+         pc++;
+      } 
+      public String toString() {return "apilaReal("+valor+")";};
+   }
+   
+   private class IApilaCadena implements Instruccion {
+      private String valor;
+      public IApilaCadena(String valor) {
+        this.valor = valor;  
+      }
+      public void ejecuta() {
+         pilaEvaluacion.push(new ValorCadena(valor)); 
+         pc++;
+      } 
+      public String toString() {return "apilaReal("+valor+")";};
+   }
+   
+   private IInt2Real() IINT2REAL;
+   private class IInt2Real implements Instruccion {
+      public void ejecuta(){   
+         Valor valor = pilaEvaluacion.peek();  
+         
+         if(valor.esInt()){
+             pilaEvaluacion.pop();
+             pilaEvaluacion.push(new ValorReal((double)valor.valorInt()));
+             pc++;
+         }
+      }
+   }
 
    private class IIrA implements Instruccion {
       private int dir;
@@ -355,6 +396,23 @@ public class MaquinaP {
       public String toString() {return "ir-f("+dir+")";};
    }
    
+   private class IIrV implements Instruccion {
+      private int dir;
+      public IIrV(int dir) {
+        this.dir = dir;  
+      }
+      public void ejecuta() {
+         if(pilaEvaluacion.pop().valorBool()) { 
+            pc=dir;
+         }   
+         else {
+            pc++; 
+         }
+      } 
+      public String toString() {return "ir-v("+dir+")";};
+   }
+   
+   
    private class ICopia implements Instruccion {
       private int tam;
       public ICopia(int tam) {
@@ -372,6 +430,15 @@ public class MaquinaP {
             pc++;
       } 
       public String toString() {return "copia("+tam+")";};
+   }
+   
+   private IDesapila IDESAPILA;
+   private class IDesapila implements Instruccion {
+      public void ejecuta(){
+         Valor val = pilaEvaluacion.pop();
+         pc++;
+      }
+      public String toString() {return "desapila";};     
    }
    
    private IApilaind IAPILAIND;
@@ -396,6 +463,25 @@ public class MaquinaP {
         pc++;
       } 
       public String toString() {return "desapila-ind";};
+   }
+
+private class IMueve implements Instruccion {
+      private int tam;
+      public IMueve(int tam) {
+        this.tam = tam;  
+      }
+      public void ejecuta() {
+            int dirOrigen = pilaEvaluacion.pop().valorInt();
+            int dirDestino = pilaEvaluacion.pop().valorInt();
+            if ((dirOrigen + (tam-1)) >= datos.length)
+                throw new EAccesoFueraDeRango();
+            if ((dirDestino + (tam-1)) >= datos.length)
+                throw new EAccesoFueraDeRango();
+            for (int i=0; i < tam; i++) 
+                datos[dirDestino+i] = datos[dirOrigen+i]; 
+            pc++;
+      } 
+      public String toString() {return "mueve("+tam+")";};
    }
 
    private class IAlloc implements Instruccion {
@@ -513,6 +599,15 @@ public class MaquinaP {
 
    }
    
+   private INl INL;
+   private class INl implements Instruccion {
+      public void ejecuta(){
+         System.out.println("");
+         pc++;
+      }
+      public String toString() {return "nl";};
+   } 
+   
    private Instruccion IIRIND;
    private class IIrind implements Instruccion {
        public void ejecuta() {
@@ -522,26 +617,94 @@ public class MaquinaP {
           return "ir-ind";                 
        }
    }
+   
+   private IWrite IWRITE;
+   private class IWrite implements Instruccion{
+      
+      public void ejecuta(){
+         valor v
+      }
+      
+      
+      
+   }
+   
+   private IRead IREAD;
+   private class IRead implements Instruccion {
+      BufferedReader reader = new BufferedReader(new inputStreamReader(System.in));
+      
+      String str ="";
+      
+      try{
+         str=reader.readLine();
+      } catch(IOException e){
+         e.printStackTrace();
+      }
+      
+      try{
+         int i = Integer.parseInt(str);
+         pìlaEvaluacion.push(new ValorInt(i));
+      } catch(Exception e){
+         
+         try{
+          	  
+            double d= Double.parseDouble(str);
+            pilaEvaluacion.push(new ValorReal(d)));
+         } catch(Exception e1){
+            
+            pilaEvaluacion.push(new ValorCadena(str));
+         }
+      }
+      pc++;
+   }
+   
 
    public Instruccion suma() {return ISUMA;}
+   public Instruccion resta() {return IRESTA;}
+   public Instruccion menos() {return IMENOS;}
    public Instruccion mul() {return IMUL;}
+   public Instruccion div() {return IDIV;}
+   public Instruccion mod() {return IMOD;}
    public Instruccion and() {return IAND;}
+   public Instruccion or() {return IOR;}
+   public Instruccion not() {return INOT;}
+   public Instruccion menor() {return IMENOR;}
+   public Instruccion menorIgual() {return IMENORIGUAL;}
+   public Instruccion mayor() {return IMAYOR;}
+   public Instruccion mayorIgual() {return IMAYORIGUAL;}
+   public Instruccion igual() {return IIGUAL;}
+   public Instruccion distinto() {return IDISTINTO;}
+   
    public Instruccion apila_int(int val) {return new IApilaInt(val);}
    public Instruccion apila_bool(boolean val) {return new IApilaBool(val);}
-   public Instruccion apilad(int nivel) {return new IApilad(nivel);}
+   public Instruccion apila_real(double val) {return new IApilaReal(val);}
+   public Instruccion apila_Cadena(String val) {return new IApilaCadena(val);}
+   //public Instruccion apila_Iden(int val) {return new IApilaIden(val);}
+   public Instruccion desapila() {return IDESAPILA}
    public Instruccion apila_ind() {return IAPILAIND;}
    public Instruccion desapila_ind() {return IDESAPILAIND;}
-   public Instruccion copia(int tam) {return new ICopia(tam);}
+   public Instruccion mueve(int tam) {return new IMueve(tam);}
+   public Instruccion int2real() {return IINTTOREAL;}
+   
+   public Instruccion nl() {return INL;}
    public Instruccion ir_a(int dir) {return new IIrA(dir);}
    public Instruccion ir_f(int dir) {return new IIrF(dir);}
+   public Instruccion ir_v(int dir) {return new IIrV(dir);}
    public Instruccion ir_ind() {return IIRIND;}
+   
    public Instruccion alloc(int tam) {return new IAlloc(tam);} 
    public Instruccion dealloc(int tam) {return new IDealloc(tam);} 
+   public Instruccion copia(int tam) {return new ICopia(tam);}
+   
    public Instruccion activa(int nivel,int tam, int dirretorno) {return new IActiva(nivel,tam,dirretorno);}
    public Instruccion desactiva(int nivel, int tam) {return new IDesactiva(nivel,tam);}
+   public Instruccion apilad(int nivel) {return new IApilad(nivel);}
    public Instruccion desapilad(int nivel) {return new IDesapilad(nivel);}
    public Instruccion dup() {return IDUP;}
    public Instruccion stop() {return ISTOP;}
+   
+   public Instruccion read() {return IREAD;}
+   public Instruccion write() {return IWRITE;}
    public void emit(Instruccion i) {
       codigoP.add(i); 
    }
@@ -558,13 +721,28 @@ public class MaquinaP {
       datos = new Valor[tamdatos+tampila+tamheap];
       this.pc = 0;
       ISUMA = new ISuma();
+      IRESTA= new IResta();
+      IMENOS= new IMenos()
       IAND = new IAnd();
       IMUL = new IMul();
+      IOR= new IOr();
+      INOT= INot();
+      IMENOR = IMenor();
+      IMENORIGUAL =new IMenorIgual();
+      IMAYOR = new IMayor();
+      IMAYORIGUAL = new IMayorIgual();
+      IIGUAL = new IIgual();
+      IDISTINTO = new IDistinto();
+      IDESAPILA = IDesapila();
+      IINT2REAL = IInt2Real();
       IAPILAIND = new IApilaind();
       IDESAPILAIND = new IDesapilaind();
       IIRIND = new IIrind();
       IDUP = new IDup();
       ISTOP = new IStop();
+      INL = new INl();
+      IREAD new IRead();
+      IWRITE = new IWrite();
       gestorPilaActivaciones = new GestorPilaActivaciones(tamdatos,(tamdatos+tampila)-1,ndisplays); 
       gestorMemoriaDinamica = new GestorMemoriaDinamica(tamdatos+tampila,(tamdatos+tampila+tamheap)-1);
    }

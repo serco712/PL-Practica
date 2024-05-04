@@ -19,4 +19,20 @@ public class GestionErroresTiny {
    public void errorSintactico(UnidadLexica unidadLexica) {
      throw new ErrorSintactico("ERROR fila "+unidadLexica.fila()+", columna "+unidadLexica.columna()+" : Elemento inexperado "+unidadLexica.lexema());
    }
+   public void errorTipoInadecuado(Tipado tipoMal, Tipado tipoBien) {
+	   System.err.println("ERROR el tipo debe ser " + tipoBien.name() + " pero es " + tipoMal.name());
+   }
+   public void errorNoDesignador() {
+	   System.err.println("ERROR el operando tiene que ser designador");	   
+   }
+   public void errorParametrosNoCoincidentes() {
+	   System.err.println("ERROR los parametros no coinciden");	   
+   }
+   public void erorTiposIncompatibles(Tipado tipo1, Tipado tipo2) {
+	   System.err.println("ERROR los tipos " + tipo1.name() + " y " + tipo2.name() + " no son compatibles");
+   }
+   public void errorTamanioArray() {
+	   System.err.println("ERROR el tamaño del array tiene que ser mayor que 0");
+   }
+
 }

@@ -15,15 +15,22 @@ public class SintaxisAbstractaTiny {
     }
 
     public enum Tipado{
-        literalEntero, bool, literalReal, literalCadena, error, ok, tipoPuntero, nl, tipoStruct, tipoArray
+        literalEntero, bool, literalReal, literalCadena, error, ok, tipoPuntero, nl, tipoStruct, tipoArray, id,
+        dec_proc, dec_simple, dec_type, pf_noref, pf_ref
     }
 
     public static abstract class Nodo  {
        private Boolean ok;
+       private int prim = -1;
+	   private int sig = -1;
+	   private int nivel = -1;
+	   private int espacio = 0;
+	   private int dir = -1;
        public Nodo() {
            ok = true;
 		   fila=col=-1;
        }   
+      
 	   private int fila;
 	   private int col;
 	   public Nodo ponFila(int fila) {
@@ -34,6 +41,36 @@ public class SintaxisAbstractaTiny {
 		    this.col = col;
             return this;			
 	   }
+	   public int getPrim(){
+           return prim;
+       }
+       public int getSig(){
+           return sig;
+       }
+       public int getNivel(){
+           return nivel;
+       }
+       public int getEspacio(){
+           return espacio;
+       }
+       public int getDir(){
+           return dir;
+       }
+       public int setPrim(int prim){
+           this.prim = prim;
+       }
+       public int setSig(int sig){
+           this.sig =  sig;
+       }
+       public int setNivel(int nivel){
+           this.nivel =  nivel;
+       }
+       public int setEspacio(int espacio){
+           this.espacio =  espacio;
+       }
+       public int setDir(int dir){
+           this.dir =  dir;
+       }
 	   public int leeFila() {
 		  return fila+1; 
 	   }
@@ -112,6 +149,7 @@ public class SintaxisAbstractaTiny {
     }
 
     public static class Var extends Nodo {
+    	private int despl;
         private Tipo tipo;
         private String str;
         public Var(Tipo tipo, String str) {
@@ -121,6 +159,8 @@ public class SintaxisAbstractaTiny {
         }
         public Tipo tipo() { return tipo; }
         public String id() { return str; }
+        public int setDesplaza(int desp) { this.despl = desp; }
+        public void getDesplaza() { return despl; }
         public void imprime() {
             tipo.imprime();
             System.out.format("%s$f:%d,c:%d$%n", str, leeFila(), leeCol());
@@ -134,6 +174,7 @@ public class SintaxisAbstractaTiny {
     }
 
     public abstract static class Dec extends Nodo {
+        protected Tipado t;
         public Dec() {
             super();
         }
@@ -141,6 +182,8 @@ public class SintaxisAbstractaTiny {
         public String id() { throw new UnsupportedOperationException(); }
         public PFmls par_for() { throw new UnsupportedOperationException(); }
         public Blo bloq() { throw new UnsupportedOperationException(); }
+        public Tipado getTipado() {return t;}
+        public void setTipado(Tipado t) {this.t = t;}
     }
 
     public static abstract class Tipo extends Nodo {
@@ -187,9 +230,12 @@ public class SintaxisAbstractaTiny {
     }
 
     public static abstract class PFml extends Nodo {
+        protected Tipado t;
         public PFml() {
             super();
         }
+        public Tipado getTipado() {return t;}
+        public void setTipado(Tipado t) {this.t = t;}
         public Tipo tipo() { throw new UnsupportedOperationException(); }
         public String id() { throw new UnsupportedOperationException(); }
     }
@@ -377,6 +423,7 @@ public class SintaxisAbstractaTiny {
         public Dec_simple(Var v) {
             super();
             this.v = v;
+            this.t = Tipado.dec_simple;
         }
         public Var var() { return v; }
         public void imprime() {
@@ -395,6 +442,7 @@ public class SintaxisAbstractaTiny {
         public Dec_Tipado(Var v) {
             super();
             this.v = v;
+            this.t = Tipado.dec_type;
         }
         public Var var() { return v; }
         public void imprime() {
@@ -418,6 +466,7 @@ public class SintaxisAbstractaTiny {
             this.str = str;
             this.parfor = parfor;
             this.bloq = bloq;
+            this.t = Tipado.dec_proc;
         }
         public String id() { return str; }
         public PFmls par_for() { return parfor; }
@@ -444,6 +493,7 @@ public class SintaxisAbstractaTiny {
             super();
             this.tipo = tipo;
             this.str = str;
+            this.t = Tipado.tipoArray;
         }
         public Tipo tipo() { return tipo; }
         public String litEnt() { return str; }
@@ -466,6 +516,7 @@ public class SintaxisAbstractaTiny {
         public Tipo_punt(Tipo tipo) {
             super();
             this.tipo = tipo;
+            this.t = Tipado.tipoPuntero;
         }
         public Tipo tipo() { return tipo; }
         public void imprime() {
@@ -531,6 +582,7 @@ public class SintaxisAbstractaTiny {
 	public static class Tipo_string extends Tipo {
         public Tipo_string() {
             super();
+            this.t = Tipado.literalCadena;
         }
         public void imprime() {
             System.out.println("<string>");
@@ -549,6 +601,7 @@ public class SintaxisAbstractaTiny {
         public Tipo_ident(String ident) {
             super();
             this.ident = ident;
+            this.t = Tipado.id
         }
         public String id() { return ident; }
         public void imprime() {
@@ -574,6 +627,7 @@ public class SintaxisAbstractaTiny {
         public Tipo_struct(LVar lvar) {
             super();
             this.lvar = lvar;
+            this.t = Tipado.tipoStruct;
         }
         public LVar lvar() { return lvar; }
         public void imprime() {
@@ -751,6 +805,7 @@ public class SintaxisAbstractaTiny {
             super();
             this.tipo = tipo;
             this.str = str;
+            this.t = Tipado.pf_ref;
         }
         public Tipo tipo() { return tipo; }
         public String id() { return str; }
@@ -773,6 +828,7 @@ public class SintaxisAbstractaTiny {
            super();
            this.tipo = tipo;
            this.str = str;
+           this.t = Tipado.pf_noref;
         }
         public Tipo tipo() { return tipo; }
         public String id() { return str; }

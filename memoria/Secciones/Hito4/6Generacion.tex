@@ -16,7 +16,7 @@
             desapila(sub_pendientes)
             let sub = dec_proc(id,PFml,Decs,Is) in
                 emit desapilad(sub.nivel)
-                recolecta_subs(Decs)
+                recolecta_procs(Decs)
                 gen_cod(Is)
                 emit desactiva(sub.nivel, sub.tam)
                 emid ir_ind()
