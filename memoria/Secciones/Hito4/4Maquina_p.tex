@@ -32,7 +32,6 @@ si la operación necesita dos argumentos, en la cima estará el 2º argumento, e
     and &  Desapila los 2 primeros argumentos de la pila y apila el resultado de la operación and\\ \hline
     or & Desapila los 2 primeros argumentos de la pila y apila el resultado de la operación or \\ \hline
     not & Desapila el primer argumento de la pila y apila su contrario \\ \hline
-    asig & Desapila los 2 primeros argumentos de la pila y apila el resultado de la operación asignación \\ \hline
     menor & Desapila los 2 primeros argumentos de la pila y apila true si el primer argumento es menor  \\ \hline
     menIgual &  Desapila los 2 primeros argumentos de la pila y apila true si el primer argumento es menor o igual\\ \hline
     mayor & Desapila los 2 primeros argumentos de la pila y apila true si el primer argumento es mayor \\ \hline
@@ -55,14 +54,11 @@ si la operación necesita dos argumentos, en la cima estará el 2º argumento, e
     \hline
     \textbf{} \\ \hline
     apilaInt(v) & Apila el valor entero v en la pila de evaluación  \\ \hline
-    apilaIden(v) & Apila el valor del identificador v en la pila de evaluación  \\ \hline
     apilaBool(v) & Apila el valor booleano v en la pila de evaluación   \\ \hline
     apilaReal(v) & Apila el valor real v en la pila de evaluación  \\ \hline
     apilaString(v) & Apila la cadena de caracteres v en la pila de evaluación  \\ \hline
     desapila(v) & desapila el valor de la cima de la pila de evaluación  \\ \hline
-    apilaInd & Desapila una dirección (dir) de la pila de evaluación, y apila (en
-dicha pila) el contenido de la celda (dir) en la memoria de datos  \\ \hline
-
+    apilaInd & Desapila una dirección (dir) de la pila de evaluación, y apila (en dicha pila) el contenido de la celda (dir) en la memoria de datos  \\ \hline
     desapilaind & Desapila el valor v y una dirección (dir) de la pila de evaluación (primero v, después d), y actualiza el contenido de la celda dir en la memoria de datos con el valor de v  \\ \hline
     mueve(n) & Desapila dos direcciones dir1 y dir0 de la pila de evaluación en ese orden y copia el contenido de las n celdas consecutivas desde la dirección dir1 a las correspondientes n celdas que comienzan en la dirección dir0. \\ \hline
     int2real() & desapila un 'entero' y apila el valor 'real' equivalente. \\ \hline
@@ -101,18 +97,29 @@ un salto incondicional a dicha dirección  \\ \hline
 }
     \hline
     \textbf{} \\ \hline
-     alloc(t)& e reserva una zona de memoria adecuada para almacenar valores del tipo t. La operación en sí devuelve la dirección de comienzo de dicha zona de memoria.  \\ \hline
-     dealloc(d,t)& Se notifica que la zona de memoria que comienza en d y que permite almacenar valores del tipo t queda liberada  \\ \hline
-     fetch(d)& Devuelve el valor almacenado en la celda direccionada por d.\\ \hline
-     store(d,v)& Almacena v en la celda direccionada por d.\\ \hline
-     copy(d,d',t)& Copia el valor del tipo t que se encuentra almacenado a partir de la dirección d’ en el bloque que comienza a partir de la dirección d \\ \hline
-     indx(d,i,t)& Considera que, a partir de d, comienza un array cuyos elementos son valores del tipo t, y devuelve la dirección de comienzo del elemento i-esimo de dicho array.\\ \hline
-     acc(d,c,t) &Con t un tipo record. Considera que, a partir de d, está almacenado un registro de tipo t, que contiene un campo c. Devuelve la dirección de comienzo de dicho campo.\\ \hline
-
-     dir(u)&  Dirección de la variable u. \\ \hline 
+     alloc(t)& e Reserva un bloque de n celdas consecutivas en el heap y apila la dirección de comienzo en la pila de evaluación.   \\ \hline
+     dealloc(t)& Desapila una dirección d de la pila de evaluación y libera en el heap el bloque de n celdas consecutivas que comienza en d  \\ \hline
+     copia(t)& Copia el valor del tipo t que se encuentra almacenado a partir de la dirección d’ en el bloque que comienza a partir de la dirección d \\ \hline
  
 \end{longtblr}
-    
+
+\subsection{Instrucciones de Entrada y Salida}
+
+\begin{longtblr}[
+    caption = {Instrucciones de Entrada y salida}
+]{
+    colspec = {|X|X|},
+    rowhead = 1,
+    row{even} = {gray9},
+    row{1} = {olive9},
+}
+    \hline
+    \textbf{} \\ \hline
+     
+    read & Desapila la dirección d de la pila de evaluacion, lee el valor v correspondiente de la entrada y lo escribe en la celda de direccion d.  \\ \hline 
+    write & Desapila un valor v de la pila de evaluacion y lo escribe por la salida \\ \hline 
+\end{longtblr}
+
 \subsection{Instrucciones de Soporte de la ejecución de procedimientos}
 
 \begin{longtblr}[

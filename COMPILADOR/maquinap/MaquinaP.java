@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import maquinap.MaquinaP.Instruccion;
+
 
 
 
@@ -45,7 +45,7 @@ public class MaquinaP {
       public boolean valorBool() {return valor;}
       public boolean esBool() {return true;}
       public boolean menorQue(Valor v) {
-         return !valor && b.valorBool();
+         return !valor && v.valorBool();
       }
       public boolean igualQue(Valor v) {
          return valor == v.valorBool();
@@ -197,7 +197,7 @@ public class MaquinaP {
       public String toString() {return "div";};
    }
    private IMod IMOD;
-   private class IResta implements Instruccion {
+   private class IMod implements Instruccion {
       public void ejecuta() {
          Valor opnd2 = pilaEvaluacion.pop(); 
          Valor opnd1 = pilaEvaluacion.pop();
@@ -350,13 +350,13 @@ public class MaquinaP {
         this.valor = valor;  
       }
       public void ejecuta() {
-         pilaEvaluacion.push(new ValorCadena(valor)); 
+         pilaEvaluacion.push(new ValorString(valor)); 
          pc++;
       } 
       public String toString() {return "apilaReal("+valor+")";};
    }
    
-   private IInt2Real() IINT2REAL;
+   private IInt2Real IINT2REAL;
    private class IInt2Real implements Instruccion {
       public void ejecuta(){   
          Valor valor = pilaEvaluacion.peek();  
@@ -599,6 +599,57 @@ private class IMueve implements Instruccion {
 
    }
    
+   private IWrite IWRITE;
+   private class IWrite implements Instruccion{
+      
+      public void ejecuta(){
+         Valor valor = pilaEvaluacion.pop();
+         if(valor instanceof ValorInt()) 
+        	 System.out.println(valor.valorInt());
+         else if(valor instanceof ValorReal())
+        	 System.out.println(valor.valorReal());
+         else if (valor instanceof ValorString())
+        	 System.out.println(valor.valorString());
+         pc++;
+      }
+      public String toString() {return "write";};
+   }
+   
+   private IRead IREAD;
+   private class IRead implements Instruccion{
+	      
+	public void ejecuta(){
+		String str ="";
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+     
+		
+      try{
+         str=reader.readLine();
+      } catch(IOException e){
+         e.printStackTrace();
+      }
+     
+      try{
+         int i = Integer.parseInt(str);
+         pìlaEvaluacion.push(new ValorInt(i));
+      } catch(Exception e){
+         
+         try{
+          	  
+            double r = Double.parseDouble(str);
+            
+            pilaEvaluacion.push(new ValorReal(r)));
+         } catch(Exception e1){
+            
+        	pilaEvaluacion.push(new ValorString(str));
+         }
+      }
+         pc++;
+    }
+      
+      public String toString() {return "read";};
+   }
+   
    private INl INL;
    private class INl implements Instruccion {
       public void ejecuta(){
@@ -618,46 +669,8 @@ private class IMueve implements Instruccion {
        }
    }
    
-   private IWrite IWRITE;
-   private class IWrite implements Instruccion{
-      
-      public void ejecuta(){
-         valor v
-      }
-      
-      
-      
-   }
-   
-   private IRead IREAD;
-   private class IRead implements Instruccion {
-      BufferedReader reader = new BufferedReader(new inputStreamReader(System.in));
-      
-      String str ="";
-      
-      try{
-         str=reader.readLine();
-      } catch(IOException e){
-         e.printStackTrace();
-      }
-      
-      try{
-         int i = Integer.parseInt(str);
-         pìlaEvaluacion.push(new ValorInt(i));
-      } catch(Exception e){
-         
-         try{
-          	  
-            double d= Double.parseDouble(str);
-            pilaEvaluacion.push(new ValorReal(d)));
-         } catch(Exception e1){
-            
-            pilaEvaluacion.push(new ValorCadena(str));
-         }
-      }
-      pc++;
-   }
-   
+  
+
 
    public Instruccion suma() {return ISUMA;}
    public Instruccion resta() {return IRESTA;}
@@ -679,7 +692,7 @@ private class IMueve implements Instruccion {
    public Instruccion apila_bool(boolean val) {return new IApilaBool(val);}
    public Instruccion apila_real(double val) {return new IApilaReal(val);}
    public Instruccion apila_Cadena(String val) {return new IApilaCadena(val);}
-   //public Instruccion apila_Iden(int val) {return new IApilaIden(val);}
+ 
    public Instruccion desapila() {return IDESAPILA}
    public Instruccion apila_ind() {return IAPILAIND;}
    public Instruccion desapila_ind() {return IDESAPILAIND;}
@@ -760,7 +773,7 @@ private class IMueve implements Instruccion {
    public void muestraEstado() {
      System.out.println("Tam datos:"+tamdatos);  
      System.out.println("Tam heap:"+tamheap); 
-     System.out.println("PP:"+gestorPilaActivaciones.pp());      
+     System.out.println("PP:"+gestorPilaActivaciones.pp());    
      System.out.print("Displays:");
      for (int i=1; i <= ndisplays; i++)
          System.out.print(i+":"+gestorPilaActivaciones.display(i)+" ");
