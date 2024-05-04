@@ -220,26 +220,27 @@ public class Comprobacion_tipos {
         }
 	}
     
-    public void procesa(inst_read exp){
-        exp.exp().procesa(this);
-        if (exp.exp().esDesignador()){
-            if (exp.exp().getTipado() != Tipado.literalEntero && exp.exp().getTipado()) != Tipado.literalReal && exp.exp().getTipado() != Tipado.literalCadena){
+    public void procesa(inst_read inst){
+        inst.exp().procesa(this);
+        if (inst.exp().esDesignador()){
+            if (inst.exp().getTipado() != Tipado.literalEntero && inst.exp().getTipado() != Tipado.literalReal && inst.exp().getTipado() != Tipado.literalCadena){
             	ok &=false;
-            	exp.setOk(false);
+            	inst.setOk(false);
                 //error
+            }
         }
-        else 
+        else {
         	ok &= false;
-        	exp.setOk(false);
+        	inst.setOk(false);
             // error
-    }
+        }
     }
 
-    public void procesa(inst_write exp){
-         exp.exp().procesa(this);
-        if (exp.exp().getTipado()) != Tipado.literalEntero && exp.exp().getTipado() != Tipado.literalReal && exp.exp().getTipado() != Tipado.literalCadena && exp.exp().getTipado() != Tipado.bool){
+    public void procesa(inst_write inst){
+         inst.exp().procesa(this);
+        if (inst.exp().getTipado() != Tipado.literalEntero && inst.exp().getTipado() != Tipado.literalReal && inst.exp().getTipado() != Tipado.literalCadena && inst.exp().getTipado() != Tipado.bool){
             ok &= false;
-            exp.setOk(false);
+            inst.setOk(false);
             //error
         }
 	}
@@ -307,13 +308,15 @@ public class Comprobacion_tipos {
         exp.opn1().procesa(this);
         
         if (exp.opnd0().esDesignador()){
-            if (!compatibles(exp.opnd0(), exp.opnd1()){
-				
+            if (compatibles(exp.opnd0(), exp.opnd1()))
+            	exp.setTipado(exp.opnd0().getTipado());
+            
+            else {
 				//aviso_error(exp.opnd0(),exp.opnd1())
 				ok&=false;
 				exp.setOk(false);
                 //error  
-            } 
+            }
         }
         else {
             ok &= false;
@@ -378,20 +381,23 @@ public class Comprobacion_tipos {
 	public void procesa(exp_mod exp){
         exp.opnd0().procesa(this);
         exp.opnd1().procesa(this);
-        if  (exp.opnd0().getType() == Type.LiteralEntero &&  exp.opnd1().getType() == Type.LiteralEntero){
-        	exp.setTipado(Type.LiteralEntero);
+        if  (exp.opnd0().getTipado() == Tipado.LiteralEntero &&  exp.opnd1().getTipado() == Tipado.LiteralEntero){
+        	exp.setTipado(Tipado.LiteralEntero);
+        }
         else
-        	exp.setTipado(Type.error);
-    	}
+        	ok &= false;
+    		not.setOk(false);
     }
 	public void procesa(exp_and exp){
         exp.opnd0().procesa(this);
         exp.opnd1().procesa(this);
-        if  (exp.opnd0().getType() == Type.bool &&  exp.opnd1().getType() == Type.bool){
-        	exp.setTipado(Type.bool);
+        if  (exp.opnd0().getTipado() == Tipado.bool &&  exp.opnd1().getTipado() == Tipado.bool){
+        	exp.setTipado(Tipado.bool);
+        }
         else
-        	exp.setTipado(Type.error);
-    	}
+        	ok &= false;
+        	not.setOk(false);
+    	
     }
          
     public void procesa(Exp_menos menos) {
@@ -530,7 +536,7 @@ public class Comprobacion_tipos {
     private boolean compatibles(Tipado t1, Tipado t2) {
     	if (t1 == t2)
             return true;
-        else if (t1 == Tipado.literalReal && t2 == TipadoliteralEntero)
+        else if (t1 == Tipado.literalReal && t2 == Tipado.literalEntero)
         	return true;
         else if (t1 == Tipado.tipoArray && t1 == Tipado.tipoArray) {
         	Tipo_array a1 = (Tipo_array)t1;
