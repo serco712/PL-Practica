@@ -1,3 +1,5 @@
+import SintaxisAbstractaTiny.Nodo;
+
 public class Etiquetado implements Procesamiento{
     private int etq = 0;
     private MaquinaP sub_pendientes;
@@ -399,14 +401,14 @@ public class Etiquetado implements Procesamiento{
     public void procesa(Exp_reg exp){
         exp.setPrim(etq);
         etq++;
-        exp.exp().procesa(this);
+        exp.exp1().procesa(this);
         etq++;
         exp.setSig(etq);
     }
     
     public void procesa(Exp_indir exp){
         exp.setPrim(etq);
-        exp.exp().procesa(this);
+        exp.exp1().procesa(this);
         etq++;
         exp.setSig(etq);
     }
@@ -459,7 +461,7 @@ public class Etiquetado implements Procesamiento{
     	}
     }
     
-    private void etiquetado-paso-param(dec_proc(id,Param,Decs,Is),PReales p){
+    private void etiquetado-paso-param(Nodo n,PReales p){
     	etq = etq+ 2;
     	p.lpr().procesa(this)
     	etq++;

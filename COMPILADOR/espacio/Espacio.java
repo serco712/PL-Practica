@@ -123,25 +123,26 @@ public class Espacio {
 
     public void asigEspacio2(Tipo_array t) {
         if (t.tipo().getClass() == Tipo_ident.class) {
-            if (t.tipo().getClass().getVinculo() == Dec_type.class){
-               asigEspacioTipo(Dec_type.getEspacio());
+            if (t.tipo().getVinculo() == Var.class){
+               asigEspacioTipo(Var.tipo().getEspacio());
             }
-            t.setEspacio(t.litEnt().getEspacio()*Dec_type.getEspacio());
+            t.setEspacio(t.litEnt().getEspacio()* Var.getEspacio());
         }
     }
 
     public void asigEspacioTipo1(Tipo_punt t) {
         t.setEspacio(1);
-        if (t.tipo().getClass() != Tipo_ident.class)
+        if (t.tipo().getClass() != Tipo_ident.class) {
             asigEspacioTipo1(t.tipo());
+        }
     }
 
     public void asigEspacio2(Tipo_punt t) {
         if (t.tipo().getClass() == Tipo_ident.class) {
-            if (t.tipo().getVinculo() == Dec_type.class){
-               asigEspacioTipo(Dec_type.getEspacio());
+            if (t.tipo().getVinculo() == Var.class){
+               asigEspacioTipo(Var.tipo().getEspacio());
             }
-            t.setEspacio(Dec_type.getEspacio());
+            t.setEspacio(Var.getEspacio());
         }
 
     }
@@ -172,8 +173,8 @@ public class Espacio {
 
     public void asigEspacioTipo1(Tipo_ident t) {
         asigEspacioTipo1(t.getVinculo());
-        if (t.getVinculo() != Dec_type.class){
-            t.setEspacio(Dec_type.getEspacio());
+        if (t.getVinculo() != Var.class){
+            t.setEspacio(Var.getEspacio());
         }
            
     }
@@ -389,14 +390,13 @@ public class Espacio {
 
     public void asigEspacio(Exp_reg exp) {
         asigEspacio(exp.getVinculo());
-        if (exp.getVinculo() == Tipo_struct.class){
-            exp.setEspacio(Tipo_struct.getEspacio());
+        if (exp.getVinculo() == Var.class){
+            exp.setEspacio(Var.tipo().getEspacio());
         }
     }
 
     public void asigEspacio(Exp_indir exp) {
         asigEspacio(exp.exp1());
-        asigEspacio(exp.exp2());
     }
 
     public void asigEspacio(Exp_true exp) { }
@@ -411,8 +411,8 @@ public class Espacio {
 
     public void asigEspacio(Exp_iden exp) {
         asigEspacio(exp.getVinculo());
-        if (exp.getVinculo() == Dec_type.class){
-            exp.setEspacio(Dec_type.getEspacio());
+        if (exp.getVinculo() == Var.class){
+            exp.setEspacio(Var.tipo().getEspacio());
         }
     }
 

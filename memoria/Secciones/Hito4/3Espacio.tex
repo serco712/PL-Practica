@@ -98,9 +98,8 @@
         fin si
 
     asig-espacio-tipo2(tipo_array(Tipo,litEnt)):
-        si Tipo = tipo_ident(id)
-            Tipo.vinculo = vinculoDe(ts,id)
-            sea Tipo.vinculo = dec_type(Tipo’,_)
+        si Tipo = tipo_ident(_)
+            sea Tipo.vinculo = var(Tipo’,_)
                 asig-espacio-tipo(Tipo’) 
             $.tam= Tipo’.tam*litEnt.tam
         fin si 
@@ -112,8 +111,8 @@
         fin si
 
     asig-espacio-tipo2(tipo_punt(Tipo)):
-        si Tipo = tipo_ident(id)
-            sea Tipo.vinculo = dec_type(Tipo’,_)
+        si Tipo = tipo_ident(_)
+            sea Tipo.vinculo = var(Tipo’,_)
                 asig-espacio-tipo(Tipo’) 
             $.tam= Tipo’.tam
         fin si 
@@ -141,13 +140,20 @@
 
     asig-espacio-tipo1(tipo_ident(id)):
         asig-espacio-tipo1($.vinculo)
-        sea $.vinculo = dec_type(Tipo,_) en
+        sea $.vinculo = var(Tipo,_) en
             $.tam = Tipo.tam
 
     asig-espacio-tipo2(tipo_ident(id)): skip
 
-    asig-espacio(tipo_struct(LVar)):
-        asig-espacio(LVar)
+    asig-espacio1(tipo_struct(LVar)):
+        dir_ant = dir
+        dir = 0
+        asig-espacio1(LVar)
+        $.tam = dir
+        dir  = dir_ant
+
+    asig-espacio2(tipo_struct(LVar)):
+        asig-espacio2(LVar)
 
     asig-espacio(si_inst(LInst)):
         asig-espacio(LInst):
@@ -311,7 +317,7 @@
 
     asig-espacio(exp_reg(Exp,id)):
         asig-espacio($.vinculo)
-        sea $.vinculo = tipo_struct(Tipo,_) en
+        sea $.vinculo = var(Tipo,_) en
             $.tam = Tipo.tam
        
 
@@ -330,7 +336,7 @@
 
     asig-espacio(exp_iden(id)):
         asig-espacio($.vinculo)
-        sea $.vinculo = dec_type(Tipo,_) en
+        sea $.vinculo = var(Tipo,_) en
             $.tam = Tipo.tam
             
 
