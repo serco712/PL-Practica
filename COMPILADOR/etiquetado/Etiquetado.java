@@ -1,11 +1,12 @@
 import SintaxisAbstractaTiny.Nodo;
+import java.util.Stack;
 
 public class Etiquetado implements Procesamiento{
     private int etq = 0;
-    private MaquinaP sub_pendientes;
+    private Stack<Nodo> sub_pendientes;
 	
-	public GeneracionCodigo(MaquinaP m) {
-		sub_pendientes = m;
+	public Etiquetado() {
+		sub_pendientes = new Stack<>();
 	}
 	
     public void procesa(Prog prog) {
@@ -16,9 +17,9 @@ public class Etiquetado implements Procesamiento{
         bloq.setPrim(etq);
         bloq.instr().procesa(this);
         etq++;
-        while(1){
+        while(sub_pendientes){
             //TODO
-            recolecta_procs(bloq.decs())
+            recolecta_procs(bloq.decs());
             bloq.decs().procesa(this);
         }
         prog.setSig(etq);
@@ -461,9 +462,9 @@ public class Etiquetado implements Procesamiento{
     	}
     }
     
-    private void etiquetado-paso-param(Nodo n,PReales p){
+    private void etiquetado_paso_param(Nodo n,PReales p){
     	etq = etq+ 2;
-    	p.lpr().procesa(this)
+    	p.lpr().procesa(this);
     	etq++;
     }
     
