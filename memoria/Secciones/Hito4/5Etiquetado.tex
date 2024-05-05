@@ -2,12 +2,14 @@
 \begin{lstlisting}
 
     var etq = 0 
+    var sub_pendientes = pila_vacia()
 
     etiquetado(prog(Blo)):
         etiquetado(Blo)
 
     etiquetado(bloq(Decs,Insts)):
-       $.prim = etq
+        $.prim = etq
+        recolecta_procs(Decs)
         etiquetado(Insts)
         etq++
         while != es-vacia(sub_pendientes)
