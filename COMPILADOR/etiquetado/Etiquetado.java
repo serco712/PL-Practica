@@ -487,7 +487,7 @@ public class Etiquetado implements Procesamiento{
 	private void recolecta_procs(Dec_type dec) {}
 	
 	private void recolecta_procs(Dec_proc dec) {
-		//emit apila(sub_pendientes,$)
+        m.apila(subs,dec);
 	}
     
     
