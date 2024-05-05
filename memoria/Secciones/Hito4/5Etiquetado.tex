@@ -16,7 +16,7 @@
             let sub = dec_proc(id,Param,Decs,Is) in
                 sub.prim = etq
                 etq++
-                recolecta_subs(Decs)
+                recolecta_procs(Decs)
                 etiquetado(Is)
                 etq+=2
                 sub.sig = etq
@@ -382,7 +382,11 @@
 
     etiquetado(exp_iden(id)):
         $.prim = etq
-        etiquetado-acc-var(id.vinculo)
+        if $.nivel = 0 then
+            etq++
+        else
+            etq += 3
+        end if
         $.sig = etq
 
     etiquetado(exp_null()): noop
@@ -394,27 +398,6 @@
         etiquetado(Opnd1)
         etiquetado-acc-val(Opnd1)
 
-        
-    etiquetado-acc-id(dec_var(Tipo,id)):
-        if $.nivel = 0 then
-            etq++
-        else
-            etiquetado-acc-var($)
-        end if
-
-        
-    etiquetado-acc-id(pval(Tipo,id)):
-        etiquetado-acc-var($)
-
-        
-    etiquetado-acc-id(pref(Tipo,id)):
-        etiquetado-acc-var($)
-        etq++
-
-        
-    etiquetado-acc-var(V):
-        etq += 3
-
     etiquetado-acc-val(Exp):
         if es-designador(Exp) then
         etq++
@@ -424,6 +407,5 @@
         etq += 2
         etiquetado(PReales)
         etq++
-
 
 \end{lstlisting}

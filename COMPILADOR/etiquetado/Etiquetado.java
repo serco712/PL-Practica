@@ -262,7 +262,7 @@ public class Etiquetado implements Procesamiento{
     	inst.setPrim(etq);
     	etq++;
     	//TODO
-    	etiquetado_paso_param(inst.vincula(),inst.pr());
+    	etiquetado_paso_param(inst.getVinculo(),inst.pr());
         etq++;
         inst.setSig(etq);
     }
@@ -457,6 +457,12 @@ public class Etiquetado implements Procesamiento{
     	if(exp.esDesignador()) {
     		etq++;
     	}
+    }
+    
+    private void etiquetado-paso-param(dec_proc(id,Param,Decs,Is),PReales p){
+    	etq = etq+ 2;
+    	p.lpr().procesa(this)
+    	etq++;
     }
     
     
