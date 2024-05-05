@@ -4,10 +4,10 @@ import Comprobacion_tipos.Tipado;
 import asint.SintaxisAbstractaTiny.*;
 
 public class GeneracionCodigo {
-	private MaquinaP m;
+	private Stack<Dec_proc> subs;
 	
-	public GeneracionCodigo(MaquinaP m) {
-		this.m = m;
+	public GeneracionCodigo() {
+		subs = new Stack<>();
 	}
 	
 	public void procesa(Prog prog) {
@@ -18,19 +18,14 @@ public class GeneracionCodigo {
         recolecta_procs(blo.decla().procesa(this));
         blo.instr().procesa(this);
         m.stop();
-        /*
-        while not es_vacia(sub_pendientes)
-	        sub = cima(sub_pendientes)
-	        desapila(sub_pendientes)
-	        let sub = dec_proc(id,PFml,Decs,Is) in
-	            emit desapilad(sub.nivel)
-	            recolecta_procs(Decs)
-	            gen_cod(Is)
-	            emit desactiva(sub.nivel, sub.tam)
-	            emid ir_ind()
-	        end let
-	    end while 
-        */
+         while(!subs.empty()){
+            Dec_proc sub =  subs.pop();
+           	m.desapilad(sub.getNivel());
+            recolecta_procs(sub.bloq().decs());
+            sub.bloq().instr().procesa(this);
+           	m.desapilad(sub.getNivel(),sub.getEspacio());
+           	m.ir_ind();
+        }
 	}
 	
 	public void procesa(Si_inst insts) {
@@ -67,19 +62,19 @@ public class GeneracionCodigo {
 
 	public void procesa(Inst_eval inst) {
         inst.exp().procesa(this);
-        gen_acc_val(inst.exp())
+        gen_acc_val(inst.exp());
 	}
 	
 	public void procesa(Inst_if inst) {
         inst.exp().procesa(this);
-	    gen_acc_val(inst.exp())
+	    gen_acc_val(inst.exp());
 	    m.ir_f(inst.getSig());
         inst.bloq().procesa(this);
 	}
 	
 	public void procesa(Inst_else inst) {
         inst.exp().procesa(this);
-        gen_acc_val(inst.exp())
+        gen_acc_val(inst.exp());
         m.ir_v(inst.getSig());
         inst.bloq1().procesa(this);
         m.ir_f(inst.getSig());
@@ -88,7 +83,7 @@ public class GeneracionCodigo {
 	
 	public void procesa(Inst_while inst) {
         inst.exp().procesa(this);
-        gen_acc_val(inst.exp())
+        gen_acc_val(inst.exp());
         m.ir_f(inst.getSig());
         inst.bloq().procesa(this);
         m.ir_a(inst.getPrim());
@@ -122,7 +117,7 @@ public class GeneracionCodigo {
 	
 	public void procesa(Inst_call inst) {
 		m.activa(inst.getVinculo().getNivel(), inst.getVinculo().getEspacio, inst.getSig());
-		gen_paso_PFml(inst.vinculo(),E)
+		gen_paso_PFml(inst.vinculo(),inst.pr().lpr().exp());
 		m.ir_a(inst.getVinculo().getPrim());
 	}
 	
@@ -148,81 +143,81 @@ public class GeneracionCodigo {
 	
 	public void procesa(Exp_menor exp) {
 		exp.exp1().procesa(this);
-	    gen_acc_val(exp.exp1())
+	    gen_acc_val(exp.exp1());
 		exp.exp2().procesa(this);
-	    gen_acc_val(exp.exp2())
+	    gen_acc_val(exp.exp2());
 	    m.menor();
 	}    
 	
 	public void procesa(Exp_menIgual exp) {
 		exp.exp1().procesa(this);
-	    gen_acc_val(exp.exp1())
+	    gen_acc_val(exp.exp1());
 		exp.exp2().procesa(this);
-	    gen_acc_val(exp.exp2())
+	    gen_acc_val(exp.exp2());
 	    m.menorIgual();
 	}
 	
 	public void procesa(Exp_mayor exp) {
 		exp.exp1().procesa(this);
-		gen_acc_val(exp.exp1())
+		gen_acc_val(exp.exp1());
 		exp.exp2().procesa(this);
-		gen_acc_val(exp.exp2())
+		gen_acc_val(exp.exp2());
 	    m.mayor();
 	}
 	
 	public void procesa(Exp_mayIgual exp) {
 		exp.exp1().procesa(this);
-		gen_acc_val(exp.exp1())
+		gen_acc_val(exp.exp1());
 		exp.exp2().procesa(this);
-		gen_acc_val(exp.exp2())
+		gen_acc_val(exp.exp2());
 	    m.mayorIgual();
 	}
 	
 	public void procesa(Exp_igual exp) {
 		exp.exp1().procesa(this);
-		gen_acc_val(exp.exp1())
+		gen_acc_val(exp.exp1());
 		exp.exp2().procesa(this);
-		gen_acc_val(exp.exp2())
+		gen_acc_val(exp.exp2());
 	    m.igual();
 	}
 	
 	public void procesa(Exp_dist exp) {
 		exp.exp1().procesa(this);
-		gen_acc_val(exp.exp1())
+		gen_acc_val(exp.exp1());
 		exp.exp2().procesa(this);
-		gen_acc_val(exp.exp2())
+		gen_acc_val(exp.exp2());
 	    m.distinto();
 	}
 
 	public void procesa(Exp_suma exp) {
 		exp.exp1().procesa(this);
-		gen_acc_val(exp.exp1())
+		gen_acc_val(exp.exp1());
 		exp.exp2().procesa(this);
-		gen_acc_val(exp.exp2())
+		gen_acc_val(exp.exp2());
 	    m.suma();
 	}
 	
 	public void procesa(Exp_resta exp) {
 		exp.exp1().procesa(this);
-		gen_acc_val(exp.exp1())
+		gen_acc_val(exp.exp1());
 		exp.exp2().procesa(this);
-		gen_acc_val(exp.exp2())
+		gen_acc_val(exp.exp2());
 	    m.resta();
 	}
 
 	public void procesa(Exp_mult exp) {
 		exp.exp1().procesa(this);
-		gen_acc_val(exp.exp1())
+		gen_acc_val(exp.exp1());
 		exp.exp2().procesa(this);
-		gen_acc_val(exp.exp2())
+		gen_acc_val(exp.exp2());
 	    m.mul();
 	}
 
 	public void procesa(Exp_div exp) {
 		exp.exp1().procesa(this);
-		gen_acc_val(exp.exp1())
+		gen_acc_val(exp.exp1());
 		exp.exp2().procesa(this);
-		gen_acc_val(exp.exp2())
+		gen_acc_val(exp.exp2());
 	    m.div();
 	}
 
@@ -344,7 +339,7 @@ public class GeneracionCodigo {
 	private void recolecta_procs(Dec_type dec) {}
 	
 	private void recolecta_procs(Dec_proc dec) {
-		//emit apila(sub_pendientes,$)
+		m.apila(subs,dec);
 	}
 		    
 }

@@ -1,12 +1,12 @@
-import SintaxisAbstractaTiny.Nodo;
+import SintaxisAbstractaTiny.Dec_proc;
 import java.util.Stack;
 
 public class Etiquetado implements Procesamiento{
     private int etq = 0;
-    private Stack<Nodo> sub_pendientes;
+    private Stack<Dec_proc> subs;
 	
 	public Etiquetado() {
-		sub_pendientes = new Stack<>();
+		subs = new Stack<>();
 	}
 	
     public void procesa(Prog prog) {
@@ -17,10 +17,14 @@ public class Etiquetado implements Procesamiento{
         bloq.setPrim(etq);
         bloq.instr().procesa(this);
         etq++;
-        while(sub_pendientes){
-            //TODO
+        while(!subs.empty()){
+            Dec_proc sub =  subs.pop();
+            sub.setPrim(etq);
+            etq++;
             recolecta_procs(bloq.decs());
-            bloq.decs().procesa(this);
+            sub.bloq().instr().procesa(this);
+            etq = etq+2;
+            sub.setSig(etq);
         }
         prog.setSig(etq);
     }

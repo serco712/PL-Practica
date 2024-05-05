@@ -160,7 +160,7 @@ public class SintaxisAbstractaTiny {
         public Tipo tipo() { return tipo; }
         public String id() { return str; }
         public int setDesplaza(int desp) { this.despl = desp; }
-        public void getDesplaza() { return despl; }
+        public int getDesplaza() { return despl; }
         public void imprime() {
             tipo.imprime();
             System.out.format("%s$f:%d,c:%d$%n", str, leeFila(), leeCol());
@@ -601,7 +601,7 @@ public class SintaxisAbstractaTiny {
         public Tipo_ident(String ident) {
             super();
             this.ident = ident;
-            this.t = Tipado.id
+            this.t = Tipado.id;
         }
         public String id() { return ident; }
         public void imprime() {

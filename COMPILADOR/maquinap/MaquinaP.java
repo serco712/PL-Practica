@@ -604,11 +604,11 @@ private class IMueve implements Instruccion {
       
       public void ejecuta(){
          Valor valor = pilaEvaluacion.pop();
-         if(valor instanceof ValorInt()) 
+         if(valor.esInt()) 
         	 System.out.println(valor.valorInt());
-         else if(valor instanceof ValorReal())
+         else if(valor.esReal())
         	 System.out.println(valor.valorReal());
-         else if (valor instanceof ValorString())
+         else if (valor.esString())
         	 System.out.println(valor.valorString());
          pc++;
       }
@@ -638,7 +638,7 @@ private class IMueve implements Instruccion {
           	  
             double r = Double.parseDouble(str);
             
-            pilaEvaluacion.push(new ValorReal(r)));
+            pilaEvaluacion.push(new ValorReal(r));
          } catch(Exception e1){
             
         	pilaEvaluacion.push(new ValorString(str));
@@ -693,7 +693,7 @@ private class IMueve implements Instruccion {
    public Instruccion apila_real(double val) {return new IApilaReal(val);}
    public Instruccion apila_Cadena(String val) {return new IApilaCadena(val);}
  
-   public Instruccion desapila() {return IDESAPILA}
+   public Instruccion desapila() {return IDESAPILA;}
    public Instruccion apila_ind() {return IAPILAIND;}
    public Instruccion desapila_ind() {return IDESAPILAIND;}
    public Instruccion mueve(int tam) {return new IMueve(tam);}
@@ -735,7 +735,7 @@ private class IMueve implements Instruccion {
       this.pc = 0;
       ISUMA = new ISuma();
       IRESTA= new IResta();
-      IMENOS= new IMenos()
+      IMENOS= new IMenos();
       IAND = new IAnd();
       IMUL = new IMul();
       IOR= new IOr();
@@ -754,7 +754,7 @@ private class IMueve implements Instruccion {
       IDUP = new IDup();
       ISTOP = new IStop();
       INL = new INl();
-      IREAD new IRead();
+      IREAD = new IRead();
       IWRITE = new IWrite();
       gestorPilaActivaciones = new GestorPilaActivaciones(tamdatos,(tamdatos+tampila)-1,ndisplays); 
       gestorMemoriaDinamica = new GestorMemoriaDinamica(tamdatos+tampila,(tamdatos+tampila+tamheap)-1);
