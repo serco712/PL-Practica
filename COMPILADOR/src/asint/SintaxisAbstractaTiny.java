@@ -1,5 +1,7 @@
 package asint;
 
+import java.util.Map;
+
 public class SintaxisAbstractaTiny {
 
     private static void imprimeOpnd(Exp opnd, int np) {
@@ -26,6 +28,8 @@ public class SintaxisAbstractaTiny {
 	   private int nivel = -1;
 	   private int espacio = 0;
 	   private int dir = -1;
+       private Nodo vinculo;
+       private Tipo tipo;
        public Nodo() {
            ok = true;
 		   fila=col=-1;
@@ -56,19 +60,19 @@ public class SintaxisAbstractaTiny {
        public int getDir(){
            return dir;
        }
-       public int setPrim(int prim){
+       public void setPrim(int prim){
            this.prim = prim;
        }
-       public int setSig(int sig){
+       public void setSig(int sig){
            this.sig =  sig;
        }
-       public int setNivel(int nivel){
+       public void setNivel(int nivel){
            this.nivel =  nivel;
        }
-       public int setEspacio(int espacio){
+       public void setEspacio(int espacio){
            this.espacio =  espacio;
        }
-       public int setDir(int dir){
+       public void setDir(int dir){
            this.dir =  dir;
        }
 	   public int leeFila() {
@@ -82,7 +86,7 @@ public class SintaxisAbstractaTiny {
        public abstract void procesa(Procesamiento p);
        public Tipo tipo() {throw new IllegalArgumentException();}
 
-       public Boolean getOk() {return this.ok;}
+       public boolean getOk() {return this.ok;}
        public void setOk(Boolean ok) {this.ok = ok;}
     }
     
@@ -159,7 +163,7 @@ public class SintaxisAbstractaTiny {
         }
         public Tipo tipo() { return tipo; }
         public String id() { return str; }
-        public int setDesplaza(int desp) { this.despl = desp; }
+        public void setDesplaza(int desp) { this.despl = desp; }
         public int getDesplaza() { return despl; }
         public void imprime() {
             tipo.imprime();
@@ -215,10 +219,13 @@ public class SintaxisAbstractaTiny {
     }
 
     public static abstract class PFmls extends Nodo {
+        protected Tipado t;
         public PFmls() {
             super();
         }
         public LPFml lpfml() { throw new UnsupportedOperationException(); }
+        public Tipado getTipado() {return t;}
+        public void setTipado(Tipado t) {this.t = t;}
     }
 
     public static abstract class LPFml extends Nodo {
@@ -245,12 +252,19 @@ public class SintaxisAbstractaTiny {
             super();
         }
         public LPReal lpr() { throw new UnsupportedOperationException(); }
+        public boolean esDesignador() { 
+    	   return false; 
+       }
+
     }
 
     public static abstract class LPReal extends Nodo {
+        protected Tipado t;
         public LPReal() {
             super();
         }
+        public Tipado getTipado() {return t;}
+        public void setTipado(Tipado t) {this.t = t;}
         public Exp exp() { throw new UnsupportedOperationException(); }
         public LPReal lpr() { throw new UnsupportedOperationException(); }
     }
@@ -270,6 +284,12 @@ public class SintaxisAbstractaTiny {
 
         public void setTipado(Tipado t){this.t = t;}
         public Tipado getTipado(){return this.t;}
+        public Nodo getVinculo(){
+        throw new UnsupportedOperationException("Vinculo erróneo");
+        }
+        public void vincula(Nodo n){
+        throw new UnsupportedOperationException("Vinculo no fijado");
+        } 
     }
 
     public static abstract class Exp  extends  Nodo {
@@ -437,9 +457,9 @@ public class SintaxisAbstractaTiny {
         }
     }   
     
-    public static class Dec_Tipado extends Dec {
+    public static class Dec_type extends Dec {
         private Var v;
-        public Dec_Tipado(Var v) {
+        public Dec_type(Var v) {
             super();
             this.v = v;
             this.t = Tipado.dec_type;
@@ -623,7 +643,7 @@ public class SintaxisAbstractaTiny {
     
     public static class Tipo_struct extends Tipo {
         private LVar lvar;
-        private Map<String,Node> reg;
+        private Map<String,Nodo> reg;
         public Tipo_struct(LVar lvar) {
             super();
             this.lvar = lvar;
@@ -636,8 +656,8 @@ public class SintaxisAbstractaTiny {
             lvar.imprime();
             System.out.println("}");
         }
-        public Map<String,Node> accedeReg() {return reg;}
-        public void vincula(Map<String,Node> reg) {
+        public Map<String,Nodo> accedeReg() {return reg;}
+        public void vincula(Map<String,Nodo> reg) {
             this.reg = reg;
         }
         public String toString() {
@@ -1761,6 +1781,10 @@ public class SintaxisAbstractaTiny {
         public void vincula(Nodo n) {
             vinculo = n;
         }
+        @Override
+        public int getEspacio() {
+            return vinculo.getEspacio();
+        }
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
@@ -1813,8 +1837,8 @@ public class SintaxisAbstractaTiny {
     public Dec dec_simple(Var v) {
         return new Dec_simple(v);
     }
-    public Dec dec_Tipado(Var v) {
-        return new Dec_Tipado(v);
+    public Dec dec_type(Var v) {
+        return new Dec_type(v);
     }
     public Dec dec_proc(String id, PFmls pfs, Blo b) {
         return new Dec_proc(id, pfs, b);

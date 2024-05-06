@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-
+import java.io.InputStreamReader;
 
 
 
@@ -82,7 +82,7 @@ public class MaquinaP {
       public ValorReal(float valor) {
          this.valor = valor; 
       }
-      public float valorReal() {return valor;}
+      public float valorReal() {return this.valor;}
       public boolean esReal() {return true;}
       public boolean menorQue(Valor v) {
          return valor < v.valorReal();
@@ -333,15 +333,15 @@ public class MaquinaP {
    }
    
    private class IApilaReal implements Instruccion {
-      private double valor;
-      public IApilaReal(int valor) {
+      private float valor;
+      public IApilaReal(float valor) {
         this.valor = valor;  
       }
       public void ejecuta() {
-         pilaEvaluacion.push(new ValorReal(valor)); 
+         pilaEvaluacion.push(new ValorReal(this.valor)); 
          pc++;
       } 
-      public String toString() {return "apilaReal("+valor+")";};
+      public String toString() {return "apilaReal("+this.valor+")";};
    }
    
    private class IApilaCadena implements Instruccion {
@@ -363,7 +363,7 @@ public class MaquinaP {
          
          if(valor.esInt()){
              pilaEvaluacion.pop();
-             pilaEvaluacion.push(new ValorReal((double)valor.valorInt()));
+             pilaEvaluacion.push(new ValorReal((float)valor.valorInt()));
              pc++;
          }
       }
@@ -435,7 +435,7 @@ public class MaquinaP {
    private IDesapila IDESAPILA;
    private class IDesapila implements Instruccion {
       public void ejecuta(){
-         Valor val = pilaEvaluacion.pop();
+         pilaEvaluacion.pop();
          pc++;
       }
       public String toString() {return "desapila";};     
@@ -631,12 +631,12 @@ private class IMueve implements Instruccion {
      
       try{
          int i = Integer.parseInt(str);
-         pìlaEvaluacion.push(new ValorInt(i));
+         pilaEvaluacion.push(new ValorInt(i));
       } catch(Exception e){
          
          try{
           	  
-            double r = Double.parseDouble(str);
+            float r = Float.parseFloat(str);
             
             pilaEvaluacion.push(new ValorReal(r));
          } catch(Exception e1){
@@ -690,14 +690,14 @@ private class IMueve implements Instruccion {
    
    public Instruccion apila_int(int val) {return new IApilaInt(val);}
    public Instruccion apila_bool(boolean val) {return new IApilaBool(val);}
-   public Instruccion apila_real(double val) {return new IApilaReal(val);}
-   public Instruccion apila_Cadena(String val) {return new IApilaCadena(val);}
+   public Instruccion apila_real(float val) {return new IApilaReal(val);}
+   public Instruccion apila_cadena(String val) {return new IApilaCadena(val);}
  
    public Instruccion desapila() {return IDESAPILA;}
    public Instruccion apila_ind() {return IAPILAIND;}
    public Instruccion desapila_ind() {return IDESAPILAIND;}
    public Instruccion mueve(int tam) {return new IMueve(tam);}
-   public Instruccion int2real() {return IINTTOREAL;}
+   public Instruccion int2real() {return IINT2REAL;}
    
    public Instruccion nl() {return INL;}
    public Instruccion ir_a(int dir) {return new IIrA(dir);}
@@ -739,15 +739,15 @@ private class IMueve implements Instruccion {
       IAND = new IAnd();
       IMUL = new IMul();
       IOR= new IOr();
-      INOT= INot();
-      IMENOR = IMenor();
+      INOT= new INot();
+      IMENOR = new IMenor();
       IMENORIGUAL =new IMenorIgual();
       IMAYOR = new IMayor();
       IMAYORIGUAL = new IMayorIgual();
       IIGUAL = new IIgual();
       IDISTINTO = new IDistinto();
-      IDESAPILA = IDesapila();
-      IINT2REAL = IInt2Real();
+      IDESAPILA = new IDesapila();
+      IINT2REAL = new IInt2Real();
       IAPILAIND = new IApilaind();
       IDESAPILAIND = new IDesapilaind();
       IIRIND = new IIrind();

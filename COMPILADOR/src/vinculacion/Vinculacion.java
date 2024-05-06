@@ -3,10 +3,31 @@ package vinculacion;
 import java.util.HashMap;
 import java.util.Map;
 
-import asint.SintaxisAbstractaTiny.*;
+import asint.SintaxisAbstractaTiny.Tipado;
+import asint.SintaxisAbstractaTiny.Tipo;
+import asint.SintaxisAbstractaTiny.Tipo_array;
+import asint.SintaxisAbstractaTiny.Tipo_ident;
+import asint.SintaxisAbstractaTiny.Tipo_punt;
+import asint.SintaxisAbstractaTiny.Tipo_struct;
+import asint.SintaxisAbstractaTiny.Var;
+import asint.SintaxisAbstractaTiny.Decs;
+import asint.SintaxisAbstractaTiny.LDecs;
+import asint.SintaxisAbstractaTiny.LVar;
+import asint.SintaxisAbstractaTiny.Muchas_decs;
+import asint.SintaxisAbstractaTiny.Muchas_var;
+import asint.SintaxisAbstractaTiny.Nodo;
+import asint.SintaxisAbstractaTiny.Blo;
+import asint.SintaxisAbstractaTiny.Dec;
+import asint.SintaxisAbstractaTiny.Dec_simple;
+import asint.SintaxisAbstractaTiny.Dec_type;
+import asint.SintaxisAbstractaTiny.Prog;
+import asint.SintaxisAbstractaTiny.Si_decs;
+import asint.Procesamiento;
 
 public class Vinculacion {
+
     public static class ErrorVinculacion extends RuntimeException {} 
+
     private class TablaValores {
         private Map<String,Nodo> diccionario;
         private TablaValores tv;
@@ -55,47 +76,35 @@ public class Vinculacion {
         ts = ts.cierraAmbito();
     }
 
-    public void vincula(Si_decs d) {
-        vincula1(d.decs());
-        vincula2(d.decs());
+    public void vincula(Decs d) {
+        if (claseDe(d, Si_decs.class)) {
+            vincula1(d.decs());
+            vincula2(d.decs());
+        }
     }
-    
-    public void vincula(No_decs d) { }
 
-    public void vincula1(Muchas_decs d) {
-        vincula1(d.decs());
+    public void vincula1(LDecs d) {
+        if (claseDe(d, Muchas_decs.class))
+            vincula1(d.decs());
         vincula1(d.dec());
     }
 
-    public void vincula2(Muchas_decs d) {
-        vincula2(d.decs());
+    public void vincula2(LDecs d) {
+        if (claseDe(d, Muchas_decs.class))
+            vincula2(d.decs());
         vincula2(d.dec());
     }
 
-    public void vincula1(Una_dec d) {
-        vincula1(d.dec());
-    }
-
-    public void vincula2(Una_dec d) {
-        vincula2(d.dec());
-    }
-
-    public void vincula1(Muchas_var v) {
-        vincula1(v.vars());
+    public void vincula1(LVar v) {
+        if (claseDe(v, Muchas_var.class))
+            vincula1(v.vars());
         vincula1(v.var());
     }
 
-    public void vincula2(Muchas_var v) {
-        vincula2(v.vars());
+    public void vincula2(LVar v) {
+        if (claseDe(v, Muchas_var.class))
+            vincula2(v.vars());
         vincula2(v.var());
-    }
-
-    public void vincula1(Una_var v) {
-        vincula1(v.vars());
-    }
-
-    public void vincula2(Una_var v) {
-        vincula2(v.vars());
     }
 
     public void vincula1(Var v) {
@@ -103,77 +112,72 @@ public class Vinculacion {
         if (ts.contiene(v.id()))
             throw new ErrorVinculacion();
         
-        ts.inserta(v.id(), d);
+        ts.inserta(v.id(), v);
     }
 
     public void vincula2(Var v) {
         vincula2(v.tipo());
     }
 
-    public void vincula1(Dec_simple d) {
-        Var v = d.var();
-        vincula1(v.tipo());
-        if (ts.contiene(v.id()))
-            throw new ErrorVinculacion();
-        
-        ts.inserta(v.id(), d);
+    public void vincula1(Dec d) {
+        if (claseDe(d, Dec_simple.class) || claseDe(d, Dec_type.class)) {
+            Var v = d.var();
+            vincula1(v.tipo());
+            if (ts.contiene(v.id()))
+                throw new ErrorVinculacion();
+            
+            ts.inserta(v.id(), d);
+        }
+        else {
+            if (ts.contiene(d.id()))
+                throw new ErrorVinculacion();
+
+            ts.inserta(d.id(), d);   
+        }
     }
 
-    public void vincula2(Dec_simple d) {
-        vincula2(d.var());
+    public void vincula2(Dec d) {
+        if (claseDe(d, Dec_simple.class) || claseDe(d, Dec_type.class)) {
+            vincula2(d.var());
+        else {
+            ts.abreAmbito();
+            vincula1(d.par_for());
+            vincul2(d.par_for());
+            vincula(d.bloq());
+            ts.cierraAmbito();
+        }
     }
 
-    public void vincula1(Dec_type d) {
-        Var v = d.var();
-        vincula1(v.tipo());
-        if (ts.contiene(v.id()))
-            throw new ErrorVinculacion();
-        
-        ts.inserta(v.id(), d);
-    }
-
-    public void vincula2(Dec_type d) {
-        vincula2(d.var());
-    }
-
-    public void vincula1(Dec_proc d) {
-        if (ts.contiene(d.id()))
-            throw new ErrorVinculacion();
-
-        ts.inserta(d.id(), d);
-    }
-
-    public void vincula2(Dec_proc d) {
-        ts.abreAmbito();
-        vincula1(d.par_for());
-        vincul2(d.par_for());
-        vincula(d.bloq());
-        ts.cierraAmbito();
-    }
-
-    public void vincula1(Tipo_array t) {
-        if (t.tipo().getClass() != Tipo_ident.class) {
-            vincula1(t);
+    public void vincula1(Tipo t) {
+        if (claseDe(t, Tipo_array.class) || claseDe(t, Tipo_punt.class)) {
+            if (!claseDe(t.tipo(), Tipo_ident.class)) {
+                vincula1(t);
+            }
+        }
+        else if (claseDe(t, Tipo_struct.class)) {
+            ts.abreAmbito();
+            vincula1(t.lvar());
+            vincula2(t.lvar());
+            t.vincula(ts.devuelveAmbito());
+            ts.cierraAmbito();
         }
     }
 
     public void vincula2(Tipo_array t) {
-        if (t.tipo().getClass() == Tipo_ident.class) {
-            Nodo n = ts.vinculoDe(s);
-            if (n.getClass() != Dec_type.class)
-                throw new ErrorVinculacion();
+        if (claseDe(t, Tipo_array.class) || claseDe(t, Tipo_punt.class)) {
+            if (claseDe(t.tipo(), Tipo_ident.class)) {
+                Nodo n = ts.vinculoDe(t.id());
+                if (n.getClass() != Dec_type.class)
+                    throw new ErrorVinculacion();
+            }
+            else
+                vincula2(t.tipo());
         }
-        else
-            vincula2(t.tipo());
     }
 
-    public void vincula1(Tipo_punt t) {
-        if (t.tipo() != Tipo_ident.class)
-            vincula1(t.tipo());
-    }
 
     public void vincula2(Tipo_punt t) {
-        if (t.tipo() == Tipo_ident.class) {
+        if (t.tipo().getClass() == Tipo_ident.class) {
             Nodo n = ts.vinculoDe(t.id());
             if (n.getClass() != Dec_type.class)
                 throw new ErrorVinculacion();
@@ -462,5 +466,9 @@ public class Vinculacion {
     }
 
     public void vincula(Exp_null exp) { }
+
+    private boolean claseDe(Object o, Class c) {
+        return o.getClass() == c;
+    } 
 
 }

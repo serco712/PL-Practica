@@ -73,145 +73,145 @@ import asint.SintaxisAbstractaTiny.Una_var;
 import asint.SintaxisAbstractaTiny.Var;
 
 public interface Procesamiento {
-	void procesa(Prog prog);
+	public void procesa(Prog prog);
 
-	void procesa(Blo blo);
+	public void procesa(Blo blo);
 
-	void procesa(Si_decs decs);
+	public void procesa(Si_decs decs);
 
-	void procesa(No_decs decs);
+	public void procesa(No_decs decs);
 
-	void procesa(Muchas_decs decs);
+	public void procesa(Muchas_decs decs);
 
-	void procesa(Una_dec decs);
+	public void procesa(Una_dec decs);
 
-	void procesa(Var v);
+	public void procesa(Var v);
 
-	void procesa(Muchas_var vars);
+	public void procesa(Muchas_var vars);
 
-	void procesa(Una_var vars);
+	public void procesa(Una_var vars);
 
-	void procesa(Dec_simple dec);
+	public void procesa(Dec_simple dec);
 
-	void procesa(Dec_type dec);
+	public void procesa(Dec_type dec);
 
-	void procesa(Dec_proc dec);
+	public void procesa(Dec_proc dec);
 
-	void procesa(Tipo_array tipo);
+	public void procesa(Tipo_array tipo);
 
-	void procesa(Tipo_punt tipo);
+	public void procesa(Tipo_punt tipo);
 
-	void procesa(Tipo_bool tipo);
+	public void procesa(Tipo_bool tipo);
 
-	void procesa(Tipo_int tipo);
+	public void procesa(Tipo_int tipo);
 
-	void procesa(Tipo_real tipo);
+	public void procesa(Tipo_real tipo);
 
-	void procesa(Tipo_string tipo);
+	public void procesa(Tipo_string tipo);
 
-	void procesa(Tipo_ident tipo);
+	public void procesa(Tipo_ident tipo);
 
-	void procesa(Tipo_struct tipo);
+	public void procesa(Tipo_struct tipo);
 
-	void procesa(Si_inst insts);
+	public void procesa(Si_inst insts);
 
-	void procesa(No_inst insts);
+	public void procesa(No_inst insts);
 
-	void procesa(Muchas_inst insts);
+	public void procesa(Muchas_inst insts);
 
-	void procesa(Una_inst insts);
+	public void procesa(Una_inst insts);
 
-	void procesa(Si_pformal pfmls);
+	public void procesa(Si_pformal pfmls);
 
-	void procesa(No_pformal pfmls);
+	public void procesa(No_pformal pfmls);
 
-	void procesa(Muchos_pformal pfmls);
+	public void procesa(Muchos_pformal pfmls);
 
-	void procesa(Un_pformal pfmls);
+	public void procesa(Un_pformal pfmls);
 
-	void procesa(Pformal_ref pfml);
+	public void procesa(Pformal_ref pfml);
 
-	void procesa(Pformal_noref pfml);
+	public void procesa(Pformal_noref pfml);
 
-	void procesa(Si_preales preales);
+	public void procesa(Si_preales preales);
 
-	void procesa(No_preales preales);
+	public void procesa(No_preales preales);
 
-	void procesa(Muchas_exp lpreal);
+	public void procesa(Muchas_exp lpreal);
 
-	void procesa(Una_exp lpreal);
+	public void procesa(Una_exp lpreal);
 
-	void procesa(Inst_eval inst);
+	public void procesa(Inst_eval inst);
 
-	void procesa(Inst_if inst);
+	public void procesa(Inst_if inst);
 
-	void procesa(Inst_else inst);
+	public void procesa(Inst_else inst);
 
-	void procesa(Inst_while inst);
+	public void procesa(Inst_while inst);
 
-	void procesa(Inst_new inst);
+	public void procesa(Inst_new inst);
 
-	void procesa(Inst_delete inst);
+	public void procesa(Inst_delete inst);
 
-	void procesa(Inst_read inst);
+	public void procesa(Inst_read inst);
 
-	void procesa(Inst_write inst);
+	public void procesa(Inst_write inst);
 
-	void procesa(Inst_call inst);
+	public void procesa(Inst_call inst);
 
-	void procesa(Inst_nl inst);
+	public void procesa(Inst_nl inst);
 
-	void procesa(Inst_blo inst);
+	public void procesa(Inst_blo inst);
 
-	void procesa(Exp_asig exp);
+	public void procesa(Exp_asig exp);
 
-	void procesa(Exp_menor exp);
+	public void procesa(Exp_menor exp);
 
-	void procesa(Exp_menIgual exp);
+	public void procesa(Exp_menIgual exp);
 
-	void procesa(Exp_mayor exp);
+	public void procesa(Exp_mayor exp);
 
-	void procesa(Exp_mayIgual exp);
+	public void procesa(Exp_mayIgual exp);
 
-	void procesa(Exp_igual exp);
+	public void procesa(Exp_igual exp);
 
-	void procesa(Exp_dist exp);
+	public void procesa(Exp_dist exp);
 
-	void procesa(Exp_suma exp);
+	public void procesa(Exp_suma exp);
 
-	void procesa(Exp_resta exp);
+	public void procesa(Exp_resta exp);
 
-	void procesa(Exp_mult exp);
+	public void procesa(Exp_mult exp);
 
-	void procesa(Exp_div exp);
+	public void procesa(Exp_div exp);
 
-	void procesa(Exp_mod exp);
+	public void procesa(Exp_mod exp);
 
-	void procesa(Exp_and and);
+	public void procesa(Exp_and and);
 
-	void procesa(Exp_or or);
+	public void procesa(Exp_or or);
 
-	void procesa(Exp_menos menos);
+	public void procesa(Exp_menos menos);
 
-	void procesa(Exp_not not);
+	public void procesa(Exp_not not);
 
-	void procesa(Exp_index index);
+	public void procesa(Exp_index index);
 
-	void procesa(Exp_reg reg);
+	public void procesa(Exp_reg reg);
 
-	void procesa(Exp_indir indir);
+	public void procesa(Exp_indir indir);
 
-	void procesa(Exp_true ex_true);
+	public void procesa(Exp_true ex_true);
 
-	void procesa(Exp_false ex_false);
+	public void procesa(Exp_false ex_false);
 
-	void procesa(Exp_litEnt litEnt);
+	public void procesa(Exp_litEnt litEnt);
 
-	void procesa(Exp_litReal litReal);
+	public void procesa(Exp_litReal litReal);
 
-	void procesa(Exp_litCadena litCadena);
+	public void procesa(Exp_litCadena litCadena);
 
-	void procesa(Exp_iden iden);
+	public void procesa(Exp_iden iden);
 
-	void procesa(Exp_null ex_null);
+	public void procesa(Exp_null ex_null);
 }

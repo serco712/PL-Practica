@@ -1,6 +1,7 @@
 package errors;
 
 import c_ast_ascendente.UnidadLexica;
+import asint.SintaxisAbstractaTiny.Tipado;
 
 public class GestionErroresTiny {
    public class ErrorLexico extends RuntimeException {
@@ -28,7 +29,7 @@ public class GestionErroresTiny {
    public void errorParametrosNoCoincidentes() {
 	   System.err.println("ERROR los parametros no coinciden");	   
    }
-   public void erorTiposIncompatibles(Tipado tipo1, Tipado tipo2) {
+   public void errorTiposIncompatibles(Tipado tipo1, Tipado tipo2) {
 	   System.err.println("ERROR los tipos " + tipo1.name() + " y " + tipo2.name() + " no son compatibles");
    }
    public void errorTamanioArray() {
