@@ -1,19 +1,99 @@
-import SintaxisAbstractaTiny.Dec_proc;
 import java.util.Stack;
+
+import asint.Procesamiento;
+import asint.SintaxisAbstractaTiny.Blo;
+import asint.SintaxisAbstractaTiny.Dec_proc;
+import asint.SintaxisAbstractaTiny.Dec_simple;
+import asint.SintaxisAbstractaTiny.Dec_type;
+import asint.SintaxisAbstractaTiny.Decs;
+import asint.SintaxisAbstractaTiny.Exp;
+import asint.SintaxisAbstractaTiny.Exp_and;
+import asint.SintaxisAbstractaTiny.Exp_asig;
+import asint.SintaxisAbstractaTiny.Exp_dist;
+import asint.SintaxisAbstractaTiny.Exp_div;
+import asint.SintaxisAbstractaTiny.Exp_false;
+import asint.SintaxisAbstractaTiny.Exp_iden;
+import asint.SintaxisAbstractaTiny.Exp_igual;
+import asint.SintaxisAbstractaTiny.Exp_index;
+import asint.SintaxisAbstractaTiny.Exp_indir;
+import asint.SintaxisAbstractaTiny.Exp_litCadena;
+import asint.SintaxisAbstractaTiny.Exp_litEnt;
+import asint.SintaxisAbstractaTiny.Exp_litReal;
+import asint.SintaxisAbstractaTiny.Exp_mayIgual;
+import asint.SintaxisAbstractaTiny.Exp_mayor;
+import asint.SintaxisAbstractaTiny.Exp_menIgual;
+import asint.SintaxisAbstractaTiny.Exp_menor;
+import asint.SintaxisAbstractaTiny.Exp_menos;
+import asint.SintaxisAbstractaTiny.Exp_mod;
+import asint.SintaxisAbstractaTiny.Exp_mult;
+import asint.SintaxisAbstractaTiny.Exp_not;
+import asint.SintaxisAbstractaTiny.Exp_null;
+import asint.SintaxisAbstractaTiny.Exp_or;
+import asint.SintaxisAbstractaTiny.Exp_reg;
+import asint.SintaxisAbstractaTiny.Exp_resta;
+import asint.SintaxisAbstractaTiny.Exp_suma;
+import asint.SintaxisAbstractaTiny.Exp_true;
+import asint.SintaxisAbstractaTiny.Inst_blo;
+import asint.SintaxisAbstractaTiny.Inst_call;
+import asint.SintaxisAbstractaTiny.Inst_delete;
+import asint.SintaxisAbstractaTiny.Inst_else;
+import asint.SintaxisAbstractaTiny.Inst_eval;
+import asint.SintaxisAbstractaTiny.Inst_if;
+import asint.SintaxisAbstractaTiny.Inst_new;
+import asint.SintaxisAbstractaTiny.Inst_nl;
+import asint.SintaxisAbstractaTiny.Inst_read;
+import asint.SintaxisAbstractaTiny.Inst_while;
+import asint.SintaxisAbstractaTiny.Inst_write;
+import asint.SintaxisAbstractaTiny.LDecs;
+import asint.SintaxisAbstractaTiny.Muchas_decs;
+import asint.SintaxisAbstractaTiny.Muchas_exp;
+import asint.SintaxisAbstractaTiny.Muchas_inst;
+import asint.SintaxisAbstractaTiny.Muchas_var;
+import asint.SintaxisAbstractaTiny.Muchos_pformal;
+import asint.SintaxisAbstractaTiny.No_decs;
+import asint.SintaxisAbstractaTiny.No_inst;
+import asint.SintaxisAbstractaTiny.No_pformal;
+import asint.SintaxisAbstractaTiny.No_preales;
+import asint.SintaxisAbstractaTiny.Nodo;
+import asint.SintaxisAbstractaTiny.PReales;
+import asint.SintaxisAbstractaTiny.Pformal_noref;
+import asint.SintaxisAbstractaTiny.Pformal_ref;
+import asint.SintaxisAbstractaTiny.Prog;
+import asint.SintaxisAbstractaTiny.Si_decs;
+import asint.SintaxisAbstractaTiny.Si_inst;
+import asint.SintaxisAbstractaTiny.Si_pformal;
+import asint.SintaxisAbstractaTiny.Si_preales;
+import asint.SintaxisAbstractaTiny.Tipo_array;
+import asint.SintaxisAbstractaTiny.Tipo_bool;
+import asint.SintaxisAbstractaTiny.Tipo_ident;
+import asint.SintaxisAbstractaTiny.Tipo_int;
+import asint.SintaxisAbstractaTiny.Tipo_punt;
+import asint.SintaxisAbstractaTiny.Tipo_real;
+import asint.SintaxisAbstractaTiny.Tipo_string;
+import asint.SintaxisAbstractaTiny.Tipo_struct;
+import asint.SintaxisAbstractaTiny.Un_pformal;
+import asint.SintaxisAbstractaTiny.Una_dec;
+import asint.SintaxisAbstractaTiny.Una_exp;
+import asint.SintaxisAbstractaTiny.Una_inst;
+import asint.SintaxisAbstractaTiny.Una_var;
+import asint.SintaxisAbstractaTiny.Var;
+import maquinap.MaquinaP;
 
 public class Etiquetado implements Procesamiento{
     private int etq = 0;
     private Stack<Dec_proc> subs;
+    private MaquinaP m;
 	
-	public Etiquetado() {
+	public Etiquetado(MaquinaP m) {
 		subs = new Stack<>();
+		this.m = m;
 	}
 	
     public void procesa(Prog prog) {
         prog.bloq().procesa(this);
     }
 
-    public void procesa(Bloq bloq) {
+    public void procesa(Blo bloq) {
         bloq.setPrim(etq);
         bloq.instr().procesa(this);
         etq++;
@@ -21,42 +101,42 @@ public class Etiquetado implements Procesamiento{
             Dec_proc sub =  subs.pop();
             sub.setPrim(etq);
             etq++;
-            recolecta_procs(bloq.decs());
+            recolecta_procs(bloq.decla().decs());
             sub.bloq().instr().procesa(this);
             etq = etq+2;
             sub.setSig(etq);
         }
-        prog.setSig(etq);
+        bloq.setSig(etq);
     }
-    public void procesa(Si_Decs dec) {
+    public void procesa(Si_decs dec) {
         dec.setPrim(etq);
         dec.decs().procesa(this);
         dec.setSig(etq);
     }
 
-    public void procesa(No_Decs dec) {}
+    public void procesa(No_decs dec) {}
     
-    public void procesa(Muchas_Decs dec) {
+    public void procesa(Muchas_decs dec) {
         dec.setPrim(etq);
         dec.decs().procesa(this);
         dec.dec().procesa(this);
         dec.setSig(etq);
     }
 
-    public void procesa(Una_Dec dec) {
+    public void procesa(Una_dec dec) {
         dec.setPrim(etq);
         dec.dec().procesa(this);
         dec.setSig(etq);
     }
 
-    public void procesa(Muchas_Var var) {
+    public void procesa(Muchas_var var) {
         var.setPrim(etq);
         var.vars().procesa(this);
         var.var().procesa(this);
         var.setSig(etq);
     }
 
-    public void procesa(Una_Var var) {
+    public void procesa(Una_var var) {
         var.setPrim(etq);
         var.var().procesa(this);
         var.setSig(etq);
@@ -74,13 +154,13 @@ public class Etiquetado implements Procesamiento{
         dec.setSig(etq);
     }
 
-    public void procesa(Dec_Tipado dec) {
+    public void procesa(Dec_type dec) {
         dec.setPrim(etq);
         dec.var().procesa(this);
         dec.setSig(etq);
     }
 
-    public void procesa(Dec_Proc dec) {
+    public void procesa(Dec_proc dec) {
         dec.setPrim(etq);
         dec.par_for().procesa(this);
         dec.bloq().procesa(this);
@@ -160,7 +240,7 @@ public class Etiquetado implements Procesamiento{
         pf.pfml().procesa(this);
         pf.setSig(etq);
     }
-
+    
     public void procesa(Pformal_ref pf) {
         pf.setPrim(etq);
         pf.tipo().procesa(this);
@@ -284,114 +364,114 @@ public class Etiquetado implements Procesamiento{
     }
     
     public void procesa(Exp_asig exp){
-    	inst.setPrim(etq);
+    	exp.setPrim(etq);
     	etiquetado_opnds(exp.exp1(),exp.exp2());
     	etq++;
-        inst.setSig(etq);
+    	exp.setSig(etq);
     }
     
     public void procesa(Exp_menor exp){
-    	inst.setPrim(etq);
+    	exp.setPrim(etq);
     	etiquetado_opnds(exp.exp1(),exp.exp2());
     	etq++;
-        inst.setSig(etq);
+    	exp.setSig(etq);
     }
     
     public void procesa(Exp_menIgual exp){
-    	inst.setPrim(etq);
+    	exp.setPrim(etq);
     	etiquetado_opnds(exp.exp1(),exp.exp2());
     	etq++;
-        inst.setSig(etq);
+    	exp.setSig(etq);
     }
     
     public void procesa(Exp_mayor exp){
-    	inst.setPrim(etq);
+    	exp.setPrim(etq);
     	etiquetado_opnds(exp.exp1(),exp.exp2());
     	etq++;
-        inst.setSig(etq);
+    	exp.setSig(etq);
     }
     
     public void procesa(Exp_mayIgual exp){
-    	inst.setPrim(etq);
+    	exp.setPrim(etq);
     	etiquetado_opnds(exp.exp1(),exp.exp2());
     	etq++;
-        inst.setSig(etq);
+    	exp.setSig(etq);
     }
     
     public void procesa(Exp_igual exp){
-    	inst.setPrim(etq);
+    	exp.setPrim(etq);
     	etiquetado_opnds(exp.exp1(),exp.exp2());
     	etq++;
-        inst.setSig(etq);
+    	exp.setSig(etq);
     }
     
     public void procesa(Exp_dist exp){
-    	inst.setPrim(etq);
+    	exp.setPrim(etq);
     	etiquetado_opnds(exp.exp1(),exp.exp2());
     	etq++;
-        inst.setSig(etq);
+    	exp.setSig(etq);
     }
     
     public void procesa(Exp_suma exp){
-    	inst.setPrim(etq);
+    	exp.setPrim(etq);
     	etiquetado_opnds(exp.exp1(),exp.exp2());
     	etq++;
-        inst.setSig(etq);
+    	exp.setSig(etq);
     }
     
     public void procesa(Exp_resta exp){
-    	inst.setPrim(etq);
+    	exp.setPrim(etq);
     	etiquetado_opnds(exp.exp1(),exp.exp2());
     	etq++;
-        inst.setSig(etq);
+    	exp.setSig(etq);
     }
     
     public void procesa(Exp_mult exp){
-    	inst.setPrim(etq);
+    	exp.setPrim(etq);
     	etiquetado_opnds(exp.exp1(),exp.exp2());
     	etq++;
-        inst.setSig(etq);
+    	exp.setSig(etq);
     }
     
     public void procesa(Exp_div exp){
-    	inst.setPrim(etq);
+    	exp.setPrim(etq);
     	etiquetado_opnds(exp.exp1(),exp.exp2());
     	etq++;
-        inst.setSig(etq);
+    	exp.setSig(etq);
     }
     
     public void procesa(Exp_mod exp){
-    	inst.setPrim(etq);
+    	exp.setPrim(etq);
     	etiquetado_opnds(exp.exp1(),exp.exp2());
     	etq++;
-        inst.setSig(etq);
+    	exp.setSig(etq);
     }
     
     public void procesa(Exp_and exp){
-    	inst.setPrim(etq);
+    	exp.setPrim(etq);
     	etiquetado_opnds(exp.exp1(),exp.exp2());
     	etq++;
-        inst.setSig(etq);
+    	exp.setSig(etq);
     }
     
     public void procesa(Exp_or exp){
-    	inst.setPrim(etq);
+    	exp.setPrim(etq);
     	etiquetado_opnds(exp.exp1(),exp.exp2());
     	etq++;
-        inst.setSig(etq);
+    	exp.setSig(etq);
     }
     
     public void procesa(Exp_menos exp){
         exp.setPrim(etq);
-        exp.exp().procesa(this);
-    	etiquetado_acc_val(exp.exp());
+        exp.procesa(this);
+    	etiquetado_acc_val(exp);
         exp.setSig(etq);
     }
     
     public void procesa(Exp_not exp){
         exp.setPrim(etq);
-        exp.exp().procesa(this);
-    	etiquetado_acc_val(exp.exp());
+        exp.procesa(this);
+    	etiquetado_acc_val(exp);
     	etq = etq+2;
         exp.setSig(etq);
     }
@@ -472,30 +552,15 @@ public class Etiquetado implements Procesamiento{
     	etq++;
     }
     
-    
-    private void recolecta_procs(Muchas_decs decs) {
-	    recolecta_procs(decs.decs().procesa(this));
-	    recolecta_procs(decs.dec().procesa(this));
-	}
-	
-	private void recolecta_procs(Una_dec dec) {
-	    recolecta_procs(dec.dec().procesa(this));
-	}
-	
-	private void recolecta_procs(Dec_simple dec) {}
-	
-	private void recolecta_procs(Dec_type dec) {}
-	
-	private void recolecta_procs(Dec_proc dec) {
-        m.apila(subs,dec);
-	}
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    private void recolecta_procs(LDecs lDecs){
+        if(claseDe(lDecs, Muchas_decs.class)){
+             recolecta_procs(lDecs.decs());
+        }
+        else if (claseDe(lDecs, Dec_proc.class))
+        	m.apila(subs,lDecs);
+    }
+   
+	private boolean claseDe(Object o, Class c) {
+        return o.getClass() == c;
+    } 
 }
