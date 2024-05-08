@@ -80,7 +80,9 @@ import asint.SintaxisAbstractaTiny.Una_inst;
 import asint.SintaxisAbstractaTiny.Una_var;
 import asint.SintaxisAbstractaTiny.Var;
 
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import asint.Procesamiento;
 import errors.GestionErroresTiny;
@@ -186,7 +188,18 @@ public class Comprobacion_tipos implements Procesamiento {
     public void procesa(Tipo_ident tipo) {}
     
     public void procesa(Tipo_struct tipo) {
-        tipo.lvar().procesa(this);
+    	boolean repetido = false;
+        Set<String> noRepetidos = new HashSet<>();
+        
+        for (String clave : tipo.accedeReg().keySet()) {
+            if (noRepetidos.contains(clave)) {
+                repetido = true;
+                break;
+            } else {
+            	noRepetidos.add(clave);
+            }
+        }
+        if (!repetido) tipo.lvar().procesa(this);
 	}
 
     public void procesa(Si_inst insts) {
@@ -256,6 +269,10 @@ public class Comprobacion_tipos implements Procesamiento {
 
     public void procesa(Inst_eval inst) {
         inst.exp().procesa(this);
+        if (inst.exp().getTipado() == Tipado.error)
+        	inst.setTipado(Tipado.error);
+        else
+        	inst.setTipado(Tipado.ok);
 	}
 
     public void procesa(Inst_if inst) {
@@ -358,7 +375,7 @@ public class Comprobacion_tipos implements Procesamiento {
            	GestionErrores.errorTipoInadecuado(instr.getVinculo().tipo().getTipado(), Tipado.dec_proc);
         }
         else {
-        	
+        	instr.pr().procesa(this);
         	instr.setTipado(tipado_parametros(instr.pr(), p.par_for()));
         }
         if (instr.getTipado() == Tipado.error) {
@@ -402,18 +419,18 @@ public class Comprobacion_tipos implements Procesamiento {
     }
     
     public Tipado tipado_parametros(Exp e, PFml pfml) {
-    	e.procesa(this);
-
-    	if(claseDe(pfml, Pformal_ref.class)) {
+    	if(claseDe(pfml, Pformal_noref.class)) {
     		if (compatibles(e, pfml.tipo())) 
         		return Tipado.ok;
     	}
-    	else if(claseDe(pfml, Pformal_noref.class)) {
-    		if (e.esDesignador() && compatibles(e, pfml.tipo())) 
+    	else if(claseDe(pfml, Pformal_ref.class)) {
+    		if (e.esDesignador() || compatibles(e, pfml.tipo()) || (e.getTipado() == Tipado.literalReal && pfml.getTipado() == Tipado.literalReal)) 
         		return Tipado.ok;
         	else {
         		if (!e.esDesignador()) 
                     GestionErrores.errorNoDesignador();
+        		else if (!compatibles(e, pfml.tipo()))
+        			GestionErrores.errorTiposIncompatibles(e.getTipado(), pfml.getTipado());
         	}
     	}
     	return Tipado.error;
@@ -601,7 +618,11 @@ public class Comprobacion_tipos implements Procesamiento {
           	GestionErrores.errorTipoInadecuado(reg.exp1().getTipado(), Tipado.tipoStruct);
         }
         else {
-            reg.setTipado(reg.exp1().getVinculo().tipo().getTipado());
+        	Tipo_struct s = (Tipo_struct)reg.exp1().tipo();
+        	if (s.accedeReg().containsKey(reg.id()))
+        		reg.setTipado(reg.exp1().getVinculo().tipo().getTipado());
+        	else 
+        		reg.setTipado(Tipado.error);
         }
 	}
 
@@ -694,6 +715,7 @@ public class Comprobacion_tipos implements Procesamiento {
     }
 
 
+    //En las compatibilidades, ha de seguirse el algoritmo de unificación de tipos y llevar cuenta de las ecuaciones entre tipos compatibles
     //Añadir lista para mayor eficiencia con las compatibilidades
     private boolean compatibles(Exp e1, Exp e2) {
     	Tipado t1 = e1.getTipado();
@@ -769,12 +791,10 @@ public class Comprobacion_tipos implements Procesamiento {
         		return false;
         	
             for (String id : r1.keySet()) {
-                if (!r2.containsKey(id)) {
+                if (!r2.containsKey(id)) 
                     return false;
-                }
-                if (r1.get(id).tipo().getTipado() != r2.get(id).tipo().getTipado()) {
+                if (r1.get(id).tipo().getTipado() != r2.get(id).tipo().getTipado())
                     return false;
-                }
             }
         	
         	return true;

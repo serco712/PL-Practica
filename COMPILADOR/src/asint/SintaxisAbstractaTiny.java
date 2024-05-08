@@ -179,6 +179,7 @@ public class SintaxisAbstractaTiny {
 
     public abstract static class Dec extends Nodo {
         protected Tipado t;
+        protected int num_datos;
         public Dec() {
             super();
         }
@@ -188,6 +189,12 @@ public class SintaxisAbstractaTiny {
         public Blo bloq() { throw new UnsupportedOperationException(); }
         public Tipado getTipado() {return t;}
         public void setTipado(Tipado t) {this.t = t;}
+        public void setNumDatos(int numdatos) {
+        	num_datos = numdatos;
+        }
+        public int getNumDatos() {
+        	return num_datos;
+        }
     }
 
     public static abstract class Tipo extends Nodo {
@@ -503,6 +510,7 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        
     }
     
     public static class Tipo_array extends Tipo {

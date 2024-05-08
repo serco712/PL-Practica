@@ -76,8 +76,8 @@ public class Espacio {
               d.setNivel(nivel);
               dir = 0;
               asigEspacio1(d.par_for());
-              asigEspacio1(d.bloq());
-              d.tam_datos = dir;
+              asigEspacio(d.bloq());
+              d.setNumDatos(dir);
               dir = aux;
               nivel--;
          }
@@ -86,10 +86,6 @@ public class Espacio {
     public void asigEspacio2(Dec d){
          if (claseDe(d, Dec_simple.class) || claseDe(d, Dec_type.class)) {
              asigEspacio2(d.var());
-         }
-         else if(claseDe(d, Dec_proc.class)){
-              asigEspacio2(d.par_for());
-              asigEspacio2(d.bloq());  
          }
     }
     
@@ -105,7 +101,7 @@ public class Espacio {
     
     public void asigEspacioTipo1(Tipo t){
         if(claseDe(t, Tipo_array.class)){
-        	t.setEspacio(t.litEnt().getEspacio());
+        	t.setEspacio(Integer.parseInt(t.litEnt()));
        		if (t.tipo().getClass() != Tipo_ident.class) {
             	asigEspacioTipo1(t);
         	}
@@ -128,7 +124,7 @@ public class Espacio {
         else if(claseDe(t, Tipo_struct.class)){
          	int dir_ant = dir;
          	dir = 0;
-         	asigEspacio1(t.vars());
+         	asigEspacio1(t.lvar());
          	t.setEspacio(dir);
          	dir = dir_ant;
         }
@@ -137,7 +133,7 @@ public class Espacio {
      public void asigEspacioTipo2(Tipo t){
         if(claseDe(t, Tipo_array.class)){
         	if (t.tipo().getClass() == Tipo_ident.class) {
-	            if (t.tipo().getVinculo() == Var.class){
+	            if (t.tipo().getClass() == Var.class){
 	               asigEspacioTipo(Var.tipo().getEspacio());
 	            }
 	            t.setEspacio(t.litEnt().getEspacio()* Var.getEspacio());

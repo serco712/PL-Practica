@@ -63,6 +63,7 @@ import asint.SintaxisAbstractaTiny.Si_decs;
 import asint.SintaxisAbstractaTiny.Si_inst;
 import asint.SintaxisAbstractaTiny.Si_pformal;
 import asint.SintaxisAbstractaTiny.Si_preales;
+import asint.SintaxisAbstractaTiny.Tipado;
 import asint.SintaxisAbstractaTiny.Tipo_array;
 import asint.SintaxisAbstractaTiny.Tipo_bool;
 import asint.SintaxisAbstractaTiny.Tipo_ident;
@@ -414,28 +415,28 @@ public class Etiquetado implements Procesamiento{
     
     public void procesa(Exp_suma exp){
     	exp.setPrim(etq);
-    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etiquetado_opnds2(exp.exp1(),exp.exp2());
     	etq++;
     	exp.setSig(etq);
     }
     
     public void procesa(Exp_resta exp){
     	exp.setPrim(etq);
-    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etiquetado_opnds2(exp.exp1(),exp.exp2());
     	etq++;
     	exp.setSig(etq);
     }
     
     public void procesa(Exp_mult exp){
     	exp.setPrim(etq);
-    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etiquetado_opnds2(exp.exp1(),exp.exp2());
     	etq++;
     	exp.setSig(etq);
     }
     
     public void procesa(Exp_div exp){
     	exp.setPrim(etq);
-    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	etiquetado_opnds2(exp.exp1(),exp.exp2());
     	etq++;
     	exp.setSig(etq);
     }
@@ -538,6 +539,19 @@ public class Etiquetado implements Procesamiento{
     	etiquetado_acc_val(exp1);
     	exp2.procesa(this);
     	etiquetado_acc_val(exp2);
+    }
+    
+    private void etiquetado_opnds2(Exp exp1,Exp exp2) {
+    	exp1.procesa(this);
+    	etiquetado_acc_val(exp1);
+    	exp2.procesa(this);
+    	etiquetado_acc_val(exp2);
+    	
+    	Tipado t0 = exp1.getTipado();
+    	Tipado t1 = exp1.getTipado();
+    	
+    	if ((t1 == Tipado.literalReal && t0 == Tipado.literalEntero) || (t0 == Tipado.literalReal && t1 == Tipado.literalEntero))
+    		etq++;
     }
     
     private void etiquetado_acc_val(Exp exp) {
