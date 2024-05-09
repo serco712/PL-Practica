@@ -1,7 +1,10 @@
+package etiquetado;
+
 import java.util.Stack;
 
 import asint.Procesamiento;
 import asint.SintaxisAbstractaTiny.Blo;
+import asint.SintaxisAbstractaTiny.Dec;
 import asint.SintaxisAbstractaTiny.Dec_proc;
 import asint.SintaxisAbstractaTiny.Dec_simple;
 import asint.SintaxisAbstractaTiny.Dec_type;
@@ -349,7 +352,6 @@ public class Etiquetado implements Procesamiento{
     public void procesa(Inst_call inst){
     	inst.setPrim(etq);
     	etq++;
-    	//TODO
     	etiquetado_paso_param(inst.getVinculo(),inst.pr());
         etq++;
         inst.setSig(etq);
@@ -546,11 +548,8 @@ public class Etiquetado implements Procesamiento{
     	etiquetado_acc_val(exp1);
     	exp2.procesa(this);
     	etiquetado_acc_val(exp2);
-    	
-    	Tipado t0 = exp1.getTipado();
-    	Tipado t1 = exp1.getTipado();
-    	
-    	if ((t1 == Tipado.literalReal && t0 == Tipado.literalEntero) || (t0 == Tipado.literalReal && t1 == Tipado.literalEntero))
+
+    	if ((exp1.getClass() == Exp_litReal.class && exp2.getClass() == Exp_litEnt.class) || (exp2.getClass() == Exp_litReal.class && exp1.getClass() == Exp_litEnt.class))
     		etq++;
     }
     
@@ -569,9 +568,18 @@ public class Etiquetado implements Procesamiento{
     private void recolecta_procs(LDecs lDecs){
         if(claseDe(lDecs, Muchas_decs.class)){
              recolecta_procs(lDecs.decs());
+             recolecta_procs(lDecs.dec());
         }
-        else if (claseDe(lDecs, Dec_proc.class))
-        	m.apila(subs,lDecs);
+        else if (claseDe(lDecs, Una_dec.class)) {
+        	recolecta_procs(lDecs.dec());
+        }
+    }
+    
+    private void recolecta_procs(Dec decs){
+        if (claseDe(decs, Dec_proc.class)) {
+        	Dec_proc e = (Dec_proc)decs;
+        	subs.add(e);
+        }
     }
    
 	private boolean claseDe(Object o, Class c) {

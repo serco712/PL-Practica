@@ -7,7 +7,7 @@ public class Espacio {
     public static class ErrorVinculacion extends RuntimeException {} 
     private int dir = 0;
 	private int nivel = 0;
-
+	private int max_dir = 0;
 
     public void asigEspacio(Prog p) {
         asigEspacio(p.bloq());
@@ -72,14 +72,19 @@ public class Espacio {
          }
          else if(claseDe(d, Dec_proc.class)){
               int aux = dir;
+              int max_dir_aux = max_dir;
        		  nivel++;
               d.setNivel(nivel);
               dir = 0;
+              max_dir = 0;
               asigEspacio1(d.par_for());
               asigEspacio(d.bloq());
               d.setNumDatos(dir);
               dir = aux;
+              max_dir = max_dir_aux;
               nivel--;
+              if (dir > max_dir)
+            	  max_dir = dir;
          }
     }
     
@@ -111,14 +116,16 @@ public class Espacio {
 	        if (t.tipo().getClass() != Tipo_ident.class) {
 	            asigEspacioTipo1(t.tipo());
 	        }
+	        dir++;
         }
         else if(claseDe(t, Tipo_bool.class) || claseDe(t, Tipo_int.class) || claseDe(t, Tipo_real.class) || claseDe(t, Tipo_string.class)){
              t.setEspacio(1);
         }
         else if (claseDe(t, Tipo_ident.class)){
-            asigEspacioTipo1(t.tipo().getVinculo());
-        	if (t.tipo().getVinculo() != Var.class){
-            	t.setEspacio(Var.getEspacio());
+        	Tipo_ident t1 = (Tipo_ident)t;
+            asigEspacioTipo1(t1.getVinculo().tipo());
+			if (claseDe(t1.getVinculo().tipo(), Dec_type.class)) {
+            	t.setEspacio(t1.getVinculo().tipo().getEspacio());
         	}
         }
         else if(claseDe(t, Tipo_struct.class)){
@@ -133,22 +140,26 @@ public class Espacio {
      public void asigEspacioTipo2(Tipo t){
         if(claseDe(t, Tipo_array.class)){
         	if (t.tipo().getClass() == Tipo_ident.class) {
-	            if (t.tipo().getClass() == Var.class){
-	               asigEspacioTipo(Var.tipo().getEspacio());
-	            }
-	            t.setEspacio(t.litEnt().getEspacio()* Var.getEspacio());
+        		Tipo_ident t1 = (Tipo_ident)t.tipo();
+    			if (claseDe(t1.getVinculo().tipo(), Dec_type.class)) {
+ 	                asigEspacioTipo2(t1.getVinculo().tipo());
+            	}
+	            t.setEspacio(Integer.parseInt(t.litEnt())* t.getEspacio());
 	        }
         }
         else if(claseDe(t, Tipo_punt.class)){
-            if (t.tipo().getClass() == Tipo_ident.class) {
-	            if (t.tipo().getVinculo() == Var.class){
-	               asigEspacioTipo(Var.tipo().getEspacio());
-	            }
-	            t.setEspacio(Var.getEspacio());
+            
+        	if (t.tipo().getClass() == Tipo_ident.class) {
+        		Tipo_ident t1 = (Tipo_ident)t.tipo();
+    			if (claseDe(t1.getVinculo().tipo(), Dec_type.class)) {
+ 	                asigEspacioTipo2(t1.getVinculo().tipo());
+            	}
+	            t.setEspacio(t.getEspacio());
 	        }
         }
         else if(claseDe(t, Tipo_struct.class)){
-         	asigEspacio2(t.vars());
+        	Tipo_struct t2 = (Tipo_struct)t;
+         	asigEspacio2(t2.lvar());
         }
     }
 
@@ -195,7 +206,13 @@ public class Espacio {
    
 
     public void asigEspacio1(PFml pf) {
-        if(claseDe(pf, Pformal_ref.class) || claseDe(pf, Pformal_noref.class)){
+        if(claseDe(pf, Pformal_ref.class)){
+	        pf.setDir(dir);
+	        pf.setNivel(nivel);
+	        asigEspacioTipo(pf.tipo());
+	        dir++;
+        }
+        if(claseDe(pf, Pformal_noref.class)){
 	        pf.setDir(dir);
 	        pf.setNivel(nivel);
 	        asigEspacioTipo(pf.tipo());
@@ -245,11 +262,19 @@ public class Espacio {
           else if(claseDe(exp, Exp_menos.class) || claseDe(exp, Exp_not.class) || claseDe(exp, Exp_indir.class)){
                asigEspacio(exp.exp1());
           }
-          else if(claseDe(exp, Exp_reg.class) ||claseDe(exp, Exp_iden.class)){
-                asigEspacio(exp.getVinculo());
-		        if (exp.getVinculo() == Var.class){
-		            exp.setEspacio(Var.tipo().getEspacio());
-		        }
+          else if(claseDe(exp, Exp_reg.class)){
+			asigEspacioTipo1(exp.getVinculo().tipo());
+			asigEspacioTipo2(exp.getVinculo().tipo());			
+			if (claseDe(exp.getVinculo().tipo(), Tipo_struct.class)) {
+			    exp.setEspacio(exp.getVinculo().tipo().getEspacio());
+			}
+          }
+          else if(claseDe(exp, Exp_iden.class)) {
+        	asigEspacioTipo1(exp.getVinculo().tipo());
+  			asigEspacioTipo2(exp.getVinculo().tipo());	
+			if (claseDe(exp.getVinculo().tipo(), Dec_type.class)) {
+			    exp.setEspacio(exp.getVinculo().tipo().getEspacio());
+  			}
           }
     }
 

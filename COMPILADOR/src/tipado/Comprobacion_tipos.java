@@ -69,6 +69,8 @@ import asint.SintaxisAbstractaTiny.Tipo_array;
 import asint.SintaxisAbstractaTiny.Tipo_bool;
 import asint.SintaxisAbstractaTiny.Tipo_ident;
 import asint.SintaxisAbstractaTiny.Tipo_int;
+import asint.SintaxisAbstractaTiny.Tipo_null;
+import asint.SintaxisAbstractaTiny.Tipo_ok;
 import asint.SintaxisAbstractaTiny.Tipo_punt;
 import asint.SintaxisAbstractaTiny.Tipo_real;
 import asint.SintaxisAbstractaTiny.Tipo_string;
@@ -77,6 +79,9 @@ import asint.SintaxisAbstractaTiny.Un_pformal;
 import asint.SintaxisAbstractaTiny.Una_dec;
 import asint.SintaxisAbstractaTiny.Una_exp;
 import asint.SintaxisAbstractaTiny.Una_inst;
+import asint.SintaxisAbstractaTiny.Tipo_ok;
+import asint.SintaxisAbstractaTiny.Tipo_null;
+import asint.SintaxisAbstractaTiny.Tipo_error;
 import asint.SintaxisAbstractaTiny.Una_var;
 import asint.SintaxisAbstractaTiny.Var;
 
@@ -85,6 +90,7 @@ import java.util.Map;
 import java.util.Set;
 
 import asint.Procesamiento;
+import asint.SintaxisAbstractaTiny;
 import errors.GestionErroresTiny;
 
 public class Comprobacion_tipos implements Procesamiento {
@@ -107,56 +113,77 @@ public class Comprobacion_tipos implements Procesamiento {
     public void procesa(Blo b) {
         b.decla().procesa(this);
         b.instr().procesa(this);
-        if (!(b.decla().getOk() && b.instr().getOk())) {
+        if (!ambos_ok(b.decla(), b.instr())) {
             ok &= false;
             b.setOk(false);
+            b.setTipo(SintaxisAbstractaTiny.tipo_error());
         }
+        else
+            b.setTipo(SintaxisAbstractaTiny.tipo_ok());
+
     }
+
 
     public void procesa(Si_decs decs) {
         decs.decs().procesa(this);
+        decs.setTipo(decs.decs().tipo());
 	}
 
 	public void procesa(No_decs decs) {
-        //Nada
+        decs.setTipo(SintaxisAbstractaTiny.tipo_ok());
 	}
 
     public void procesa(Muchas_decs decs) {
         decs.decs().procesa(this);
         decs.dec().procesa(this);
-        if (!(decs.decs().getOk() && decs.dec().getOk())) {
+        if (!ambos_ok(decs.decs(),decs.dec())) {
             ok &= false;
             decs.setOk(false);
+            decs.setTipo(SintaxisAbstractaTiny.tipo_error());
         }
+        else 
+            decs.setTipo(SintaxisAbstractaTiny.tipo_ok());
 	}
 
 	public void procesa(Una_dec decs) {
         decs.dec().procesa(this);
+        decs.setTipo(decs.dec().tipo());
 	}
 
     public void procesa(Muchas_var vars) {
         vars.vars().procesa(this);
 		vars.var().procesa(this);
-        if (!(vars.vars().getOk() && vars.var().getOk())) {
+        if (!ambos_ok(vars.vars(), vars.var())) {
             ok &= false;
             vars.setOk(false);
+            vars.setTipo(SintaxisAbstractaTiny.tipo_error());
         }
+        else
+            vars.setTipo(SintaxisAbstractaTiny.tipo_ok());
 	}
 
 	public void procesa(Una_var vars) {
         vars.var().procesa(this);
+        if (vars.var().tipo().getClass() != Tipo_error.class)
+            vars.setTipo(SintaxisAbstractaTiny.tipo_ok());
+        else vars.setTipo(SintaxisAbstractaTiny.tipo_error());
 	}
 
     public void procesa(Var v) {
         v.tipo().procesa(this);
+        v.setTipo(v.tipo());
 	}
 
     public void procesa(Dec_simple dec) {
         dec.var().procesa(this);
+        if (dec.var().tipo().getClass() != Tipo_error.class)
+            dec.setTipo(SintaxisAbstractaTiny.tipo_ok());
+        else dec.setTipo(SintaxisAbstractaTiny.tipo_error());
 	}
     
     public void procesa(Dec_type dec) {
         dec.var().procesa(this);
+
 	}
     
     public void procesa(Dec_proc dec) {
@@ -179,13 +206,14 @@ public class Comprobacion_tipos implements Procesamiento {
     
     public void tipado(Tipo_punt tipo) {
         tipo.tipo().procesa(this);
+        tipo.setTipo(tipo.tipo().tipo());
     }
 
-    public void procesa(Tipo_bool tipo) {}
-	public void procesa(Tipo_int tipo) {}
-	public void procesa(Tipo_real tipo) {}
-	public void procesa(Tipo_string tipo) {}
-    public void procesa(Tipo_ident tipo) {}
+    public void procesa(Tipo_bool tipo) {tipo.setTipo(SintaxisAbstractaTiny.tipo_bool());}
+	public void procesa(Tipo_int tipo) {tipo.setTipo(SintaxisAbstractaTiny.tipo_int());}
+	public void procesa(Tipo_real tipo) {tipo.setTipo(SintaxisAbstractaTiny.tipo_real());}
+	public void procesa(Tipo_string tipo) {tipo.setTipo(SintaxisAbstractaTiny.tipo_string());}
+    public void procesa(Tipo_ident tipo) {tipo.setTipo(tipo.getVinculo().tipo());}
     
     public void procesa(Tipo_struct tipo) {
     	boolean repetido = false;
@@ -211,7 +239,7 @@ public class Comprobacion_tipos implements Procesamiento {
     public void procesa(Muchas_inst insts) {
 		insts.insts().procesa(this);
         insts.inst().procesa(this);	
-        if (!(insts.insts().getOk() && insts.inst().getOk())) {
+        if (!ambos_ok(insts.tipo(), insts.inst())) {
             ok &= false;
             insts.setOk(false);
         }
@@ -269,101 +297,102 @@ public class Comprobacion_tipos implements Procesamiento {
 
     public void procesa(Inst_eval inst) {
         inst.exp().procesa(this);
-        if (inst.exp().getTipado() == Tipado.error)
-        	inst.setTipado(Tipado.error);
-        else
-        	inst.setTipado(Tipado.ok);
+        if (inst.exp().tipo().getClass() == Tipo_error.class) {
+            ok &= false;
+            inst.exp().setTipo(SintaxisAbstractaTiny.tipo_error());
+        }
+        else inst.exp().setTipo(SintaxisAbstractaTiny.tipo_ok());
 	}
 
     public void procesa(Inst_if inst) {
         inst.exp().procesa(this);
         inst.bloq().procesa(this);
-        if (!(inst.exp().getTipado() == Tipado.bool && inst.bloq().getOk())) {
+        if (!(claseDe(inst.exp().tipo(), Tipo_bool.class) || claseDe(inst.bloq().tipo(), Tipo_ok.class))) {
             ok &= false;
             inst.setOk(false);
-            if (!(inst.exp().getTipado() == Tipado.bool))
-            	GestionErrores.errorTipoInadecuado(inst.exp().getTipado(), Tipado.bool);
+            if (!claseDe(inst.exp().tipo(), Tipo_bool.class))
+            	GestionErrores.errorTipoInadecuado(inst.exp().tipo(), Tipo_bool.class);
+            inst.setTipo(SintaxisAbstractaTiny.tipo_error());
         }
+        else inst.setTipo(SintaxisAbstractaTiny.tipo_ok());
 	}
 
     public void procesa(Inst_else inst) {
         inst.exp().procesa(this);
         inst.bloq1().procesa(this);
         inst.bloq2().procesa(this);
-        if (!(inst.exp().getTipado() == Tipado.bool && inst.bloq1().getOk() && inst.bloq2().getOk())) {
+        if (!(claseDe(inst.exp().tipo(), Tipo_bool.class) || claseDe(inst.bloq1().tipo(), Tipo_ok.class) || claseDe(inst.bloq2().tipo(), Tipo_ok.class) )){
             ok &= false;
             inst.setOk(false);
-            if (!(inst.exp().getTipado() == Tipado.bool))
-            	GestionErrores.errorTipoInadecuado(inst.exp().getTipado(), Tipado.bool);
+            if (!claseDe(inst.exp().tipo(), Tipo_bool.class))
+            	GestionErrores.errorTipoInadecuado(inst.exp().tipo(), Tipo_bool.class);
+            inst.setTipo(SintaxisAbstractaTiny.tipo_error());
         }
+        else inst.setTipo(SintaxisAbstractaTiny.tipo_ok());
 	}
 
     public void procesa(Inst_while inst) {
         inst.exp().procesa(this);
         inst.bloq().procesa(this);
-        if (!(inst.exp().getTipado() == Tipado.bool && inst.bloq().getOk())) {
+        if (!(claseDe(inst.exp().tipo(), Tipo_bool.class) || claseDe(inst.bloq().tipo(), Tipo_ok.class))) {
             ok &= false;
             inst.setOk(false);
-            if (!(inst.exp().getTipado() == Tipado.bool))
-            	GestionErrores.errorTipoInadecuado(inst.exp().getTipado(), Tipado.bool);
+            if (!claseDe(inst.exp().tipo(), Tipo_bool.class))
+            	GestionErrores.errorTipoInadecuado(inst.exp().tipo(), Tipo_bool.class);
+            inst.setTipo(SintaxisAbstractaTiny.tipo_error());
         }
+        else inst.setTipo(SintaxisAbstractaTiny.tipo_ok());
+	
 	}
 
     public void procesa(Inst_new inst) {
         inst.exp().procesa(this);
-        if (inst.exp().getTipado() != Tipado.tipoPuntero) {
+        if (!claseDe(inst.exp().tipo(), Tipo_punt.class)) {
             ok &= false;
             inst.setOk(false);
-            if (!(inst.exp().getTipado() == Tipado.tipoPuntero))
-            	GestionErrores.errorTipoInadecuado(inst.exp().getTipado(), Tipado.tipoPuntero);
+            GestionErrores.errorTipoInadecuado(inst.exp().tipo(), Tipo_punt.class);
+            inst.setTipo(SintaxisAbstractaTiny.tipo_error());
         }
+        else
+            inst.setTipo(SintaxisAbstractaTiny.tipo_ok());
 	}
 
     public void procesa(Inst_delete inst) {
         inst.exp().procesa(this);
-        if (inst.exp().getTipado() != Tipado.tipoPuntero) {
+        if (!claseDe(inst.exp().tipo(), Tipo_punt.class)) {
             ok &= false;
             inst.setOk(false);
-            if (!(inst.exp().getTipado() == Tipado.tipoPuntero))
-            	GestionErrores.errorTipoInadecuado(inst.exp().getTipado(), Tipado.tipoPuntero);
+            GestionErrores.errorTipoInadecuado(inst.exp().tipo(), Tipo_punt.class);
+            inst.setTipo(SintaxisAbstractaTiny.tipo_error());
         }
+        else
+            inst.setTipo(SintaxisAbstractaTiny.tipo_ok());
 	}
     
     public void procesa(Inst_read inst){
         inst.exp().procesa(this);
-        if (inst.exp().esDesignador()){
-            if (inst.exp().getTipado() != Tipado.literalEntero && inst.exp().getTipado() != Tipado.literalReal && inst.exp().getTipado() != Tipado.literalCadena){
-            	ok &=false;
-            	inst.setOk(false);
-            	 if (!(inst.exp().getTipado() == Tipado.literalEntero))
-                 	GestionErrores.errorTipoInadecuado(inst.exp().getTipado(), Tipado.literalEntero);
-            	 else if (!(inst.exp().getTipado() == Tipado.literalReal))
-                 	GestionErrores.errorTipoInadecuado(inst.exp().getTipado(), Tipado.literalReal);
-            	 else if (!(inst.exp().getTipado() == Tipado.literalCadena))
-                  	GestionErrores.errorTipoInadecuado(inst.exp().getTipado(), Tipado.literalCadena);
-            }
+        Tipo t = inst.exp().tipo();
+        if (!(inst.exp().esDesignador() && (claseDe(t, Tipo_int.class) || claseDe(t, Tipo_real.class) || claseDe(t, Tipo_string.class)))) {
+            ok &= false;
+            inst.setOk(false);
+            if (!(claseDe(t, Tipo_int.class)))
+             	GestionErrores.errorTipoInadecuado(inst.exp().tipo(), Exp_litEnt.class);
+            inst.setTipo(SintaxisAbstractaTiny.tipo_error());
         }
-        else {
-        	ok &= false;
-        	inst.setOk(false);
-            GestionErrores.errorNoDesignador();
-        }
+        else inst.setTipo(SintaxisAbstractaTiny.tipo_ok());
     }
 
     public void procesa(Inst_write inst){
-         inst.exp().procesa(this);
-        if (inst.exp().getTipado() != Tipado.literalEntero && inst.exp().getTipado() != Tipado.literalReal && inst.exp().getTipado() != Tipado.literalCadena && inst.exp().getTipado() != Tipado.bool) {
+        inst.exp().procesa(this);
+        Tipo t = inst.exp().tipo();
+        if (!(claseDe(t, Tipo_bool.class) || claseDe(t, Tipo_int.class) || claseDe(t, Tipo_real.class) || claseDe(t, Tipo_string.class))) {
             ok &= false;
             inst.setOk(false);
-            if (!(inst.exp().getTipado() == Tipado.literalEntero))
-             	GestionErrores.errorTipoInadecuado(inst.exp().getTipado(), Tipado.literalEntero);
-        	 else if (!(inst.exp().getTipado() == Tipado.literalReal))
-             	GestionErrores.errorTipoInadecuado(inst.exp().getTipado(), Tipado.literalReal);
-        	 else if (!(inst.exp().getTipado() == Tipado.literalCadena))
-              	GestionErrores.errorTipoInadecuado(inst.exp().getTipado(), Tipado.literalCadena);
-        	 else if (!(inst.exp().getTipado() == Tipado.bool))
-               	GestionErrores.errorTipoInadecuado(inst.exp().getTipado(), Tipado.bool);
+            if (!(claseDe(t, Tipo_int.class)))
+             	GestionErrores.errorTipoInadecuado(inst.exp().tipo(), Exp_litEnt.class);
+            inst.setTipo(SintaxisAbstractaTiny.tipo_error());
         }
+        else inst.setTipo(SintaxisAbstractaTiny.tipo_ok());
 	}
     
     public void procesa(Inst_call instr){
@@ -372,13 +401,17 @@ public class Comprobacion_tipos implements Procesamiento {
         if (p == null) {
         	ok &= false;
         	instr.setOk(false);
-           	GestionErrores.errorTipoInadecuado(instr.getVinculo().tipo().getTipado(), Tipado.dec_proc);
+           	GestionErrores.errorTipoInadecuado(instr.getVinculo().tipo().tipo(), Dec_proc.class);
         }
         else {
         	instr.pr().procesa(this);
-        	instr.setTipado(tipado_parametros(instr.pr(), p.par_for()));
+        	if (tipado_parametros(instr.pr(), p.par_for()))
+        		instr.setTipo(SintaxisAbstractaTiny.tipo_ok());
+        	else
+        		instr.setTipo(SintaxisAbstractaTiny.tipo_error());
+        		
         }
-        if (instr.getTipado() == Tipado.error) {
+        if (claseDe(instr.tipo(), Error.class)) {
         	ok &= false;
         	instr.setOk(false);
         	GestionErrores.errorParametrosNoCoincidentes();
@@ -387,9 +420,9 @@ public class Comprobacion_tipos implements Procesamiento {
         instr.pr().procesa(this);
     }   
     
-    public Tipado tipado_parametros(PReales pr, PFmls pfmls) {
+    public boolean tipado_parametros(PReales pr, PFmls pfmls) {
         if(claseDe(pr, No_preales.class) && claseDe(pfmls, No_pformal.class)){
-        	return Tipado.ok;
+        	return true;
         }
         else if(claseDe(pr, Si_preales.class) && claseDe(pfmls, Si_pformal.class)){
         	if(claseDe(pr.lpr(), Muchas_exp.class) && claseDe(pfmls.lpfml(), Muchos_pformal.class))
@@ -397,43 +430,41 @@ public class Comprobacion_tipos implements Procesamiento {
         	else if(claseDe(pr.lpr(), Una_exp.class) && claseDe(pfmls.lpfml(), Un_pformal.class))
         		return tipado_parametros((Una_exp)pr.lpr(), (Un_pformal)pfmls.lpfml());
         }
-		return Tipado.error;
+		return false;
     }
     
-    public Tipado tipado_parametros(Muchas_exp lpreal, Muchos_pformal pfmls) {
+    public boolean tipado_parametros(Muchas_exp lpreal, Muchos_pformal pfmls) {
     	if(claseDe(lpreal.lpr(), Una_exp.class) && claseDe(pfmls.lpfml(), Un_pformal.class)) {
-    		if (tipado_parametros((Una_exp)lpreal.lpr(), (Un_pformal)pfmls.lpfml()) == Tipado.ok &&
-            		tipado_parametros(lpreal.exp(), pfmls.pfml()) == Tipado.ok)
-    			return Tipado.ok;
+    		return tipado_parametros((Una_exp)lpreal.lpr(), (Un_pformal)pfmls.lpfml()) &&
+            		tipado_parametros(lpreal.exp(), pfmls.pfml());
     	}
     	else if(claseDe(lpreal.lpr(), Muchas_exp.class) && claseDe(pfmls.lpfml(), Muchos_pformal.class)) {
-    		if (tipado_parametros((Muchas_exp)lpreal.lpr(), (Muchos_pformal)pfmls.lpfml()) == Tipado.ok &&
-            		tipado_parametros(lpreal.exp(), pfmls.pfml()) == Tipado.ok)
-    			return Tipado.ok;
+    		return tipado_parametros((Muchas_exp)lpreal.lpr(), (Muchos_pformal)pfmls.lpfml()) &&
+            		tipado_parametros(lpreal.exp(), pfmls.pfml());
     	}
-    	return Tipado.error;
+    	return false;
     }
     
-    public Tipado tipado_parametros(Una_exp lpreal, Un_pformal pfmls) {
+    public boolean tipado_parametros(Una_exp lpreal, Un_pformal pfmls) {
     	return tipado_parametros(lpreal.exp(), pfmls.pfml());
     }
     
-    public Tipado tipado_parametros(Exp e, PFml pfml) {
+    public boolean tipado_parametros(Exp e, PFml pfml) {
     	if(claseDe(pfml, Pformal_noref.class)) {
-    		if (compatibles(e, pfml.tipo())) 
-        		return Tipado.ok;
+    		if (compatibles(e.tipo(), pfml.tipo())) 
+        		return true;
     	}
     	else if(claseDe(pfml, Pformal_ref.class)) {
-    		if (e.esDesignador() || compatibles(e, pfml.tipo()) || (e.getTipado() == Tipado.literalReal && pfml.getTipado() == Tipado.literalReal)) 
-        		return Tipado.ok;
+    		if (e.esDesignador() || compatibles(e.tipo(), pfml.tipo()) || (claseDe(e.tipo(), Exp_litReal.class) && claseDe(pfml.tipo(), Exp_litReal.class))) 
+        		return true;
         	else {
         		if (!e.esDesignador()) 
                     GestionErrores.errorNoDesignador();
-        		else if (!compatibles(e, pfml.tipo()))
-        			GestionErrores.errorTiposIncompatibles(e.getTipado(), pfml.getTipado());
+        		else if (!compatibles(e.tipo(), pfml.tipo()))
+        			GestionErrores.errorTiposIncompatibles(e.tipo(), pfml.tipo());
         	}
     	}
-    	return Tipado.error;
+    	return false;
     }
             		
 	public void procesa(Inst_nl inst) {}
@@ -448,10 +479,10 @@ public class Comprobacion_tipos implements Procesamiento {
         
         if (exp.exp1().esDesignador()){
             if (compatibles(exp.exp1(), exp.exp2()))
-            	exp.setTipado(exp.exp1().getTipado());
+            	exp.setTipo(exp.exp1().tipo());
             
             else {
-               	GestionErrores.errorTiposIncompatibles(exp.exp1().getTipado(), exp.exp2().getTipado());
+               	GestionErrores.errorTiposIncompatibles(exp.exp1().tipo(), exp.exp2().tipo());
 				ok&=false;
 				exp.setOk(false);
             }
@@ -466,265 +497,269 @@ public class Comprobacion_tipos implements Procesamiento {
 	public void procesa(Exp_menor exp){
         exp.exp1().procesa(this);
         exp.exp2().procesa(this);
-        exp.setTipado(tipo_bin2(exp.exp1().getTipado(), exp.exp2().getTipado()));
+        exp.setTipo(tipo_bin2(exp.exp1(), exp.exp2()));
     }
     public void procesa(Exp_menIgual exp){
         exp.exp1().procesa(this);
         exp.exp2().procesa(this);
-        exp.setTipado(tipo_bin2(exp.exp1().getTipado(), exp.exp2().getTipado()));
+        exp.setTipo(tipo_bin2(exp.exp1(), exp.exp2()));
     }
     public void procesa(Exp_mayor exp){
         exp.exp1().procesa(this);
         exp.exp2().procesa(this);
-        exp.setTipado(tipo_bin2(exp.exp1().getTipado(), exp.exp2().getTipado()));
+        exp.setTipo(tipo_bin2(exp.exp1(), exp.exp2()));
     }
     public void procesa(Exp_mayIgual exp){
         exp.exp1().procesa(this);
         exp.exp2().procesa(this);
-        exp.setTipado(tipo_bin2(exp.exp1().getTipado(), exp.exp2().getTipado()));
+        exp.setTipo(tipo_bin2(exp.exp1(), exp.exp2()));
     }
 	public void procesa(Exp_igual exp){
         exp.exp1().procesa(this);
         exp.exp2().procesa(this);
-        exp.setTipado(tipo_bin3(exp.exp1().getTipado(), exp.exp2().getTipado()));
+        exp.setTipo(tipo_bin3(exp.exp1(), exp.exp2()));
     }
   
     public void procesa(Exp_dist exp){
         exp.exp1().procesa(this);
         exp.exp2().procesa(this);
-        exp.setTipado(tipo_bin3(exp.exp1().getTipado(), exp.exp2().getTipado()));
+        exp.setTipo(tipo_bin3(exp.exp1(), exp.exp2()));
     }
     public void procesa(Exp_suma exp){
         exp.exp1().procesa(this);
         exp.exp2().procesa(this);
-        exp.setTipado(tipo_bin1(exp.exp1(), exp.exp2()));
+        exp.setTipo(tipo_bin1(exp.exp1(), exp.exp2()));
     }
     public void procesa(Exp_resta exp){
         exp.exp1().procesa(this);
         exp.exp2().procesa(this);
-        exp.setTipado(tipo_bin1(exp.exp1(), exp.exp2()));
+        exp.setTipo(tipo_bin1(exp.exp1(), exp.exp2()));
     }
 
     public void procesa(Exp_mult exp){
         exp.exp1().procesa(this);
         exp.exp2().procesa(this);
-        exp.setTipado(tipo_bin1(exp.exp1(), exp.exp2()));
+        exp.setTipo(tipo_bin1(exp.exp1(), exp.exp2()));
     }
 
     public void procesa(Exp_div exp){
         exp.exp1().procesa(this);
         exp.exp2().procesa(this);
-        exp.setTipado(tipo_bin1(exp.exp1(), exp.exp2()));
+        exp.setTipo(tipo_bin1(exp.exp1(), exp.exp2()));
     }
 	public void procesa(Exp_mod exp){
         exp.exp1().procesa(this);
         exp.exp2().procesa(this);
-        if  (exp.exp1().getTipado() == Tipado.literalEntero &&  exp.exp2().getTipado() == Tipado.literalEntero){
-        	exp.setTipado(Tipado.literalEntero);
+        if  (claseDe(exp.exp1().tipo(), Exp_litEnt.class) && claseDe(exp.exp2().tipo(), Exp_litEnt.class)) {
+        	exp.setTipo(exp.exp1().tipo());
         }
         else {
         	ok &= false;
     		exp.setOk(false);
-    		if (exp.exp1().getTipado() != Tipado.literalEntero)
-              	GestionErrores.errorTipoInadecuado(exp.exp1().getTipado(), Tipado.literalEntero);
-    		if (exp.exp2().getTipado() != Tipado.literalEntero)
-              	GestionErrores.errorTipoInadecuado(exp.exp2().getTipado(), Tipado.literalEntero);
+    		if (!claseDe(exp.exp1().tipo(), Exp_litEnt.class))
+              	GestionErrores.errorTipoInadecuado(exp.exp1().tipo(), Exp_litEnt.class);
+    		if (!claseDe(exp.exp2().tipo(), Exp_litEnt.class))
+              	GestionErrores.errorTipoInadecuado(exp.exp2().tipo(), Exp_litEnt.class);
         }
     }
 
 	public void procesa(Exp_and exp){
         exp.exp1().procesa(this);
         exp.exp2().procesa(this);
-        if  (exp.exp1().getTipado() == Tipado.bool &&  exp.exp2().getTipado() == Tipado.bool){
-        	exp.setTipado(Tipado.bool);
+        if  (claseDe(exp.exp1().tipo(), Tipo_bool.class) &&  claseDe(exp.exp2().tipo(), Tipo_bool.class)){
+        	exp.setTipo(exp.exp1().tipo());
         }
         else {
         	ok &= false;
         	exp.setOk(false);
-        	if (exp.exp1().getTipado() != Tipado.bool)
-              	GestionErrores.errorTipoInadecuado(exp.exp1().getTipado(), Tipado.bool);
-    		if (exp.exp2().getTipado() != Tipado.bool)
-              	GestionErrores.errorTipoInadecuado(exp.exp2().getTipado(), Tipado.bool);
+        	if (!claseDe(exp.exp1().tipo(), Exp_litEnt.class))
+              	GestionErrores.errorTipoInadecuado(exp.exp1().tipo(), Tipo_bool.class);
+    		if (!claseDe(exp.exp2().tipo(), Exp_litEnt.class))
+              	GestionErrores.errorTipoInadecuado(exp.exp2().tipo(), Tipo_bool.class);
         }
     }
 
     public void procesa(Exp_or exp){
         exp.exp1().procesa(this);
         exp.exp2().procesa(this);
-        if  (exp.exp1().getTipado() == Tipado.bool &&  exp.exp2().getTipado() == Tipado.bool){
-        	exp.setTipado(Tipado.bool);
+        if  (claseDe(exp.exp1().tipo(),Tipo_bool.class) &&  claseDe(exp.exp2().tipo(), Tipo_bool.class)){
+        	exp.setTipo(exp.exp1().tipo());
         }
         else {
         	ok &= false;
         	exp.setOk(false);
-        	if (exp.exp1().getTipado() != Tipado.bool)
-              	GestionErrores.errorTipoInadecuado(exp.exp1().getTipado(), Tipado.bool);
-    		if (exp.exp2().getTipado() != Tipado.bool)
-              	GestionErrores.errorTipoInadecuado(exp.exp2().getTipado(), Tipado.bool);
+        	if (!claseDe(exp.exp1().tipo(),Tipo_bool.class))
+              	GestionErrores.errorTipoInadecuado(exp.exp1().tipo(), Tipo_bool.class);
+    		if (!claseDe(exp.exp2().tipo(),Tipo_bool.class))
+              	GestionErrores.errorTipoInadecuado(exp.exp2().tipo(), Tipo_bool.class);
         }
     }
          
     public void procesa(Exp_menos menos) {
         menos.exp1().procesa(this);
-        if (menos.exp1().getTipado() != Tipado.literalEntero && menos.exp1().getTipado() != Tipado.literalReal) {
+        if (!claseDe(menos.exp1().tipo(), Exp_litEnt.class) && !claseDe(menos.exp1().tipo(), Exp_litReal.class)) {
             ok &= false;
             menos.setOk(false);
-            if (menos.exp1().getTipado() != Tipado.literalEntero)
-              	GestionErrores.errorTipoInadecuado(menos.exp1().getTipado(), Tipado.literalEntero);
+            if (!claseDe(menos.exp1().tipo(), Exp_litEnt.class))
+              	GestionErrores.errorTipoInadecuado(menos.exp1().tipo(), Exp_litEnt.class);
             else
-            	GestionErrores.errorTipoInadecuado(menos.exp1().getTipado(), Tipado.literalReal);
-        }
-        else if (menos.exp1().getTipado() != Tipado.literalEntero) {
-            menos.setTipado(Tipado.literalEntero);
+            	GestionErrores.errorTipoInadecuado(menos.exp1().tipo(), Exp_litReal.class);
         }
         else {
-            menos.setTipado(Tipado.literalReal);
+            menos.setTipo(menos.exp1().tipo());
         }
 	}
 
     public void procesa(Exp_not not) {
 		not.exp1().procesa(this);
-        if (not.exp1().getTipado() != Tipado.bool) {
+        if (!claseDe(not.exp1().tipo(), Tipo_bool.class)) {
             ok &= false;
             not.setOk(false);
-            GestionErrores.errorTipoInadecuado(not.exp1().getTipado(), Tipado.bool);
+            GestionErrores.errorTipoInadecuado(not.exp1().tipo(), Tipo_bool.class);
+            not.setTipo(SintaxisAbstractaTiny.tipo_error());
         }
         else {
-            not.setTipado(Tipado.bool);
+            not.setTipo(not.exp1().tipo());
         }
 	}
 
     public void procesa(Exp_index index) {
 		index.exp1().procesa(this);
 		index.exp2().procesa(this);
-        if (index.exp1().getTipado() != Tipado.tipoArray && index.exp2().getTipado() != Tipado.literalEntero) {
+        if (!(claseDe(index.exp1().tipo(), Tipo_array.class) && claseDe(index.exp2().tipo(), Exp_litEnt.class))) {
             ok &= false;
             index.setOk(false);
-            if (index.exp1().getTipado() != Tipado.tipoArray)
-              	GestionErrores.errorTipoInadecuado(index.exp1().getTipado(), Tipado.tipoArray);
-            if (index.exp2().getTipado() != Tipado.literalEntero)
-              	GestionErrores.errorTipoInadecuado(index.exp2().getTipado(), Tipado.literalEntero);
+            if (!claseDe(index.exp1().tipo(), Tipo_array.class))
+              	GestionErrores.errorTipoInadecuado(index.exp1().tipo(), Tipo_array.class);
+            if (!claseDe(index.exp2().tipo(), Exp_litEnt.class))
+              	GestionErrores.errorTipoInadecuado(index.exp2().tipo(), Exp_litEnt.class);
         }
         else {
-            index.setTipado(index.exp1().getVinculo().tipo().getTipado());
+            index.setTipo(index.exp1().getVinculo().tipo().tipo());
         }
 	}
 
     public void procesa(Exp_reg reg) {
 		reg.exp1().procesa(this);
-        if (reg.exp1().getTipado() != Tipado.tipoStruct) {
+        if (!claseDe(reg.exp1().tipo(), Tipo_struct.class)) {
             ok &= false;
             reg.setOk(false);
-          	GestionErrores.errorTipoInadecuado(reg.exp1().getTipado(), Tipado.tipoStruct);
+          	GestionErrores.errorTipoInadecuado(reg.exp1().tipo(), Tipo_struct.class);
         }
         else {
         	Tipo_struct s = (Tipo_struct)reg.exp1().tipo();
         	if (s.accedeReg().containsKey(reg.id()))
-        		reg.setTipado(reg.exp1().getVinculo().tipo().getTipado());
+        		reg.setTipo(reg.exp1().getVinculo().tipo().tipo());
         	else 
-        		reg.setTipado(Tipado.error);
+        		reg.setTipo(SintaxisAbstractaTiny.tipo_error());
         }
 	}
 
     public void procesa(Exp_indir indir) {
 		indir.exp1().procesa(this);
-        if (indir.exp1().getTipado() != Tipado.tipoPuntero) {
+        if (!claseDe(indir.exp1().tipo(), Tipo_punt.class)) {
             ok &= false;
             indir.setOk(false);
-          	GestionErrores.errorTipoInadecuado(indir.exp1().getTipado(), Tipado.tipoPuntero);
+          	GestionErrores.errorTipoInadecuado(indir.exp1().tipo(), Tipo_punt.class);
         }
         else {
-            indir.setTipado(Tipado.ok);
+            indir.setTipo(SintaxisAbstractaTiny.tipo_ok());
         }        
 	}
 
     public void procesa(Exp_true e) {
-        e.setTipado(Tipado.bool);
+        e.setTipo(SintaxisAbstractaTiny.tipo_bool());
      }
 
     public void procesa(Exp_false e) {
-        e.setTipado(Tipado.bool);
+        e.setTipo(SintaxisAbstractaTiny.tipo_bool());
 	}
 
     public void procesa(Exp_litEnt litEnt) {
-        litEnt.setTipado(Tipado.literalEntero);
+        litEnt.setTipo(SintaxisAbstractaTiny.tipo_int());
 	}
 
     public void procesa(Exp_litReal litReal) {
-        litReal.setTipado(Tipado.literalReal);
+        litReal.setTipo(SintaxisAbstractaTiny.tipo_real());
 	}
 
     public void procesa(Exp_litCadena litCadena) {
-        litCadena.setTipado(Tipado.literalCadena);
+        litCadena.setTipo(SintaxisAbstractaTiny.tipo_string());
 	}
 
     public void procesa(Exp_iden iden) {
-        iden.setTipado(iden.getVinculo().tipo().getTipado());
+        iden.setTipo(iden.getVinculo().tipo());
 	}
 
     public void procesa(Exp_null ex_null) {
-        ex_null.setTipado(Tipado.nl);
+        ex_null.setTipo(SintaxisAbstractaTiny.tipo_null());
 	}
 
 
-    private Tipado tipo_bin1(Exp e0, Exp e1) {
-    	Tipado t0 = e0.getTipado();
-    	Tipado t1 = e1.getTipado();
+    private Tipo tipo_bin1(Exp e0, Exp e1) {
+    	Class t0 = e0.tipo().getClass();
+    	Class t1 = e1.tipo().getClass();
     	
     	if (compatibles(e0,e1)) 
-    		return t0;
-    	else if (t1 == Tipado.literalReal) {
-    		if (t0 == Tipado.literalReal || t0 == Tipado.literalEntero)
-    			return Tipado.literalReal;
+    		return e0.tipo();
+    	else if (t1 == Exp_litReal.class) {
+    		if (t0 == Exp_litReal.class || t0 == Exp_litEnt.class)
+    			return e1.tipo();
     		else 
-    			return Tipado.error;
+    			return SintaxisAbstractaTiny.tipo_error();
     	}    	
-    	else if (t0 == Tipado.literalReal) {
-    		if (t1 == Tipado.literalReal || t1 == Tipado.literalEntero)
-    			return Tipado.literalReal;
+    	else if (t0 == Exp_litReal.class) {
+    		if (t1 == Exp_litReal.class || t1 == Exp_litEnt.class)
+    			return e0.tipo();
     		else 
-    			return Tipado.error;
+    			return SintaxisAbstractaTiny.tipo_error();
     	}
     	else 
-    		return Tipado.error;
+    		return SintaxisAbstractaTiny.tipo_error();
     }
 
-    private Tipado tipo_bin2(Tipado t0, Tipado t1) {
-    	if ((t0 == Tipado.literalReal || t0 == Tipado.literalEntero) && (t1 == Tipado.literalReal || t0 == Tipado.literalEntero))
-    		return Tipado.bool;
-    	else if (t0 == Tipado.bool && t1 == Tipado.bool)
-    		return Tipado.bool;
-    	else if (t0 == Tipado.literalCadena && t1 == Tipado.literalCadena)
-    		return Tipado.bool;
+    private Tipo tipo_bin2(Exp e0, Exp e1) {
+    	Class t0 = e0.tipo().getClass();
+    	Class t1 = e1.tipo().getClass();
+    	
+    	if ((t0 == Exp_litReal.class || t0 == Exp_litEnt.class) && (t1 == Exp_litReal.class || t0 == Exp_litEnt.class))
+    		return SintaxisAbstractaTiny.tipo_bool();
+    	else if (t0 == Tipo_bool.class && t1 == Tipo_bool.class)
+    		return SintaxisAbstractaTiny.tipo_bool();
+    	else if (t0 == Exp_litCadena.class && t1 == Exp_litCadena.class)
+    		return SintaxisAbstractaTiny.tipo_bool();
     	else
-    		return Tipado.error;
+    		return SintaxisAbstractaTiny.tipo_error();
     }
 
 
-    private Tipado tipo_bin3(Tipado t0, Tipado t1) {
-    	 if ((t0 == Tipado.literalReal || t0 == Tipado.literalEntero) && (t1 == Tipado.literalReal || t0 == Tipado.literalEntero))
-     		return Tipado.bool;
-     	else if (t0 == Tipado.bool && t1 == Tipado.bool)
-     		return Tipado.bool;
-     	else if (t0 == Tipado.literalCadena && t1 == Tipado.literalCadena)
-     		return Tipado.bool;
-        else if ((t0 == Tipado.tipoPuntero || t0 == Tipado.nl) && (t1 == Tipado.tipoPuntero || t1 == Tipado.nl))
-            return Tipado.bool;
+    private Tipo tipo_bin3(Exp e0, Exp e1) {
+    	Class t0 = e0.tipo().getClass();
+    	Class t1 = e1.tipo().getClass();
+    	
+    	 if ((t0 == Exp_litReal.class || t0 == Exp_litEnt.class) && (t1 == Exp_litReal.class || t0 == Exp_litEnt.class))
+     		return SintaxisAbstractaTiny.tipo_bool();
+     	else if (t0 == Tipo_bool.class && t1 == Tipo_bool.class)
+     		return SintaxisAbstractaTiny.tipo_bool();
+     	else if (t0 == Exp_litCadena.class && t1 == Exp_litCadena.class)
+     		return SintaxisAbstractaTiny.tipo_bool();
+        else if ((t0 == Tipo_punt.class || t0 == Inst_nl.class) && (t1 == Tipo_punt.class || t1 == Inst_nl.class))
+            return SintaxisAbstractaTiny.tipo_bool();
         else
-            return Tipado.error;
+            return SintaxisAbstractaTiny.tipo_error();
     }
 
 
     //En las compatibilidades, ha de seguirse el algoritmo de unificación de tipos y llevar cuenta de las ecuaciones entre tipos compatibles
     //Añadir lista para mayor eficiencia con las compatibilidades
     private boolean compatibles(Exp e1, Exp e2) {
-    	Tipado t1 = e1.getTipado();
-    	Tipado t2 = e2.getTipado();
+    	Class t1 = e1.tipo().getClass();
+    	Class t2 = e2.tipo().getClass();
     	if (t1 == t2)
             return true;
-        else if (t1 == Tipado.literalReal && t2 == Tipado.literalEntero)
+        else if (t1 == Exp_litReal.class && t2 == Exp_litEnt.class)
         	return true;
-        else if (t1 == Tipado.tipoArray && t1 == Tipado.tipoArray) {
+        else if (t1 == Tipo_array.class && t1 == Tipo_array.class) {
         	Tipo_array a1 = (Tipo_array)e1.getVinculo().tipo();
         	Tipo_array a2 = (Tipo_array)e2.getVinculo().tipo();
         	if (a1.getTam() != a2.getTam())
@@ -732,7 +767,7 @@ public class Comprobacion_tipos implements Procesamiento {
         	else 
         		return true;
         }
-        else if (t1 == Tipado.tipoStruct && t2 == Tipado.tipoStruct) {
+        else if (t1 == Tipo_struct.class && t2 == Tipo_struct.class) {
         	Tipo_struct s1 = (Tipo_struct)e1.getVinculo().tipo();
         	Tipo_struct s2 = (Tipo_struct)e2.getVinculo().tipo();
         	Map<String,Nodo> r1 = s1.accedeReg();
@@ -742,22 +777,19 @@ public class Comprobacion_tipos implements Procesamiento {
         		return false;
         	
             for (String id : r1.keySet()) {
-                if (!r2.containsKey(id)) {
-                    return false;
-                }
-                if (r1.get(id).tipo().getTipado() != r2.get(id).tipo().getTipado()) {
+                if (!compatibles(r1.get(id).tipo().tipo(), r2.get(id).tipo().tipo())) {
                     return false;
                 }
             }
         	
         	return true;
         }
-        else if (t1 == Tipado.tipoPuntero && t2 == Tipado.nl)
+        else if (t1 == Tipo_punt.class && t2 == Inst_nl.class)
         	return true;
-        else if (t1 == Tipado.tipoPuntero && t2 == Tipado.tipoPuntero) {
+        else if (t1 == Tipo_punt.class && t2 == Tipo_punt.class) {
         	Tipo_punt p1 = (Tipo_punt)e1.getVinculo().tipo();
         	Tipo_punt p2 = (Tipo_punt)e2.getVinculo().tipo();
-        	if (p1.tipo().getTipado() != p2.tipo().getTipado())
+        	if (p1.tipo().tipo() != p2.tipo().tipo())
         		return false;
         	else 
         		return true;
@@ -765,52 +797,38 @@ public class Comprobacion_tipos implements Procesamiento {
         else
             return false;
     }
-    
-    private boolean compatibles(Exp e1, Tipo e2) {
-    	Tipado t1 = e1.getTipado();
-    	Tipado t2 = e2.getTipado();
-    	if (t1 == t2)
-            return true;
-        else if (t1 == Tipado.literalReal && t2 == Tipado.literalEntero)
-        	return true;
-        else if (t1 == Tipado.tipoArray && t1 == Tipado.tipoArray) {
-        	Tipo_array a1 = (Tipo_array)e1.getVinculo().tipo();
-        	Tipo_array a2 = (Tipo_array)e2;
-        	if (a1.getTam() != a2.getTam())
-        		return false;
-        	else 
-        		return true;
-        }
-        else if (t1 == Tipado.tipoStruct && t2 == Tipado.tipoStruct) {
-        	Tipo_struct s1 = (Tipo_struct)e1.getVinculo().tipo();
-        	Tipo_struct s2 = (Tipo_struct)e2;
-        	Map<String,Nodo> r1 = s1.accedeReg();
-        	Map<String,Nodo> r2 = s1.accedeReg();
 
-        	if (r1 == null || r2 == null || r1.size() != r2.size())
-        		return false;
+    private boolean compatibles(Tipo t1, Tipo t2) {
+    	if (t1.getClass() == t2.getClass()) {
+            if (claseDe(t1, Tipo_struct.class)) {
+                Tipo_struct s1 = (Tipo_struct)t1;
+                Tipo_struct s2 = (Tipo_struct)t2;
+                Map<String,Nodo> r1 = s1.accedeReg();
+                Map<String,Nodo> r2 = s1.accedeReg();
+
+                if (r1 == null || r2 == null || r1.size() != r2.size())
+        		    return false;
         	
-            for (String id : r1.keySet()) {
-                if (!r2.containsKey(id)) 
-                    return false;
-                if (r1.get(id).tipo().getTipado() != r2.get(id).tipo().getTipado())
-                    return false;
+                for (String id : r1.keySet()) {
+                    if (!compatibles(r1.get(id).tipo().tipo(), r2.get(id).tipo().tipo())) {
+                        return false;
+                    }
+                }
             }
-        	
-        	return true;
+            else if (claseDe(t1, Tipo_array.class)) {
+                Tipo_array a1 = (Tipo_array)t1;
+                Tipo_array a2 = (Tipo_array)t2;
+                if (a1.getTam() != a2.getTam())
+                    return false;
+                else return compatibles(a1.tipo(), a2.tipo());
+            }
+            return true;
         }
-        else if (t1 == Tipado.tipoPuntero && t2 == Tipado.nl)
-        	return true;
-        else if (t1 == Tipado.tipoPuntero && t2 == Tipado.tipoPuntero) {
-        	Tipo_punt p1 = (Tipo_punt)e1.getVinculo().tipo();
-        	Tipo_punt p2 = (Tipo_punt)e2;
-        	if (p1.tipo().getTipado() != p2.tipo().getTipado())
-        		return false;
-        	else 
-        		return true;
-        }
-        else
-            return false;
+        else if (claseDe(t1, Tipo_real.class) && claseDe(t2, Tipo_int.class))
+            return true;
+        else if (claseDe(t1, Tipo_punt.class) && claseDe(t2, Tipo_null.class))
+            return true;
+        else return false;
     }
 
 	@Override
@@ -822,5 +840,10 @@ public class Comprobacion_tipos implements Procesamiento {
 	private boolean claseDe(Object o, Class c) {
         return o.getClass() == c;
     } 
+
+
+    private boolean ambos_ok(Nodo n1, Nodo n2) {
+        return n1.tipo().getClass() == Tipo_ok.class && n2.tipo().getClass() == Tipo_ok.class;
+    }
 
 }

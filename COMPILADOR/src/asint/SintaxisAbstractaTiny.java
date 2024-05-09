@@ -79,12 +79,14 @@ public class SintaxisAbstractaTiny {
 		  return fila+1; 
 	   }
 	   public int leeCol() {
-		  return col; 
+		  return col;
 	   }
 
        public abstract void imprime();
        public abstract void procesa(Procesamiento p);
-       public Tipo tipo() {throw new IllegalArgumentException();}
+       public Tipo tipo() {return this.tipo;}
+       public void setTipo(Tipo t) {this.tipo = t;}
+
 
        public boolean getOk() {return this.ok;}
        public void setOk(Boolean ok) {this.ok = ok;}
@@ -277,7 +279,6 @@ public class SintaxisAbstractaTiny {
     }
 
     public static abstract class Inst extends Nodo {
-        protected Tipado t;
         public Inst() {
             super();
         }
@@ -289,8 +290,6 @@ public class SintaxisAbstractaTiny {
 		public String id() { throw new UnsupportedOperationException(); }
         public PReales pr() { throw new UnsupportedOperationException(); }
 
-        public void setTipado(Tipado t){this.t = t;}
-        public Tipado getTipado(){return this.t;}
         public Nodo getVinculo(){
         throw new UnsupportedOperationException("Vinculo erróneo");
         }
@@ -300,7 +299,6 @@ public class SintaxisAbstractaTiny {
     }
 
     public static abstract class Exp  extends  Nodo {
-       Tipado t;
        public Exp() {
 		   super();
        }   
@@ -321,9 +319,6 @@ public class SintaxisAbstractaTiny {
        public void vincula(Nodo n){
         throw new UnsupportedOperationException("Vinculo no fijado");
        } 
-
-       public void setTipado(Tipado t){this.t = t;}
-       public Tipado getTipado(){return this.t;}
 
        public abstract int prioridad();
     }
@@ -673,6 +668,58 @@ public class SintaxisAbstractaTiny {
         } 
         public void procesa(Procesamiento p) {
             p.procesa(this);
+        }
+    }
+
+    public static class Tipo_ok extends Tipo {
+        public Tipo_ok() {
+            super();
+        }
+        public void imprime() {
+
+        }
+        public String toString() {
+                return "tipo_ok()";
+        } 
+        public void procesa(Procesamiento p) {
+        }
+    }
+
+    public static class Tipo_error extends Tipo {
+        public Tipo_error() {
+            super();
+        }
+        public void imprime() {
+        }
+        public String toString() {
+            return "tipo_error()";
+        } 
+        public void procesa(Procesamiento p) {
+        }
+    }
+
+    public static class Tipo_null extends Tipo {
+        public Tipo_null() {
+            super();
+        }
+        public void imprime() {
+        }
+        public String toString() {
+            return "tipo_null()";
+        } 
+        public void procesa(Procesamiento p) {
+        }
+    }
+    public static class Tipo_nl extends Tipo {
+        public Tipo_nl() {
+            super();
+        }
+        public void imprime() {
+        }
+        public String toString() {
+            return "tipo_nl()";
+        } 
+        public void procesa(Procesamiento p) {
         }
     }
     
@@ -1851,29 +1898,41 @@ public class SintaxisAbstractaTiny {
     public Dec dec_proc(String id, PFmls pfs, Blo b) {
         return new Dec_proc(id, pfs, b);
     }
-    public Tipo tipo_array(Tipo t, String id) {
+    public static Tipo tipo_array(Tipo t, String id) {
         return new Tipo_array(t, id);
     }
-    public Tipo tipo_punt(Tipo t) {
+    public static Tipo tipo_punt(Tipo t) {
         return new Tipo_punt(t);
     }
-    public Tipo tipo_bool() {
+    public static Tipo tipo_bool() {
         return new Tipo_bool();
     }
-    public Tipo tipo_int() {
+    public static Tipo tipo_int() {
         return new Tipo_int();
     }
-    public Tipo tipo_real() {
+    public static Tipo tipo_real() {
         return new Tipo_real();
     }
-    public Tipo tipo_string() {
+    public static Tipo tipo_string() {
         return new Tipo_string();
     }
-    public Tipo tipo_ident(String id) {
+    public static Tipo tipo_ident(String id) {
         return new Tipo_ident(id);
     }
-    public Tipo tipo_struct(LVar lv) {
+    public static Tipo tipo_struct(LVar lv) {
         return new Tipo_struct(lv);
+    }
+    public static Tipo tipo_ok() {
+        return new Tipo_ok();
+    }
+    public static Tipo tipo_error() {
+        return new Tipo_error();
+    }
+    public static Tipo tipo_null() {
+        return new Tipo_error();
+    }
+    public static Tipo tipo_nl() {
+        return new Tipo_error();
     }
     public Insts si_inst(LInst li) {
         return new Si_inst(li);

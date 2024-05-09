@@ -104,6 +104,7 @@ public class GeneracionCodigo implements Procesamiento{
     } 
 
 	public void procesa(Blo blo) {
+		
         recolecta_procs(blo.decla().procesa(this));
         blo.instr().procesa(this);
         m.emit(m.stop());
@@ -207,7 +208,7 @@ public class GeneracionCodigo implements Procesamiento{
 	
 	public void procesa(Inst_call inst) {
 		m.emit(m.activa(inst.getVinculo().getNivel(), inst.getVinculo().getEspacio(), inst.getSig()));
-		gen_paso_PFml(inst.vinculo(),inst.pr().lpr().exp());
+		gen_paso_PFml(inst.getVinculo(),inst.pr().lpr().exp());
 		m.emit(m.ir_a(inst.getVinculo().getPrim()));
 	}
 	
@@ -415,21 +416,169 @@ public class GeneracionCodigo implements Procesamiento{
 	    	}
 	}
 	
-	private void recolecta_procs(Decs decs) {
-	    recolecta_procs(decs.decs().procesa(this));
-	    recolecta_procs(decs.dec().procesa(this));
+	private void recolecta_procs(LDecs lDecs){
+        if(claseDe(lDecs, Muchas_decs.class)){
+             recolecta_procs(lDecs.decs());
+             recolecta_procs(lDecs.dec());
+        }
+        else if (claseDe(lDecs, Una_dec.class)) {
+        	recolecta_procs(lDecs.dec());
+        }
+    }
+    
+    private void recolecta_procs(Dec decs){
+        if (claseDe(decs, Dec_proc.class)) {
+        	Dec_proc e = (Dec_proc)decs;
+        	subs.add(e);
+        }
+    }
+    
+    private boolean claseDe(Object o, Class c) {
+        return o.getClass() == c;
+    }
+
+	@Override
+	public void procesa(Si_decs decs) {
+		// TODO Auto-generated method stub
+		
 	}
-	
-	private void recolecta_procs(Una_dec dec) {
-	    recolecta_procs(dec.dec().procesa(this));
+
+	@Override
+	public void procesa(No_decs decs) {
+		// TODO Auto-generated method stub
+		
 	}
-	
-	private void recolecta_procs(Dec_simple dec) {}
-	
-	private void recolecta_procs(Dec_type dec) {}
-	
-	private void recolecta_procs(Dec_proc dec) {
-		m.emit(m.apila(subs,dec));
+
+	@Override
+	public void procesa(Muchas_decs decs) {
+		// TODO Auto-generated method stub
+		
 	}
+
+	@Override
+	public void procesa(Una_dec decs) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Var v) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Muchas_var vars) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Una_var vars) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Dec_simple dec) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Dec_type dec) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Dec_proc dec) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Tipo_array tipo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Tipo_punt tipo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Tipo_bool tipo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Tipo_int tipo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Tipo_real tipo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Tipo_string tipo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Tipo_ident tipo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Tipo_struct tipo) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Si_pformal pfmls) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(No_pformal pfmls) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Muchos_pformal pfmls) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Un_pformal pfmls) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Pformal_ref pfml) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void procesa(Pformal_noref pfml) {
+		// TODO Auto-generated method stub
+		
+	} 
 		    
 }
