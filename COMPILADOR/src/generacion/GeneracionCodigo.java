@@ -104,7 +104,6 @@ public class GeneracionCodigo implements Procesamiento{
     } 
 
 	public void procesa(Blo blo) {
-		
         recolecta_procs(blo.decla().procesa(this));
         blo.instr().procesa(this);
         m.emit(m.stop());
@@ -359,7 +358,7 @@ public class GeneracionCodigo implements Procesamiento{
     
     public void procesa(Exp_reg exp){
         exp.exp1().procesa(this);
-        if (exp.getTipado() == Tipado.tipoStruct) {
+        if (claseDe(exp.exp1().tipo(), Tipo_struct.class)) {
         	Tipo_struct s = (Tipo_struct)exp.exp1().getVinculo().tipo();
         	m.emit(m.apila_int(s.lvar().var().getDesplaza()));
         }
