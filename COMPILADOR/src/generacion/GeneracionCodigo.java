@@ -94,9 +94,9 @@ import java.util.Stack;
 public class GeneracionCodigo implements Procesamiento{
 	private Stack<Dec_proc> subs;
 	private MaquinaP m;
-	public GeneracionCodigo() {
+	public GeneracionCodigo(MaquinaP m) {
 		subs = new Stack<>();
-		
+		this.m = m;
 	}
 	
 	public void procesa(Prog prog) {
@@ -104,15 +104,15 @@ public class GeneracionCodigo implements Procesamiento{
     } 
 
 	public void procesa(Blo blo) {
-        recolecta_procs(blo.decla().procesa(this));
+        recolecta_procs(blo.decla().decs());
         blo.instr().procesa(this);
         m.emit(m.stop());
          while(!subs.empty()){
             Dec_proc sub =  subs.pop();
            	m.emit(m.desapilad(sub.getNivel()));
-            recolecta_procs(sub.bloq().decla());
+            recolecta_procs(sub.bloq().decla().decs());
             sub.bloq().instr().procesa(this);
-           	m.emit(m.desapilad(sub.getNivel(),sub.getEspacio()));
+           	m.emit(m.desactiva(sub.getNivel(),sub.getEspacio()));
            	m.emit(m.ir_ind());
         }
 	}
@@ -164,9 +164,9 @@ public class GeneracionCodigo implements Procesamiento{
 	public void procesa(Inst_else inst) {
         inst.exp().procesa(this);
         gen_acc_val(inst.exp());
-        m.emit(m.ir_v(inst.getSig()));
+        m.emit(m.ir_v(inst.bloq2().getPrim()));
         inst.bloq1().procesa(this);
-        m.emit(m.ir_f(inst.getSig()));
+        m.emit(m.ir_f(inst.bloq2().getSig()));
         inst.bloq2().procesa(this);
 	}
 	
@@ -180,9 +180,8 @@ public class GeneracionCodigo implements Procesamiento{
 	
 	public void procesa(Inst_new inst) {
         inst.exp().procesa(this);
-        if (inst.exp().getTipado() == Tipado.tipoPuntero) {
-        	Tipo_punt p = (Tipo_punt)inst.exp().getTipado();
-        	inst.exp().getTipado();
+        if (claseDe(inst.exp().tipo(), Tipo_punt.class)) {
+        	Tipo_punt p = (Tipo_punt)inst.exp().tipo();
         	m.emit(m.alloc(p.tipo().getEspacio()));
         }
         m.emit(m.desapila_ind());
@@ -191,24 +190,28 @@ public class GeneracionCodigo implements Procesamiento{
 	public void procesa(Inst_delete inst) {
         inst.exp().procesa(this);
         m.emit(m.apila_ind());
-        if (inst.exp().getTipado() == Tipado.tipoPuntero) {
-        	Tipo_punt p = (Tipo_punt)inst.exp().getTipado();
+        if (claseDe(inst.exp().tipo(), Tipo_punt.class)) {
+        	Tipo_punt p = (Tipo_punt)inst.exp().tipo();
         	m.emit(m.dealloc(p.tipo().getEspacio()));
         }
 	}
 	
 	public void procesa(Inst_read inst) {
         inst.exp().procesa(this);
+        m.emit(m.desapila_ind());
 	}
 	
 	public void procesa(Inst_write inst) {
         inst.exp().procesa(this);
+        gen_acc_val(inst.exp());
 	}
 	
 	public void procesa(Inst_call inst) {
 		m.emit(m.activa(inst.getVinculo().getNivel(), inst.getVinculo().getEspacio(), inst.getSig()));
-		gen_paso_PFml(inst.getVinculo(),inst.pr().lpr().exp());
+		Dec_proc dp = (Dec_proc)inst.getVinculo();
+		allocPFmls(dp.par_for(), inst.pr());
 		m.emit(m.ir_a(inst.getVinculo().getPrim()));
+		deallocPFmls(dp.par_for());
 	}
 	
 	public void procesa(Inst_nl inst) {
@@ -224,7 +227,7 @@ public class GeneracionCodigo implements Procesamiento{
 		exp.exp1().procesa(this);
 		exp.exp2().procesa(this);
 		if (exp.exp1().esDesignador()) {
-			m.emit(m.copia(exp.getTipado().getEspacio()));
+			m.emit(m.copia(exp.tipo().getEspacio()));
 		}
 		else {
 			m.emit(m.desapila_ind());
@@ -282,32 +285,56 @@ public class GeneracionCodigo implements Procesamiento{
 	public void procesa(Exp_suma exp) {
 		exp.exp1().procesa(this);
 		gen_acc_val(exp.exp1());
+		if (claseDe(exp.tipo(), Tipo_real.class)) {
+			casteo(exp.exp1());
+		}
 		exp.exp2().procesa(this);
 		gen_acc_val(exp.exp2());
+		if (claseDe(exp.tipo(), Tipo_real.class)) {
+			casteo(exp.exp2());
+		}
 	    m.emit(m.suma());
 	}
 	
 	public void procesa(Exp_resta exp) {
 		exp.exp1().procesa(this);
 		gen_acc_val(exp.exp1());
+		if (claseDe(exp.tipo(), Tipo_real.class)) {
+			casteo(exp.exp1());
+		}
 		exp.exp2().procesa(this);
 		gen_acc_val(exp.exp2());
+		if (claseDe(exp.tipo(), Tipo_real.class)) {
+			casteo(exp.exp2());
+		}
 	    m.emit(m.resta());
 	}
 
 	public void procesa(Exp_mult exp) {
 		exp.exp1().procesa(this);
 		gen_acc_val(exp.exp1());
+		if (claseDe(exp.tipo(), Tipo_real.class)) {
+			casteo(exp.exp1());
+		}
 		exp.exp2().procesa(this);
 		gen_acc_val(exp.exp2());
+		if (claseDe(exp.tipo(), Tipo_real.class)) {
+			casteo(exp.exp2());
+		}
 	    m.emit(m.mul());
 	}
 
 	public void procesa(Exp_div exp) {
 		exp.exp1().procesa(this);
 		gen_acc_val(exp.exp1());
+		if (claseDe(exp.tipo(), Tipo_real.class)) {
+			casteo(exp.exp1());
+		}
 		exp.exp2().procesa(this);
 		gen_acc_val(exp.exp2());
+		if (claseDe(exp.tipo(), Tipo_real.class)) {
+			casteo(exp.exp2());
+		}
 	    m.emit(m.div());
 	}
 
@@ -358,10 +385,11 @@ public class GeneracionCodigo implements Procesamiento{
     
     public void procesa(Exp_reg exp){
         exp.exp1().procesa(this);
-        if (claseDe(exp.exp1().tipo(), Tipo_struct.class)) {
-        	Tipo_struct s = (Tipo_struct)exp.exp1().getVinculo().tipo();
-        	m.emit(m.apila_int(s.lvar().var().getDesplaza()));
-        }
+    	Tipo_struct s = (Tipo_struct)exp.exp1().getVinculo().tipo();
+        if (s.accedeReg().containsKey(exp.id())){
+    		m.emit(m.apila_int(s.lvar().var().getDesplaza()));
+    	}
+         m.emit(m.suma());
     }
     
     public void procesa(Exp_indir exp){
@@ -390,7 +418,27 @@ public class GeneracionCodigo implements Procesamiento{
 	}
 	
 	public void procesa(Exp_iden exp){
-		m.emit(m.apila_int(exp.getVinculo().getDir()));
+		if(claseDe(exp.getVinculo(), Pformal_ref.class)){
+			m.emit(m.apilad(exp.getVinculo().getNivel()));
+			m.emit(m.apila_int(exp.getVinculo().getDir()));
+			m.emit(m.suma());
+			m.emit(m.apila_ind());
+		}
+		else if(claseDe(exp.getVinculo(), Pformal_noref.class)){
+			m.emit(m.apilad(exp.getVinculo().getNivel()));
+			m.emit(m.apila_int(exp.getVinculo().getDir()));
+			m.emit(m.suma());
+		}	
+		else if(claseDe(exp.getVinculo(), Var.class)){
+			if(exp.getVinculo().getNivel() == 0){
+				m.emit(m.apila_int(exp.getVinculo().getDir()));
+			}
+			else{
+				m.emit(m.apilad(exp.getVinculo().getNivel()));
+				m.emit(m.apila_int(exp.getVinculo().getDir()));
+				m.emit(m.suma());
+			}
+		}
 	}
 	   
 	public void procesa(Exp_null exp){}
@@ -400,19 +448,63 @@ public class GeneracionCodigo implements Procesamiento{
 			m.emit(m.apila_ind());
 		}
 	}
-	
-	private void gen_paso_PFml(Dec_proc proc, PReales pr) {
-	    m.emit(m.dup());
-	    m.emit(m.apila_int(proc.par_for().getDir()));
-	    m.emit(m.suma());
-	    pr.procesa(this);
-	    
-	    if (proc.par_for().getTipado() == Tipado.pf_ref || !pr.esDesignador())
-	        m.emit(m.desapila_ind());
-	    else
-	    	if (proc.par_for().getTipado() == Tipado.pf_noref) {
-	    		m.emit(m.copia(proc.par_for().tipo().getEspacio()));
-	    	}
+
+	private void allocPFmls(PFmls pfml, PReales prs) {
+		if (claseDe(pfml, Si_pformal.class)) {
+			allocLPFml(pfml.lpfml(), prs.lpr());
+		}
+	}
+
+	private void allocLPFml(LPFml lpfml, LPReal lpr) {
+		if (claseDe(lpfml, Muchos_pformal.class)) {
+			allocLPFml(lpfml.lpfml(), lpr.lpr());
+		}
+		allocPFml(lpfml.pfml(), lpr.exp());
+	}
+
+	private void allocPFml(PFml pf, Exp e) {
+		if (claseDe(pf, Pformal_ref.class)) {
+			m.emit(m.alloc(SintaxisAbstractaTiny.tipo_int().getEspacio()));
+			e.procesa(this);
+			m.emit(m.desapila_ind());
+		}
+		else {
+			m.emit(m.alloc(pf.tipo().getEspacio()));
+			e.procesa(this);
+			if (claseDe(pf.tipo(), Tipo_real.class) && claseDe(e.tipo(), Tipo_int.class)) {
+				gen_acc_val(e);
+				casteo(e);
+				m.emit(m.desapila_ind());
+			}
+			else {
+				if (e.esDesignador())
+					m.emit(m.copia(pf.tipo().getEspacio()));
+				else
+					m.emit(m.desapila_ind());
+			}
+		}
+	}
+
+	private void deallocPFmls(PFmls pfml) {
+		if (claseDe(pfml, Si_pformal.class)) {
+			deallocLPFml(pfml.lpfml());
+		}
+	}
+
+	private void deallocLPFml(LPFml lpfml) {
+		if (claseDe(lpfml, Muchos_pformal.class)) {
+			deallocLPFml(lpfml.lpfml());
+		}
+		deallocPFml(lpfml.pfml());
+	}
+
+	private void deallocPFml(PFml pf) {
+		if (claseDe(pf, Pformal_ref.class)) {
+			m.emit(m.dealloc(SintaxisAbstractaTiny.tipo_int().getEspacio()));
+		}
+		else {
+			m.emit(m.dealloc(pf.tipo().getEspacio()));
+		}
 	}
 	
 	private void recolecta_procs(LDecs lDecs){
@@ -435,149 +527,36 @@ public class GeneracionCodigo implements Procesamiento{
     private boolean claseDe(Object o, Class c) {
         return o.getClass() == c;
     }
+    
+    private void casteo(Exp e1) {
+    	if (claseDe(e1.tipo(), Tipo_int.class)) {
+    		m.emit(m.int2real());
+    	}
+    }
 
-	@Override
-	public void procesa(Si_decs decs) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(No_decs decs) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Muchas_decs decs) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Una_dec decs) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Var v) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Muchas_var vars) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Una_var vars) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Dec_simple dec) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Dec_type dec) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Dec_proc dec) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Tipo_array tipo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Tipo_punt tipo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Tipo_bool tipo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Tipo_int tipo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Tipo_real tipo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Tipo_string tipo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Tipo_ident tipo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Tipo_struct tipo) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Si_pformal pfmls) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(No_pformal pfmls) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Muchos_pformal pfmls) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Un_pformal pfmls) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Pformal_ref pfml) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void procesa(Pformal_noref pfml) {
-		// TODO Auto-generated method stub
-		
-	} 
-		    
+	public void procesa(Si_decs decs) {}
+	public void procesa(No_decs decs) {}
+	public void procesa(Muchas_decs decs) {}
+	public void procesa(Una_dec decs) {}
+	public void procesa(Var v) {}
+	public void procesa(Muchas_var vars) {}
+	public void procesa(Una_var vars) {}
+	public void procesa(Dec_simple dec) {}
+	public void procesa(Dec_type dec) {}
+	public void procesa(Dec_proc dec) {}
+	public void procesa(Tipo_array tipo) {}
+	public void procesa(Tipo_punt tipo) {}
+	public void procesa(Tipo_bool tipo) {}
+	public void procesa(Tipo_int tipo) {}
+	public void procesa(Tipo_real tipo) {}
+	public void procesa(Tipo_string tipo) {}
+	public void procesa(Tipo_ident tipo) {}
+	public void procesa(Tipo_struct tipo) {}
+	public void procesa(Si_pformal pfmls) {}
+	public void procesa(No_pformal pfmls) {}
+	public void procesa(Muchos_pformal pfmls) {}
+	public void procesa(Un_pformal pfmls) {}
+	public void procesa(Pformal_ref pfml) {}
+	public void procesa(Pformal_noref pfml) {} 
+		 
 }

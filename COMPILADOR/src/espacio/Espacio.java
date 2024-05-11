@@ -57,8 +57,8 @@ public class Espacio {
     
 
     public void asigEspacio1(Var v) {
-        //v.setDir(dir);
-        //v.setNivel(nivel);
+        v.setDir(dir);
+        v.setNivel(nivel);
         asigEspacioTipo(v.tipo());
         v.setDesplaza(v.tipo().getEspacio());
         dir = dir + v.tipo().getEspacio();
