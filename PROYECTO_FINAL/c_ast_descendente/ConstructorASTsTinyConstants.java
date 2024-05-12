@@ -190,6 +190,7 @@ public interface ConstructorASTsTinyConstants {
     "\"}\"",
     "\"[\"",
     "\"]\"",
+    "\"$$\"",
   };
 
 }
