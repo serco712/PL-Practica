@@ -14,7 +14,7 @@
     
     tipado(si_decs(LDecs)):
         tipado(LDecs)
-        $.tipo = ok
+        $.tipo = LDecs.tipo
 
     tipado(muchas_decs(LDecs,Dec)):
         tipado(LDecs)
@@ -40,11 +40,11 @@
 
     tipo(dec_simple(Var)):
         tipado(Var)
-        $.tipo = ok
+        $.tipo = Var.tipo
 
     tipo(dec_type(Var)):
         tipado(Var)
-        $.tipo = ok
+        $.tipo = Var.tipo
     
     tipo(dec_proc(id,PFmls,Blo)):
         tipado(PFmls)
@@ -77,12 +77,13 @@
         end let
 
     tipado(tipo_struct(LVar)):
+        comprobarRepetidosStruct()
         tipado(LVar)
         $.tipo = LVar.tipo
 
     tipado(si_inst(LInst)):
         tipado(LInst)
-        $.tipo = ok
+        $.tipo = LInst.tipo
 
     tipado(no_inst()): $.tipo = ok
 
@@ -97,7 +98,7 @@
 
     tipado(si_pformal(LPFml)):
         tipado(LPFml)
-        $.tipo = ok
+        $.tipo = LPFml.tipo
 
     tipado(no_pformal()): $.tipo = ok
 
@@ -112,7 +113,7 @@
 
     tipado(si_preales(LPReal)):
         tipado(LPReal)
-        $.tipo = ok
+        $.tipo = LPReal.tipo
 
     tipado(no_preales()): $.tipo = ok
 
@@ -135,7 +136,7 @@
 
     tipado(inst_eval(Exp)):
         tipado(Exp)
-        $.tipo = ok
+        $.tipo = Exp.tipo
 
     tipado(inst_if(Exp,Blo)):
         tipado(Exp)
@@ -203,16 +204,15 @@
 
     tipado(inst_call(id,PReales)):
         if $.vinculo == dec_proc(id, PFmls, Blo) then
-            if num_elems(PReales) != num_elems(PFmls)
+            if num_elems(PReales) != num_elems(PFmls) then
                 $.tipo = error
             else
-                tipado_parametros(PReales, PFmls)
+                tipado(PReales)
+                $.tipo = tipado_parametros(PReales, PFmls)
             end if
         else 
             $.tipo = error
         end if
-        tipado(PReales)
-        $.tipo = ok
 
     tipado_parametros(no_preales(), no_pformal()):
         return ok
@@ -223,23 +223,23 @@
     tipado_parametros(muchas_exp(LPReal,Exp), muchas_pformal(LPFml, PFml)):
         return ambos_ok(tipado_parametros(LPReal,LPFml), tipado_parametros(Exp,PFml))
 
-    tipado_parametros(una_exp(Exp), pformal_ref(Tipo,id)):
-        tipado(Exp)
-        if compatibles(Exp.tipo,Tipo.tipo) entonces
-            return ok
-        else
-            aviso-error(Tipo.tipo)
-            return error
-
     tipado_parametros(una_exp(Exp), pformal_noref(Tipo,id)):
         tipado(Exp)
-        if es-designador(Exp) ^ compatibles(Exp.tipo,Tipo.tipo) entonces
+        if compatibles(Exp.tipo,Tipo.tipo) then
             return ok
         else
             aviso-error(Tipo.tipo)
             return error
 
-    tipado(inst_nl()): $.tipo = nl
+    tipado_parametros(una_exp(Exp), pformal_ref(Tipo,id)):
+        tipado(Exp)
+        if es-designador(Exp) ^ compatibles(Exp.tipo,Tipo.tipo) then
+            return ok
+        else
+            aviso-error(Tipo.tipo)
+            return error
+
+    tipado(inst_nl()): $.tipo = ok
 
     tipado(inst_blo(Blo)):
         tipado(Blo)
@@ -345,7 +345,7 @@
     tipado(exp_reg(Exp,id)):
         tipado(Exp)
         let $.vinculo = var(T,I) in
-            if ref!(Exp.tipo) == tipo_struct(T) then
+            if ref!(Exp.tipo) == tipo_struct(T) ^ structContieneId(I) then
                 return T.tipo
             else 
                 return error
@@ -468,17 +468,23 @@
     compatibles(T1,T2):
         let T1' = ref!(T1) ^ T2' = ref!(T2) in
             if T1' == T2' then
-                return true;
+                return true
             else if T1 == literalReal ^ (T2== literalEntero v T2==literalReal)) then
-            	return true;
+            	return true
             else if T1 == tipo_array(T,literalEntero) ^ T2 == tipo_array(T,literalEntero) then
-            	return true;
+                if tam(T1) != tam(T2) return false;
+            	else return true
             else if T1 == tipo_struct(LVar) ^ T2 == tipo_struct(LVar) then
-            	return true;
+                R1 = registroStruct(T1)
+                R2 = registroStruct(T2)
+                if R1 == null v R2 == null v R1.size != R2.size v !tiposStructMismoIdCompatibles(T1,T2)
+                    return false
+                else return true
             else if T1== tipo_punt(T) ^ T2== null then
-            	return true;
-            else if  T1== tipo_punt(T) ^ T2 == tipo_punt(T) then
-            	return true;
+            	return true
+            else if  T1== tipo_punt(T) ^ T2 == tipo_punt(T') then
+                if T != T' then return false
+            	else return true
             else
                 return false
             end if

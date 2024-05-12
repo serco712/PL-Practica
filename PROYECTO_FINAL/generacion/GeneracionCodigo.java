@@ -430,7 +430,7 @@ public class GeneracionCodigo implements Procesamiento{
 			m.emit(m.apila_int(exp.getVinculo().getDir()));
 			m.emit(m.suma());
 		}	
-		else if(claseDe(exp.getVinculo(), Var.class)){
+		else if(claseDe(exp.getVinculo(), Dec_simple.class)){
 			if(exp.getVinculo().getNivel() == 0){
 				m.emit(m.apila_int(exp.getVinculo().getDir()));
 			}

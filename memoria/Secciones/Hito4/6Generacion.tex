@@ -60,7 +60,7 @@
     gen_cod(inst_else(Exp,Blo1,Blo2)):
         gen_cod(Exp)
         gen_acc_val(Exp)
-        emit ir_v($.sig)
+        emit ir_v($.prim)
         gen_cod(Blo1)
         emit ir_f($.sig)
         gen_cod(Blo2)
@@ -88,17 +88,22 @@
 
     gen_cod(inst_read(Exp)):
         gen_cod(Exp)
+        emit desapila_ind()
 
     gen_cod(inst_write(Exp)):
         gen_cod(Exp)
+        gen_acc_val(Exp)
+        emit write()
 
     gen_cod(inst_call(id,PReales)):
         emit activa($.vinculo.nivel,$.vinculo.tam,$.sig)
-        gen_paso_PFml($.vinculo,E)
+        allocPFmls($.vinculo.pformal,$.prim)
         emit ir_a($.vinculo.prim)
+        deallocPFmls($.vinculo.pformal)
 
     gen_cod(inst_nl()):
         emit nl
+        emit write
 
     gen_cod(inst_blo(Blo)):
         gen_cod(Blo)
@@ -157,29 +162,45 @@
     gen_cod(exp_sum(Opnd0,Opnd1)):
         gen_cod(Opnd0)
         gen_acc_val(Opnd0)
+        if Opnd0.tipo == tipoReal then
+            casteo(Opnd0)
         gen_cod(Opnd1)
         gen_acc_val(Opnd1)
+        if Opnd1.tipo == tipoReal then
+            casteo(Opnd1)
         emit suma
 
     gen_cod(exp_resta(Opnd0,Opnd1)):
         gen_cod(Opnd0)
         gen_acc_val(Opnd0)
+        if Opnd0.tipo == tipoReal then
+            casteo(Opnd0)
         gen_cod(Opnd1)
         gen_acc_val(Opnd1)
+        if Opnd1.tipo == tipoReal then
+            casteo(Opnd1)
         emit resta
 
     gen_cod(exp_mult(Opnd0,Opnd1)):
         gen_cod(Opnd0)
         gen_acc_val(Opnd0)
+        if Opnd0.tipo == tipoReal then
+            casteo(Opnd0)
         gen_cod(Opnd1)
         gen_acc_val(Opnd1)
+        if Opnd1.tipo == tipoReal then
+            casteo(Opnd1)
         emit mult
 
     gen_cod(exp_div(Opnd0,Opnd1)):
         gen_cod(Opnd0)
         gen_acc_val(Opnd0)
+        if Opnd0.tipo == tipoReal then
+            casteo(Opnd0)
         gen_cod(Opnd1)
         gen_acc_val(Opnd1)
+        if Opnd1.tipo == tipoReal then
+            casteo(Opnd1)
         emit div
 
     gen_cod(exp_mod(Opnd0,Opnd1)):
@@ -250,6 +271,22 @@
         emit apilaString(litCad)
 
     gen_cod(exp_iden(id)):
+        if $.vinculo == Pformal_ref then
+            emit apilad($.vinculo.nivel)
+            emit apila_int($.vinculo.dir)
+            emit suma()
+            emit apila_ind()
+        else if $.vinculo() == Pformal_noref then
+            emit apilad($.vinculo.nivel)
+            emit apila_int($.vinculo.dir)
+            emit suma()
+        else if $.vinculo() == Dec_simple then
+            if $.vinculo().nivel() == 0 then
+                emit apila_int($.vinculo.dir)
+            else 
+                emit apilad($.vinculo.nivel)
+                emit apila_int($.vinculo.dir)
+                emit suma()
         emit apilaInt($.viculo.dir)
 
     gen_cod(exp_null()): noop
@@ -258,20 +295,52 @@
         if es_designador(ref!(E)) then
             emit apilaInd()
         end if
+
+    allocPFmls(PFmls, PReales):
+        if PFmls == Si_pformal then
+            allocLPFml(PFmls.lpfml, PReales.lpr)
     
-    gen_paso_PFml(proc(id,PFml,Decs,Is),PReal):
-        emit dup
-        emit apilaInt(PFml.dir)
-        emit suma
-        gen_cod(PReal)
-        if PFml = pref(T,id) v not es_designador(PReal) then
+    alloLPFml(LPFml, LPReal):
+        if LPFml == Muchos_pformal then
+            allocLPFml(LPFml.lpfml, LPReal.lpr)       
+        allocPFml(LPFml.pfml, LPReal.exp)
+
+    allocPFml(PFml, Exp):
+        if PFml.tipo == Pformal_ref then
+            emit alloc(TipoEnt.tam)
+            gen_cod(Exp)
             emit desapila_ind()
         else
-            let PFml = pval(T, id) in
-                emit copia(T.tam)
-            end let
-        end if
+            emit alloc(PFml.tipo.tam)
+            gen_cod(Exp)
+            if PFml.tipo == Tipo_real ^ e.tipo == Tipo_int then
+                gen_acc_val(Exp)
+                casteo(Exp)
+                emit desapila_ind()
+            else
+                if esDesignador(Exp) then
+                    emit copia(PFml.tipo.tam)
+                else
+                    emit desapila_ind()
         
+    deallocPFmls (PFmls):
+		if PFmls.tipo == Si_pformal then
+			deallocLPFml(PFmls.lpfml)
+		
+	deallocLPFml(LPFml):
+		if LPFml.tipo == Muchos_pformal then
+			deallocLPFml(LPFml.lpfml)
+		deallocPFml(LPFml.pfml)
+	
+	deallocPFml(PFml):
+		if PFml == Pformal_ref then
+			emit dealloc(TipoEnt.tam)
+		else
+        	emit dealloc(PFml.tipo.tam)
+
+    recolecta_procs(si_decs(Decs)):
+        recolecta_procs(Decs)
+
     recolecta_procs(muchas_decs(Decs, Dec)):
         recolecta_procs(muchas_decs(Decs))
         recolecta_procs(Dec)

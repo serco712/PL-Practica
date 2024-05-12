@@ -410,4 +410,21 @@
         etiquetado(PReales)
         etq++
 
+        recolecta_procs(si_decs(Decs)):
+        recolecta_procs(Decs)
+
+    recolecta_procs(muchas_decs(Decs, Dec)):
+        recolecta_procs(muchas_decs(Decs))
+        recolecta_procs(Dec)
+    
+    recolecta_procs(una_dec(Dec)):
+        recolecta_procs(Dec)
+
+    recolecta_procs(dec_simple(Tipo,id)): noop
+
+    recolecta_procs(dec_type(Tipo,id)): noop
+
+    recolecta_procs(dec_proc(id,PFml,Decs,Is)): 
+        emit apila(sub_pendientes,$)
+
 \end{lstlisting}

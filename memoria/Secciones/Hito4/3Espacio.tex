@@ -3,6 +3,7 @@
 
     global dir = 0 //contador de direcciones
     global nivel = 0 //nivel de anidamiento
+    global max_dir = 0
     
     asig-espacio(prog(Blo)):
         asig-espacio(Blo)
@@ -69,15 +70,19 @@
     
     asig-espacio1(dec_proc(id,PFmls,Blo)):
         ant_dir = dir 
+        ant_max_dir = max_dir
         nivel = nivel + 1
         $.nivel = nivel
         dir = 0 
+        max_dir = 0
         asigna_espacio1(PFmls)
         asigna_espacio1(Blo)
         $.tam_datos = dir 
         dir = ant_dir 
+        max_dir = max_dir_aux
         nivel = nivel - 1 
-        
+        if dir > max_dir then
+            max_dir = dir
 
     asig-espacio2(dec_proc(id,PFmls,Blo)):
         asigna_espacio2(PFmls)

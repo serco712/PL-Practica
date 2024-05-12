@@ -108,6 +108,7 @@ public class Comprobacion_tipos implements Procesamiento {
 
     public void procesa(Prog p) {
         p.bloq().procesa(this);
+        p.setTipo(p.bloq().tipo());
     }
 
     public void procesa(Blo b) {
@@ -183,12 +184,13 @@ public class Comprobacion_tipos implements Procesamiento {
     
     public void procesa(Dec_type dec) {
         dec.var().procesa(this);
-
+        dec.setTipo(dec.var().tipo());
 	}
     
     public void procesa(Dec_proc dec) {
         dec.par_for().procesa(this);
         dec.bloq().procesa(this);
+        dec.setTipo(dec.bloq().tipo());
 	}
 
     public void procesa(Tipo_array tipo) {
@@ -440,7 +442,6 @@ public class Comprobacion_tipos implements Procesamiento {
         	GestionErrores.errorParametrosNoCoincidentes();
         }
         
-        instr.pr().procesa(this);
     }   
     
     public boolean tipado_parametros(PReales pr, PFmls pfmls) {
@@ -716,7 +717,15 @@ public class Comprobacion_tipos implements Procesamiento {
     public void procesa(Exp_iden iden) {
     	if (claseDe(iden.getVinculo(), Dec_simple.class)) {
     		Dec_simple d = (Dec_simple)iden.getVinculo();
-    		iden.setTipo(d.var().tipo());
+    		iden.setTipo(d.tipo());
+    	}
+    	else if (claseDe(iden.getVinculo(), Pformal_ref.class)) {
+    		Pformal_ref d = (Pformal_ref)iden.getVinculo();
+    		iden.setTipo(d.tipo());
+    	}
+    	else if (claseDe(iden.getVinculo(), Pformal_noref.class)) {
+    		Pformal_noref d = (Pformal_noref)iden.getVinculo();
+    		iden.setTipo(d.tipo());
     	}
     	else 
     		iden.setTipo(SintaxisAbstractaTiny.tipo_error());
