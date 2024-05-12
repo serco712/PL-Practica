@@ -162,11 +162,11 @@ public class Vinculacion {
     }
 
     public void vincula1(Var v) {
+    	if (!ts.contiene(v.id())) {
+            //throw new ErrorVinculacion();
+            ts.inserta(v.id(), v);
+        }
         vincula1(v.tipo());
-        if (ts.contiene(v.id()))
-            throw new ErrorVinculacion();
-        
-        ts.inserta(v.id(), v);
     }
 
     public void vincula2(Var v) {
@@ -176,17 +176,17 @@ public class Vinculacion {
     public void vincula1(Dec d) {
         if (claseDe(d, Dec_simple.class) || claseDe(d, Dec_type.class)) {
             Var v = d.var();
+            if (!ts.contiene(v.id())) {
+                //throw new ErrorVinculacion();
+	            ts.inserta(v.id(), d);
+            }
             vincula1(v.tipo());
-            if (ts.contiene(v.id()))
-                throw new ErrorVinculacion();
-            
-            ts.inserta(v.id(), d);
         }
         else {
-            if (ts.contiene(d.id()))
-                throw new ErrorVinculacion();
-
-            ts.inserta(d.id(), d);   
+            if (!ts.contiene(d.id())) {
+               // throw new ErrorVinculacion();
+            	ts.inserta(d.id(), d);  
+            }
         }
     }
 
@@ -280,11 +280,11 @@ public class Vinculacion {
     
      public void vincula1(PFml pf) {
         if(claseDe(pf, Pformal_ref.class) || claseDe(pf, Pformal_noref.class)){
-	        vincula1(pf.tipo());
-            if (ts.contiene(pf.id()))
-                throw new ErrorVinculacion();
-            
-            ts.inserta(pf.id(), pf);
+        	if (!ts.contiene(pf.id())) {
+                //throw new ErrorVinculacion();
+        		ts.inserta(pf.id(), pf);
+        	}
+	        vincula1(pf.tipo());        
         }
     }
 
@@ -354,9 +354,8 @@ public class Vinculacion {
                 }
           else if(claseDe(exp, Exp_iden.class)) {
         	    Nodo n = ts.vinculoDe(exp.id());
-                if (n.getClass() != Dec_simple.class)
+                if (claseDe(n, Dec_simple.class))
                     throw new ErrorVinculacion();
-                
                 exp.vincula(n);
           }
     }

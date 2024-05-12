@@ -104,13 +104,13 @@ public class GeneracionCodigo implements Procesamiento{
     } 
 
 	public void procesa(Blo blo) {
-        recolecta_procs(blo.decla().decs());
+        recolecta_procs(blo.decla());
         blo.instr().procesa(this);
         m.emit(m.stop());
          while(!subs.empty()){
             Dec_proc sub =  subs.pop();
            	m.emit(m.desapilad(sub.getNivel()));
-            recolecta_procs(sub.bloq().decla().decs());
+            recolecta_procs(sub.bloq().decla());
             sub.bloq().instr().procesa(this);
            	m.emit(m.desactiva(sub.getNivel(),sub.getEspacio()));
            	m.emit(m.ir_ind());
@@ -204,6 +204,7 @@ public class GeneracionCodigo implements Procesamiento{
 	public void procesa(Inst_write inst) {
         inst.exp().procesa(this);
         gen_acc_val(inst.exp());
+        m.emit(m.write());
 	}
 	
 	public void procesa(Inst_call inst) {
@@ -216,7 +217,7 @@ public class GeneracionCodigo implements Procesamiento{
 	
 	public void procesa(Inst_nl inst) {
         m.emit(m.nl());
-		
+        m.emit(m.write());
 	}
 	
 	public void procesa(Inst_blo inst) {
@@ -507,6 +508,12 @@ public class GeneracionCodigo implements Procesamiento{
 		}
 	}
 	
+	private void recolecta_procs(Decs decs) {
+    	if (claseDe(decs, Si_decs.class)) {
+    		recolecta_procs(decs.decs());
+    	}
+    }
+	
 	private void recolecta_procs(LDecs lDecs){
         if(claseDe(lDecs, Muchas_decs.class)){
              recolecta_procs(lDecs.decs());
@@ -523,7 +530,7 @@ public class GeneracionCodigo implements Procesamiento{
         	subs.add(e);
         }
     }
-    
+        
     private boolean claseDe(Object o, Class c) {
         return o.getClass() == c;
     }

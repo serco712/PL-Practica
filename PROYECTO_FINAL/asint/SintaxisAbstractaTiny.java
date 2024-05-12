@@ -295,7 +295,7 @@ public class SintaxisAbstractaTiny {
         }
         public void vincula(Nodo n){
         throw new UnsupportedOperationException("Vinculo no fijado");
-        } 
+        }         
     }
 
     public static abstract class Exp  extends  Nodo {
@@ -1843,6 +1843,10 @@ public class SintaxisAbstractaTiny {
         public void procesa(Procesamiento p) {
             p.procesa(this);
         }
+        @Override
+		public boolean esDesignador() {
+			return true;
+		}
     }
     
 	public static class Exp_null extends Exp{

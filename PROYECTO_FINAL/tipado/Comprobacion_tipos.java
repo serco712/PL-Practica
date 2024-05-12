@@ -232,28 +232,38 @@ public class Comprobacion_tipos implements Procesamiento {
 
     public void procesa(Si_inst insts) {
 		insts.insts().procesa(this);
+		insts.setTipo(insts.insts().tipo());
 	}
 
-	public void procesa(No_inst insts) {}
+	public void procesa(No_inst insts) {
+		insts.setTipo(SintaxisAbstractaTiny.tipo_ok());
+	}
 
     public void procesa(Muchas_inst insts) {
 		insts.insts().procesa(this);
         insts.inst().procesa(this);	
-        if (!ambos_ok(insts.tipo(), insts.inst())) {
+        if (!ambos_ok(insts.insts(), insts.inst())) {
             ok &= false;
             insts.setOk(false);
+            insts.setTipo(SintaxisAbstractaTiny.tipo_error());
         }
+        else 
+            insts.setTipo(SintaxisAbstractaTiny.tipo_ok());
 	}
 
 	public void procesa(Una_inst insts) {
-		insts.inst().procesa(this);	
+		insts.inst().procesa(this);
+		insts.setTipo(insts.inst().tipo());
 	}
 
 	public void procesa(Si_pformal pfmls) {
         pfmls.lpfml().procesa(this);
+		pfmls.setTipo(pfmls.lpfml().tipo());
 	}
 
-	public void procesa(No_pformal pfmls) {}
+	public void procesa(No_pformal pfmls) {
+		pfmls.setTipo(SintaxisAbstractaTiny.tipo_ok());
+	}
 
     public void procesa(Muchos_pformal pfmls) {
 		pfmls.lpfml().procesa(this);
@@ -261,18 +271,25 @@ public class Comprobacion_tipos implements Procesamiento {
         if (!(pfmls.lpfml().getOk() && pfmls.pfml().getOk())) {
             ok &= false;
             pfmls.setOk(false);
+            pfmls.setTipo(SintaxisAbstractaTiny.tipo_error());
         }
+        else 
+            pfmls.setTipo(SintaxisAbstractaTiny.tipo_ok());
 	}
 
 	public void procesa(Un_pformal pfmls) {
 		pfmls.pfml().procesa(this);
+		pfmls.setTipo(pfmls.lpfml().tipo());
 	}
 
     public void procesa(Si_preales preales) {
 		preales.lpr().procesa(this);
+		preales.setTipo(preales.lpr().tipo());
 	}
 
-	public void procesa(No_preales preales) {}
+	public void procesa(No_preales preales) {
+		preales.setTipo(SintaxisAbstractaTiny.tipo_ok());
+	}
 
 	public void procesa(Muchas_exp lpreal) {
 		lpreal.lpr().procesa(this);
@@ -280,28 +297,34 @@ public class Comprobacion_tipos implements Procesamiento {
         if (!(lpreal.lpr().getOk() && lpreal.exp().getOk())) {
             ok &= false;
             lpreal.setOk(false);
+            lpreal.setTipo(SintaxisAbstractaTiny.tipo_error());
         }
+        else 
+            lpreal.setTipo(SintaxisAbstractaTiny.tipo_ok());
 	}
 
 	public void procesa(Una_exp lpreal) {
 		lpreal.exp().procesa(this);		
+		lpreal.setTipo(lpreal.exp().tipo());
 	}
 
     public void procesa(Pformal_ref pfml) {
 		pfml.tipo().procesa(this);
+		pfml.setTipo(pfml.tipo());
 	}
 
 	public void procesa(Pformal_noref pfml) {
 		pfml.tipo().procesa(this);
+		pfml.setTipo(pfml.tipo());
 	}
 
     public void procesa(Inst_eval inst) {
         inst.exp().procesa(this);
-        if (inst.exp().tipo().getClass() == Tipo_error.class) {
+        if (claseDe(inst.exp().tipo(), Tipo_error.class)) {
             ok &= false;
-            inst.exp().setTipo(SintaxisAbstractaTiny.tipo_error());
+            inst.setTipo(SintaxisAbstractaTiny.tipo_error());
         }
-        else inst.exp().setTipo(SintaxisAbstractaTiny.tipo_ok());
+        else inst.setTipo(SintaxisAbstractaTiny.tipo_ok());
 	}
 
     public void procesa(Inst_if inst) {
@@ -467,10 +490,13 @@ public class Comprobacion_tipos implements Procesamiento {
     	return false;
     }
             		
-	public void procesa(Inst_nl inst) {}
+	public void procesa(Inst_nl inst) {
+		inst.setTipo(SintaxisAbstractaTiny.tipo_ok());
+	}
 
 	public void procesa(Inst_blo inst) {
-        inst.bloq().procesa(this);		
+        inst.bloq().procesa(this);	
+        inst.setTipo(inst.bloq().tipo());
 	}
 
     public void procesa(Exp_asig exp){
@@ -688,7 +714,12 @@ public class Comprobacion_tipos implements Procesamiento {
 	}
 
     public void procesa(Exp_iden iden) {
-        iden.setTipo(iden.getVinculo().tipo());
+    	if (claseDe(iden.getVinculo(), Dec_simple.class)) {
+    		Dec_simple d = (Dec_simple)iden.getVinculo();
+    		iden.setTipo(d.var().tipo());
+    	}
+    	else 
+    		iden.setTipo(SintaxisAbstractaTiny.tipo_error());
 	}
 
     public void procesa(Exp_null ex_null) {
@@ -831,11 +862,6 @@ public class Comprobacion_tipos implements Procesamiento {
         else return false;
     }
 
-	@Override
-	public void procesa(Tipo_punt tipo) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 	private boolean claseDe(Object o, Class c) {
         return o.getClass() == c;
@@ -845,5 +871,11 @@ public class Comprobacion_tipos implements Procesamiento {
     private boolean ambos_ok(Nodo n1, Nodo n2) {
         return n1.tipo().getClass() == Tipo_ok.class && n2.tipo().getClass() == Tipo_ok.class;
     }
+
+	@Override
+	public void procesa(Tipo_punt tipo) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

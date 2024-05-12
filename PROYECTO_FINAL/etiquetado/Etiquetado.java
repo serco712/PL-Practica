@@ -105,7 +105,7 @@ public class Etiquetado implements Procesamiento{
             Dec_proc sub =  subs.pop();
             sub.setPrim(etq);
             etq++;
-            recolecta_procs(bloq.decla().decs());
+            recolecta_procs(bloq.decla());
             sub.bloq().instr().procesa(this);
             etq = etq+2;
             sub.setSig(etq);
@@ -563,6 +563,12 @@ public class Etiquetado implements Procesamiento{
     	etq = etq+ 2;
     	p.lpr().procesa(this);
     	etq++;
+    }
+    
+    private void recolecta_procs(Decs decs) {
+    	if (claseDe(decs, Si_decs.class)) {
+    		recolecta_procs(decs.decs());
+    	}
     }
     
     private void recolecta_procs(LDecs lDecs){
