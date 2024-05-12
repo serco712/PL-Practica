@@ -281,6 +281,7 @@ public class Etiquetado implements Procesamiento{
     	etiquetado_acc_val(inst.exp());
         etq++;
         inst.bloq().procesa(this);
+        etq++;
         inst.setSig(etq);
     }
     
@@ -290,6 +291,7 @@ public class Etiquetado implements Procesamiento{
     	etiquetado_acc_val(inst.exp());
         etq++;
         inst.bloq1().procesa(this);
+        etq++;
         inst.bloq2().procesa(this);
         inst.setSig(etq);
     }
@@ -314,7 +316,7 @@ public class Etiquetado implements Procesamiento{
     public void procesa(Inst_delete inst){
     	inst.setPrim(etq);
     	inst.exp().procesa(this);
-        etq = etq +2;
+        etq++;
         inst.setSig(etq);
     }
     
@@ -351,7 +353,8 @@ public class Etiquetado implements Procesamiento{
     
     public void procesa(Exp_asig exp){
     	exp.setPrim(etq);
-    	etiquetado_opnds(exp.exp1(),exp.exp2());
+    	exp.exp1().procesa(this);
+    	exp.exp2().procesa(this);
     	etq++;
     	exp.setSig(etq);
     }
@@ -507,12 +510,27 @@ public class Etiquetado implements Procesamiento{
     
     public void procesa(Exp_iden exp){
         exp.setPrim(etq);
-        if(exp.getNivel() == 0) {
+		if (claseDe(exp.getVinculo(),Pformal_noref.class)) {
+			etq+=3;
+		}
+		else if ( claseDe(exp.getVinculo(),Pformal_ref.class)) {
+			etq+=4;
+		}
+		else if (claseDe(exp.getVinculo(),Var.class) ) {
+			if (exp.getVinculo().getNivel() == 0) {
+				etq+=1;
+			}
+			else {
+				etq+=3;
+			}
+		}
+		
+		/*if(exp.getNivel() == 0) {
         	etq++;
         }
         else {
         	etq = etq +3;
-        }
+        }*/
         exp.setSig(etq);
     }
     
