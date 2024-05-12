@@ -206,7 +206,8 @@ public class GeneracionCodigo implements Procesamiento{
 	
 	public void procesa(Inst_read inst) {
         inst.exp().procesa(this);
-        m.emit(m.desapila_ind());
+        m.emit(m.read());
+		m.emit(m.desapila_ind());
 	}
 	
 	public void procesa(Inst_write inst) {

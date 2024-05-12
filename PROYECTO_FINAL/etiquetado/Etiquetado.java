@@ -421,7 +421,7 @@ public class Etiquetado implements Procesamiento{
     
     public void procesa(Exp_div exp){
     	exp.setPrim(etq);
-    	etiquetado_opnds2(exp.exp1(),exp.exp2());¡
+    	etiquetado_opnds2(exp.exp1(),exp.exp2());
     	exp.setSig(etq);
     }
     

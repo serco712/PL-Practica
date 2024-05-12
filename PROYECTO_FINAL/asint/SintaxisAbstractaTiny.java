@@ -663,6 +663,7 @@ public class SintaxisAbstractaTiny {
         public void vincula(Map<String,Nodo> reg) {
             this.reg = reg;
         }
+        
         public String toString() {
                 return "tipo_struct("+lvar+")";
         } 

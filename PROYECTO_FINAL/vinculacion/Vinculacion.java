@@ -203,7 +203,7 @@ public class Vinculacion {
     public void vincula1(Tipo t) {
         if (claseDe(t, Tipo_array.class) || claseDe(t, Tipo_punt.class)) {
             if (!claseDe(t.tipo(), Tipo_ident.class)) {
-                vincula1(t);
+                vincula1(t.tipo());
             }
         }
         else if (claseDe(t, Tipo_struct.class)) {
@@ -335,20 +335,19 @@ public class Vinculacion {
          || claseDe(exp, Exp_mayor.class) || claseDe(exp, Exp_mayIgual.class) || claseDe(exp, Exp_igual.class)
          || claseDe(exp, Exp_dist.class) || claseDe(exp, Exp_suma.class) || claseDe(exp, Exp_resta.class)
          || claseDe(exp, Exp_mult.class)|| claseDe(exp, Exp_div.class)|| claseDe(exp, Exp_mod.class)
-         || claseDe(exp, Exp_and.class) || claseDe(exp, Exp_or.class)|| claseDe(exp, Exp_index.class)
-         || claseDe(exp, Exp_indir.class)){
+         || claseDe(exp, Exp_and.class) || claseDe(exp, Exp_or.class)|| claseDe(exp, Exp_index.class)){
                 vincula(exp.exp1());
         		vincula(exp.exp2());
           }
-          else if(claseDe(exp, Exp_menos.class) || claseDe(exp, Exp_not.class) ){
+          else if(claseDe(exp, Exp_menos.class) || claseDe(exp, Exp_not.class) || claseDe(exp, Exp_indir.class) ){
                vincula(exp.exp1());
           }
           else if(claseDe(exp, Exp_reg.class)){
 			    vincula(exp.exp1());
                 Nodo n = ts.vinculoDe(exp.id());
-                if (n.getClass() != Tipo_struct.class)
+                if (!claseDe(n, Tipo_struct.class))
                     throw new ErrorVinculacion();
-                }
+          }
           else if(claseDe(exp, Exp_iden.class)) {
         	    Nodo n = ts.vinculoDe(exp.id());
                 if (!claseDe(n, Dec_simple.class))
