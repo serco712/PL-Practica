@@ -1,4 +1,3 @@
-package domjudge;
 import asint.SintaxisAbstractaTiny.Prog;
 import c_ast_ascendente.AnalizadorLexicoTiny;
 import c_ast_descendente.ConstructorASTsTiny;
@@ -25,14 +24,16 @@ import java.io.Reader;
 public class DomJudge {
    public static void main(String[] args) throws Exception {
 	   try {
-	        Reader input = new InputStreamReader(new FileInputStream("C:/hloca/PL-Practica/ConstructoresASTs/sample4d.in"));
+	        Reader input = new InputStreamReader(new FileInputStream("/home/sergio/Downloads/casos_prueba_correctos(1)/casos_basicos/02basico_d.in"));
 	        BufferedReader br = new BufferedReader(input); //Ya tenemos el "lector"
 	        Prog p;
+			//System.out.println(br.readLine());
 	        if(br.readLine().startsWith("a")) {
-	            System.out.println("CONSTRUCCION AST ASCENDENTE");
-	            AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(br);
-	            c_ast_ascendente.ConstructorASTsTiny asint = new c_ast_ascendente.ConstructorASTsTinyDJ(alex);
-	            p = (Prog)asint.debug_parse().value;
+	            // System.out.println("CONSTRUCCION AST ASCENDENTE");
+	            // AnalizadorLexicoTiny alex = new AnalizadorLexicoTiny(br);
+	            // c_ast_ascendente.ConstructorASTsTiny asint = new c_ast_ascendente.ConstructorASTsTinyDJ(alex);
+	            // p = (Prog)asint.debug_parse().value;
+				p = null;
 	        }
 	        else {
 	            System.out.println("CONSTRUCCION AST DESCENDENTE");
