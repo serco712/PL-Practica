@@ -91,6 +91,7 @@ llaveCi = \}
 corcheteAp = \[
 corcheteCi = \]
 punto = \.
+eof = \$
 
 %%
 {bool}  				  {return ops.unidadBool();}
@@ -148,4 +149,6 @@ punto = \.
 {corcheteAp}              {return ops.unidadCorcheteAp();}
 {corcheteCi}              {return ops.unidadCorcheteCi();}
 {punto}                   {return ops.unidadPunto();}
+{eof} 					  {return ops.unidadEof();}
 [^]                       {ops.error();}  
+
