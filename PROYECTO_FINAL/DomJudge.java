@@ -24,7 +24,7 @@ import java.io.Reader;
 public class DomJudge {
    public static void main(String[] args) throws Exception {
 	   try {
-	        Reader input = new InputStreamReader(new FileInputStream("C:/hlocal/PL-Practica/PROYECTO_FINAL/casos_errores/04_errores_tipado2_d.in"));
+	        Reader input = new InputStreamReader(new FileInputStream("/home/sergio/Desktop/Estudios/UCM/4º/PL/PL-Practica/PROYECTO_FINAL/casos_prueba_correctos/casos_basicos/04control_d.in"));
 	        BufferedReader br = new BufferedReader(input); //Ya tenemos el "lector"
 	        Prog p;
 			//System.out.println(br.readLine());

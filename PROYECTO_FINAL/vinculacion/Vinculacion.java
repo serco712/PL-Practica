@@ -2,6 +2,7 @@ package vinculacion;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 import asint.SintaxisAbstractaTiny.Tipado;
 import asint.SintaxisAbstractaTiny.Tipo;
@@ -78,15 +79,11 @@ public class Vinculacion {
 
     private class TablaValores {
         private Map<String,Nodo> diccionario;
-        private TablaValores tv;
+        private Stack<Map<String,Nodo>> tv;
 
         public TablaValores() { 
-            diccionario = new HashMap<>(); 
-            tv = null;
-        }
-        public TablaValores(TablaValores tv) { 
-            diccionario = new HashMap<>(); 
-            this.tv = tv;
+            tv = new Stack<>();
+            diccionario = new HashMap<>();
         }
         public void inserta(String s, Nodo n) {
             diccionario.put(s, n);
@@ -94,11 +91,11 @@ public class Vinculacion {
         public boolean contiene(String s) {
             return diccionario.containsKey(s);
         }
-        public TablaValores abreAmbito() {
-            return new TablaValores(this);
+        public void abreAmbito() {
+            tv.push(diccionario);
         }
-        public TablaValores cierraAmbito() {
-            return tv;
+        public void cierraAmbito() {
+            diccionario = tv.pop();
         }
         public Map<String,Nodo> devuelveAmbito() {
             return diccionario;
@@ -123,11 +120,11 @@ public class Vinculacion {
     }
 
     public void vincula(Blo b) {
-        ts = ts.abreAmbito();
+        ts.abreAmbito();
         vincula(b.decla());
         vincula(b.instr());
         //ts.printDicc();
-        ts = ts.cierraAmbito();
+        ts.cierraAmbito();
     }
 
     public void vincula(Decs d) {
@@ -354,7 +351,7 @@ public class Vinculacion {
                 }
           else if(claseDe(exp, Exp_iden.class)) {
         	    Nodo n = ts.vinculoDe(exp.id());
-                if (claseDe(n, Dec_simple.class))
+                if (!claseDe(n, Dec_simple.class))
                     throw new ErrorVinculacion();
                 exp.vincula(n);
           }

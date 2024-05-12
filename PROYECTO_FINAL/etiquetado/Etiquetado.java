@@ -153,15 +153,9 @@ public class Etiquetado implements Procesamiento{
     }
 
     public void procesa(Dec_simple dec) {
-        dec.setPrim(etq);
-        dec.var().procesa(this);
-        dec.setSig(etq);
     }
 
     public void procesa(Dec_type dec) {
-        dec.setPrim(etq);
-        dec.var().procesa(this);
-        dec.setSig(etq);
     }
 
     public void procesa(Dec_proc dec) {
@@ -172,15 +166,9 @@ public class Etiquetado implements Procesamiento{
     }
 
     public void procesa(Tipo_array tipo) {
-        tipo.setPrim(etq);
-        tipo.tipo().procesa(this);
-        tipo.setSig(etq);
     }
 
     public void procesa(Tipo_punt tipo) {
-        tipo.setPrim(etq);
-        tipo.tipo().procesa(this);
-        tipo.setSig(etq);
     }
 
     public void procesa(Tipo_bool tipo) {}
@@ -193,7 +181,6 @@ public class Etiquetado implements Procesamiento{
 
     public void procesa(Tipo_ident tipo) {
         tipo.setPrim(etq);
-        etq++;
         tipo.setSig(etq);
     }
 
@@ -285,7 +272,6 @@ public class Etiquetado implements Procesamiento{
     public void procesa(Inst_eval inst){
     	inst.setPrim(etq);
     	inst.exp().procesa(this);
-        etq = etq +2;
         inst.setSig(etq);
     }
 
@@ -295,7 +281,6 @@ public class Etiquetado implements Procesamiento{
     	etiquetado_acc_val(inst.exp());
         etq++;
         inst.bloq().procesa(this);
-        etq++;
         inst.setSig(etq);
     }
     
@@ -305,9 +290,7 @@ public class Etiquetado implements Procesamiento{
     	etiquetado_acc_val(inst.exp());
         etq++;
         inst.bloq1().procesa(this);
-        etq++;
         inst.bloq2().procesa(this);
-        etq++;
         inst.setSig(etq);
     }
     
@@ -438,8 +421,7 @@ public class Etiquetado implements Procesamiento{
     
     public void procesa(Exp_div exp){
     	exp.setPrim(etq);
-    	etiquetado_opnds2(exp.exp1(),exp.exp2());
-    	etq++;
+    	etiquetado_opnds2(exp.exp1(),exp.exp2());¡
     	exp.setSig(etq);
     }
     

@@ -178,13 +178,15 @@ public class Comprobacion_tipos implements Procesamiento {
     public void procesa(Dec_simple dec) {
         dec.var().procesa(this);
         if (dec.var().tipo().getClass() != Tipo_error.class)
-            dec.setTipo(SintaxisAbstractaTiny.tipo_ok());
+            dec.setTipo(dec.var().tipo());
         else dec.setTipo(SintaxisAbstractaTiny.tipo_error());
 	}
     
     public void procesa(Dec_type dec) {
         dec.var().procesa(this);
-        dec.setTipo(dec.var().tipo());
+        if (dec.var().tipo().getClass() != Tipo_error.class)
+            dec.setTipo(dec.var().tipo());
+        else dec.setTipo(SintaxisAbstractaTiny.tipo_error());
 	}
     
     public void procesa(Dec_proc dec) {

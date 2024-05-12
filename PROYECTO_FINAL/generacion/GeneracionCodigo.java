@@ -100,13 +100,23 @@ public class GeneracionCodigo implements Procesamiento{
 	}
 	
 	public void procesa(Prog prog) {
-        prog.bloq().procesa(this);
+		recolecta_procs(prog.bloq().decla());
+        prog.bloq().instr().procesa(this);
+		m.emit(m.stop());
+		while(!subs.empty()){
+            Dec_proc sub =  subs.pop();
+           	m.emit(m.desapilad(sub.getNivel()));
+            recolecta_procs(sub.bloq().decla());
+            sub.bloq().instr().procesa(this);
+           	m.emit(m.desactiva(sub.getNivel(),sub.getEspacio()));
+           	m.emit(m.ir_ind());
+		}
     } 
 
 	public void procesa(Blo blo) {
         recolecta_procs(blo.decla());
         blo.instr().procesa(this);
-        m.emit(m.stop());
+        //m.emit(m.stop());
          while(!subs.empty()){
             Dec_proc sub =  subs.pop();
            	m.emit(m.desapilad(sub.getNivel()));
@@ -151,7 +161,6 @@ public class GeneracionCodigo implements Procesamiento{
 
 	public void procesa(Inst_eval inst) {
         inst.exp().procesa(this);
-        gen_acc_val(inst.exp());
 	}
 	
 	public void procesa(Inst_if inst) {
@@ -164,9 +173,8 @@ public class GeneracionCodigo implements Procesamiento{
 	public void procesa(Inst_else inst) {
         inst.exp().procesa(this);
         gen_acc_val(inst.exp());
-        m.emit(m.ir_v(inst.bloq2().getPrim()));
+        m.emit(m.ir_f(inst.bloq2().getPrim()));
         inst.bloq1().procesa(this);
-        m.emit(m.ir_f(inst.bloq2().getSig()));
         inst.bloq2().procesa(this);
 	}
 	
@@ -217,7 +225,6 @@ public class GeneracionCodigo implements Procesamiento{
 	
 	public void procesa(Inst_nl inst) {
         m.emit(m.nl());
-        m.emit(m.write());
 	}
 	
 	public void procesa(Inst_blo inst) {
@@ -227,11 +234,16 @@ public class GeneracionCodigo implements Procesamiento{
 	public void procesa(Exp_asig exp) {
 		exp.exp1().procesa(this);
 		exp.exp2().procesa(this);
-		if (exp.exp1().esDesignador()) {
-			m.emit(m.copia(exp.tipo().getEspacio()));
+		if (claseDe(exp.exp1().tipo(), Tipo_real.class) && claseDe(exp.exp2().tipo(), Tipo_int.class)) {
+			gen_acc_val(exp.exp2());
+			casteo(exp.exp2());
+			m.emit(m.desapila_ind());
 		}
 		else {
-			m.emit(m.desapila_ind());
+			if (exp.exp2().esDesignador())
+				m.emit(m.copia(exp.exp1().tipo().getEspacio()));
+			else 
+				m.emit(m.desapila_ind());
 		}
 	}
 	

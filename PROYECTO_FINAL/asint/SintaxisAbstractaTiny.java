@@ -26,7 +26,7 @@ public class SintaxisAbstractaTiny {
        private int prim = -1;
 	   private int sig = -1;
 	   private int nivel = -1;
-	   private int espacio = 0;
+	   private int espacio = 1;
 	   private int dir = -1;
        private Nodo vinculo;
        private Tipo tipo;
@@ -1253,7 +1253,7 @@ public class SintaxisAbstractaTiny {
         }
         @Override
 		public boolean esDesignador() {
-			return true;
+			return false;
 		}
      }
     
@@ -1279,7 +1279,7 @@ public class SintaxisAbstractaTiny {
         }
         @Override
 		public boolean esDesignador() {
-			return true;
+			return false;
 		}
      }
     
@@ -1305,7 +1305,7 @@ public class SintaxisAbstractaTiny {
         }
         @Override
 		public boolean esDesignador() {
-			return true;
+			return false;
 		}
      }
     
@@ -1331,7 +1331,7 @@ public class SintaxisAbstractaTiny {
         }
         @Override
 		public boolean esDesignador() {
-			return true;
+			return false;
 		}
      }
     
@@ -1357,7 +1357,7 @@ public class SintaxisAbstractaTiny {
         }
         @Override
 		public boolean esDesignador() {
-			return true;
+			return false;
 		}
      }
     
@@ -1383,7 +1383,7 @@ public class SintaxisAbstractaTiny {
         }
         @Override
 		public boolean esDesignador() {
-			return true;
+			return false;
 		}
      }
     
@@ -1409,7 +1409,7 @@ public class SintaxisAbstractaTiny {
         }
         @Override
 		public boolean esDesignador() {
-			return true;
+			return false;
 		}
      }
     
@@ -1435,7 +1435,7 @@ public class SintaxisAbstractaTiny {
         }
         @Override
 		public boolean esDesignador() {
-			return true;
+			return false;
 		}
      }
     
@@ -1461,7 +1461,7 @@ public class SintaxisAbstractaTiny {
         }
         @Override
 		public boolean esDesignador() {
-			return true;
+			return false;
 		}
      }
     
@@ -1487,7 +1487,7 @@ public class SintaxisAbstractaTiny {
         }
         @Override
 		public boolean esDesignador() {
-			return true;
+			return false;
 		}
      }
     
@@ -1513,7 +1513,7 @@ public class SintaxisAbstractaTiny {
         }
         @Override
 		public boolean esDesignador() {
-			return true;
+			return false;
 		}
      }
     public static class Exp_mod extends Exp{
@@ -1538,7 +1538,7 @@ public class SintaxisAbstractaTiny {
         }
         @Override
 		public boolean esDesignador() {
-			return true;
+			return false;
 		}
      }
   
@@ -1564,7 +1564,7 @@ public class SintaxisAbstractaTiny {
         }
         @Override
 		public boolean esDesignador() {
-			return true;
+			return false;
 		}
      }
 
@@ -1590,7 +1590,7 @@ public class SintaxisAbstractaTiny {
         }
         @Override
 		public boolean esDesignador() {
-			return true;
+			return false;
 		}
      }
      
@@ -1614,7 +1614,7 @@ public class SintaxisAbstractaTiny {
         }
         @Override
 		public boolean esDesignador() {
-			return true;
+			return false;
 		}
      }
      
@@ -1638,7 +1638,7 @@ public class SintaxisAbstractaTiny {
         }
         @Override
 		public boolean esDesignador() {
-			return true;
+			return false;
 		}
      }
     
@@ -1667,7 +1667,7 @@ public class SintaxisAbstractaTiny {
         }
         @Override
 		public boolean esDesignador() {
-			return true;
+			return false;
 		}
     }
     

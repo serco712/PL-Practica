@@ -68,7 +68,11 @@ public class Espacio {
     
     public void asigEspacio1(Dec d){
          if (claseDe(d, Dec_simple.class) || claseDe(d, Dec_type.class)) {
-             asigEspacio1(d.var());
+            Var v = d.var();
+            d.setDir(dir);
+            d.setNivel(nivel);
+            asigEspacioTipo(d.tipo());
+            dir = dir + d.tipo().getEspacio();
          }
          else if(claseDe(d, Dec_proc.class)){
               int aux = dir;
