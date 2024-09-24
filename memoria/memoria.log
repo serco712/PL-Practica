@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.3.15)  1 MAY 2024 23:47
+This is XeTeX, Version 3.141592653-2.6-0.999993 (TeX Live 2022/dev/Debian) (preloaded format=xelatex 2024.3.15)  12 MAY 2024 22:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1529,19 +1529,19 @@ less on input line 59.
 [8.9
 
 ]
-LaTeX Info: Redefining \. on input line 119.
-LaTeX Info: Redefining \% on input line 119.
+LaTeX Info: Redefining \. on input line 120.
+LaTeX Info: Redefining \% on input line 120.
  [9.10]
 LaTeX Info: Redefining \. on input line 179.
 LaTeX Info: Redefining \% on input line 179.
  [10.11]
-Overfull \hbox (220.13168pt too wide) in paragraph at lines 187--188
+Overfull \hbox (220.13168pt too wide) in paragraph at lines 188--189
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][] 
  []
 
 
-Overfull \hbox (346.13297pt too wide) in paragraph at lines 198--199
+Overfull \hbox (346.13297pt too wide) in paragraph at lines 199--200
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][] 
  []
@@ -1576,36 +1576,42 @@ Overfull \hbox (106.13052pt too wide) in paragraph at lines 375--376
 LaTeX Info: Redefining \. on input line 419.
 LaTeX Info: Redefining \% on input line 419.
 [14.15]
-Overfull \hbox (268.13217pt too wide) in paragraph at lines 436--437
+Overfull \hbox (268.13217pt too wide) in paragraph at lines 440--441
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (268.13217pt too wide) in paragraph at lines 453--454
+Overfull \hbox (268.13217pt too wide) in paragraph at lines 456--457
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (202.1315pt too wide) in paragraph at lines 459--460
+Overfull \hbox (202.1315pt too wide) in paragraph at lines 462--463
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (22.12967pt too wide) in paragraph at lines 470--471
+Overfull \hbox (22.12967pt too wide) in paragraph at lines 472--473
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (82.13028pt too wide) in paragraph at lines 472--473
+Overfull \hbox (82.13028pt too wide) in paragraph at lines 474--475
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 LaTeX Info: Redefining \. on input line 479.
 LaTeX Info: Redefining \% on input line 479.
-[15.16]) (./Secciones/Hito4/3Espacio.tex
+[15.16]
+Overfull \hbox (136.13083pt too wide) in paragraph at lines 480--481
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][] 
+ []
+
+) (./Secciones/Hito4/3Espacio.tex
 LaTeX Info: Redefining \. on input line 1.
 LaTeX Info: Redefining \% on input line 1.
  [16.17]
@@ -1622,15 +1628,15 @@ Underfull \hbox (badness 10000) in paragraph at lines 1--2
 
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 58.
+less on input line 59.
 
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 58.
+less on input line 59.
 
 
 Package fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
-less on input line 58.
+less on input line 59.
 
 [17.18
 
@@ -1638,11 +1644,11 @@ less on input line 58.
 Missing character: There is no ’ ("2019) in font ec-lmr10!
 Missing character: There is no ’ ("2019) in font ec-lmr10!
 Missing character: There is no ’ ("2019) in font ec-lmr10!
-Missing character: There is no ’ ("2019) in font ec-lmr10!
-Missing character: There is no ’ ("2019) in font ec-lmr10!
 LaTeX Info: Redefining \. on input line 118.
 LaTeX Info: Redefining \% on input line 118.
 [18.19]
+Missing character: There is no ’ ("2019) in font ec-lmr10!
+Missing character: There is no ’ ("2019) in font ec-lmr10!
 Missing character: There is no ’ ("2019) in font ec-lmr10!
 LaTeX Info: Redefining \. on input line 178.
 LaTeX Info: Redefining \% on input line 178.
@@ -1675,26 +1681,26 @@ Package hyperref Warning: Difference (2) between bookmark levels is greater
 > Step: calculate cell and line sizes.
 > Step: build the whole table.
 
-Overfull \hbox (30.0pt too wide) in paragraph at lines 43--43
+Overfull \hbox (30.0pt too wide) in paragraph at lines 42--42
 [] 
  []
 
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 43.
+less on input line 42.
 
 
 Package fancyhdr Warning: \fancyhead's `E' option without twoside option is use
-less on input line 43.
+less on input line 42.
 
 
 Package fancyhdr Warning: \fancyfoot's `E' option without twoside option is use
-less on input line 43.
+less on input line 42.
 
 [23.24
 
 ]
-Overfull \hbox (30.0pt too wide) in paragraph at lines 43--43
+Overfull \hbox (30.0pt too wide) in paragraph at lines 42--42
 [] 
  []
 
@@ -1707,7 +1713,7 @@ Overfull \hbox (30.0pt too wide) in paragraph at lines 43--43
 > Step: calculate cell and line sizes.
 > Step: build the whole table.
 
-Overfull \hbox (30.0pt too wide) in paragraph at lines 69--69
+Overfull \hbox (30.0pt too wide) in paragraph at lines 65--65
 [] 
  []
 
@@ -1720,7 +1726,7 @@ Overfull \hbox (30.0pt too wide) in paragraph at lines 69--69
 > Step: calculate cell and line sizes.
 > Step: build the whole table.
 
-Overfull \hbox (30.0pt too wide) in paragraph at lines 90--90
+Overfull \hbox (30.0pt too wide) in paragraph at lines 86--86
 [] 
  []
 
@@ -1737,13 +1743,13 @@ Missing character: There is no ’ ("2019) in font ec-lmr10!
 Missing character: There is no ’ ("2019) in font ec-lmr10!
 Missing character: There is no ’ ("2019) in font ec-lmr10!
 > Step: build the whole table.
-LaTeX Info: Redefining \. on input line 114.
-LaTeX Info: Redefining \% on input line 114.
+LaTeX Info: Redefining \. on input line 104.
+LaTeX Info: Redefining \% on input line 104.
 [24.25]
 Missing character: There is no ’ ("2019) in font ec-lmr10!
 Missing character: There is no ’ ("2019) in font ec-lmr10!
 
-Overfull \hbox (30.0pt too wide) in paragraph at lines 114--114
+Overfull \hbox (30.0pt too wide) in paragraph at lines 104--104
 [] 
  []
 
@@ -1756,14 +1762,27 @@ Overfull \hbox (30.0pt too wide) in paragraph at lines 114--114
 > Step: calculate cell and line sizes.
 > Step: build the whole table.
 
-Overfull \hbox (30.0pt too wide) in paragraph at lines 155--155
+Overfull \hbox (30.0pt too wide) in paragraph at lines 121--121
 [] 
  []
 
-LaTeX Info: Redefining \. on input line 155.
-LaTeX Info: Redefining \% on input line 155.
+> Step: init table outer spec.
+> Step: parse table options.
+> Step: split table.
+> Step: init table inner spec.
+> Step: parse table inner spec.
+> Step: execute table commands.
+> Step: calculate cell and line sizes.
+> Step: build the whole table.
+
+Overfull \hbox (30.0pt too wide) in paragraph at lines 162--162
+[] 
+ []
+
+LaTeX Info: Redefining \. on input line 162.
+LaTeX Info: Redefining \% on input line 162.
 [25.26]
-Overfull \hbox (30.0pt too wide) in paragraph at lines 155--155
+Overfull \hbox (30.0pt too wide) in paragraph at lines 162--162
 [] 
  []
 
@@ -1809,8 +1828,8 @@ LaTeX Info: Redefining \% on input line 238.
 LaTeX Info: Redefining \. on input line 298.
 LaTeX Info: Redefining \% on input line 298.
  [31.32]
-LaTeX Info: Redefining \. on input line 358.
-LaTeX Info: Redefining \% on input line 358.
+LaTeX Info: Redefining \. on input line 360.
+LaTeX Info: Redefining \% on input line 360.
  [32.33]
 LaTeX Info: Redefining \. on input line 418.
 LaTeX Info: Redefining \% on input line 418.
@@ -1845,14 +1864,14 @@ less on input line 60.
 [35.36
 
 ]
-LaTeX Info: Redefining \. on input line 119.
-LaTeX Info: Redefining \% on input line 119.
+LaTeX Info: Redefining \. on input line 120.
+LaTeX Info: Redefining \% on input line 120.
  [36.37]
 LaTeX Info: Redefining \. on input line 179.
 LaTeX Info: Redefining \% on input line 179.
  [37.38]
-LaTeX Info: Redefining \. on input line 240.
-LaTeX Info: Redefining \% on input line 240.
+LaTeX Info: Redefining \. on input line 239.
+LaTeX Info: Redefining \% on input line 239.
  [38.39]
 LaTeX Info: Redefining \. on input line 299.
 LaTeX Info: Redefining \% on input line 299.
@@ -1909,14 +1928,14 @@ LaTeX Info: Redefining \% on input line 32.
 LaTeX Font Warning: Some font shapes were not available, defaults substituted.
 
 Package rerunfilecheck Info: File `memoria.out' has not changed.
-(rerunfilecheck)             Checksum: 1521EF29713E46C37832D289B64C4376;3657.
+(rerunfilecheck)             Checksum: 4BAFCDCDBDBE89CC2A45D0287540206F;3901.
  ) 
 Here is how much of TeX's memory you used:
- 38040 strings out of 476191
- 737092 string characters out of 5812072
- 1244209 words of memory out of 5000000
- 58109 multiletter control sequences out of 15000+600000
- 514337 words of font info for 64 fonts, out of 8000000 for 9000
+ 38033 strings out of 476191
+ 736777 string characters out of 5812072
+ 1244497 words of memory out of 5000000
+ 58102 multiletter control sequences out of 15000+600000
+ 515112 words of font info for 67 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  106i,12n,131p,1164b,32766s stack positions out of 5000i,500n,10000p,200000b,80000s
 

@@ -7,7 +7,8 @@
 \contentsline {subsection}{\numberline {4.0.2}Instrucciones de movimiento de datos}{24}{subsection.4.0.2}%
 \contentsline {subsection}{\numberline {4.0.3}Instrucciones de salto}{24}{subsection.4.0.3}%
 \contentsline {subsection}{\numberline {4.0.4}Instrucciones de gestión de memoria dinámica}{24}{subsection.4.0.4}%
-\contentsline {subsection}{\numberline {4.0.5}Instrucciones de Soporte de la ejecución de procedimientos}{25}{subsection.4.0.5}%
+\contentsline {subsection}{\numberline {4.0.5}Instrucciones de Entrada y Salida}{25}{subsection.4.0.5}%
+\contentsline {subsection}{\numberline {4.0.6}Instrucciones de Soporte de la ejecución de procedimientos}{25}{subsection.4.0.6}%
 \contentsline {chapter}{\numberline {5}Especificación del procesamiento de etiquetado}{27}{chapter.5}%
 \contentsline {chapter}{\numberline {6}Especificación del procesamiento de generación de código}{35}{chapter.6}%
 \contentsline {chapter}{Índice de figuras}{41}{chapter*.3}%
